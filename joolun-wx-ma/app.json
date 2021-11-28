@@ -11,7 +11,8 @@
     "pages/order/order-detail/index",
     "pages/user/user-center/index",
     "pages/user/user-address/list/index",
-    "pages/user/user-address/form/index"
+    "pages/user/user-address/form/index",
+    "pages/plan/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -26,10 +27,16 @@
     "selectedColor": "#2967ff",
     "list": [
       {
+        "pagePath": "pages/plan/index",
+        "iconPath": "public/img/1-001.png",
+        "selectedIconPath": "public/img/1-002.png",
+        "text": "计划"
+      },
+      {
         "pagePath": "pages/home/index",
         "iconPath": "public/img/1-001.png",
         "selectedIconPath": "public/img/1-002.png",
-        "text": "首页"
+        "text": "商城"
       },
       {
         "pagePath": "pages/goods/goods-category/index",
@@ -51,7 +58,5 @@
       }
     ]
   },
-  "usingComponents": {
-    
-  }
+  "usingComponents": {}
 }
