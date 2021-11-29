@@ -250,7 +250,8 @@
             handleUpdate: function (row, index, done, loading) {
                 row.categoryFirst = row.categoryId[0]
                 row.categorySecond = row.categoryId[1]
-                row.picUrls = row.picUrls?row.picUrls.split(','):''
+                
+                row.picUrls = row.picUrls?row.picUrls.toString().split(','):''
                 putObj(row).then(data => {
                     this.$message({
                         showClose: true,
@@ -272,7 +273,8 @@
             handleSave: function (row, done, loading) {
                 row.categoryFirst = row.categoryId[0]
                 row.categorySecond = row.categoryId[1]
-                row.picUrls = row.picUrls?row.picUrls.split(','):''
+                console.log(row.picUrls)
+                row.picUrls = row.picUrls?row.picUrls.toString().split(','):''
                 addObj(row).then(data => {
                     this.$message({
                         showClose: true,

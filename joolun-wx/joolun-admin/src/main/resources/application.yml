@@ -3,7 +3,7 @@ ruoyi:
   # 实例演示开关
   demoEnabled: false
   # 文件路径 示例（ Windows配置D:/joolun/uploadPath，Linux配置 /home/joolun/uploadPath）
-  profile: D:/joolun/uploadPath
+  profile: ~/Documents/uploadPath
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
@@ -123,15 +123,15 @@ wx:
   # 公众号配置
   mp:
     configs:
-      - appId: xxxxxxxx
-        secret: xxxxxxxxxxxxxxxxxxxxxxxxxx
+      - appId: wx752ba57ab54cbde9
+        secret: 0cf06760177228fd885837fe5707e853
         token: xxxxxxxxxx
         aesKey: xxxxxxxxxxxxxxxxxxxx
   # 小程序配置
   ma:
     configs:
-      - appId: xxxxxxxxxxxxxxxx
-        secret: xxxxxxxxxxxxx
+      - appId: wx9781c13b89c7bc4f
+        secret: 0e5b07b657a65099359833898c6b4873
         # 微信支付商户号，请去微信支付平台申请
         mchId: 1588227511
         # 微信支付商户密钥，请去微信支付平台申请

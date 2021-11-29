@@ -143,10 +143,10 @@ export const tableOption = {
                   message: '图片不能为空',
                   trigger: 'change'
                 }],
-                canvasOption: {
-                  text: 'joolun',
-                  ratio: 0.1
-                },
+                // canvasOption: {
+                //   text: 'joolun',
+                //   ratio: 0.1
+                // },
                 oss: 'ali',
                 loadText: '附件上传中，请稍等',
                 span: 24,
