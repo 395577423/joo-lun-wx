@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 微信支付Configuration
- * @author www.joolun.com
+ * @author Owen
  *
  */
 @Slf4j

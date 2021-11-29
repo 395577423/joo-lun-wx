@@ -6,7 +6,7 @@ import com.joolun.system.domain.SysPost;
 /**
  * 岗位信息 数据层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface SysPostMapper
 {

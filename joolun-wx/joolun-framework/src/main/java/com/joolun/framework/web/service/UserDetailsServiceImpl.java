@@ -17,7 +17,7 @@ import com.joolun.system.service.ISysUserService;
 /**
  * 用户验证处理
  *
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService

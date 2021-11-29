@@ -59,7 +59,7 @@ import java.util.Map;
 import static me.chanjar.weixin.common.api.WxConsts.EventType;
 
 /**
- * @author www.joolun.com
+ * @author Owen
  */
 @Slf4j
 @Component

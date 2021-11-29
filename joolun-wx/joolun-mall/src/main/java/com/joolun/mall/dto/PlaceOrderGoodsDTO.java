@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 /**
  * 下单参数
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2019-08-13 10:18:34
  */
 @Data

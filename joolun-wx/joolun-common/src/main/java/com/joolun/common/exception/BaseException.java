@@ -6,7 +6,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 基础异常
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class BaseException extends RuntimeException
 {

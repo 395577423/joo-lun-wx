@@ -21,7 +21,7 @@ import com.joolun.framework.config.ServerConfig;
 /**
  * 通用请求处理
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 public class CommonController

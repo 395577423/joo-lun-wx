@@ -5,7 +5,7 @@ import com.joolun.weixin.entity.ThirdSession;
 import lombok.experimental.UtilityClass;
 
 /**
- * @author
+ * @author Owen
  * thirdSession工具类
  */
 @UtilityClass

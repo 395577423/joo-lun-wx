@@ -7,7 +7,7 @@ import com.joolun.common.core.domain.entity.SysUser;
 /**
  * 用户表 数据层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface SysUserMapper
 {

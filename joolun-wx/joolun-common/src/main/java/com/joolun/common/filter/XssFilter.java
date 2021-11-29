@@ -18,7 +18,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 防止XSS攻击的过滤器
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class XssFilter implements Filter
 {

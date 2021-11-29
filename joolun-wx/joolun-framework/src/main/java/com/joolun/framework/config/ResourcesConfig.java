@@ -16,7 +16,7 @@ import com.joolun.framework.interceptor.RepeatSubmitInterceptor;
 /**
  * 通用配置
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer

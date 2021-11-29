@@ -14,7 +14,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * Filter配置
  *
- * @author ruoyi
+ * @author Owen
  */
 @Configuration
 public class FilterConfig

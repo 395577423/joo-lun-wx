@@ -6,7 +6,7 @@ import com.joolun.system.domain.SysConfig;
 /**
  * 参数配置 数据层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface SysConfigMapper
 {

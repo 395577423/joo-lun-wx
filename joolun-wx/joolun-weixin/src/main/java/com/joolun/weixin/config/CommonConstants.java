@@ -24,7 +24,7 @@ SOFTWARE.
 package com.joolun.weixin.config;
 
 /**
- * @author
+ * @author Owen
  */
 public interface CommonConstants {
 	/**

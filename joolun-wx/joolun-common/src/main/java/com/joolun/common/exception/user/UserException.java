@@ -5,7 +5,7 @@ import com.joolun.common.exception.BaseException;
 /**
  * 用户信息异常类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class UserException extends BaseException
 {

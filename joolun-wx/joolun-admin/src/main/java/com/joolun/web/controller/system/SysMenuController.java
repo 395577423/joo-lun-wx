@@ -29,7 +29,7 @@ import com.joolun.system.service.ISysMenuService;
 /**
  * 菜单信息
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 @RequestMapping("/system/menu")

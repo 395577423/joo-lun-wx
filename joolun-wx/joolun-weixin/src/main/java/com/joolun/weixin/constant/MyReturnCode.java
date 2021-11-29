@@ -26,7 +26,7 @@ package com.joolun.weixin.constant;
 /**
  * 全局返回码
  * 小程序用6开头，例60001
- * @author www.joolun.com
+ * @author Owen
  * 2019年7月25日
  */
 public enum MyReturnCode {

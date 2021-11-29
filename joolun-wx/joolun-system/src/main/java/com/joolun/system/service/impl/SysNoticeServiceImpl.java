@@ -10,7 +10,7 @@ import com.joolun.system.service.ISysNoticeService;
 /**
  * 公告 服务层实现
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService

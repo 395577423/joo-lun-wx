@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 商品类目
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2019-08-12 11:46:28
  */
 @Slf4j

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 下单参数
  *
- * @author JL
+ * @author Owen
  * @date 2019-08-13 10:18:34
  */
 @Data

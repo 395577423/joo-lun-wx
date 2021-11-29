@@ -5,7 +5,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 分页数据
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class PageDomain
 {

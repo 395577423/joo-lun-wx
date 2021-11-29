@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * 微信消息
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2019-05-28 16:12:10
  */
 @Service

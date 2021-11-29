@@ -11,7 +11,7 @@ import com.joolun.common.core.domain.BaseEntity;
 /**
  * 岗位表 sys_post
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class SysPost extends BaseEntity
 {

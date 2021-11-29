@@ -24,7 +24,7 @@ SOFTWARE.
 package com.joolun.weixin.constant;
 
 /**
- * @author www.joolun.com
+ * @author Owen
  */
 public interface WebSocketConstant {
 

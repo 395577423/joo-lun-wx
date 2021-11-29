@@ -21,7 +21,7 @@ import com.joolun.framework.manager.factory.AsyncFactory;
 /**
  * 登录校验方法
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Component
 public class SysLoginService

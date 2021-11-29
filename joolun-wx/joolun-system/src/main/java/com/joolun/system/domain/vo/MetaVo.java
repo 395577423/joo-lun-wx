@@ -3,7 +3,7 @@ package com.joolun.system.domain.vo;
 /**
  * 路由显示信息
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class MetaVo
 {

@@ -6,7 +6,7 @@ import com.joolun.system.domain.SysLogininfor;
 /**
  * 系统访问日志情况信息 服务层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface ISysLogininforService
 {

@@ -20,7 +20,7 @@ import com.joolun.system.service.ISysDeptService;
 /**
  * 部门管理 服务实现
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class SysDeptServiceImpl implements ISysDeptService

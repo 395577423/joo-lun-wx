@@ -12,7 +12,7 @@ import com.joolun.common.core.domain.BaseEntity;
 /**
  * 字典数据表 sys_dict_data
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class SysDictData extends BaseEntity
 {

@@ -21,7 +21,7 @@ import com.joolun.common.utils.uuid.IdUtils;
 /**
  * 验证码操作处理
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 public class CaptchaController

@@ -24,7 +24,7 @@ SOFTWARE.
 package com.joolun.mall.config;
 
 /**
- * @author
+ * @author Owen
  */
 public interface CommonConstants {
 	/**

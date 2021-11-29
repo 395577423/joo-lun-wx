@@ -10,7 +10,7 @@ import com.joolun.common.exception.CustomException;
 /**
  * 安全服务工具类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class SecurityUtils
 {

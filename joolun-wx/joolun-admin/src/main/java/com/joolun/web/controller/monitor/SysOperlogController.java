@@ -20,7 +20,7 @@ import com.joolun.system.service.ISysOperLogService;
 /**
  * 操作日志记录
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 @RequestMapping("/monitor/operlog")

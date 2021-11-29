@@ -11,7 +11,7 @@ import com.joolun.common.utils.http.HttpUtils;
 /**
  * 获取地址类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class AddressUtils
 {

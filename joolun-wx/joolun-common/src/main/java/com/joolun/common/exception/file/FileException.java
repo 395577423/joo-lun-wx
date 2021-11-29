@@ -5,7 +5,7 @@ import com.joolun.common.exception.BaseException;
 /**
  * 文件信息异常类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class FileException extends BaseException
 {

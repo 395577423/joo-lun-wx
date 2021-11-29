@@ -3,7 +3,7 @@ package com.joolun.common.constant;
 /**
  * 任务调度通用常量
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class ScheduleConstants
 {

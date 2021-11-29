@@ -10,7 +10,7 @@ import com.joolun.common.core.domain.entity.SysUser;
 /**
  * 登录用户身份权限
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class LoginUser implements UserDetails
 {

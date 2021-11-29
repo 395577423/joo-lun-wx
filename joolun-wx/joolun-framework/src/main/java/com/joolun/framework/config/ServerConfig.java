@@ -7,7 +7,7 @@ import com.joolun.common.utils.ServletUtils;
 /**
  * 服务相关配置
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Component
 public class ServerConfig

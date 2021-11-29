@@ -3,7 +3,7 @@ package com.joolun.common.exception.file;
 /**
  * 文件名大小限制异常类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class FileSizeLimitExceededException extends FileException
 {

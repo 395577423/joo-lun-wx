@@ -39,7 +39,7 @@ import com.joolun.generator.util.VelocityUtils;
 /**
  * 业务 服务层实现
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class GenTableServiceImpl implements IGenTableService

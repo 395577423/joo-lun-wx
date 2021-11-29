@@ -3,7 +3,7 @@ package com.joolun.common.enums;
 /**
  * 业务操作类型
  * 
- * @author ruoyi
+ * @author Owen
  */
 public enum BusinessType
 {

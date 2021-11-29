@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author www.joolun.com
+ * @author Owen
  **/
 @Configuration
 public class MybatisPlusConfig {

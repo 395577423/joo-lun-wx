@@ -22,7 +22,7 @@ import com.joolun.system.service.ISysMenuService;
 /**
  * 登录验证
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 public class SysLoginController

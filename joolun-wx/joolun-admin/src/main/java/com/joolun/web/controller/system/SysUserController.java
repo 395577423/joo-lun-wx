@@ -35,7 +35,7 @@ import com.joolun.system.service.ISysUserService;
 /**
  * 用户信息
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 @RequestMapping("/system/user")

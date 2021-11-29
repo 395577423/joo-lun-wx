@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * web层通用数据处理
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class BaseController
 {

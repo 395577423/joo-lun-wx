@@ -9,7 +9,7 @@ import com.joolun.common.utils.html.EscapeUtil;
 /**
  * 获取IP方法
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class IpUtils
 {

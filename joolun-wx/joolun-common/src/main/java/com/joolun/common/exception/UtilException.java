@@ -3,7 +3,7 @@ package com.joolun.common.exception;
 /**
  * 工具类异常
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class UtilException extends RuntimeException
 {

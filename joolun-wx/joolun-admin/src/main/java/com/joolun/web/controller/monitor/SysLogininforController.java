@@ -20,7 +20,7 @@ import com.joolun.system.service.ISysLogininforService;
 /**
  * 系统访问记录
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 @RequestMapping("/monitor/logininfor")

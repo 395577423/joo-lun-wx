@@ -10,7 +10,7 @@ import com.joolun.system.service.ISysOperLogService;
 /**
  * 操作日志 服务层处理
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService

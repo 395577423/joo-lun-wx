@@ -5,7 +5,7 @@ import com.joolun.common.utils.Arith;
 /**
  * CPU相关信息
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class Cpu
 {

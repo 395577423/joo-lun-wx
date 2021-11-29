@@ -1,7 +1,7 @@
 package com.joolun.mall.constant;
 
 /**
- * @author
+ * @author Owen
  */
 public interface MallConstants {
 	/**

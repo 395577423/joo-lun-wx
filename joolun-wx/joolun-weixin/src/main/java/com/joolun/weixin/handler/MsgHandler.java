@@ -50,7 +50,7 @@ import java.util.Map;
 import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType;
 
 /**
- * @author www.joolun.com
+ * @author Owen
  */
 @Component
 @AllArgsConstructor

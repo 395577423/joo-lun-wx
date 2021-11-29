@@ -3,7 +3,7 @@ package com.joolun.common.enums;
 /**
  * 操作状态
  * 
- * @author ruoyi
+ * @author Owen
  *
  */
 public enum BusinessStatus

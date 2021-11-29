@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 
 /**
  * ThirdSession拦截器，校验每个请求的ThirdSession
- * @author
+ * @author Owen
  */
 @Slf4j
 @Component

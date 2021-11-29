@@ -7,7 +7,7 @@ import com.joolun.common.core.domain.entity.SysRole;
 /**
  * 角色业务层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface ISysRoleService
 {

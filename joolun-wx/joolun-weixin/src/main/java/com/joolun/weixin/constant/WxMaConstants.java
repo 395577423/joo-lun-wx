@@ -24,7 +24,7 @@ SOFTWARE.
 package com.joolun.weixin.constant;
 
 /**
- * @author
+ * @author Owen
  */
 public interface WxMaConstants {
 

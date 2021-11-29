@@ -25,7 +25,7 @@ package com.joolun.weixin.constant;
 
 /**
  * 全局常量
- * @author www.joolun.com
+ * @author Owen
  * 2019年1月21日
  */
 public interface ConfigConstant {

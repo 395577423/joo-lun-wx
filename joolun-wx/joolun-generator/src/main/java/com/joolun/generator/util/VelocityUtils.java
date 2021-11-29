@@ -14,7 +14,7 @@ import com.joolun.generator.domain.GenTableColumn;
 /**
  * 模板处理工具类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class VelocityUtils
 {

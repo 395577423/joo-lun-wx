@@ -11,7 +11,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 类型转换器
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class Convert
 {

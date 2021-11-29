@@ -20,7 +20,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 全局异常处理器
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler

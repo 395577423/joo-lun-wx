@@ -9,7 +9,7 @@ import com.joolun.common.core.domain.BaseEntity;
 /**
  * 通知公告表 sys_notice
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class SysNotice extends BaseEntity
 {

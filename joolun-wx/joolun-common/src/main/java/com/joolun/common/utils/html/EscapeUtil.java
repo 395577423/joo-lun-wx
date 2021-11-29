@@ -5,7 +5,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 转义和反转义工具类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class EscapeUtil
 {

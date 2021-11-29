@@ -6,7 +6,7 @@ import com.joolun.generator.domain.GenTable;
 /**
  * 业务 数据层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface GenTableMapper
 {

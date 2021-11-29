@@ -6,7 +6,7 @@ import com.joolun.generator.domain.GenTableColumn;
 /**
  * 业务字段 服务层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface IGenTableColumnService
 {

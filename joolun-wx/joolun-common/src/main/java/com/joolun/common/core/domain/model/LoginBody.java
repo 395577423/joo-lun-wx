@@ -3,7 +3,7 @@ package com.joolun.common.core.domain.model;
 /**
  * 用户登录对象
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class LoginBody
 {

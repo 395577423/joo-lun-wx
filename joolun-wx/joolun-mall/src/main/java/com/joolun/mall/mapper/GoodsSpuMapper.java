@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * spu商品
  *
- * @author JL
+ * @author Owen
  * @date 2019-08-12 16:25:10
  */
 public interface GoodsSpuMapper extends BaseMapper<GoodsSpu> {

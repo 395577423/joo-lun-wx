@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * 自定义菜单模型
  *
- * @author www.joolun.com
+ * @author Owen
  */
 @Data
 public class MenuButton implements Serializable {

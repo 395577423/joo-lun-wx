@@ -27,7 +27,7 @@ import com.joolun.system.service.ISysDeptService;
 /**
  * 部门信息
  * 
- * @author ruoyi
+ * @author Owen
  */
 @RestController
 @RequestMapping("/system/dept")

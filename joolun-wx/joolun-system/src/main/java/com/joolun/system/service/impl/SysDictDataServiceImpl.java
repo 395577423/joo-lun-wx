@@ -11,7 +11,7 @@ import com.joolun.system.service.ISysDictDataService;
 /**
  * 字典 业务层处理
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class SysDictDataServiceImpl implements ISysDictDataService

@@ -12,7 +12,7 @@ import com.joolun.common.core.domain.BaseEntity;
 /**
  * 部门表 sys_dept
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class SysDept extends BaseEntity
 {

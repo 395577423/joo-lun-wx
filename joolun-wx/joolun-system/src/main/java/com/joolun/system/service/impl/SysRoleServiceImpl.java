@@ -25,7 +25,7 @@ import com.joolun.system.service.ISysRoleService;
 /**
  * 角色 业务层处理
  * 
- * @author ruoyi
+ * @author Owen
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService

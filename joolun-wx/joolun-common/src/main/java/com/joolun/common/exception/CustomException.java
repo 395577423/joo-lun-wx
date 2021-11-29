@@ -3,7 +3,7 @@ package com.joolun.common.exception;
 /**
  * 自定义异常
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class CustomException extends RuntimeException
 {

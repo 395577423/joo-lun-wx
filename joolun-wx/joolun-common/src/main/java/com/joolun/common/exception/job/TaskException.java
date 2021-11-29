@@ -3,7 +3,7 @@ package com.joolun.common.exception.job;
 /**
  * 计划策略异常
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class TaskException extends Exception
 {

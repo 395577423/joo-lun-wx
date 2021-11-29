@@ -5,7 +5,7 @@ import com.joolun.weixin.constant.ConfigConstant;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author www.joolun.com
+ * @author Owen
  * 小程序工具类
  */
 public class WxMaUtil {

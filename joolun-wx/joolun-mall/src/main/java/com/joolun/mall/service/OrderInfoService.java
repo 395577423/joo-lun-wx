@@ -19,7 +19,7 @@ import java.io.Serializable;
 /**
  * 商城订单
  *
- * @author JL
+ * @author Owen
  * @date 2019-09-10 15:21:22
  */
 public interface OrderInfoService extends IService<OrderInfo> {

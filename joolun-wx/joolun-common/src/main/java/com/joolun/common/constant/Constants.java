@@ -3,7 +3,7 @@ package com.joolun.common.constant;
 /**
  * 通用常量信息
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class Constants
 {

@@ -12,7 +12,7 @@ import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
- * @author www.joolun.com
+ * @author Owen
  */
 @Configuration
 @AllArgsConstructor

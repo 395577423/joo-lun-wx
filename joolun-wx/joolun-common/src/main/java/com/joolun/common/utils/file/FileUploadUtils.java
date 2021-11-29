@@ -16,7 +16,7 @@ import com.joolun.common.utils.uuid.IdUtils;
 /**
  * 文件上传工具类
  *
- * @author ruoyi
+ * @author Owen
  */
 public class FileUploadUtils
 {

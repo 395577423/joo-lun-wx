@@ -6,7 +6,7 @@ import com.joolun.quartz.domain.SysJobLog;
 /**
  * 调度任务日志信息 数据层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface SysJobLogMapper
 {

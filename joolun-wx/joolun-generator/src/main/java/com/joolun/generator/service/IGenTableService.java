@@ -7,7 +7,7 @@ import com.joolun.generator.domain.GenTable;
 /**
  * 业务 服务层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface IGenTableService
 {

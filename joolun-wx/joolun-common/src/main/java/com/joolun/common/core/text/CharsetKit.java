@@ -7,7 +7,7 @@ import com.joolun.common.utils.StringUtils;
 /**
  * 字符集工具类
  * 
- * @author ruoyi
+ * @author Owen
  */
 public class CharsetKit
 {

@@ -6,7 +6,7 @@ import com.joolun.common.core.domain.entity.SysUser;
 /**
  * 用户 业务层
  * 
- * @author ruoyi
+ * @author Owen
  */
 public interface ISysUserService
 {
