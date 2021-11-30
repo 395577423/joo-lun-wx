@@ -25,8 +25,8 @@ server:
     min-spare-threads: 30
   ssl:
     key-store: classpath:read-yiqishijian-com-tomcat-1130171903.jks
-    key-password: Pjm871227
     key-store-type: JKS
+    key-store-password:
 # 日志配置
 logging:
   level:

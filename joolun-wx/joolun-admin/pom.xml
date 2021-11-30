@@ -14,9 +14,6 @@
     <description>
         web服务入口
     </description>
-    <properties>
-        <tomcat.version>9.0.24</tomcat.version>
-    </properties>
 
     <dependencies>
 
@@ -86,22 +83,6 @@
         <dependency>
             <groupId>com.joolun</groupId>
             <artifactId>joolun-mall</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-el</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>${tomcat.version}</version>
         </dependency>
 
     </dependencies>

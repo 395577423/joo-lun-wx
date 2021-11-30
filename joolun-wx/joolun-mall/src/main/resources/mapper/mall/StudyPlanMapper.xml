@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.StudyPlanMapper">
+    
+    <resultMap type="StudyPlan" id="StudyPlanResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="titlePic"    column="title_pic"    />
+        <result property="content"    column="content"    />
+        <result property="price"    column="price"    />
+        <result property="cashReturn"    column="cash_return"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectStudyPlanVo">
+        select id, title, introduction, title_pic, content, price, cash_return, start_time, end_time, create_time, update_time from study_plan
+    </sql>
+
+    <select id="selectStudyPlanList" parameterType="StudyPlan" resultMap="StudyPlanResult">
+        <include refid="selectStudyPlanVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="introduction != null "> and introduction = #{introduction}</if>
+            <if test="titlePic != null  and titlePic != ''"> and title_pic = #{titlePic}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="cashReturn != null "> and cash_return = #{cashReturn}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectStudyPlanById" parameterType="Long" resultMap="StudyPlanResult">
+        <include refid="selectStudyPlanVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStudyPlan" parameterType="StudyPlan">
+        insert into study_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="titlePic != null and titlePic != ''">title_pic,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="price != null">price,</if>
+            <if test="cashReturn != null">cash_return,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="titlePic != null and titlePic != ''">#{titlePic},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="price != null">#{price},</if>
+            <if test="cashReturn != null">#{cashReturn},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStudyPlan" parameterType="StudyPlan">
+        update study_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="titlePic != null and titlePic != ''">title_pic = #{titlePic},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="cashReturn != null">cash_return = #{cashReturn},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudyPlanById" parameterType="Long">
+        delete from study_plan where id = #{id}
+    </delete>
+
+    <delete id="deleteStudyPlanByIds" parameterType="java.lang.String">
+        delete from study_plan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
