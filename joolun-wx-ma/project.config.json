@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": false,
     "postcss": true,
@@ -37,13 +37,13 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
+    "minifyWXML": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.6",
-  "appid": "wx9781c13b89c7bc4f",
+  "appid": "wxa8f0475c8754393c",
   "projectname": "joolun-wx-ma",
   "debugOptions": {
     "hidedInDevtools": []

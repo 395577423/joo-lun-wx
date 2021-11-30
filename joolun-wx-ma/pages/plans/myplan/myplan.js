@@ -1,4 +1,4 @@
-// pages/plan/index.js
+// pages/plans/myplan/myplan.js
 Page({
 
   /**

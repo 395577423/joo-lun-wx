@@ -52,6 +52,12 @@
         <text class="text-black">已完成</text>
       </navigator>
     </view>
+    <view class="cu-item">
+      <navigator url="/pages/plans/myplan/myplan" hover-class="none">
+        <image class="order-image" src="/public/img/5-2.png"></image>
+        <text class="text-black">已购买计划</text>
+      </navigator>
+    </view>
   </view>
 </view>
 <view class="cu-list menu card-menu radius address">
