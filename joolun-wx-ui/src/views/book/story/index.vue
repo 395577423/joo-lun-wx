@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { listStory, getStory, delStory, addStory, updateStory, exportStory } from "@/api/system/story";
+import { listStory, getStory, delStory, addStory, updateStory, exportStory } from "@/api/book/story";
 import Editor from '@/components/Editor';
 
 export default {

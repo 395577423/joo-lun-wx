@@ -1,51 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="标题" prop="title">
+      <el-form-item label="用户ID" prop="userId">
         <el-input
-          v-model="queryParams.title"
-          placeholder="请输入标题"
+          v-model="queryParams.userId"
+          placeholder="请输入用户ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="视频缩略图片地址" prop="coverUrl">
+      <el-form-item label="答案ID" prop="answerId">
         <el-input
-          v-model="queryParams.coverUrl"
-          placeholder="请输入视频缩略图片地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="视频地址" prop="videoUrl">
-        <el-input
-          v-model="queryParams.videoUrl"
-          placeholder="请输入视频地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="课程id" prop="courseId">
-        <el-input
-          v-model="queryParams.courseId"
-          placeholder="请输入课程id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="1 正常 0 停用" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择1 正常 0 停用" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input
-          v-model="queryParams.sort"
-          placeholder="请输入排序"
+          v-model="queryParams.answerId"
+          placeholder="请输入答案ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -65,7 +33,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:video:add']"
+          v-hasPermi="['system:answer:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -76,7 +44,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:video:edit']"
+          v-hasPermi="['system:answer:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -87,7 +55,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:video:remove']"
+          v-hasPermi="['system:answer:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -97,21 +65,17 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:video:export']"
+          v-hasPermi="['system:answer:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="videoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="answerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="视频缩略图片地址" align="center" prop="coverUrl" />
-      <el-table-column label="视频地址" align="center" prop="videoUrl" />
-      <el-table-column label="课程id" align="center" prop="courseId" />
-      <el-table-column label="1 正常 0 停用" align="center" prop="status" />
-      <el-table-column label="排序" align="center" prop="sort" />
+      <el-table-column label="答案ID" align="center" prop="id" />
+      <el-table-column label="用户ID" align="center" prop="userId" />
+      <el-table-column label="答案ID" align="center" prop="answerId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -119,14 +83,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:video:edit']"
+            v-hasPermi="['system:answer:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:video:remove']"
+            v-hasPermi="['system:answer:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -140,28 +104,14 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改课程视频对话框 -->
+    <!-- 添加或修改用户答案对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题" />
+        <el-form-item label="用户ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入用户ID" />
         </el-form-item>
-        <el-form-item label="视频缩略图片地址" prop="coverUrl">
-          <el-input v-model="form.coverUrl" placeholder="请输入视频缩略图片地址" />
-        </el-form-item>
-        <el-form-item label="视频地址" prop="videoUrl">
-          <el-input v-model="form.videoUrl" placeholder="请输入视频地址" />
-        </el-form-item>
-        <el-form-item label="课程id" prop="courseId">
-          <el-input v-model="form.courseId" placeholder="请输入课程id" />
-        </el-form-item>
-        <el-form-item label="1 正常 0 停用">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
+        <el-form-item label="答案ID" prop="answerId">
+          <el-input v-model="form.answerId" placeholder="请输入答案ID" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -173,10 +123,10 @@
 </template>
 
 <script>
-import { listVideo, getVideo, delVideo, addVideo, updateVideo, exportVideo } from "@/api/system/video";
+import { listAnswer, getAnswer, delAnswer, addAnswer, updateAnswer, exportAnswer } from "@/api/course/answer";
 
 export default {
-  name: "Video",
+  name: "Answer",
   components: {
   },
   data() {
@@ -193,8 +143,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 课程视频表格数据
-      videoList: [],
+      // 用户答案表格数据
+      answerList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -203,12 +153,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        title: null,
-        coverUrl: null,
-        videoUrl: null,
-        courseId: null,
-        status: null,
-        sort: null
+        userId: null,
+        answerId: null,
       },
       // 表单参数
       form: {},
@@ -221,11 +167,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询课程视频列表 */
+    /** 查询用户答案列表 */
     getList() {
       this.loading = true;
-      listVideo(this.queryParams).then(response => {
-        this.videoList = response.rows;
+      listAnswer(this.queryParams).then(response => {
+        this.answerList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -239,14 +185,10 @@ export default {
     reset() {
       this.form = {
         id: null,
-        title: null,
-        coverUrl: null,
-        videoUrl: null,
-        courseId: null,
-        status: 0,
-        createBy: null,
+        userId: null,
+        answerId: null,
         createTime: null,
-        sort: null
+        updateTime: null
       };
       this.resetForm("form");
     },
@@ -270,16 +212,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加课程视频";
+      this.title = "添加用户答案";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getVideo(id).then(response => {
+      getAnswer(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改课程视频";
+        this.title = "修改用户答案";
       });
     },
     /** 提交按钮 */
@@ -287,13 +229,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateVideo(this.form).then(response => {
+            updateAnswer(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addVideo(this.form).then(response => {
+            addAnswer(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -305,12 +247,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除课程视频编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除用户答案编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delVideo(ids);
+          return delAnswer(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -319,12 +261,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有课程视频数据项?', "警告", {
+      this.$confirm('是否确认导出所有用户答案数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportVideo(queryParams);
+          return exportAnswer(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

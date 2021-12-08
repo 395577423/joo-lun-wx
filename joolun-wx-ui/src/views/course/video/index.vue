@@ -1,21 +1,51 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="课程ID
-" prop="courseId">
+      <el-form-item label="标题" prop="title">
         <el-input
-          v-model="queryParams.courseId"
-          placeholder="请输入课程ID
-"
+          v-model="queryParams.title"
+          placeholder="请输入标题"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="录音地址" prop="audioUrl">
+      <el-form-item label="视频缩略图片地址" prop="coverUrl">
         <el-input
-          v-model="queryParams.audioUrl"
-          placeholder="请输入录音地址"
+          v-model="queryParams.coverUrl"
+          placeholder="请输入视频缩略图片地址"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="视频地址" prop="videoUrl">
+        <el-input
+          v-model="queryParams.videoUrl"
+          placeholder="请输入视频地址"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="课程id" prop="courseId">
+        <el-input
+          v-model="queryParams.courseId"
+          placeholder="请输入课程id"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="1 正常 0 停用" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择1 正常 0 停用" clearable size="small">
+          <el-option label="请选择字典生成" value="" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="排序" prop="sort">
+        <el-input
+          v-model="queryParams.sort"
+          placeholder="请输入排序"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -35,7 +65,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:audio:add']"
+          v-hasPermi="['system:video:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -46,7 +76,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:audio:edit']"
+          v-hasPermi="['system:video:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -57,7 +87,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:audio:remove']"
+          v-hasPermi="['system:video:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -67,18 +97,21 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:audio:export']"
+          v-hasPermi="['system:video:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="audioList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="videoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="课程ID
-" align="center" prop="courseId" />
-      <el-table-column label="录音地址" align="center" prop="audioUrl" />
+      <el-table-column label="标题" align="center" prop="title" />
+      <el-table-column label="视频缩略图片地址" align="center" prop="coverUrl" />
+      <el-table-column label="视频地址" align="center" prop="videoUrl" />
+      <el-table-column label="课程id" align="center" prop="courseId" />
+      <el-table-column label="1 正常 0 停用" align="center" prop="status" />
+      <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -86,14 +119,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:audio:edit']"
+            v-hasPermi="['system:video:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:audio:remove']"
+            v-hasPermi="['system:video:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -107,16 +140,28 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改用户书籍录音对话框 -->
+    <!-- 添加或修改课程视频对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="课程ID
-" prop="courseId">
-          <el-input v-model="form.courseId" placeholder="请输入课程ID
-" />
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入标题" />
         </el-form-item>
-        <el-form-item label="录音地址" prop="audioUrl">
-          <el-input v-model="form.audioUrl" placeholder="请输入录音地址" />
+        <el-form-item label="视频缩略图片地址" prop="coverUrl">
+          <el-input v-model="form.coverUrl" placeholder="请输入视频缩略图片地址" />
+        </el-form-item>
+        <el-form-item label="视频地址" prop="videoUrl">
+          <el-input v-model="form.videoUrl" placeholder="请输入视频地址" />
+        </el-form-item>
+        <el-form-item label="课程id" prop="courseId">
+          <el-input v-model="form.courseId" placeholder="请输入课程id" />
+        </el-form-item>
+        <el-form-item label="1 正常 0 停用">
+          <el-radio-group v-model="form.status">
+            <el-radio label="1">请选择字典生成</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -128,10 +173,10 @@
 </template>
 
 <script>
-import { listAudio, getAudio, delAudio, addAudio, updateAudio, exportAudio } from "@/api/system/audio";
+import { listVideo, getVideo, delVideo, addVideo, updateVideo, exportVideo } from "@/api/course/video";
 
 export default {
-  name: "Audio",
+  name: "Video",
   components: {
   },
   data() {
@@ -148,8 +193,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 用户书籍录音表格数据
-      audioList: [],
+      // 课程视频表格数据
+      videoList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -158,8 +203,12 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        title: null,
+        coverUrl: null,
+        videoUrl: null,
         courseId: null,
-        audioUrl: null,
+        status: null,
+        sort: null
       },
       // 表单参数
       form: {},
@@ -172,11 +221,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询用户书籍录音列表 */
+    /** 查询课程视频列表 */
     getList() {
       this.loading = true;
-      listAudio(this.queryParams).then(response => {
-        this.audioList = response.rows;
+      listVideo(this.queryParams).then(response => {
+        this.videoList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -190,9 +239,14 @@ export default {
     reset() {
       this.form = {
         id: null,
+        title: null,
+        coverUrl: null,
+        videoUrl: null,
         courseId: null,
-        audioUrl: null,
-        createTime: null
+        status: 0,
+        createBy: null,
+        createTime: null,
+        sort: null
       };
       this.resetForm("form");
     },
@@ -216,16 +270,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加用户书籍录音";
+      this.title = "添加课程视频";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getAudio(id).then(response => {
+      getVideo(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改用户书籍录音";
+        this.title = "修改课程视频";
       });
     },
     /** 提交按钮 */
@@ -233,13 +287,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateAudio(this.form).then(response => {
+            updateVideo(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addAudio(this.form).then(response => {
+            addVideo(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -251,12 +305,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除用户书籍录音编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除课程视频编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delAudio(ids);
+          return delVideo(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -265,12 +319,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有用户书籍录音数据项?', "警告", {
+      this.$confirm('是否确认导出所有课程视频数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportAudio(queryParams);
+          return exportVideo(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

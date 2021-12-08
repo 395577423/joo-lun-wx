@@ -275,7 +275,7 @@
 </template>
 
 <script>
-import { listCourse, getCourse, delCourse, addCourse, updateCourse, exportCourse } from "@/api/system/course";
+import { listCourse, getCourse, delCourse, addCourse, updateCourse, exportCourse } from "@/api/course/course";
 
 export default {
   name: "Course",

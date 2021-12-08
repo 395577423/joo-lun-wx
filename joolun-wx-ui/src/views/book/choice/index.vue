@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import { listChoice, getChoice, delChoice, addChoice, updateChoice, exportChoice } from "@/api/system/choice";
+import { listChoice, getChoice, delChoice, addChoice, updateChoice, exportChoice } from "@/api/book/choice";
 
 export default {
   name: "Choice",

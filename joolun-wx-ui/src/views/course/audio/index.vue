@@ -1,19 +1,21 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户ID" prop="userId">
+      <el-form-item label="课程ID
+" prop="courseId">
         <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入用户ID"
+          v-model="queryParams.courseId"
+          placeholder="请输入课程ID
+"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="答案ID" prop="answerId">
+      <el-form-item label="录音地址" prop="audioUrl">
         <el-input
-          v-model="queryParams.answerId"
-          placeholder="请输入答案ID"
+          v-model="queryParams.audioUrl"
+          placeholder="请输入录音地址"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -33,7 +35,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:answer:add']"
+          v-hasPermi="['system:audio:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -44,7 +46,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:answer:edit']"
+          v-hasPermi="['system:audio:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,7 +57,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:answer:remove']"
+          v-hasPermi="['system:audio:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -65,17 +67,18 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:answer:export']"
+          v-hasPermi="['system:audio:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="answerList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="audioList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="答案ID" align="center" prop="id" />
-      <el-table-column label="用户ID" align="center" prop="userId" />
-      <el-table-column label="答案ID" align="center" prop="answerId" />
+      <el-table-column label="主键" align="center" prop="id" />
+      <el-table-column label="课程ID
+" align="center" prop="courseId" />
+      <el-table-column label="录音地址" align="center" prop="audioUrl" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -83,14 +86,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:answer:edit']"
+            v-hasPermi="['system:audio:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:answer:remove']"
+            v-hasPermi="['system:audio:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -104,14 +107,16 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改用户答案对话框 -->
+    <!-- 添加或修改用户书籍录音对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户ID" />
+        <el-form-item label="课程ID
+" prop="courseId">
+          <el-input v-model="form.courseId" placeholder="请输入课程ID
+" />
         </el-form-item>
-        <el-form-item label="答案ID" prop="answerId">
-          <el-input v-model="form.answerId" placeholder="请输入答案ID" />
+        <el-form-item label="录音地址" prop="audioUrl">
+          <el-input v-model="form.audioUrl" placeholder="请输入录音地址" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -123,10 +128,10 @@
 </template>
 
 <script>
-import { listAnswer, getAnswer, delAnswer, addAnswer, updateAnswer, exportAnswer } from "@/api/book/answer";
+import { listAudio, getAudio, delAudio, addAudio, updateAudio, exportAudio } from "@/api/course/audio";
 
 export default {
-  name: "Answer",
+  name: "Audio",
   components: {
   },
   data() {
@@ -143,8 +148,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 用户答案表格数据
-      answerList: [],
+      // 用户书籍录音表格数据
+      audioList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -153,8 +158,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userId: null,
-        answerId: null,
+        courseId: null,
+        audioUrl: null,
       },
       // 表单参数
       form: {},
@@ -167,11 +172,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询用户答案列表 */
+    /** 查询用户书籍录音列表 */
     getList() {
       this.loading = true;
-      listAnswer(this.queryParams).then(response => {
-        this.answerList = response.rows;
+      listAudio(this.queryParams).then(response => {
+        this.audioList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -185,10 +190,9 @@ export default {
     reset() {
       this.form = {
         id: null,
-        userId: null,
-        answerId: null,
-        createTime: null,
-        updateTime: null
+        courseId: null,
+        audioUrl: null,
+        createTime: null
       };
       this.resetForm("form");
     },
@@ -212,16 +216,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加用户答案";
+      this.title = "添加用户书籍录音";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getAnswer(id).then(response => {
+      getAudio(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改用户答案";
+        this.title = "修改用户书籍录音";
       });
     },
     /** 提交按钮 */
@@ -229,13 +233,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateAnswer(this.form).then(response => {
+            updateAudio(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addAnswer(this.form).then(response => {
+            addAudio(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -247,12 +251,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除用户答案编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除用户书籍录音编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delAnswer(ids);
+          return delAudio(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -261,12 +265,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有用户答案数据项?', "警告", {
+      this.$confirm('是否确认导出所有用户书籍录音数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportAnswer(queryParams);
+          return exportAudio(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

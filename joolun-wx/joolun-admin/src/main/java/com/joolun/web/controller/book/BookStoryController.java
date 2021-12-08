@@ -1,8 +1,17 @@
 package com.joolun.web.controller.book;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.common.enums.BusinessType;
+import com.joolun.mall.entity.BookStory;
+import com.joolun.mall.service.IBookStoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 /**
  * 书籍故事Controller
@@ -11,64 +20,52 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021-12-08
  */
 @RestController
-@RequestMapping("/system/story")
+@RequestMapping("/book/story")
 public class BookStoryController extends BaseController {
-//    @Autowired
-//    private IBookStoryService bookStoryService;
-//
-//    /**
-//     * 查询书籍故事列表
-//     */
-//    @GetMapping("/list")
-//    public TableDataInfo list(BookStory bookStory) {
-//        startPage();
-//        List<BookStory> list = bookStoryService.selectBookStoryList(bookStory);
-//        return getDataTable(list);
-//    }
-//
-//    /**
-//     * 导出书籍故事列表
-//     */
-//    @Log(title = "书籍故事", businessType = BusinessType.EXPORT)
-//    @GetMapping("/export")
-//    public AjaxResult export(BookStory bookStory) {
-//        List<BookStory> list = bookStoryService.selectBookStoryList(bookStory);
-//        ExcelUtil<BookStory> util = new ExcelUtil<BookStory>(BookStory.class);
-//        return util.exportExcel(list, "story");
-//    }
-//
-//    /**
-//     * 获取书籍故事详细信息
-//     */
-//    @GetMapping(value = "/{id}")
-//    public AjaxResult getInfo(@PathVariable("id") Long id) {
-//        return AjaxResult.success(bookStoryService.selectBookStoryById(id));
-//    }
-//
-//    /**
-//     * 新增书籍故事
-//     */
-//    @Log(title = "书籍故事", businessType = BusinessType.INSERT)
-//    @PostMapping
-//    public AjaxResult add(@RequestBody BookStory bookStory) {
-//        return toAjax(bookStoryService.insertBookStory(bookStory));
-//    }
-//
-//    /**
-//     * 修改书籍故事
-//     */
-//    @Log(title = "书籍故事", businessType = BusinessType.UPDATE)
-//    @PutMapping
-//    public AjaxResult edit(@RequestBody BookStory bookStory) {
-//        return toAjax(bookStoryService.updateBookStory(bookStory));
-//    }
-//
-//    /**
-//     * 删除书籍故事
-//     */
-//    @Log(title = "书籍故事", businessType = BusinessType.DELETE)
-//    @DeleteMapping("/{ids}")
-//    public AjaxResult remove(@PathVariable Long[] ids) {
-//        return toAjax(bookStoryService.deleteBookStoryByIds(ids));
-//    }
+    @Autowired
+    private IBookStoryService bookStoryService;
+
+    /**
+     * 查询书籍故事列表
+     */
+    @GetMapping("/page")
+    public AjaxResult list(Page page, BookStory bookStory) {
+        return AjaxResult.success(bookStoryService.page(page, Wrappers.query(bookStory)));
+    }
+
+
+    /**
+     * 获取书籍故事详细信息
+     */
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
+        return AjaxResult.success(bookStoryService.getById(id));
+    }
+
+    /**
+     * 新增书籍故事
+     */
+    @Log(title = "书籍故事", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody BookStory bookStory) {
+        return AjaxResult.success(bookStoryService.save(bookStory));
+    }
+
+    /**
+     * 修改书籍故事
+     */
+    @Log(title = "书籍故事", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody BookStory bookStory) {
+        return AjaxResult.success(bookStoryService.updateById(bookStory));
+    }
+
+    /**
+     * 删除书籍故事
+     */
+    @Log(title = "书籍故事", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
+        return AjaxResult.success(bookStoryService.removeByIds(Arrays.asList(ids)));
+    }
 }

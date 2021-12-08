@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询课程视频列表
 export function listVideo(query) {
   return request({
-    url: '/system/video/list',
+    url: '/course/video/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listVideo(query) {
 // 查询课程视频详细
 export function getVideo(id) {
   return request({
-    url: '/system/video/' + id,
+    url: '/course/video/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getVideo(id) {
 // 新增课程视频
 export function addVideo(data) {
   return request({
-    url: '/system/video',
+    url: '/course/video',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addVideo(data) {
 // 修改课程视频
 export function updateVideo(data) {
   return request({
-    url: '/system/video',
+    url: '/course/video',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateVideo(data) {
 // 删除课程视频
 export function delVideo(id) {
   return request({
-    url: '/system/video/' + id,
+    url: '/course/video/' + id,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delVideo(id) {
 // 导出课程视频
 export function exportVideo(query) {
   return request({
-    url: '/system/video/export',
+    url: '/course/video/export',
     method: 'get',
     params: query
   })

@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * @date 2021-12-08
  */
 @Data
-@TableName("goods_category")
+@TableName("book_story")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "书籍故事对象")
 public class BookStory extends Model<BookStory> {

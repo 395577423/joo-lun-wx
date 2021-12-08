@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询用户书籍录音列表
 export function listAudio(query) {
   return request({
-    url: '/system/audio/list',
+    url: '/course/audio/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listAudio(query) {
 // 查询用户书籍录音详细
 export function getAudio(id) {
   return request({
-    url: '/system/audio/' + id,
+    url: '/course/audio/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getAudio(id) {
 // 新增用户书籍录音
 export function addAudio(data) {
   return request({
-    url: '/system/audio',
+    url: '/course/audio',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addAudio(data) {
 // 修改用户书籍录音
 export function updateAudio(data) {
   return request({
-    url: '/system/audio',
+    url: '/course/audio',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateAudio(data) {
 // 删除用户书籍录音
 export function delAudio(id) {
   return request({
-    url: '/system/audio/' + id,
+    url: '/course/audio/' + id,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delAudio(id) {
 // 导出用户书籍录音
 export function exportAudio(query) {
   return request({
-    url: '/system/audio/export',
+    url: '/course/audio/export',
     method: 'get',
     params: query
   })

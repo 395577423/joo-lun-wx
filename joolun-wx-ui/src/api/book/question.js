@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询书籍问题列表
 export function listQuestion(query) {
   return request({
-    url: '/system/question/list',
+    url: '/book/question/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listQuestion(query) {
 // 查询书籍问题详细
 export function getQuestion(id) {
   return request({
-    url: '/system/question/' + id,
+    url: '/book/question/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getQuestion(id) {
 // 新增书籍问题
 export function addQuestion(data) {
   return request({
-    url: '/system/question',
+    url: '/book/question',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addQuestion(data) {
 // 修改书籍问题
 export function updateQuestion(data) {
   return request({
-    url: '/system/question',
+    url: '/book/question',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateQuestion(data) {
 // 删除书籍问题
 export function delQuestion(id) {
   return request({
-    url: '/system/question/' + id,
+    url: '/book/question/' + id,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delQuestion(id) {
 // 导出书籍问题
 export function exportQuestion(query) {
   return request({
-    url: '/system/question/export',
+    url: '/book/question/export',
     method: 'get',
     params: query
   })

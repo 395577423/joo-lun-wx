@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import { listQuestion, getQuestion, delQuestion, addQuestion, updateQuestion, exportQuestion } from "@/api/system/question";
+import { listQuestion, getQuestion, delQuestion, addQuestion, updateQuestion, exportQuestion } from "@/api/book/question";
 
 export default {
   name: "Question",
