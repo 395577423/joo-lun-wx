@@ -34,39 +34,42 @@ public class UserAddressApi {
     private final UserAddressService userAddressService;
 
     /**
-    * 分页查询
-    * @param page 分页对象
-    * @param userAddress 用户收货地址
-    * @return
-    */
-	@ApiOperation(value = "分页查询")
+     * 分页查询
+     *
+     * @param page        分页对象
+     * @param userAddress 用户收货地址
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/page")
     public AjaxResult getUserAddressPage(Page page, UserAddress userAddress) {
-		userAddress.setUserId(ThirdSessionHolder.getWxUserId());
-        return AjaxResult.success(userAddressService.page(page,Wrappers.query(userAddress)));
+        userAddress.setUserId(ThirdSessionHolder.getWxUserId());
+        return AjaxResult.success(userAddressService.page(page, Wrappers.query(userAddress)));
     }
 
     /**
-    * 新增、修改用户收货地址
-    * @param userAddress 用户收货地址
-    * @return AjaxResult
-    */
-	@ApiOperation(value = "新增、修改用户收货地址")
+     * 新增、修改用户收货地址
+     *
+     * @param userAddress 用户收货地址
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "新增、修改用户收货地址")
     @PostMapping
-    public AjaxResult save(@RequestBody UserAddress userAddress){
-		userAddress.setUserId(ThirdSessionHolder.getWxUserId());
+    public AjaxResult save(@RequestBody UserAddress userAddress) {
+        userAddress.setUserId(ThirdSessionHolder.getWxUserId());
         return AjaxResult.success(userAddressService.saveOrUpdate(userAddress));
     }
 
     /**
-    * 通过id删除用户收货地址
-    * @param id
-    * @return AjaxResult
-    */
-	@ApiOperation(value = "通过id删除用户收货地址")
+     * 通过id删除用户收货地址
+     *
+     * @param id
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "通过id删除用户收货地址")
     @DeleteMapping("/{id}")
-    public AjaxResult removeById(@PathVariable String id){
-		return AjaxResult.success(userAddressService.removeById(id));
+    public AjaxResult removeById(@PathVariable String id) {
+        return AjaxResult.success(userAddressService.removeById(id));
     }
 
 }

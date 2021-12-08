@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.UserAudioMapper">
+    
+    <resultMap type="UserAudio" id="UserAudioResult">
+        <result property="id"    column="id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="audioUrl"    column="audio_url"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectUserAudioVo">
+        select id, course_id, audio_url, create_time from user_audio
+    </sql>
+
+    <select id="selectUserAudioList" parameterType="UserAudio" resultMap="UserAudioResult">
+        <include refid="selectUserAudioVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="audioUrl != null  and audioUrl != ''"> and audio_url = #{audioUrl}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserAudioById" parameterType="Long" resultMap="UserAudioResult">
+        <include refid="selectUserAudioVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserAudio" parameterType="UserAudio" useGeneratedKeys="true" keyProperty="id">
+        insert into user_audio
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="audioUrl != null">audio_url,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="audioUrl != null">#{audioUrl},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserAudio" parameterType="UserAudio">
+        update user_audio
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="audioUrl != null">audio_url = #{audioUrl},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserAudioById" parameterType="Long">
+        delete from user_audio where id = #{id}
+    </delete>
+
+    <delete id="deleteUserAudioByIds" parameterType="java.lang.String">
+        delete from user_audio where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

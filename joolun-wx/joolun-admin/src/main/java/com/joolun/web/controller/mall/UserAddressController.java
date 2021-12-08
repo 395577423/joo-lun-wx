@@ -35,63 +35,68 @@ public class UserAddressController extends BaseController {
     private final UserAddressService userAddressService;
 
     /**
-    * 分页查询
-    * @param page 分页对象
-    * @param userAddress 用户收货地址
-    * @return
-    */
-	@ApiOperation(value = "分页查询")
+     * 分页查询
+     *
+     * @param page        分页对象
+     * @param userAddress 用户收货地址
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/page")
     @PreAuthorize("@ss.hasPermi('mall:useraddress:index')")
     public AjaxResult getUserAddressPage(Page page, UserAddress userAddress) {
-        return AjaxResult.success(userAddressService.page(page,Wrappers.query(userAddress)));
+        return AjaxResult.success(userAddressService.page(page, Wrappers.query(userAddress)));
     }
 
     /**
-    * 通过id查询用户收货地址
-    * @param id
-    * @return R
-    */
-	@ApiOperation(value = "通过id查询用户收货地址")
+     * 通过id查询用户收货地址
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id查询用户收货地址")
     @GetMapping("/{id}")
     @PreAuthorize("@ss.hasPermi('mall:useraddress:get')")
-    public AjaxResult getById(@PathVariable("id") String id){
+    public AjaxResult getById(@PathVariable("id") String id) {
         return AjaxResult.success(userAddressService.getById(id));
     }
 
     /**
-    * 新增用户收货地址
-    * @param userAddress 用户收货地址
-    * @return R
-    */
-	@ApiOperation(value = "新增用户收货地址")
+     * 新增用户收货地址
+     *
+     * @param userAddress 用户收货地址
+     * @return R
+     */
+    @ApiOperation(value = "新增用户收货地址")
     @PostMapping
     @PreAuthorize("@ss.hasPermi('mall:useraddress:add')")
-    public AjaxResult save(@RequestBody UserAddress userAddress){
+    public AjaxResult save(@RequestBody UserAddress userAddress) {
         return AjaxResult.success(userAddressService.save(userAddress));
     }
 
     /**
-    * 修改用户收货地址
-    * @param userAddress 用户收货地址
-    * @return R
-    */
-	@ApiOperation(value = "修改用户收货地址")
+     * 修改用户收货地址
+     *
+     * @param userAddress 用户收货地址
+     * @return R
+     */
+    @ApiOperation(value = "修改用户收货地址")
     @PutMapping
     @PreAuthorize("@ss.hasPermi('mall:useraddress:edit')")
-    public AjaxResult updateById(@RequestBody UserAddress userAddress){
+    public AjaxResult updateById(@RequestBody UserAddress userAddress) {
         return AjaxResult.success(userAddressService.updateById(userAddress));
     }
 
     /**
-    * 通过id删除用户收货地址
-    * @param id
-    * @return R
-    */
-	@ApiOperation(value = "通过id删除用户收货地址")
+     * 通过id删除用户收货地址
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id删除用户收货地址")
     @DeleteMapping("/{id}")
     @PreAuthorize("@ss.hasPermi('mall:useraddress:del')")
-    public AjaxResult removeById(@PathVariable String id){
+    public AjaxResult removeById(@PathVariable String id) {
         return AjaxResult.success(userAddressService.removeById(id));
     }
 

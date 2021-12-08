@@ -33,12 +33,12 @@ public class GoodsCategoryApi {
     private final GoodsCategoryService goodsCategoryService;
 
     /**
-    * 返回树形集合
-    */
-	@ApiOperation(value = "返回树形集合")
+     * 返回树形集合
+     */
+    @ApiOperation(value = "返回树形集合")
     @GetMapping("/tree")
     public AjaxResult goodsCategoryTree(GoodsCategory goodsCategory) {
-		goodsCategory.setEnable(CommonConstants.YES);
-		return AjaxResult.success(goodsCategoryService.selectTree(goodsCategory));
+        goodsCategory.setEnable(CommonConstants.YES);
+        return AjaxResult.success(goodsCategoryService.selectTree(goodsCategory));
     }
 }

@@ -37,31 +37,33 @@ public class GoodsSpuApi {
 
     private final GoodsSpuService goodsSpuService;
 
-	/**
-	* 分页查询
-	* @param page 分页对象
-	* @param goodsSpu spu商品
-	* @return
-	*/
-	@ApiOperation(value = "分页查询")
+    /**
+     * 分页查询
+     *
+     * @param page     分页对象
+     * @param goodsSpu spu商品
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/page")
     public AjaxResult getGoodsSpuPage(Page page, GoodsSpu goodsSpu, String couponUserId) {
-		goodsSpu.setShelf(CommonConstants.YES);
+        goodsSpu.setShelf(CommonConstants.YES);
         return AjaxResult.success(goodsSpuService.page1(page, goodsSpu));
     }
 
     /**
-    * 通过id查询spu商品
-    * @param id
-    * @return R
-    */
-	@ApiOperation(value = "通过id查询spu商品")
+     * 通过id查询spu商品
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id查询spu商品")
     @GetMapping("/{id}")
-    public AjaxResult getById(@PathVariable("id") String id){
-		GoodsSpu goodsSpu = goodsSpuService.getById2(id);
-		if(goodsSpu == null){
-			return AjaxResult.error(MyReturnCode.ERR_80004.getCode(), MyReturnCode.ERR_80004.getMsg());
-		}
+    public AjaxResult getById(@PathVariable("id") String id) {
+        GoodsSpu goodsSpu = goodsSpuService.getById2(id);
+        if (goodsSpu == null) {
+            return AjaxResult.error(MyReturnCode.ERR_80004.getCode(), MyReturnCode.ERR_80004.getMsg());
+        }
         return AjaxResult.success(goodsSpu);
     }
 

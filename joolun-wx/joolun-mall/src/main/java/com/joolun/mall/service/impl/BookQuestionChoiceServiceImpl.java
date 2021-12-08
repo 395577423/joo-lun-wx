@@ -1,0 +1,17 @@
+package com.joolun.mall.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.joolun.mall.entity.BookQuestionChoice;
+import com.joolun.mall.mapper.BookQuestionChoiceMapper;
+import com.joolun.mall.service.IBookQuestionChoiceService;
+import org.springframework.stereotype.Service;
+
+/**
+ * 书籍问题选项Service业务层处理
+ *
+ * @author www.joolun.com
+ * @date 2021-12-08
+ */
+@Service
+public class BookQuestionChoiceServiceImpl extends ServiceImpl<BookQuestionChoiceMapper, BookQuestionChoice> implements IBookQuestionChoiceService {
+}

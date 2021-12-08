@@ -35,63 +35,68 @@ public class ShoppingCartApi {
 
     private final ShoppingCartService shoppingCartService;
 
-	/**
-	 * 分页查询
-	 * @param page 分页对象
-	 * @param shoppingCart 购物车
-	 * @return
-	 */
-	@ApiOperation(value = "分页查询")
+    /**
+     * 分页查询
+     *
+     * @param page         分页对象
+     * @param shoppingCart 购物车
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/page")
     public AjaxResult getShoppingCartPage(Page page, ShoppingCart shoppingCart) {
-		shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
-		return AjaxResult.success(shoppingCartService.page2(page, shoppingCart));
+        shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
+        return AjaxResult.success(shoppingCartService.page2(page, shoppingCart));
     }
 
-	/**
-	 * 数量
-	 * @param shoppingCart
-	 * @return
-	 */
-	@ApiOperation(value = "查询数量")
-	@GetMapping("/count")
-	public AjaxResult getShoppingCartCount(ShoppingCart shoppingCart) {
-		shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
-		return AjaxResult.success(shoppingCartService.count(Wrappers.query(shoppingCart)));
-	}
+    /**
+     * 数量
+     *
+     * @param shoppingCart
+     * @return
+     */
+    @ApiOperation(value = "查询数量")
+    @GetMapping("/count")
+    public AjaxResult getShoppingCartCount(ShoppingCart shoppingCart) {
+        shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
+        return AjaxResult.success(shoppingCartService.count(Wrappers.query(shoppingCart)));
+    }
 
-	/**
-	 * 加入购物车
-	 * @param shoppingCart
-	 * @return
-	 */
-	@ApiOperation(value = "加入购物车")
-	@PostMapping
-	public AjaxResult save(@RequestBody ShoppingCart shoppingCart){
-		shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
-		return AjaxResult.success(shoppingCartService.save(shoppingCart));
-	}
+    /**
+     * 加入购物车
+     *
+     * @param shoppingCart
+     * @return
+     */
+    @ApiOperation(value = "加入购物车")
+    @PostMapping
+    public AjaxResult save(@RequestBody ShoppingCart shoppingCart) {
+        shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
+        return AjaxResult.success(shoppingCartService.save(shoppingCart));
+    }
 
-	/**
-	 * 修改购物车商品
-	 * @param shoppingCart
-	 * @return
-	 */
-	@ApiOperation(value = "修改购物车商品")
-	@PutMapping
-	public AjaxResult edit(@RequestBody ShoppingCart shoppingCart){
-		shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
-		return AjaxResult.success(shoppingCartService.updateById(shoppingCart));
-	}
+    /**
+     * 修改购物车商品
+     *
+     * @param shoppingCart
+     * @return
+     */
+    @ApiOperation(value = "修改购物车商品")
+    @PutMapping
+    public AjaxResult edit(@RequestBody ShoppingCart shoppingCart) {
+        shoppingCart.setUserId(ThirdSessionHolder.getWxUserId());
+        return AjaxResult.success(shoppingCartService.updateById(shoppingCart));
+    }
 
-	/**
-	 * 删除购物车商品数量
-	 * @param ids
-	 * @return
-	 */
-	@ApiOperation(value = "删除购物车商品数量")
-	@PostMapping("/del")
-	public AjaxResult del(@RequestBody List<String> ids){
-		return AjaxResult.success(shoppingCartService.removeByIds(ids));
-	}
+    /**
+     * 删除购物车商品数量
+     *
+     * @param ids
+     * @return
+     */
+    @ApiOperation(value = "删除购物车商品数量")
+    @PostMapping("/del")
+    public AjaxResult del(@RequestBody List<String> ids) {
+        return AjaxResult.success(shoppingCartService.removeByIds(ids));
+    }
 }

@@ -32,67 +32,72 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "shoppingcart", tags = "购物车管理")
 public class ShoppingCartController extends BaseController {
 
-	private final ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
 
-	/**
-	 * 分页查询
-	 * @param page 分页对象
-	 * @param shoppingCart 购物车
-	 * @return
-	 */
-	@ApiOperation(value = "分页查询")
-	@GetMapping("/page")
-	@PreAuthorize("@ss.hasPermi('mall:shoppingcart:index')")
-	public AjaxResult getShoppingCartPage(Page page, ShoppingCart shoppingCart) {
-		return AjaxResult.success(shoppingCartService.page(page,Wrappers.query(shoppingCart)));
-	}
+    /**
+     * 分页查询
+     *
+     * @param page         分页对象
+     * @param shoppingCart 购物车
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
+    @GetMapping("/page")
+    @PreAuthorize("@ss.hasPermi('mall:shoppingcart:index')")
+    public AjaxResult getShoppingCartPage(Page page, ShoppingCart shoppingCart) {
+        return AjaxResult.success(shoppingCartService.page(page, Wrappers.query(shoppingCart)));
+    }
 
-	/**
-	 * 通过id查询购物车
-	 * @param id
-	 * @return R
-	 */
-	@ApiOperation(value = "通过id查询购物车")
-	@GetMapping("/{id}")
-	@PreAuthorize("@ss.hasPermi('mall:shoppingcart:get')")
-	public AjaxResult getById(@PathVariable("id") String id){
-		return AjaxResult.success(shoppingCartService.getById(id));
-	}
+    /**
+     * 通过id查询购物车
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id查询购物车")
+    @GetMapping("/{id}")
+    @PreAuthorize("@ss.hasPermi('mall:shoppingcart:get')")
+    public AjaxResult getById(@PathVariable("id") String id) {
+        return AjaxResult.success(shoppingCartService.getById(id));
+    }
 
-	/**
-	 * 新增购物车
-	 * @param shoppingCart 购物车
-	 * @return R
-	 */
-	@ApiOperation(value = "新增购物车")
-	@PostMapping
-	@PreAuthorize("@ss.hasPermi('mall:shoppingcart:add')")
-	public AjaxResult save(@RequestBody ShoppingCart shoppingCart){
-		return AjaxResult.success(shoppingCartService.save(shoppingCart));
-	}
+    /**
+     * 新增购物车
+     *
+     * @param shoppingCart 购物车
+     * @return R
+     */
+    @ApiOperation(value = "新增购物车")
+    @PostMapping
+    @PreAuthorize("@ss.hasPermi('mall:shoppingcart:add')")
+    public AjaxResult save(@RequestBody ShoppingCart shoppingCart) {
+        return AjaxResult.success(shoppingCartService.save(shoppingCart));
+    }
 
-	/**
-	 * 修改购物车
-	 * @param shoppingCart 购物车
-	 * @return R
-	 */
-	@ApiOperation(value = "修改购物车")
-	@PutMapping
-	@PreAuthorize("@ss.hasPermi('mall:shoppingcart:edit')")
-	public AjaxResult updateById(@RequestBody ShoppingCart shoppingCart){
-		return AjaxResult.success(shoppingCartService.updateById(shoppingCart));
-	}
+    /**
+     * 修改购物车
+     *
+     * @param shoppingCart 购物车
+     * @return R
+     */
+    @ApiOperation(value = "修改购物车")
+    @PutMapping
+    @PreAuthorize("@ss.hasPermi('mall:shoppingcart:edit')")
+    public AjaxResult updateById(@RequestBody ShoppingCart shoppingCart) {
+        return AjaxResult.success(shoppingCartService.updateById(shoppingCart));
+    }
 
-	/**
-	 * 通过id删除购物车
-	 * @param id
-	 * @return R
-	 */
-	@ApiOperation(value = "通过id删除购物车")
-	@DeleteMapping("/{id}")
-	@PreAuthorize("@ss.hasPermi('mall:shoppingcart:del')")
-	public AjaxResult removeById(@PathVariable String id){
-		return AjaxResult.success(shoppingCartService.removeById(id));
-	}
+    /**
+     * 通过id删除购物车
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id删除购物车")
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@ss.hasPermi('mall:shoppingcart:del')")
+    public AjaxResult removeById(@PathVariable String id) {
+        return AjaxResult.success(shoppingCartService.removeById(id));
+    }
 
 }

@@ -36,74 +36,80 @@ public class OrderLogisticsController extends BaseController {
     private final OrderLogisticsService orderLogisticsService;
 
     /**
-    * 分页查询
-    * @param page 分页对象
-    * @param orderLogistics 订单物流
-    * @return
-    */
-	@ApiOperation(value = "分页查询")
+     * 分页查询
+     *
+     * @param page           分页对象
+     * @param orderLogistics 订单物流
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/page")
     @PreAuthorize("@ato.hasAuthority('mall:orderlogistics:index')")
     public AjaxResult getOrderLogisticsPage(Page page, OrderLogistics orderLogistics) {
-        return AjaxResult.success(orderLogisticsService.page(page,Wrappers.query(orderLogistics)));
+        return AjaxResult.success(orderLogisticsService.page(page, Wrappers.query(orderLogistics)));
     }
 
     /**
-    * 通过id查询订单物流
-    * @param id
-    * @return R
-    */
-	@ApiOperation(value = "通过id查询订单物流")
+     * 通过id查询订单物流
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id查询订单物流")
     @GetMapping("/{id}")
     @PreAuthorize("@ato.hasAuthority('mall:orderlogistics:get')")
-    public AjaxResult getById(@PathVariable("id") String id){
+    public AjaxResult getById(@PathVariable("id") String id) {
         return AjaxResult.success(orderLogisticsService.getById(id));
     }
 
     /**
-    * 新增订单物流
-    * @param orderLogistics 订单物流
-    * @return R
-    */
-	@ApiOperation(value = "新增订单物流")
+     * 新增订单物流
+     *
+     * @param orderLogistics 订单物流
+     * @return R
+     */
+    @ApiOperation(value = "新增订单物流")
     @PostMapping
     @PreAuthorize("@ato.hasAuthority('mall:orderlogistics:add')")
-    public AjaxResult save(@RequestBody OrderLogistics orderLogistics){
+    public AjaxResult save(@RequestBody OrderLogistics orderLogistics) {
         return AjaxResult.success(orderLogisticsService.save(orderLogistics));
     }
 
     /**
-    * 修改订单物流
-    * @param orderLogistics 订单物流
-    * @return R
-    */
-	@ApiOperation(value = "修改订单物流")
+     * 修改订单物流
+     *
+     * @param orderLogistics 订单物流
+     * @return R
+     */
+    @ApiOperation(value = "修改订单物流")
     @PutMapping
     @PreAuthorize("@ato.hasAuthority('mall:orderlogistics:edit')")
-    public AjaxResult updateById(@RequestBody OrderLogistics orderLogistics){
+    public AjaxResult updateById(@RequestBody OrderLogistics orderLogistics) {
         return AjaxResult.success(orderLogisticsService.updateById(orderLogistics));
     }
 
     /**
-    * 通过id删除订单物流
-    * @param id
-    * @return R
-    */
-	@ApiOperation(value = "通过id删除订单物流")
+     * 通过id删除订单物流
+     *
+     * @param id
+     * @return R
+     */
+    @ApiOperation(value = "通过id删除订单物流")
     @DeleteMapping("/{id}")
     @PreAuthorize("@ato.hasAuthority('mall:orderlogistics:del')")
-    public AjaxResult removeById(@PathVariable String id){
+    public AjaxResult removeById(@PathVariable String id) {
         return AjaxResult.success(orderLogisticsService.removeById(id));
     }
 
-	/**
-	 * 获取相关枚举数据的字典
-	 * @param type
-	 * @return
-	 */
-	@ApiOperation(value = "获取相关枚举数据的字典")
-	@GetMapping("/dict/{type}")
-	public AjaxResult getDictByType(@PathVariable String type) {
-		return AjaxResult.success(OrderLogisticsEnum.queryAll(type));
-	}
+    /**
+     * 获取相关枚举数据的字典
+     *
+     * @param type
+     * @return
+     */
+    @ApiOperation(value = "获取相关枚举数据的字典")
+    @GetMapping("/dict/{type}")
+    public AjaxResult getDictByType(@PathVariable String type) {
+        return AjaxResult.success(OrderLogisticsEnum.queryAll(type));
+    }
 }

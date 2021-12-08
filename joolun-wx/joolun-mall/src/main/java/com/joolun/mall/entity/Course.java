@@ -1,0 +1,107 @@
+package com.joolun.mall.entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joolun.common.annotation.Excel;
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+/**
+ * 课程对象 course
+ * 
+ * @author Owen
+ * @date 2021-12-08
+ */
+@Data
+@TableName("course")
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(description = "课程对象")
+public class Course extends Model<Course>
+{
+    private static final long serialVersionUID = 1L;
+
+    /** 主键 */
+    private Long id;
+
+    /** 标题 */
+    @Excel(name = "标题")
+    private String title;
+
+    /** 介绍 */
+    @Excel(name = "介绍")
+    private String introduction;
+
+    /** 课程图片地址 */
+    @Excel(name = "课程图片地址")
+    private String coverUrl;
+
+    /** 1 推荐 0 不推荐 */
+    @Excel(name = "1 推荐 0 不推荐")
+    private Long recommend;
+
+    /** 1 正常 0 停用 */
+    @Excel(name = "1 正常 0 停用")
+    private Long status;
+
+    /** 课程开始日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "课程开始日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date startTime;
+
+    /** 课程结束日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "课程结束日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date endTime;
+
+    /** 适应开始年龄 */
+    @Excel(name = "适应开始年龄")
+    private Long ageStart;
+
+    /** 适应结束年龄 */
+    @Excel(name = "适应结束年龄")
+    private Long ageEnd;
+
+    /** 课程价格 */
+    @Excel(name = "课程价格")
+    private BigDecimal price;
+
+    /** 返现金额 */
+    @Excel(name = "返现金额")
+    private BigDecimal cashReturn;
+
+    /** 折扣率 0-1 */
+    @Excel(name = "折扣率 0-1")
+    private BigDecimal rates;
+
+    /** 是否参与奖学金计划 1 参加 0 不参加 */
+    @Excel(name = "是否参与奖学金计划 1 参加 0 不参加")
+    private Long plan;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+    /**
+     * 最后更新时间
+     */
+    private LocalDateTime updateTime;
+
+    /**
+     * 更新者
+     */
+    private String updateBy;
+
+    /**
+     * 创建者
+     */
+    private String createBy;
+    /**
+     * 备注
+     */
+    private String remark;
+}

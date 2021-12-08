@@ -33,99 +33,99 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "spu商品")
 public class GoodsSpu extends Model<GoodsSpu> {
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
-   * PK
-   */
-	@ApiModelProperty(value = "PK")
+     * PK
+     */
+    @ApiModelProperty(value = "PK")
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
     /**
-   * spu编码
-   */
-	@ApiModelProperty(value = "spu编码")
+     * spu编码
+     */
+    @ApiModelProperty(value = "spu编码")
     private String spuCode;
     /**
-   * spu名字
-   */
-	@ApiModelProperty(value = "spu名字")
+     * spu名字
+     */
+    @ApiModelProperty(value = "spu名字")
     private String name;
     /**
-   * 卖点
-   */
-	@ApiModelProperty(value = "卖点")
+     * 卖点
+     */
+    @ApiModelProperty(value = "卖点")
     private String sellPoint;
     /**
-   * 描述
-   */
-	@ApiModelProperty(value = "描述")
+     * 描述
+     */
+    @ApiModelProperty(value = "描述")
     private String description;
     /**
-	 * 一级分类ID
-	 */
-	@ApiModelProperty(value = "一级分类ID")
+     * 一级分类ID
+     */
+    @ApiModelProperty(value = "一级分类ID")
     private String categoryFirst;
-	/**
-	 * 二级分类ID
-	 */
-	@ApiModelProperty(value = "二级分类ID")
-	private String categorySecond;
     /**
-   * 商品主图
-   */
-	@ApiModelProperty(value = "商品主图")
-	@TableField(typeHandler = ArrayStringTypeHandler.class, jdbcType= JdbcType.VARCHAR)
+     * 二级分类ID
+     */
+    @ApiModelProperty(value = "二级分类ID")
+    private String categorySecond;
+    /**
+     * 商品主图
+     */
+    @ApiModelProperty(value = "商品主图")
+    @TableField(typeHandler = ArrayStringTypeHandler.class, jdbcType = JdbcType.VARCHAR)
     private String[] picUrls;
     /**
-   * 是否上架（0否 1是）
-   */
-	@ApiModelProperty(value = "是否上架（0否 1是）")
+     * 是否上架（0否 1是）
+     */
+    @ApiModelProperty(value = "是否上架（0否 1是）")
     private String shelf;
     /**
-   * 排序字段
-   */
-	@ApiModelProperty(value = "排序字段")
+     * 排序字段
+     */
+    @ApiModelProperty(value = "排序字段")
     private Integer sort;
-	/**
-	 * 销售价格
-	 */
-	@ApiModelProperty(value = "销售价格")
-	private BigDecimal salesPrice;
-	/**
-	 * 市场价
-	 */
-	@ApiModelProperty(value = "市场价")
-	private BigDecimal marketPrice;
-	/**
-	 * 成本价
-	 */
-	@ApiModelProperty(value = "成本价")
-	private BigDecimal costPrice;
-	/**
-	 * 成本
-	 */
-	@ApiModelProperty(value = "库存")
-	private Integer stock;
-	/**
-	 * 销量
-	 */
-	@ApiModelProperty(value = "销量")
-	private Integer saleNum;
     /**
-   * 创建时间
-   */
-	@ApiModelProperty(value = "创建时间")
+     * 销售价格
+     */
+    @ApiModelProperty(value = "销售价格")
+    private BigDecimal salesPrice;
+    /**
+     * 市场价
+     */
+    @ApiModelProperty(value = "市场价")
+    private BigDecimal marketPrice;
+    /**
+     * 成本价
+     */
+    @ApiModelProperty(value = "成本价")
+    private BigDecimal costPrice;
+    /**
+     * 成本
+     */
+    @ApiModelProperty(value = "库存")
+    private Integer stock;
+    /**
+     * 销量
+     */
+    @ApiModelProperty(value = "销量")
+    private Integer saleNum;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
     /**
-   * 最后更新时间
-   */
-	@ApiModelProperty(value = "最后更新时间")
+     * 最后更新时间
+     */
+    @ApiModelProperty(value = "最后更新时间")
     private LocalDateTime updateTime;
     /**
-   * 逻辑删除标记（0：显示；1：隐藏）
-   */
-	@ApiModelProperty(value = "逻辑删除标记（0：显示；1：隐藏）")
+     * 逻辑删除标记（0：显示；1：隐藏）
+     */
+    @ApiModelProperty(value = "逻辑删除标记（0：显示；1：隐藏）")
     private String delFlag;
 
 }

@@ -38,104 +38,112 @@ public class GoodsSpuController extends BaseController {
     private final GoodsSpuService goodsSpuService;
 
     /**
-    * 分页查询
-    * @param page 分页对象
-    * @param goodsSpu spu商品
-    * @return
-    */
-	@ApiOperation(value = "分页查询")
+     * 分页查询
+     *
+     * @param page     分页对象
+     * @param goodsSpu spu商品
+     * @return
+     */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/page")
     @PreAuthorize("@ss.hasPermi('mall:goodsspu:index')")
     public AjaxResult getGoodsSpuPage(Page page, GoodsSpu goodsSpu) {
-		return AjaxResult.success(goodsSpuService.page1(page, goodsSpu));
+        return AjaxResult.success(goodsSpuService.page1(page, goodsSpu));
     }
 
-	/**
-	 * list查询
-	 * @param goodsSpu
-	 * @return
-	 */
-	@ApiOperation(value = "list查询")
-	@GetMapping("/list")
-	public List<GoodsSpu> getList(GoodsSpu goodsSpu) {
-		return goodsSpuService.list(Wrappers.query(goodsSpu).lambda()
-						.select(GoodsSpu::getId,
-								GoodsSpu::getName)
-				);
-	}
-
-	/**
-	 * 查询数量
-	 * @param goodsSpu
-	 * @return
-	 */
-	@ApiOperation(value = "查询数量")
-	@GetMapping("/count")
-	public AjaxResult getCount(GoodsSpu goodsSpu) {
-		return AjaxResult.success(goodsSpuService.count(Wrappers.query(goodsSpu)));
-	}
+    /**
+     * list查询
+     *
+     * @param goodsSpu
+     * @return
+     */
+    @ApiOperation(value = "list查询")
+    @GetMapping("/list")
+    public List<GoodsSpu> getList(GoodsSpu goodsSpu) {
+        return goodsSpuService.list(Wrappers.query(goodsSpu).lambda()
+                .select(GoodsSpu::getId,
+                        GoodsSpu::getName)
+        );
+    }
 
     /**
-    * 通过id查询spu商品
-    * @param id
-    * @return AjaxResult
-    */
-	@ApiOperation(value = "通过id查询spu商品")
+     * 查询数量
+     *
+     * @param goodsSpu
+     * @return
+     */
+    @ApiOperation(value = "查询数量")
+    @GetMapping("/count")
+    public AjaxResult getCount(GoodsSpu goodsSpu) {
+        return AjaxResult.success(goodsSpuService.count(Wrappers.query(goodsSpu)));
+    }
+
+    /**
+     * 通过id查询spu商品
+     *
+     * @param id
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "通过id查询spu商品")
     @GetMapping("/{id}")
     @PreAuthorize("@ss.hasPermi('mall:goodsspu:get')")
-    public AjaxResult getById(@PathVariable("id") String id){
+    public AjaxResult getById(@PathVariable("id") String id) {
         return AjaxResult.success(goodsSpuService.getById1(id));
     }
 
     /**
-    * 新增spu商品
-    * @param goodsSpu spu商品
-    * @return AjaxResult
-    */
-	@ApiOperation(value = "新增spu商品")
+     * 新增spu商品
+     *
+     * @param goodsSpu spu商品
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "新增spu商品")
     @PostMapping
     @PreAuthorize("@ss.hasPermi('mall:goodsspu:add')")
-    public AjaxResult save(@RequestBody GoodsSpu goodsSpu){
+    public AjaxResult save(@RequestBody GoodsSpu goodsSpu) {
         return AjaxResult.success(goodsSpuService.save1(goodsSpu));
     }
 
     /**
-    * 修改spu商品
-    * @param goodsSpu spu商品
-    * @return AjaxResult
-    */
-	@ApiOperation(value = "修改spu商品")
+     * 修改spu商品
+     *
+     * @param goodsSpu spu商品
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "修改spu商品")
     @PutMapping
     @PreAuthorize("@ss.hasPermi('mall:goodsspu:edit')")
-    public AjaxResult updateById(@RequestBody GoodsSpu goodsSpu){
+    public AjaxResult updateById(@RequestBody GoodsSpu goodsSpu) {
         return AjaxResult.success(goodsSpuService.updateById1(goodsSpu));
     }
 
-	/**
-	 * 商品上下架操作
-	 * @param shelf
-	 * @param ids
-	 * @return AjaxResult
-	 */
-	@ApiOperation(value = "商品上下架操作")
-	@PutMapping("/shelf")
-	@PreAuthorize("@ss.hasPermi('mall:goodsspu:edit')")
-	public AjaxResult updateById(@RequestParam(value = "shelf") String shelf, @RequestParam(value = "ids") String ids){
-		GoodsSpu goodsSpu = new GoodsSpu();
-		goodsSpu.setShelf(shelf);
-		return AjaxResult.success(goodsSpuService.update(goodsSpu,Wrappers.<GoodsSpu>lambdaQuery()
-				.in(GoodsSpu::getId, Convert.toList(ids))));
-	}
+    /**
+     * 商品上下架操作
+     *
+     * @param shelf
+     * @param ids
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "商品上下架操作")
+    @PutMapping("/shelf")
+    @PreAuthorize("@ss.hasPermi('mall:goodsspu:edit')")
+    public AjaxResult updateById(@RequestParam(value = "shelf") String shelf, @RequestParam(value = "ids") String ids) {
+        GoodsSpu goodsSpu = new GoodsSpu();
+        goodsSpu.setShelf(shelf);
+        return AjaxResult.success(goodsSpuService.update(goodsSpu, Wrappers.<GoodsSpu>lambdaQuery()
+                .in(GoodsSpu::getId, Convert.toList(ids))));
+    }
 
     /**
-    * 通过id删除spu商品
-    * @param id
-    * @return AjaxResult
-    */
-	@ApiOperation(value = "通过id删除spu商品")
+     * 通过id删除spu商品
+     *
+     * @param id
+     * @return AjaxResult
+     */
+    @ApiOperation(value = "通过id删除spu商品")
     @DeleteMapping("/{id}")
     @PreAuthorize("@ss.hasPermi('mall:goodsspu:del')")
-    public AjaxResult removeById(@PathVariable String id){
+    public AjaxResult removeById(@PathVariable String id) {
         return AjaxResult.success(goodsSpuService.removeById(id));
     }
 

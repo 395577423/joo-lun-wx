@@ -48,79 +48,83 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/wxsummary")
 public class WxSummaryController extends BaseController {
 
-	private final WxMpService wxService;
-	/**
-	 * 获取用户增减数据
-	 * @param appId
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	@GetMapping("/usersummary")
-//	@PreAuthorize("@ss.hasPermi('wxmp:wxsummary:index')")
-	public AjaxResult getUsersummary(String appId, String startDate, String endDate) {
-		try {
-			WxMpDataCubeService wxMpDataCubeService = wxService.getDataCubeService();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			return AjaxResult.success(wxMpDataCubeService.getUserSummary(sdf.parse(startDate), sdf.parse(endDate)));
-		} catch (WxErrorException e) {
-			e.printStackTrace();
-			log.error("获取用户增减数据失败",e);
-			return AjaxResult.error(e.getMessage());
-		}catch (Exception e) {
-			e.printStackTrace();
-			log.error("获取用户增减数据失败",e);
-			return AjaxResult.error("获取用户增减数据失败");
-		}
-	}
+    private final WxMpService wxService;
 
-	/**
-	 * 获取累计用户数据
-	 * @param appId
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	@GetMapping("/usercumulate")
+    /**
+     * 获取用户增减数据
+     *
+     * @param appId
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @GetMapping("/usersummary")
 //	@PreAuthorize("@ss.hasPermi('wxmp:wxsummary:index')")
-	public AjaxResult getUserCumulate(String appId, String startDate, String endDate){
-		try {
-			WxMpDataCubeService wxMpDataCubeService = wxService.getDataCubeService();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			return AjaxResult.success(wxMpDataCubeService.getUserCumulate(sdf.parse(startDate), sdf.parse(endDate)));
-		} catch (WxErrorException e) {
-			e.printStackTrace();
-			log.error("获取累计用户数据失败",e);
-			return AjaxResult.error(e.getMessage());
-		}catch (Exception e) {
-			e.printStackTrace();
-			log.error("获取用户增减数据失败",e);
-			return AjaxResult.error("获取用户增减数据失败");
-		}
-	}
+    public AjaxResult getUsersummary(String appId, String startDate, String endDate) {
+        try {
+            WxMpDataCubeService wxMpDataCubeService = wxService.getDataCubeService();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return AjaxResult.success(wxMpDataCubeService.getUserSummary(sdf.parse(startDate), sdf.parse(endDate)));
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            log.error("获取用户增减数据失败", e);
+            return AjaxResult.error(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取用户增减数据失败", e);
+            return AjaxResult.error("获取用户增减数据失败");
+        }
+    }
 
-	/**
-	 * 获取接口分析数据
-	 * @param appId
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	@GetMapping("/interfacesummary")
+    /**
+     * 获取累计用户数据
+     *
+     * @param appId
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @GetMapping("/usercumulate")
 //	@PreAuthorize("@ss.hasPermi('wxmp:wxsummary:index')")
-	public AjaxResult getInterfaceSummary(String appId, String startDate, String endDate){
-		try {
-			WxMpDataCubeService wxMpDataCubeService = wxService.getDataCubeService();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			return AjaxResult.success(wxMpDataCubeService.getInterfaceSummary(sdf.parse(startDate), sdf.parse(endDate)));
-		} catch (WxErrorException e) {
-			e.printStackTrace();
-			log.error("获取接口分析数据失败",e);
-			return AjaxResult.error(e.getMessage());
-		}catch (Exception e) {
-			e.printStackTrace();
-			log.error("获取接口分析数据失败",e);
-			return AjaxResult.error("获取接口分析数据失败");
-		}
-	}
+    public AjaxResult getUserCumulate(String appId, String startDate, String endDate) {
+        try {
+            WxMpDataCubeService wxMpDataCubeService = wxService.getDataCubeService();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return AjaxResult.success(wxMpDataCubeService.getUserCumulate(sdf.parse(startDate), sdf.parse(endDate)));
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            log.error("获取累计用户数据失败", e);
+            return AjaxResult.error(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取用户增减数据失败", e);
+            return AjaxResult.error("获取用户增减数据失败");
+        }
+    }
+
+    /**
+     * 获取接口分析数据
+     *
+     * @param appId
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @GetMapping("/interfacesummary")
+//	@PreAuthorize("@ss.hasPermi('wxmp:wxsummary:index')")
+    public AjaxResult getInterfaceSummary(String appId, String startDate, String endDate) {
+        try {
+            WxMpDataCubeService wxMpDataCubeService = wxService.getDataCubeService();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return AjaxResult.success(wxMpDataCubeService.getInterfaceSummary(sdf.parse(startDate), sdf.parse(endDate)));
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            log.error("获取接口分析数据失败", e);
+            return AjaxResult.error(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取接口分析数据失败", e);
+            return AjaxResult.error("获取接口分析数据失败");
+        }
+    }
 }
