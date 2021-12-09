@@ -32,7 +32,6 @@ public class BookController extends BaseController {
         return AjaxResult.success(bookService.page1(page, book));
     }
 
-
     /**
      * 获取书籍详细信息
      */

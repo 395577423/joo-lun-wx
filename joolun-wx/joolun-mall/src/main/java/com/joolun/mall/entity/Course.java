@@ -42,11 +42,11 @@ public class Course extends Model<Course>
 
     /** 1 推荐 0 不推荐 */
     @Excel(name = "1 推荐 0 不推荐")
-    private Long recommend;
+    private String recommend;
 
     /** 1 正常 0 停用 */
     @Excel(name = "1 正常 0 停用")
-    private Long status;
+    private String status;
 
     /** 课程开始日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -80,7 +80,7 @@ public class Course extends Model<Course>
 
     /** 是否参与奖学金计划 1 参加 0 不参加 */
     @Excel(name = "是否参与奖学金计划 1 参加 0 不参加")
-    private Long plan;
+    private String plan;
 
     /**
      * 创建时间

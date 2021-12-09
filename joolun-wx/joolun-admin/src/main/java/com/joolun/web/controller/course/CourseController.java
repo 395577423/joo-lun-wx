@@ -6,7 +6,6 @@ import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.enums.BusinessType;
-import com.joolun.common.utils.poi.ExcelUtil;
 import com.joolun.mall.entity.Course;
 import com.joolun.mall.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
