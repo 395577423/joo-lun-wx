@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询课程列表
-export function listCourse(query) {
+export function getPage(query) {
   return request({
     url: '/course/page',
     method: 'get',
@@ -10,7 +10,7 @@ export function listCourse(query) {
 }
 
 // 查询课程详细
-export function getCourse(id) {
+export function getObj(id) {
   return request({
     url: '/course/' + id,
     method: 'get'
@@ -18,7 +18,7 @@ export function getCourse(id) {
 }
 
 // 新增课程
-export function addCourse(data) {
+export function addObj(data) {
   return request({
     url: '/course',
     method: 'post',
@@ -27,7 +27,7 @@ export function addCourse(data) {
 }
 
 // 修改课程
-export function updateCourse(data) {
+export function putObj(data) {
   return request({
     url: '/course',
     method: 'put',
@@ -36,18 +36,9 @@ export function updateCourse(data) {
 }
 
 // 删除课程
-export function delCourse(id) {
+export function delObj(id) {
   return request({
     url: '/course/' + id,
     method: 'delete'
-  })
-}
-
-// 导出课程
-export function exportCourse(query) {
-  return request({
-    url: '/course/export',
-    method: 'get',
-    params: query
   })
 }
