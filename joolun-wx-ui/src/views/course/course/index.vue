@@ -54,7 +54,7 @@
         >
         </el-switch>
       </template>
-      <template slot="introductionForm" slot-scope="scope">
+      <template slot="introduction" slot-scope="scope">
         <BaseEditor v-model="scope.row.introduction"/>
       </template>
     </avue-crud>
@@ -87,7 +87,8 @@ export default {
       tableOption: tableOption,
       dialogAppraises: false,
       selectionData: '',
-      pointsConfig: null
+      pointsConfig: null,
+      introduction: null
     }
   },
   watch: {},

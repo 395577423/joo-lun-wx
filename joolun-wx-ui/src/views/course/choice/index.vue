@@ -115,7 +115,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import { listChoice, getChoice, delChoice, addChoice, updateChoice, exportChoice } from "@/api/book/choice";
+import { listChoice, getChoice, delChoice, addChoice, updateChoice, exportChoice } from "@/api/course/choice";
 
 export default {
   name: "Choice",

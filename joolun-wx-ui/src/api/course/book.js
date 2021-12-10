@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询书籍列表
 export function getPage(query) {
   return request({
-    url: '/book/page',
+    url: '/course/book/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function getPage(query) {
 // 查询书籍详细
 export function getObj(id) {
   return request({
-    url: '/book/' + id,
+    url: '/course/book/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getObj(id) {
 // 新增书籍
 export function addObj(data) {
   return request({
-    url: '/book',
+    url: '/course/book',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addObj(data) {
 // 修改书籍
 export function putObj(data) {
   return request({
-    url: '/book',
+    url: '/course/book',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function putObj(data) {
 // 删除书籍
 export function delObj(id) {
   return request({
-    url: '/book/' + id,
+    url: '/course/book/' + id,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delObj(id) {
 // 导出书籍
 export function exportBook(query) {
   return request({
-    url: '/book/export',
+    url: '/course/book/export',
     method: 'get',
     params: query
   })

@@ -1,4 +1,4 @@
-package com.joolun.web.controller.book;
+package com.joolun.web.controller.course;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,7 +20,7 @@ import java.util.Arrays;
  * @date 2021-12-08
  */
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/course/book")
 public class BookController extends BaseController {
     @Autowired
     private IBookService bookService;

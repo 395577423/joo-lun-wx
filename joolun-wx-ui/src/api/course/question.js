@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
 // 查询书籍问题列表
-export function listQuestion(query) {
+export function getPage(query) {
   return request({
-    url: '/book/question/page',
+    url: '/course/question/page',
     method: 'get',
     params: query
   })
@@ -12,42 +12,34 @@ export function listQuestion(query) {
 // 查询书籍问题详细
 export function getQuestion(id) {
   return request({
-    url: '/book/question/' + id,
+    url: '/course/question/' + id,
     method: 'get'
   })
 }
 
 // 新增书籍问题
-export function addQuestion(data) {
+export function addObj(data) {
   return request({
-    url: '/book/question',
+    url: '/course/question',
     method: 'post',
     data: data
   })
 }
 
 // 修改书籍问题
-export function updateQuestion(data) {
+export function putObj(data) {
   return request({
-    url: '/book/question',
+    url: '/course/question',
     method: 'put',
     data: data
   })
 }
 
 // 删除书籍问题
-export function delQuestion(id) {
+export function delObj(id) {
   return request({
-    url: '/book/question/' + id,
+    url: '/course/question/' + id,
     method: 'delete'
   })
 }
 
-// 导出书籍问题
-export function exportQuestion(query) {
-  return request({
-    url: '/book/question/export',
-    method: 'get',
-    params: query
-  })
-}

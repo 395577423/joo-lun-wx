@@ -1,4 +1,4 @@
-package com.joolun.web.controller.book;
+package com.joolun.web.controller.course;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,8 +20,8 @@ import java.util.Arrays;
  * @date 2021-12-08
  */
 @RestController
-@RequestMapping("/book/story")
-public class BookStoryController extends BaseController {
+@RequestMapping("/course/story")
+public class CourseStoryController extends BaseController {
     @Autowired
     private ICourseStoryService bookStoryService;
 
@@ -29,8 +29,8 @@ public class BookStoryController extends BaseController {
      * 查询书籍故事列表
      */
     @GetMapping("/page")
-    public AjaxResult list(Page page, CourseStory bookStory) {
-        return AjaxResult.success(bookStoryService.page(page, Wrappers.query(bookStory)));
+    public AjaxResult list(Page page, CourseStory courseStory) {
+        return AjaxResult.success(bookStoryService.page(page, Wrappers.query(courseStory)));
     }
 
 
@@ -47,8 +47,8 @@ public class BookStoryController extends BaseController {
      */
     @Log(title = "书籍故事", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CourseStory bookStory) {
-        return AjaxResult.success(bookStoryService.save(bookStory));
+    public AjaxResult add(@RequestBody CourseStory courseStory) {
+        return AjaxResult.success(bookStoryService.save(courseStory));
     }
 
     /**
@@ -56,8 +56,8 @@ public class BookStoryController extends BaseController {
      */
     @Log(title = "书籍故事", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CourseStory bookStory) {
-        return AjaxResult.success(bookStoryService.updateById(bookStory));
+    public AjaxResult edit(@RequestBody CourseStory courseStory) {
+        return AjaxResult.success(bookStoryService.updateById(courseStory));
     }
 
     /**

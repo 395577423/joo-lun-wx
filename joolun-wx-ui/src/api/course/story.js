@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询书籍故事列表
 export function listStory(query) {
   return request({
-    url: '/book/story/page',
+    url: '/course/story/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listStory(query) {
 // 查询书籍故事详细
 export function getStory(id) {
   return request({
-    url: '/book/story/' + id,
+    url: '/course/story/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getStory(id) {
 // 新增书籍故事
 export function addStory(data) {
   return request({
-    url: '/book/story',
+    url: '/course/story',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addStory(data) {
 // 修改书籍故事
 export function updateStory(data) {
   return request({
-    url: '/book/story',
+    url: '/course/story',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateStory(data) {
 // 删除书籍故事
 export function delStory(id) {
   return request({
-    url: '/book/story/' + id,
+    url: '/course/story/' + id,
     method: 'delete'
   })
 }
@@ -46,7 +46,7 @@ export function delStory(id) {
 // 导出书籍故事
 export function exportStory(query) {
   return request({
-    url: '/book/story/export',
+    url: '/course/story/export',
     method: 'get',
     params: query
   })

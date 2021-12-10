@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import { addObj, delObj, getPage, putObj } from '@/api/book/book'
-import { tableOption } from '@/const/crud/book/book'
+import { addObj, delObj, getPage, putObj } from '@/api/course/book'
+import { tableOption } from '@/const/crud/course/book'
 
 export default {
   name: 'book',

@@ -96,7 +96,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { listStory, getStory, delStory, addStory, updateStory, exportStory } from "@/api/book/story";
+import { listStory, getStory, delStory, addStory, updateStory, exportStory } from "@/api/course/story";
 import Editor from '@/components/Editor';
 
 export default {

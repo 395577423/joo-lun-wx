@@ -1,4 +1,4 @@
-package com.joolun.web.controller.book;
+package com.joolun.web.controller.course;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,17 +20,17 @@ import java.util.Arrays;
  * @date 2021-12-08
  */
 @RestController
-@RequestMapping("/book/question")
-public class BookQuestionController extends BaseController {
+@RequestMapping("/course/question")
+public class CourseQuestionController extends BaseController {
     @Autowired
-    private ICourseQuestionService bookQuestionService;
+    private ICourseQuestionService courseQuestionService;
 
     /**
      * 查询书籍问题列表
      */
     @GetMapping("/page")
-    public AjaxResult page(Page page, CourseQuestion bookQuestion) {
-        return AjaxResult.success(bookQuestionService.page(page, Wrappers.query(bookQuestion)));
+    public AjaxResult page(Page page, CourseQuestion courseQuestion) {
+        return AjaxResult.success(courseQuestionService.page(page, Wrappers.query(courseQuestion)));
     }
 
     /**
@@ -38,7 +38,7 @@ public class BookQuestionController extends BaseController {
      */
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return AjaxResult.success(bookQuestionService.getById(id));
+        return AjaxResult.success(courseQuestionService.getById(id));
     }
 
     /**
@@ -46,8 +46,8 @@ public class BookQuestionController extends BaseController {
      */
     @Log(title = "书籍问题", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CourseQuestion bookQuestion) {
-        return AjaxResult.success(bookQuestionService.save(bookQuestion));
+    public AjaxResult add(@RequestBody CourseQuestion courseQuestion) {
+        return AjaxResult.success(courseQuestionService.save(courseQuestion));
     }
 
     /**
@@ -55,8 +55,8 @@ public class BookQuestionController extends BaseController {
      */
     @Log(title = "书籍问题", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CourseQuestion bookQuestion) {
-        return AjaxResult.success(bookQuestionService.updateById(bookQuestion));
+    public AjaxResult edit(@RequestBody CourseQuestion courseQuestion) {
+        return AjaxResult.success(courseQuestionService.updateById(courseQuestion));
     }
 
     /**
@@ -65,6 +65,6 @@ public class BookQuestionController extends BaseController {
     @Log(title = "书籍问题", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
-        return AjaxResult.success(bookQuestionService.removeByIds(Arrays.asList(ids)));
+        return AjaxResult.success(courseQuestionService.removeByIds(Arrays.asList(ids)));
     }
 }

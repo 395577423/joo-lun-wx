@@ -29,7 +29,7 @@ export const tableOption = {
     {
       label: '介绍',
       prop: 'introduction',
-      display: false
+      display: false,
     },
     {
       label: '课程开始日期',
@@ -252,17 +252,15 @@ export const tableOption = {
           }]
         }
       ]
-
     },
     {
       icon: 'el-icon-grape',
       label: '其他信息',
-      prop: 'group6',
       column: [
         {
           label: '介绍',
           prop: 'introduction',
-          formslot: true,
+          slot: true,
           span: 12
         }]
     }

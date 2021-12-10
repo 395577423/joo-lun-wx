@@ -1,4 +1,4 @@
-package com.joolun.web.controller.book;
+package com.joolun.web.controller.course;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,8 +20,8 @@ import java.util.Arrays;
  * @date 2021-12-08
  */
 @RestController
-@RequestMapping("/book/choice")
-public class BookQuestionChoiceController extends BaseController {
+@RequestMapping("/course/choice")
+public class CourseQuestionChoiceController extends BaseController {
     @Autowired
     private ICourseQuestionChoiceService bookQuestionChoiceService;
 
@@ -29,8 +29,8 @@ public class BookQuestionChoiceController extends BaseController {
      * 查询书籍问题选项列表
      */
     @GetMapping("/page")
-    public AjaxResult page(Page page, CourseQuestionChoice bookQuestionChoice) {
-        return AjaxResult.success(bookQuestionChoiceService.page(page, Wrappers.query(bookQuestionChoice)));
+    public AjaxResult page(Page page, CourseQuestionChoice courseQuestionChoice) {
+        return AjaxResult.success(bookQuestionChoiceService.page(page, Wrappers.query(courseQuestionChoice)));
     }
 
     /**

@@ -1,304 +1,182 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="书籍ID" prop="bookId">
-        <el-input
-          v-model="queryParams.bookId"
-          placeholder="请输入书籍ID"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="封面图片" prop="imageUrl">
-        <el-input
-          v-model="queryParams.imageUrl"
-          placeholder="请输入封面图片"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="问题" prop="question">
-        <el-input
-          v-model="queryParams.question"
-          placeholder="请输入问题"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input
-          v-model="queryParams.sort"
-          placeholder="请输入排序"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['system:question:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:question:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:question:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['system:question:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
-    <el-table v-loading="loading" :data="questionList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="书籍ID" align="center" prop="bookId" />
-      <el-table-column label="封面图片" align="center" prop="imageUrl" />
-      <el-table-column label="问题" align="center" prop="question" />
-      <el-table-column label="排序" align="center" prop="sort" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:question:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['system:question:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
-    <!-- 添加或修改书籍问题对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="书籍ID" prop="bookId">
-          <el-input v-model="form.bookId" placeholder="请输入书籍ID" />
-        </el-form-item>
-        <el-form-item label="封面图片" prop="imageUrl">
-          <el-input v-model="form.imageUrl" placeholder="请输入封面图片" />
-        </el-form-item>
-        <el-form-item label="问题" prop="question">
-          <el-input v-model="form.question" placeholder="请输入问题" />
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
+    <avue-crud ref="crud"
+               :page="page"
+               :data="tableData"
+               :table-loading="tableLoading"
+               :option= "option"
+               :before-open="beforeOpen"
+               v-model="form"
+               @on-load="getPage"
+               @refresh-change="refreshChange"
+               @row-update="handleUpdate"
+               @row-save="handleSave"
+               @row-del="handleDel"
+               @sort-change="sortChange"
+               @search-change="searchChange"
+               @selection-change="selectionChange"
+    >
+    </avue-crud>
   </div>
 </template>
 
 <script>
-import { listQuestion, getQuestion, delQuestion, addQuestion, updateQuestion, exportQuestion } from "@/api/book/question";
+import { addObj, delObj, getPage, putObj } from '@/api/course/question'
+import option from '@/const/crud/course/question.js'
 
 export default {
-  name: "Question",
-  components: {
-  },
+  name: 'book',
+  components: {},
   data() {
     return {
-      // 遮罩层
-      loading: true,
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      // 书籍问题表格数据
-      questionList: [],
-      // 弹出层标题
-      title: "",
-      // 是否显示弹出层
-      open: false,
-      // 查询参数
-      queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        bookId: null,
-        imageUrl: null,
-        question: null,
-        sort: null
-      },
-      // 表单参数
       form: {},
-      // 表单校验
-      rules: {
-      }
-    };
+      tableData: [],
+      page: {
+        total: 0, // 总页数
+        currentPage: 1, // 当前页数
+        pageSize: 20, // 每页显示多少条
+        ascs: [],//升序字段
+        descs: 'course_id'//降序字段
+      },
+      paramsSearch: {},
+      tableLoading: false,
+      option: option(this),
+      dialogAppraises: false,
+      selectionData: '',
+      pointsConfig: null
+    }
   },
+  watch: {},
   created() {
-    this.getList();
   },
+  mounted: function() {
+  },
+  computed: {},
   methods: {
-    /** 查询书籍问题列表 */
-    getList() {
-      this.loading = true;
-      listQuestion(this.queryParams).then(response => {
-        this.questionList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+
+    selectionChange(list) {
+      this.selectionData = list
     },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
+    changeStatus(row) {
+      putObj({
+        id: row.id,
+        status: row.status
+      }).then(data => {
+      })
     },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        bookId: null,
-        imageUrl: null,
-        question: null,
-        sort: null
-      };
-      this.resetForm("form");
+    beforeOpen(done, type) {
+      done()
     },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+    searchChange(params, done) {
+      params = this.filterForm(params)
+      this.paramsSearch = params
+      this.page.currentPage = 1
+      this.getPage(this.page, params)
+      done()
     },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+    sortChange(val) {
+      let prop = val.prop ? val.prop.replace(/([A-Z])/g, '_$1').toLowerCase() : ''
+      if (val.order == 'ascending') {
+        this.page.descs = []
+        this.page.ascs = prop
+      } else if (val.order == 'descending') {
+        this.page.ascs = []
+        this.page.descs = prop
+      } else {
+        this.page.ascs = []
+        this.page.descs = []
+      }
+      this.getPage(this.page)
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+    getPage(page, params) {
+      this.tableLoading = true
+      getPage(Object.assign({
+        current: page.currentPage,
+        size: page.pageSize,
+        descs: this.page.descs,
+        ascs: this.page.ascs
+      }, params, this.paramsSearch)).then(response => {
+        console.log(response)
+        this.tableData = response.data.records
+        this.page.total = response.data.total
+        this.page.currentPage = page.currentPage
+        this.page.pageSize = page.pageSize
+        this.tableLoading = false
+      }).catch(() => {
+        this.tableLoading = false
+      })
     },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加书籍问题";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getQuestion(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改书籍问题";
-      });
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateQuestion(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addQuestion(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除书籍问题编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delQuestion(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
+    /**
+     * @title 数据删除
+     * @param row 为当前的数据
+     * @param index 为当前删除数据的行数
+     *
+     **/
+    handleDel: function(row, index) {
+      var _this = this
+      this.$confirm('是否确认删除此数据', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delObj(row.id)
+      }).then(data => {
+        _this.$message({
+          showClose: true,
+          message: '删除成功',
+          type: 'success'
         })
+        this.getPage(this.page)
+      }).catch(function(err) {
+      })
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有书籍问题数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportQuestion(queryParams);
-        }).then(response => {
-          this.download(response.msg);
+    /**
+     * @title 数据更新
+     * @param row 为当前的数据
+     * @param index 为当前更新数据的行数
+     * @param done 为表单关闭函数
+     *
+     **/
+    handleUpdate: function(row, index, done, loading) {
+      row.coverUrl = row.coverUrl ? row.coverUrl : ''
+      putObj(row).then(data => {
+        this.$message({
+          showClose: true,
+          message: '修改成功',
+          type: 'success'
         })
+        done()
+        this.getPage(this.page)
+      }).catch(() => {
+        loading()
+      })
+    },
+    /**
+     * @title 数据添加
+     * @param row 为当前的数据
+     * @param done 为表单关闭函数
+     *
+     **/
+    handleSave: function(row, done, loading) {
+      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
+      addObj(row).then(data => {
+        this.$message({
+          showClose: true,
+          message: '添加成功',
+          type: 'success'
+        })
+        done()
+        this.getPage(this.page)
+      }).catch(() => {
+        loading()
+      })
+    },
+    /**
+     * 刷新回调
+     */
+    refreshChange(page) {
+      this.getPage(this.page)
     }
   }
-};
+}
 </script>
