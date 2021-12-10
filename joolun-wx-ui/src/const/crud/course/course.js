@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- * 注意：
- * 本软件为www.joolun.com开发研制，项目使用请保留此说明
- */
 export const tableOption = {
   dialogType: 'drawer',
   border: true,
@@ -27,10 +21,10 @@ export const tableOption = {
     {
       label: '课程图片',
       prop: 'coverUrl',
-      type:'upload',
+      type: 'upload',
       width: 250,
       display: false,
-      listType: 'picture-img',
+      listType: 'picture-img'
     },
     {
       label: '介绍',
@@ -129,6 +123,15 @@ export const tableOption = {
         label: '不推荐',
         value: '0'
       }]
+    } ,{
+      label: '书籍问题',
+      prop: 'question',
+      display: false
+    },
+    {
+      label: '音频地址',
+      prop: 'questionAudio',
+      display: false
     }
   ],
   group: [
@@ -177,11 +180,24 @@ export const tableOption = {
           }],
           dicData: [{
             label: '不推荐',
-            value: '0',
+            value: '0'
           }, {
             label: '推荐',
             value: '1'
           }]
+        },
+        {
+          label: '书籍问题',
+          prop: 'question',
+          rules: [{
+            required: true,
+            message: '请输入书籍问题'
+          }]
+        },
+        {
+          label: '音频地址',
+          prop: 'questionAudio',
+          type: 'upload'
         },
         {
           label: '课程开始日期',

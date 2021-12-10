@@ -8,16 +8,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 书籍问题对象 book_question
+ * 书籍故事对象 book_story
  *
  * @author Owen
  * @date 2021-12-08
  */
 @Data
-@TableName("book_question")
+@TableName("course_story")
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "书籍问题对象")
-public class BookQuestion extends Model<BookQuestion> {
+@ApiModel(description = "书籍故事对象")
+public class CourseStory extends Model<CourseStory> {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -26,27 +26,20 @@ public class BookQuestion extends Model<BookQuestion> {
     private Long id;
 
     /**
-     * 书籍ID
+     * 课程ID
      */
-    @Excel(name = "书籍ID")
-    private Long bookId;
+    @Excel(name = "课程ID")
+    private Long courseId;
 
     /**
-     * 封面图片
+     * 内容
      */
-    @Excel(name = "封面图片")
-    private String imageUrl;
-
-    /**
-     * 问题
-     */
-    @Excel(name = "问题")
-    private String question;
+    @Excel(name = "内容")
+    private String content;
 
     /**
      * 排序
      */
     @Excel(name = "排序")
     private Long sort;
-
 }

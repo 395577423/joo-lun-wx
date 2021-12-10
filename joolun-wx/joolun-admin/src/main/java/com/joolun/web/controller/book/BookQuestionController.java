@@ -6,14 +6,12 @@ import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.enums.BusinessType;
-import com.joolun.common.utils.poi.ExcelUtil;
-import com.joolun.mall.entity.BookQuestion;
-import com.joolun.mall.service.IBookQuestionService;
+import com.joolun.mall.entity.CourseQuestion;
+import com.joolun.mall.service.ICourseQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 书籍问题Controller
@@ -25,13 +23,13 @@ import java.util.List;
 @RequestMapping("/book/question")
 public class BookQuestionController extends BaseController {
     @Autowired
-    private IBookQuestionService bookQuestionService;
+    private ICourseQuestionService bookQuestionService;
 
     /**
      * 查询书籍问题列表
      */
     @GetMapping("/page")
-    public AjaxResult page(Page page, BookQuestion bookQuestion) {
+    public AjaxResult page(Page page, CourseQuestion bookQuestion) {
         return AjaxResult.success(bookQuestionService.page(page, Wrappers.query(bookQuestion)));
     }
 
@@ -48,7 +46,7 @@ public class BookQuestionController extends BaseController {
      */
     @Log(title = "书籍问题", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BookQuestion bookQuestion) {
+    public AjaxResult add(@RequestBody CourseQuestion bookQuestion) {
         return AjaxResult.success(bookQuestionService.save(bookQuestion));
     }
 
@@ -57,7 +55,7 @@ public class BookQuestionController extends BaseController {
      */
     @Log(title = "书籍问题", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody BookQuestion bookQuestion) {
+    public AjaxResult edit(@RequestBody CourseQuestion bookQuestion) {
         return AjaxResult.success(bookQuestionService.updateById(bookQuestion));
     }
 

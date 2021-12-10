@@ -1,7 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
--->
 <template>
   <div v-loading="mainLoading" class="wx-voice-div" @click="outTime ? '' : playVoice(objData)">
     <i v-if="!outTime" :class="objData.amrPlaying != true ? 'icon-yuyin': 'icon-playing1'">

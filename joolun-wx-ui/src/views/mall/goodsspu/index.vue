@@ -1,9 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
-  - 注意：
-  - 本软件为www.joolun.com开发研制，项目使用请保留此说明
--->
 <template>
   <div class="app-container">
       <avue-crud ref="crud"
@@ -250,7 +244,7 @@
             handleUpdate: function (row, index, done, loading) {
                 row.categoryFirst = row.categoryId[0]
                 row.categorySecond = row.categoryId[1]
-                
+
                 row.picUrls = row.picUrls?row.picUrls.toString().split(','):''
                 putObj(row).then(data => {
                     this.$message({

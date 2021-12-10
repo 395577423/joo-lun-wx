@@ -104,4 +104,16 @@ public class Course extends Model<Course>
      * 备注
      */
     private String remark;
+
+    /**
+     * 书籍问题
+     */
+    @Excel(name = "书籍问题")
+    private String question;
+
+    /**
+     * 音频地址
+     */
+    @Excel(name = "音频地址")
+    private String questionAudio;
 }

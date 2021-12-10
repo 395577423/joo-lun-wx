@@ -19,29 +19,8 @@
       <template slot="coverUrl" slot-scope="scope">
         <img
           style="height: 100px"
-          :src="scope.row.coverUrl">
-      </template>
-      <template slot="recommend" slot-scope="scope">
-        <el-switch
-          active-value="1"
-          inactive-value="0"
-          v-model="scope.row.recommend"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          @change="changeRecommend(scope.row)"
+          :src="scope.row.coverUrl"
         >
-        </el-switch>
-      </template>
-      <template slot="plan" slot-scope="scope">
-        <el-switch
-          active-value="1"
-          inactive-value="0"
-          v-model="scope.row.plan"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          @change="changeRecommend(scope.row)"
-        >
-        </el-switch>
       </template>
       <template slot="status" slot-scope="scope">
         <el-switch
@@ -50,27 +29,21 @@
           v-model="scope.row.status"
           active-color="#13ce66"
           inactive-color="#ff4949"
-          @change="changePlan(scope.row)"
+          @change="changeStatus(scope.row)"
         >
         </el-switch>
-      </template>
-      <template slot="introductionForm" slot-scope="scope">
-        <BaseEditor v-model="scope.row.introduction"/>
       </template>
     </avue-crud>
   </div>
 </template>
 
 <script>
-import { addObj, delObj, getPage, putObj } from '@/api/course/course'
-import { tableOption } from '@/const/crud/course/course'
-import BaseEditor from '@/components/Editor/index.vue'
+import { addObj, delObj, getPage, putObj } from '@/api/book/book'
+import { tableOption } from '@/const/crud/book/book'
 
 export default {
-  name: 'course',
-  components: {
-    BaseEditor
-  },
+  name: 'book',
+  components: {},
   data() {
     return {
       form: {},
@@ -95,32 +68,16 @@ export default {
   },
   mounted: function() {
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
 
     selectionChange(list) {
       this.selectionData = list
     },
-    changeRecommend(row) {
-      putObj({
-        id: row.id,
-        recommend: row.recommend
-      }).then(data => {
-      })
-    },
     changeStatus(row) {
       putObj({
         id: row.id,
         status: row.status
-      }).then(data => {
-      })
-    },
-    changePlan(row) {
-      putObj({
-        id: row.id,
-        plan: row.plan
       }).then(data => {
       })
     },
@@ -197,7 +154,7 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
-      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
+      row.coverUrl = row.coverUrl ? row.coverUrl : ''
       putObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -217,7 +174,7 @@ export default {
      *
      **/
     handleSave: function(row, done, loading) {
-      row.coverUrl = row.coverUrl ? row.coverUrl.toString(): ''
+      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
       addObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -239,4 +196,3 @@ export default {
   }
 }
 </script>
-

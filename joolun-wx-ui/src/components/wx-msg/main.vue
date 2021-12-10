@@ -1,7 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
--->
 <template>
   <div class="msg-main" v-loading="mainLoading">
     <div class="msg-div" :id="'msg-div'+nowStr">

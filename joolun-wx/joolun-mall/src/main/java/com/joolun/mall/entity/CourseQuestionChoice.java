@@ -8,38 +8,45 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 书籍故事对象 book_story
+ * 书籍问题选项对象 book_question_choice
  *
  * @author Owen
  * @date 2021-12-08
  */
 @Data
-@TableName("book_story")
+@TableName("course_question_choice")
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "书籍故事对象")
-public class BookStory extends Model<BookStory> {
+@ApiModel(description = "书籍问题选项对象")
+public class CourseQuestionChoice extends Model<CourseQuestionChoice> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 主键
+     * $column.columnComment
      */
     private Long id;
 
     /**
-     * 书籍ID
+     * 问题ID
      */
-    @Excel(name = "书籍ID")
-    private Long bookId;
+    @Excel(name = "问题ID")
+    private Long questionId;
 
     /**
-     * 内容
+     * 1 是 0 否
      */
-    @Excel(name = "内容")
-    private String content;
+    @Excel(name = "1 是 0 否")
+    private Long choosed;
+
+    /**
+     * 问题的选项
+     */
+    @Excel(name = "问题的选项")
+    private String choice;
 
     /**
      * 排序
      */
     @Excel(name = "排序")
     private Long sort;
+
 }

@@ -6,8 +6,8 @@ import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.enums.BusinessType;
-import com.joolun.mall.entity.BookStory;
-import com.joolun.mall.service.IBookStoryService;
+import com.joolun.mall.entity.CourseStory;
+import com.joolun.mall.service.ICourseStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +23,13 @@ import java.util.Arrays;
 @RequestMapping("/book/story")
 public class BookStoryController extends BaseController {
     @Autowired
-    private IBookStoryService bookStoryService;
+    private ICourseStoryService bookStoryService;
 
     /**
      * 查询书籍故事列表
      */
     @GetMapping("/page")
-    public AjaxResult list(Page page, BookStory bookStory) {
+    public AjaxResult list(Page page, CourseStory bookStory) {
         return AjaxResult.success(bookStoryService.page(page, Wrappers.query(bookStory)));
     }
 
@@ -47,7 +47,7 @@ public class BookStoryController extends BaseController {
      */
     @Log(title = "书籍故事", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BookStory bookStory) {
+    public AjaxResult add(@RequestBody CourseStory bookStory) {
         return AjaxResult.success(bookStoryService.save(bookStory));
     }
 
@@ -56,7 +56,7 @@ public class BookStoryController extends BaseController {
      */
     @Log(title = "书籍故事", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody BookStory bookStory) {
+    public AjaxResult edit(@RequestBody CourseStory bookStory) {
         return AjaxResult.success(bookStoryService.updateById(bookStory));
     }
 

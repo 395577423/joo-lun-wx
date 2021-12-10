@@ -1,7 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
--->
 <template>
   <div id="wxEditor">
     <div v-loading="quillUpdateImg" element-loading-text="请稍等，图片上传中">

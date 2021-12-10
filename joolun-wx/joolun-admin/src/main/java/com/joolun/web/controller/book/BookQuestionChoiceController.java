@@ -5,15 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
-import com.joolun.common.core.page.TableDataInfo;
 import com.joolun.common.enums.BusinessType;
-import com.joolun.mall.entity.BookQuestionChoice;
-import com.joolun.mall.service.IBookQuestionChoiceService;
+import com.joolun.mall.entity.CourseQuestionChoice;
+import com.joolun.mall.service.ICourseQuestionChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 书籍问题选项Controller
@@ -25,13 +23,13 @@ import java.util.List;
 @RequestMapping("/book/choice")
 public class BookQuestionChoiceController extends BaseController {
     @Autowired
-    private IBookQuestionChoiceService bookQuestionChoiceService;
+    private ICourseQuestionChoiceService bookQuestionChoiceService;
 
     /**
      * 查询书籍问题选项列表
      */
     @GetMapping("/page")
-    public AjaxResult page(Page page, BookQuestionChoice bookQuestionChoice) {
+    public AjaxResult page(Page page, CourseQuestionChoice bookQuestionChoice) {
         return AjaxResult.success(bookQuestionChoiceService.page(page, Wrappers.query(bookQuestionChoice)));
     }
 
@@ -48,7 +46,7 @@ public class BookQuestionChoiceController extends BaseController {
      */
     @Log(title = "书籍问题选项", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BookQuestionChoice bookQuestionChoice) {
+    public AjaxResult add(@RequestBody CourseQuestionChoice bookQuestionChoice) {
         return AjaxResult.success(bookQuestionChoiceService.save(bookQuestionChoice));
     }
 
@@ -57,7 +55,7 @@ public class BookQuestionChoiceController extends BaseController {
      */
     @Log(title = "书籍问题选项", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody BookQuestionChoice bookQuestionChoice) {
+    public AjaxResult edit(@RequestBody CourseQuestionChoice bookQuestionChoice) {
         return AjaxResult.success(bookQuestionChoiceService.updateById(bookQuestionChoice));
     }
 

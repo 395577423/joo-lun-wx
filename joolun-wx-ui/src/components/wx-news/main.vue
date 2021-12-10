@@ -1,7 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
--->
 <template>
   <div class="news-home">
     <div v-for="(news, index) in objData" :key="index" class="news-div">

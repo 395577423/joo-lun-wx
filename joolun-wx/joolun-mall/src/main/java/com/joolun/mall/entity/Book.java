@@ -58,28 +58,10 @@ public class Book extends Model<Book> {
     private Long dictCode;
 
     /**
-     * 书籍类型名称
-     */
-    @Excel(name = "书籍类型名称")
-    private String dictLabel;
-
-    /**
      * 0 停用 1 正常
      */
     @Excel(name = "0 停用 1 正常")
     private String status;
-
-    /**
-     * 书籍问题
-     */
-    @Excel(name = "书籍问题")
-    private String question;
-
-    /**
-     * 音频地址
-     */
-    @Excel(name = "音频地址")
-    private String questionAudio;
 
     /**
      * 创建时间

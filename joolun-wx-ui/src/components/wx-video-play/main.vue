@@ -1,7 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
--->
 <template>
   <div>
     <div v-if="!outTime"><i class="icon-shipinbofang" style="font-size: 80px!important;" @click="playVideo()"></i><p>点击播放视频</p></div>

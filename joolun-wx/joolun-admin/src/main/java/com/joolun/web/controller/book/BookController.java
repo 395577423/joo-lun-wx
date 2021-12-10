@@ -1,5 +1,6 @@
 package com.joolun.web.controller.book;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
@@ -29,7 +30,7 @@ public class BookController extends BaseController {
      */
     @GetMapping("/page")
     public AjaxResult getGoodsSpuPage(Page page, Book book) {
-        return AjaxResult.success(bookService.page1(page, book));
+        return AjaxResult.success(bookService.page(page, Wrappers.query(book)));
     }
 
     /**
@@ -46,7 +47,7 @@ public class BookController extends BaseController {
     @Log(title = "书籍", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Book book) {
-        return AjaxResult.success(bookService.save1(book));
+        return AjaxResult.success(bookService.save(book));
     }
 
     /**

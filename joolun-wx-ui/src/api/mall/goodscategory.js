@@ -1,7 +1,3 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- */
 import request from '@/utils/request'
 
 export function getPage(query) {

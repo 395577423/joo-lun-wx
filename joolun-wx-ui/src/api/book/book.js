@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询书籍列表
-export function listBook(query) {
+export function getPage(query) {
   return request({
     url: '/book/page',
     method: 'get',
@@ -10,7 +10,7 @@ export function listBook(query) {
 }
 
 // 查询书籍详细
-export function getBook(id) {
+export function getObj(id) {
   return request({
     url: '/book/' + id,
     method: 'get'
@@ -18,7 +18,7 @@ export function getBook(id) {
 }
 
 // 新增书籍
-export function addBook(data) {
+export function addObj(data) {
   return request({
     url: '/book',
     method: 'post',
@@ -27,7 +27,7 @@ export function addBook(data) {
 }
 
 // 修改书籍
-export function updateBook(data) {
+export function putObj(data) {
   return request({
     url: '/book',
     method: 'put',
@@ -36,7 +36,7 @@ export function updateBook(data) {
 }
 
 // 删除书籍
-export function delBook(id) {
+export function delObj(id) {
   return request({
     url: '/book/' + id,
     method: 'delete'

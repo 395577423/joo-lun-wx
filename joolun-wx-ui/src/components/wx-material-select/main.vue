@@ -1,7 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
--->
 <template>
   <div v-if="objData.repType == 'image'">
     <div class="waterfall" v-loading="tableLoading">
