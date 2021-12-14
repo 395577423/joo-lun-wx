@@ -6,11 +6,13 @@ import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.enums.BusinessType;
+import com.joolun.common.utils.SecurityUtils;
 import com.joolun.mall.entity.CourseVideo;
 import com.joolun.mall.service.ICourseVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -47,6 +49,8 @@ public class CourseVideoController extends BaseController {
     @Log(title = "课程视频", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CourseVideo courseVideo) {
+        courseVideo.setCreateBy(SecurityUtils.getUsername());
+        courseVideo.setCreateTime(LocalDateTime.now());
         return AjaxResult.success(courseVideoService.save(courseVideo));
     }
 

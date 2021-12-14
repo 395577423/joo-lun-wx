@@ -32,7 +32,7 @@ public class CourseQuestionChoice extends Model<CourseQuestionChoice> {
     private Long questionId;
 
     /**
-     * 1 是 0 否
+     * 1 是 0 否 正确答案
      */
     @Excel(name = "1 是 0 否")
     private Long choosed;

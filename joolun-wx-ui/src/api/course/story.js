@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询书籍故事列表
-export function listStory(query) {
+export function getPage(query) {
   return request({
     url: '/course/story/page',
     method: 'get',
@@ -10,7 +10,7 @@ export function listStory(query) {
 }
 
 // 查询书籍故事详细
-export function getStory(id) {
+export function getObj(id) {
   return request({
     url: '/course/story/' + id,
     method: 'get'
@@ -18,7 +18,7 @@ export function getStory(id) {
 }
 
 // 新增书籍故事
-export function addStory(data) {
+export function addObj(data) {
   return request({
     url: '/course/story',
     method: 'post',
@@ -27,7 +27,7 @@ export function addStory(data) {
 }
 
 // 修改书籍故事
-export function updateStory(data) {
+export function putObj(data) {
   return request({
     url: '/course/story',
     method: 'put',
@@ -36,18 +36,10 @@ export function updateStory(data) {
 }
 
 // 删除书籍故事
-export function delStory(id) {
+export function delObj(id) {
   return request({
     url: '/course/story/' + id,
     method: 'delete'
   })
 }
 
-// 导出书籍故事
-export function exportStory(query) {
-  return request({
-    url: '/course/story/export',
-    method: 'get',
-    params: query
-  })
-}

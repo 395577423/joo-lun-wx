@@ -4,7 +4,7 @@
                :page="page"
                :data="tableData"
                :table-loading="tableLoading"
-               :option="tableOption"
+               :option= "option"
                :before-open="beforeOpen"
                v-model="form"
                @on-load="getPage"
@@ -16,22 +16,6 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
-      <template slot="coverUrl" slot-scope="scope">
-        <img
-          style="height: 100px"
-          :src="scope.row.coverUrl">
-      </template>
-      <template slot="recommend" slot-scope="scope">
-        <el-switch
-          active-value="1"
-          inactive-value="0"
-          v-model="scope.row.recommend"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          @change="changeRecommend(scope.row)"
-        >
-        </el-switch>
-      </template>
       <template slot="plan" slot-scope="scope">
         <el-switch
           active-value="1"
@@ -39,38 +23,27 @@
           v-model="scope.row.plan"
           active-color="#13ce66"
           inactive-color="#ff4949"
-          @change="changeRecommend(scope.row)"
-        >
+          @change="changePlan(scope.row)">
         </el-switch>
       </template>
-      <template slot="status" slot-scope="scope">
-        <el-switch
-          active-value="1"
-          inactive-value="0"
-          v-model="scope.row.status"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          @change="changePlan(scope.row)"
-        >
-        </el-switch>
-      </template>
-      <template slot="introduction" slot-scope="scope">
-        <BaseEditor v-model="scope.row.introduction"/>
-      </template>
+<!--      <template slot="introduction" slot-scope="scope">-->
+<!--        <UEditor v-model="scope.row.introduction" />-->
+<!--      </template>-->
     </avue-crud>
   </div>
 </template>
 
 <script>
 import { addObj, delObj, getPage, putObj } from '@/api/course/course'
-import { tableOption } from '@/const/crud/course/course'
+import option from '@/const/crud/course/course'
 import BaseEditor from '@/components/Editor/index.vue'
+import { getObj } from '@/api/mall/goodsspu'
+
+import UEditor from '@/components/UEditor/index.vue'
 
 export default {
   name: 'course',
-  components: {
-    BaseEditor
-  },
+  components: {UEditor},
   data() {
     return {
       form: {},
@@ -84,11 +57,10 @@ export default {
       },
       paramsSearch: {},
       tableLoading: false,
-      tableOption: tableOption,
+      option: option(this),
       dialogAppraises: false,
       selectionData: '',
-      pointsConfig: null,
-      introduction: null
+      pointsConfig: null
     }
   },
   watch: {},
@@ -96,27 +68,11 @@ export default {
   },
   mounted: function() {
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
 
     selectionChange(list) {
       this.selectionData = list
-    },
-    changeRecommend(row) {
-      putObj({
-        id: row.id,
-        recommend: row.recommend
-      }).then(data => {
-      })
-    },
-    changeStatus(row) {
-      putObj({
-        id: row.id,
-        status: row.status
-      }).then(data => {
-      })
     },
     changePlan(row) {
       putObj({
@@ -126,7 +82,16 @@ export default {
       })
     },
     beforeOpen(done, type) {
-      done()
+      if(type == 'add'){
+        done()
+      }else if(type == 'edit'){
+        this.tableLoading = true
+        getObj(this.form.id).then(response => {
+          this.$set(this.form,'introduction', response.data.introduction)
+          this.tableLoading = false
+          done()
+        })
+      }
     },
     searchChange(params, done) {
       params = this.filterForm(params)
@@ -198,7 +163,7 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
-      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
+      row.imageUrl = row.imageUrl ? row.imageUrl : ''
       putObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -218,7 +183,7 @@ export default {
      *
      **/
     handleSave: function(row, done, loading) {
-      row.coverUrl = row.coverUrl ? row.coverUrl.toString(): ''
+      row.imageUrl = row.imageUrl ? row.imageUrl.toString() : ''
       addObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -240,4 +205,3 @@ export default {
   }
 }
 </script>
-

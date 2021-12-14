@@ -89,7 +89,6 @@ export const tableOption = {
       sortable:true,
       search:true,
       editDisplay:false,
-      slot:true,
       dicData: dicDataSubscribe
     },
     {
@@ -122,7 +121,6 @@ export const tableOption = {
       sortable:true,
       search:true,
       editDisplay:false,
-      slot:true,
       dicData: dicDataSex
     },
     {
@@ -160,7 +158,6 @@ export const tableOption = {
       prop: 'tagidList',
       type: 'select',
       editDisplay: false,
-      searchslot:true,
       search:true,
       props: {
         label: 'name',
@@ -287,7 +284,6 @@ export const tableOption2 = {
       sortable:true,
       search:true,
       editDisplay:false,
-      slot:true,
       dicUrl: dicDataSex
     },
     {

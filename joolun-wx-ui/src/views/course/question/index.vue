@@ -16,16 +16,21 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
+      <template slot="imageUrl" slot-scope="scope">
+        <img
+          style="height: 100px"
+          :src="scope.row.imageUrl">
+      </template>
     </avue-crud>
   </div>
 </template>
 
 <script>
 import { addObj, delObj, getPage, putObj } from '@/api/course/question'
-import option from '@/const/crud/course/question.js'
+import option from '@/const/crud/course/question'
 
 export default {
-  name: 'book',
+  name: 'question',
   components: {},
   data() {
     return {
@@ -96,7 +101,6 @@ export default {
         descs: this.page.descs,
         ascs: this.page.ascs
       }, params, this.paramsSearch)).then(response => {
-        console.log(response)
         this.tableData = response.data.records
         this.page.total = response.data.total
         this.page.currentPage = page.currentPage
@@ -138,7 +142,7 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
-      row.coverUrl = row.coverUrl ? row.coverUrl : ''
+      row.imageUrl = row.imageUrl ? row.imageUrl : ''
       putObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -158,7 +162,7 @@ export default {
      *
      **/
     handleSave: function(row, done, loading) {
-      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
+      row.imageUrl = row.imageUrl ? row.imageUrl.toString() : ''
       addObj(row).then(data => {
         this.$message({
           showClose: true,

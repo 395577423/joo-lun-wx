@@ -5,13 +5,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.common.core.domain.entity.SysDictData;
 import com.joolun.common.enums.BusinessType;
 import com.joolun.mall.entity.Book;
 import com.joolun.mall.service.IBookService;
+import com.joolun.system.service.ISysDictDataService;
+import com.joolun.system.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 书籍Controller
@@ -24,6 +28,12 @@ import java.util.Arrays;
 public class BookController extends BaseController {
     @Autowired
     private IBookService bookService;
+
+    @Autowired
+    private ISysDictDataService dictDataService;
+
+    @Autowired
+    private ISysDictTypeService dictTypeService;
 
     /**
      * 查询书籍列表
@@ -66,5 +76,13 @@ public class BookController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return AjaxResult.success(bookService.removeByIds(Arrays.asList(ids)));
+    }
+
+    @GetMapping("/type")
+    public AjaxResult getType() {
+        SysDictData dictData = new SysDictData();
+        dictData.setDictType("books_type");
+        List<SysDictData> sysDictData = dictDataService.selectDictDataList(dictData);
+        return AjaxResult.success(sysDictData);
     }
 }

@@ -44,7 +44,6 @@ export const tableOption = {
       search: true,
       sortable: true,
       span: 24,
-      slot: true,
       rules: [{
         required: true,
         message: '请选择显示状态',

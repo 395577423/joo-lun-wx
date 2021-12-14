@@ -1,17 +1,22 @@
 package com.joolun.web.controller.course;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.enums.BusinessType;
+import com.joolun.common.utils.StringUtils;
+import com.joolun.mall.entity.Course;
 import com.joolun.mall.entity.CourseQuestion;
+import com.joolun.mall.entity.CourseQuestionChoice;
 import com.joolun.mall.service.ICourseQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 书籍问题Controller
@@ -66,5 +71,18 @@ public class CourseQuestionController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return AjaxResult.success(courseQuestionService.removeByIds(Arrays.asList(ids)));
+    }
+
+    /**
+     * 查询问题列表
+     */
+    @GetMapping("/list")
+    public AjaxResult list(String question) {
+        QueryWrapper<CourseQuestion> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotEmpty(question)) {
+            queryWrapper.like("question", question);
+        }
+        List<CourseQuestion> list = courseQuestionService.list(queryWrapper.lambda().select(CourseQuestion::getId, CourseQuestion::getQuestion));
+        return AjaxResult.success(list);
     }
 }

@@ -62,7 +62,6 @@ export const tableOption = {
       sortable:true,
       search:true,
       editDisplay:false,
-      slot:true,
       dicData: dicDataSex
     },
     {

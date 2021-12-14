@@ -22,7 +22,6 @@ export const tableOption = {
       label: '商品图片',
       prop: 'picUrls',
       width: 120,
-      slot: true,
       display: false
     },
     {
@@ -45,7 +44,6 @@ export const tableOption = {
     {
       label: '销售价',
       prop: 'salesPrice',
-      slot: true,
       display: false
     },
     {
@@ -93,7 +91,6 @@ export const tableOption = {
       type: 'radio',
       search: true,
       sortable: true,
-      slot: true,
       display: false,
       dicData: [{
         label: '下架',
@@ -238,8 +235,8 @@ export const tableOption = {
         {
           label: '描述',
           prop: 'description',
-          formslot: true,
-          span: 12
+          span: 12,
+          component:'UEditor'
         }]
     }
   ]
@@ -269,7 +266,6 @@ export const tableOption2 = {
       label: '商品图片',
       prop: 'picUrls',
       width: 120,
-      slot: true
     },
     {
       label: '类目',
@@ -335,7 +331,6 @@ export const tableOption2 = {
       type: 'radio',
       search: true,
       sortable: true,
-      slot: true
     }
   ]
 }

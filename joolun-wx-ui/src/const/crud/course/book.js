@@ -39,13 +39,13 @@ export const tableOption = {
     {
       label: '书籍类型',
       prop: 'dictCode',
-      type: 'cascader',
+      type: 'select',
       search: true,
       props: {
-        label: 'name',
-        value: 'id'
+        label: 'dictLabel',
+        value: 'dictCode'
       },
-      dicUrl: '/goodscategory/tree',
+      dicUrl: '/course/book/type',
       display: false
     },
     {
@@ -75,7 +75,6 @@ export const tableOption = {
       prop: 'status',
       type: 'radio',
       sortable: true,
-      slot: true,
       display: false,
       dicData: [{
         label: '正常',
@@ -137,19 +136,18 @@ export const tableOption = {
         {
           label: '书籍类型',
           prop: 'dictCode',
-          type: 'cascader',
+          type: 'select',
           props: {
-            label: 'name',
-            value: 'id'
+            label: 'dictLabel',
+            value: 'dictCode'
           },
-          dicUrl: '/goodscategory/tree',
+          dicUrl: '/course/book/type',
           rules: [{
             required: true,
             message: '请选择类目',
             trigger: 'blur'
           }]
         },
-
         {
           label: '创建时间',
           prop: 'createTime',
@@ -173,7 +171,6 @@ export const tableOption = {
           prop: 'status',
           type: 'radio',
           sortable: true,
-          slot: true,
           dicData: [{
             label: '正常',
             value: '1'

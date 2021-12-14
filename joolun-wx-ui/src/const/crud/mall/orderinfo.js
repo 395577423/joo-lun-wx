@@ -55,7 +55,6 @@ export const tableOption = {
             label: '商品信息',
             prop: 'name',
             width: 500,
-            slot: true,
             display: false
         },
         {
@@ -63,7 +62,6 @@ export const tableOption = {
             prop: 'createTime',
             sortable: true,
             width: 250,
-            slot: true,
             display: false
         },
         {
@@ -71,7 +69,6 @@ export const tableOption = {
             prop: 'status',
             type: 'radio',
             sortable: true,
-            slot: true,
             width: 200,
             display: false
         },
@@ -79,7 +76,6 @@ export const tableOption = {
             label: '订单金额(￥)',
             prop: 'salesPrice',
             sortable: true,
-            slot: true,
             width: 200,
             display: false
         },
@@ -132,7 +128,6 @@ export const tableOption = {
             column: [
                 {
                     prop: 'orderNo',
-                    formslot: true,
                     span: 24
                 }]
         }, {
@@ -141,7 +136,6 @@ export const tableOption = {
             prop: 'group2',
             column: [{
                 prop: 'userId',
-                formslot: true,
                 span: 24
             }]
         }, {
@@ -151,7 +145,6 @@ export const tableOption = {
             column: [
                 {
                     prop: 'listOrderItem',
-                    formslot: true,
                     span: 24
                 }
             ]
@@ -161,7 +154,6 @@ export const tableOption = {
             prop: 'group4',
             column: [{
                 prop: 'orderLogistics',
-                formslot: true,
                 span: 24
             }]
         }]

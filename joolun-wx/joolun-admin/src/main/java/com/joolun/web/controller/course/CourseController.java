@@ -75,13 +75,13 @@ public class CourseController extends BaseController {
      * 查询课程列表
      */
     @GetMapping("/list")
-    public List<Course> list(String title) {
+    public AjaxResult list(String title) {
         QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotEmpty(title)) {
             queryWrapper.like("title", title);
         }
         List<Course> list = courseService.list(queryWrapper.lambda().select(Course::getId, Course::getTitle));
-        return list;
+        return AjaxResult.success(list);
     }
 
 }
