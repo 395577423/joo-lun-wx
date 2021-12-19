@@ -1,0 +1,50 @@
+<view class="cu-list menu-avatar bg-white padding-bottom" style="background-color:#f3f4f7 !important;">
+  <view class='flex justify-end margin-right'>
+    <view class="text-xl margin-top" bindtap="settings">
+      <text class="cuIcon-settingsfill text-black"></text>
+    </view>
+  </view>
+  <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头' : ''}}</view>
+  <view class="content text-center margin-top-sm">
+    <view class="margin-top-xs text-xxl text-bold text-black" wx:if="{{wxUser.nickName}}">{{wxUser.nickName}}</view>
+    <button class="cu-btn round sm margin-top-xs" bindtap="getUserProfile">
+      {{!wxUser.nickName ? '获取昵称' : '更新昵称'}}
+    </button>
+  </view>
+</view>
+<view class="cu-listradius order-list">
+  <view class="cu-bar">
+    <view class="action">
+      <text class="cuIcon-titles text-black titles-color"></text>成为会员
+    </view>
+    <navigator class="action" url="/pages/order/order-list/index" hover-class="none">
+      立即加入<text class="cuIcon-right"></text>
+    </navigator>
+  </view>
+  <view class="cu-bar">
+    <view class="action">
+      <text class="cuIcon-titles text-black titles-color"></text>我的书屋
+    </view>
+    <navigator class="action" url="/pages/order/order-list/index" hover-class="none">
+      已借阅<text class="cuIcon-right"></text>
+    </navigator>
+    <navigator class="action" url="/pages/order/order-list/index" hover-class="none">
+      心愿单<text class="cuIcon-right"></text>
+    </navigator>
+  </view>
+  <view class="cu-bar">
+    <view class="action">
+      <text class="cuIcon-titles text-black titles-color"></text>我的勋章
+    </view>
+  </view>
+  <view class="cu-bar">
+    <navigator class="action" url="/pages/goods/goods-category/index">
+      <text class="cuIcon-titles text-black titles-color" bind></text>我的奖学金兑换
+    </navigator>
+  </view>
+  <view class="cu-bar">
+    <navigator class="action" url="/pages/order/order-list/index">
+      <text class="cuIcon-titles text-black titles-color"></text>我的订单
+    </navigator>
+  </view>
+</view>

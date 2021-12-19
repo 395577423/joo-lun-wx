@@ -151,5 +151,8 @@ module.exports = {
   },
   userAddressDel: (id) => {//用户收货地址删除
     return request('/weixin/api/ma/useraddress/' + id, 'delete', null, false)
+  },
+  booksCategoryGet:() => { //书籍目录获取
+    return request('/weixin/api/course/tree','get')
   }
 }

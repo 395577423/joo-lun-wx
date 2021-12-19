@@ -1,5 +1,6 @@
 package com.joolun.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.mall.entity.Course;
 import com.joolun.mall.mapper.CourseMapper;
@@ -15,4 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
 
+    @Override
+    public Course selectPlan() {
+        QueryWrapper<Course> wrapper = new QueryWrapper<>();
+        wrapper.eq("plan", "1").orderByDesc("create_time");
+        return baseMapper.selectOne(wrapper);
+    }
 }

@@ -11,4 +11,5 @@ import com.joolun.mall.entity.Course;
  */
 public interface ICourseService extends IService<Course>
 {
+    Course selectPlan();
 }

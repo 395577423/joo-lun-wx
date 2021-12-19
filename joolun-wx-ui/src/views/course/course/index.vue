@@ -82,16 +82,7 @@ export default {
       })
     },
     beforeOpen(done, type) {
-      if(type == 'add'){
-        done()
-      }else if(type == 'edit'){
-        this.tableLoading = true
-        getObj(this.form.id).then(response => {
-          this.$set(this.form,'introduction', response.data.introduction)
-          this.tableLoading = false
-          done()
-        })
-      }
+      done()
     },
     searchChange(params, done) {
       params = this.filterForm(params)

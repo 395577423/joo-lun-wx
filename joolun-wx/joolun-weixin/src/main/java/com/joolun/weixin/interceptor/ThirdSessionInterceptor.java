@@ -26,7 +26,7 @@ import java.io.PrintWriter;
  * @author Owen
  */
 @Slf4j
-@Component
+//@Component
 @AllArgsConstructor
 public class ThirdSessionInterceptor extends HandlerInterceptorAdapter {
 

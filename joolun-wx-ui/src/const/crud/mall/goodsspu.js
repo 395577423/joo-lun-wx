@@ -236,7 +236,7 @@ export const tableOption = {
           label: '描述',
           prop: 'description',
           span: 12,
-          component:'UEditor'
+          type:'textarea'
         }]
     }
   ]

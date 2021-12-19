@@ -14,7 +14,9 @@
     "pages/user/user-address/list/index",
     "pages/user/user-address/form/index",
     "pages/plans/plandetail/plandetail",
-    "pages/plans/myplan/myplan"
+    "pages/plans/myplan/myplan",
+    "pages/user/user-center-new/index",
+    "pages/course/course-category/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -32,28 +34,16 @@
         "pagePath": "pages/home/index",
         "iconPath": "public/img/1-001.png",
         "selectedIconPath": "public/img/1-002.png",
-        "text": "计划"
+        "text": "首页"
       },
       {
-        "pagePath": "pages/store/index",
-        "iconPath": "public/img/1-001.png",
-        "selectedIconPath": "public/img/1-002.png",
-        "text": "商城"
-      },
-      {
-        "pagePath": "pages/goods/goods-category/index",
+        "pagePath": "pages/course/course-category/index",
         "iconPath": "public/img/2-001.png",
         "selectedIconPath": "public/img/2-002.png",
-        "text": "分类"
+        "text": "书架"
       },
       {
-        "pagePath": "pages/shopping-cart/index",
-        "iconPath": "public/img/3-001.png",
-        "selectedIconPath": "public/img/3-002.png",
-        "text": "购物车"
-      },
-      {
-        "pagePath": "pages/user/user-center/index",
+        "pagePath": "pages/user/user-center-new/index",
         "iconPath": "public/img/4-001.png",
         "selectedIconPath": "public/img/4-002.png",
         "text": "我的"

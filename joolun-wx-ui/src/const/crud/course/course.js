@@ -92,7 +92,8 @@ export default (safe) => {
       }, {
         label: '介绍',
         prop: 'introduction',
-        span: 12
+        span: 12,
+        type:'textarea'
       }]
 
   }

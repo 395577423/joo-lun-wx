@@ -48,9 +48,9 @@
                   @change="changeShelf(scope.row)">
           </el-switch>
         </template>
-        <template slot="descriptionForm" slot-scope="scope">
-          <BaseEditor v-model="scope.row.description"/>
-        </template>
+<!--        <template slot="descriptionForm" slot-scope="scope">-->
+<!--          <BaseEditor v-model="scope.row.description"/>-->
+<!--        </template>-->
         <template slot="picUrls" slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
