@@ -1,4 +1,4 @@
-<view class="cu-bar search bg-white fixed" style="box-shadow:none">
+<view class="cu-bar search bg-white fixed padding" style="box-shadow:none">
   <view class="search-form">
     <text class="cuIcon-search"></text>
     <navigator class="response" hover-class='none' url='/pages/course/course-category/index'>
@@ -6,8 +6,54 @@
     </navigator>
   </view>
 </view>
-<view class="cu-listradius order-list">
-  <view class="cu-bar">
-    <text class="cuIcon-titles text-black titles-color"></text>我的订单
+<view class="cu-bar bg-white solid-bottom margin-top" style="margin-top: 120rpx;">
+  <view class="action">
+    <text class=" text-shadow text-orange">奖学金计划</text>
   </view>
 </view>
+<view class="cu-list grid  no-border">
+  <view class="flex">
+    <image src="{{src}}" style="width: 150rpx;height: 150rpx;"></image>
+    <view class="flex flex-direction">
+      <view class="flex-sub">
+        <text>《{{title}}》</text>
+      </view>
+      <view class="flex-sub">
+        <button class="cu-btn round bg-green button-hover" bindtap="toDetail" data-courseId="{{id}}">立即加入</button>
+      </view>
+    </view>
+  </view>
+</view>
+<scroll-view scroll-y="true" class="bg-white">
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="text-shadow text-orange">大家都在读</text>
+    </view>
+  </view>
+  <view class="bg-white padding">
+    <view wx:for="{{recommends}}" wx:key="index">
+      <view class="recommend flex" bindtap="toDetail" data-courseId="{{item.id}}">
+        <view>
+          <image src="{{item.coverUrl}}"  style="width: 100rpx;height:100rpx;"></image>
+        </view>
+        <view class="flex-direction flex">
+          <text class="text-black text-bold text-cut text-xs">《{{item.title}}》</text>
+          <text class="text-black text-bold">{{item.ageStart}}~{{item.ageEnd}}岁</text>
+          <view wx:if="{{item.realPrice<item.price}}">
+            <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+            <text class="text-price text-red text-bold" style="margin-left: 5px;text-decoration:line-through;">{{item.price}}</text>
+          </view>
+          <view wx:else>
+            <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<block wx:if="{{dataILu}}">
+  <view class="cu-load bg-blue loading"></view>
+</block>
+<block wx:else>
+  <view class="cu-load bg-blue over"></view>
+</block>

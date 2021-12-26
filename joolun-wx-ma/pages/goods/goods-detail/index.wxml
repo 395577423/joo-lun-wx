@@ -1,9 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
-  - 注意：
-  - 本软件为www.joolun.com开发研制，项目使用请保留此说明
--->
 <view class='product-bg bg-white padding-top'>
   <swiper class="screen-swiper square-dot screen" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="change">
     <swiper-item wx:for="{{goodsSpu.picUrls}}" wx:key="index">
@@ -79,7 +73,7 @@
           send-message-title="{{goodsSpu.name}}--咨询"
           send-message-img="{{goodsSpu.picUrls[0] ? goodsSpu.picUrls[0] : '/public/img/no_pic.png'}}"
           show-message-card="true" 
-          send-message-path="/pages/goods/goods-detail/index?id={{goodsSpu.id}}">
+          send-message-path="/pages/goods/goods-detail/index?id={{goodsSpu.id}}" disabled="true">
     <view class="cuIcon-servicefill"></view> 
     客服
   </button>

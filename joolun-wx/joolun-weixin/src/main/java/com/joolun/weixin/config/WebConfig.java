@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 		 * 进入ThirdSession拦截器
 		 */
 		registry.addInterceptor(new ThirdSessionInterceptor(redisTemplate))
-//				.addPathPatterns("/weixin/api/**")//拦截/api/**接口
+				.addPathPatterns("/weixin/api/**")//拦截/api/**接口
 				.excludePathPatterns("/weixin/api/ma/wxuser/login",
 						"/weixin/api/ma/orderinfo/notify-order",
 						"/weixin/api/ma/orderinfo/notify-logisticsr",

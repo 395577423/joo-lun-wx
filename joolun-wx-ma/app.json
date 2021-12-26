@@ -16,7 +16,8 @@
     "pages/plans/plandetail/plandetail",
     "pages/plans/myplan/myplan",
     "pages/user/user-center-new/index",
-    "pages/course/course-category/index"
+    "pages/course/course-category/index",
+    "pages/course/course-detail/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

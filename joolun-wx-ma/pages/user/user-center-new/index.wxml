@@ -17,20 +17,18 @@
     <view class="action">
       <text class="cuIcon-titles text-black titles-color"></text>成为会员
     </view>
-    <navigator class="action" url="/pages/order/order-list/index" hover-class="none">
-      立即加入<text class="cuIcon-right"></text>
-    </navigator>
+    <button class="cu-btn round line-green button-hover">立即加入</button>
   </view>
   <view class="cu-bar">
     <view class="action">
       <text class="cuIcon-titles text-black titles-color"></text>我的书屋
     </view>
-    <navigator class="action" url="/pages/order/order-list/index" hover-class="none">
-      已借阅<text class="cuIcon-right"></text>
-    </navigator>
-    <navigator class="action" url="/pages/order/order-list/index" hover-class="none">
-      心愿单<text class="cuIcon-right"></text>
-    </navigator>
+    <button class="cu-btn round line-green button-hover" url="/pages/order/order-list/index">
+      已借阅
+    </button>
+    <button class="cu-btn round line-green button-hover" url="/pages/order/order-list/index">
+      心愿单
+    </button>
   </view>
   <view class="cu-bar">
     <view class="action">
@@ -46,5 +44,13 @@
     <navigator class="action" url="/pages/order/order-list/index">
       <text class="cuIcon-titles text-black titles-color"></text>我的订单
     </navigator>
+  </view>
+</view>
+
+<view class="padding bg-white">
+  <view class="flex">
+    <view class="flex-treble" style="text-decoration-line: underline;">联系客服</view>
+    <view class="flex-treble" style="text-decoration-line: underline;">意见反馈</view>
+    <view class="flex-treble" style="text-decoration-line: underline;">关注公众号</view>
   </view>
 </view>

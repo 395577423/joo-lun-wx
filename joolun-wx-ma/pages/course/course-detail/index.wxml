@@ -1,0 +1,22 @@
+<view class="text-center text-xl padding">{{title}}</view>
+<view class="basis-xl bg-cyan margin-xs padding-sm radius">{{introduction}}</view>
+<view >
+  <view class="basis-xl bg-green margin-xs padding-sm radius">任务一</view>
+</view>
+
+<view>
+  <view class="basis-xl bg-green margin-xs padding-sm radius">任务二</view>
+  
+</view>
+
+<view>
+  <view class="basis-xl bg-green margin-xs padding-sm radius">任务三</view>
+</view>
+      
+<view>
+  <view class="basis-xl bg-green margin-xs padding-sm radius">任务四</view>
+</view>
+
+<view>
+  <button class="cu-btn round bg-green button-hover">{{result}}</button>
+</view>

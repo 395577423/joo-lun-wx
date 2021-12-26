@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joolun.common.annotation.Excel;
@@ -69,6 +70,9 @@ public class Course extends Model<Course>
     /** 课程价格 */
     @Excel(name = "课程价格")
     private BigDecimal price;
+
+    @TableField(exist = false)
+    private BigDecimal realPrice;
 
     /** 返现金额 */
     @Excel(name = "返现金额")
