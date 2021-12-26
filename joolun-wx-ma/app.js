@@ -103,7 +103,7 @@ App({
                 that.globalData.wxUser = wxUser
                 resolve("success")
                 //获取购物车数量
-                that.shoppingCartCount()
+                // that.shoppingCartCount()
               })
           }
         }
