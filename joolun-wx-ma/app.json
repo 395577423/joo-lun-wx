@@ -3,6 +3,7 @@
     "pages/home/index",
     "pages/store/index",
     "pages/base/search/index",
+    "pages/base/search2/index",
     "pages/goods/goods-category/index",
     "pages/goods/goods-list/index",
     "pages/goods/goods-detail/index",
@@ -17,13 +18,18 @@
     "pages/plans/myplan/myplan",
     "pages/user/user-center-new/index",
     "pages/course/course-category/index",
-    "pages/course/course-detail/index"
+    "pages/course/course-detail/index",
+    "pages/course/course-question/index",
+    "pages/course/course-audio/index",
+    "pages/course/course-video/index",
+    "pages/course/course-list/index",
+    "pages/course/course-report/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#fefefe",
+    "navigationBarBackgroundColor": "#0081FF",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "tabBar": {

@@ -17,6 +17,8 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
+        <result property="categoryFirst" column="category_first"/>
+        <result property="categorySecond" column="category_second"/>
     </resultMap>
 
 </mapper>

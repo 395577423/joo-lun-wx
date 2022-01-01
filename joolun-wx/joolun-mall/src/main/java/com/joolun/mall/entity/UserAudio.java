@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
+import java.time.LocalDateTime;
+
 /**
  * 用户书籍录音对象 user_audio
  *
@@ -31,9 +33,12 @@ public class UserAudio extends Model<UserAudio> {
     @Excel(name = "课程ID")
     private Long courseId;
 
+    private String userId;
     /**
      * 录音地址
      */
     @Excel(name = "录音地址")
     private String audioUrl;
+
+    private LocalDateTime createTime;
 }

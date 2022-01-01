@@ -44,4 +44,6 @@ public interface CommonConstants {
 	 * 编码
 	 */
 	String UTF8 = "UTF-8";
+
+	Long LONG_PARENT_ID = 0L;
 }

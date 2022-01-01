@@ -37,15 +37,15 @@ export const tableOption = {
       display: false
     },
     {
-      label: '书籍类型',
-      prop: 'dictCode',
-      type: 'select',
+      label: '类目',
+      prop: 'categoryId',
+      type: 'cascader',
       search: true,
       props: {
-        label: 'dictLabel',
-        value: 'dictCode'
+        label: 'name',
+        value: 'id'
       },
-      dicUrl: '/course/book/type',
+      dicUrl: '/bookcategory/tree',
       display: false
     },
     {
@@ -134,14 +134,14 @@ export const tableOption = {
           prop: 'author'
         },
         {
-          label: '书籍类型',
-          prop: 'dictCode',
-          type: 'select',
+          label: '类目',
+          prop: 'categoryId',
+          type: 'cascader',
           props: {
-            label: 'dictLabel',
-            value: 'dictCode'
+            label: 'name',
+            value: 'id'
           },
-          dicUrl: '/course/book/type',
+          dicUrl: '/bookcategory/tree',
           rules: [{
             required: true,
             message: '请选择类目',

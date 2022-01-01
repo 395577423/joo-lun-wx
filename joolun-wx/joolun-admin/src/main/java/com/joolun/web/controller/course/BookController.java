@@ -1,5 +1,6 @@
 package com.joolun.web.controller.course;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.annotation.Log;
@@ -7,11 +8,13 @@ import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.core.domain.entity.SysDictData;
 import com.joolun.common.enums.BusinessType;
+import com.joolun.common.utils.StringUtils;
 import com.joolun.mall.entity.Book;
 import com.joolun.mall.service.IBookService;
 import com.joolun.system.service.ISysDictDataService;
 import com.joolun.system.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -84,5 +87,15 @@ public class BookController extends BaseController {
         dictData.setDictType("books_type");
         List<SysDictData> sysDictData = dictDataService.selectDictDataList(dictData);
         return AjaxResult.success(sysDictData);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getBookList(String name){
+
+        QueryWrapper<Book> wrapper = new QueryWrapper<>();
+        if(StringUtils.isNotEmpty(name)) {
+            wrapper.like("title", name);
+        }
+        return AjaxResult.success(bookService.list(wrapper));
     }
 }

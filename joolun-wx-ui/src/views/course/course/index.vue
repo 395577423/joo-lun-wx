@@ -26,24 +26,21 @@
           @change="changePlan(scope.row)">
         </el-switch>
       </template>
-<!--      <template slot="introduction" slot-scope="scope">-->
-<!--        <UEditor v-model="scope.row.introduction" />-->
-<!--      </template>-->
+      <template slot="introductionForm" slot-scope="scope">
+        <BaseEditor v-model="scope.row.introduction" />
+      </template>
     </avue-crud>
   </div>
 </template>
 
 <script>
-import { addObj, delObj, getPage, putObj } from '@/api/course/course'
+import { addObj, delObj,getObj, getPage, putObj } from '@/api/course/course'
 import option from '@/const/crud/course/course'
 import BaseEditor from '@/components/Editor/index.vue'
-import { getObj } from '@/api/mall/goodsspu'
-
-import UEditor from '@/components/UEditor/index.vue'
 
 export default {
   name: 'course',
-  components: {UEditor},
+  components: {BaseEditor},
   data() {
     return {
       form: {},
@@ -79,10 +76,22 @@ export default {
         id: row.id,
         plan: row.plan
       }).then(data => {
+
       })
     },
     beforeOpen(done, type) {
-      done()
+      if(type == 'add'){
+        done()
+      }else if(type == 'edit'){
+        this.tableLoading = true
+        getObj(this.form.id).then(response => {
+          console.log(response)
+          console.log(this.form)
+          this.$set(this.form,'introduction', response.data.introduction)
+          this.tableLoading = false
+          done()
+        })
+      }
     },
     searchChange(params, done) {
       params = this.filterForm(params)

@@ -1,12 +1,3 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- * 注意：
- * 本软件为www.joolun.com开发研制，项目使用请保留此说明
- */
-/**
- * <version>3.3.1</version>
- */
 import api from './utils/api'
 import __config from './config/env'
 
@@ -15,7 +6,9 @@ App({
   globalData: {
     thirdSession: null,
     wxUser: null,
-    config: __config
+    config: __config,
+    winWidth:null,
+    winHeight:null
   },
   onLaunch: function () {
     //检测新版本
@@ -26,6 +19,8 @@ App({
         let custom = wx.getMenuButtonBoundingClientRect();
         this.globalData.Custom = custom;
         this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+        this.globalData.winWidth = e.screenWidth
+        this.globalData.winHeight = e.screenHeight
       }
     })
   },
@@ -103,7 +98,7 @@ App({
                 that.globalData.wxUser = wxUser
                 resolve("success")
                 //获取购物车数量
-                // that.shoppingCartCount()
+                that.shoppingCartCount()
               })
           }
         }

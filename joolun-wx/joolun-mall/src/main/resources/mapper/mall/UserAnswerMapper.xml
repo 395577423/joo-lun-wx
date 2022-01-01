@@ -8,7 +8,7 @@
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="answerId" column="answer_id"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
+        <result property="questionId" column="question_id"/>
+        <result property="courseId" column="course_id"/>
     </resultMap>
 </mapper>

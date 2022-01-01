@@ -1,11 +1,14 @@
 package com.joolun.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.joolun.common.annotation.Excel;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 书籍问题对象 book_question
@@ -49,4 +52,18 @@ public class CourseQuestion extends Model<CourseQuestion> {
     @Excel(name = "排序")
     private Long sort;
 
+    @TableField(exist = false)
+    private List<CourseQuestionChoice> choices;
+
+    /**
+     * 用户答案
+     */
+    @TableField(exist = false)
+    private Long choiceId;
+
+    /**
+     * 是否正确
+     */
+    @TableField(exist = false)
+    private Boolean correct;
 }

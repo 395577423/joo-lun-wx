@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- * 注意：
- * 本软件为www.joolun.com开发研制，项目使用请保留此说明
- */
 import __config from '../config/env'
 
 const request = (url, method, data, showLoading) => {
@@ -161,7 +155,25 @@ module.exports = {
   booksCategoryGet: () => { //书籍目录获取
     return request('/weixin/api/course/tree', 'get')
   },
-  courseDetail: (courseId) => { //获取课程详情
-    return request('/weixin/api/course/detail/'+courseId, 'get', null, false)
+  coursePage:(data) =>{ //根据书籍分类查询课程列表
+    return request('/weixin/api/course/list','get',data,false)
   },
+  courseDetail: (courseId) => { //获取课程详情
+    return request('/weixin/api/course/detail/' + courseId, 'get', null, false)
+  },
+  getUserCourse: (courseId, userId) => { //用户课程信息
+    return request('/weixin/api/course/usercourse/' + courseId + '/' + userId, 'get', null, false)
+  },
+  getCourseQuestion: (courseId, userId) => { //课程问题与答案
+    return request('/weixin/api/course/question/' + courseId + '/' + userId, 'get', null, false)
+  },
+  setUserChoice: (data) => { //保存用户问题答案
+    return request('/weixin/api/course/choice', 'post', data, false)
+  },
+  getUserAudio:(courseId, userId) =>{ //查询用户录音
+    return request('/weixin/api/course/audio/' + courseId + '/' + userId, 'get', null, false)
+  },
+  getUserReport:(courseId,userId) =>{ //获取用户读书报告
+    return request('/weixin/api/course/report/' + courseId + '/' + userId, 'get', null, false)
+  }
 }

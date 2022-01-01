@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.common.annotation.Excel;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -85,4 +86,13 @@ public class Book extends Model<Book> {
      * 备注
      */
     private String remark;
+
+    /**
+     * 一级分类ID
+     */
+    private Long categoryFirst;
+    /**
+     * 二级分类ID
+     */
+    private Long categorySecond;
 }

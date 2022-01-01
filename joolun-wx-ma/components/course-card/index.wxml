@@ -1,0 +1,21 @@
+<view class="course-container">
+  <view class="course-box" wx:for="{{courseList}}" wx:key="index">
+    <navigator hover-class='none' url='/pages/course/course-detail/index?courseId={{item.id}}'>
+      <view class="text-black margin-top text-bold padding-lr overflow-1">{{item.title}}</view>
+      <view class="img-box">
+        <image src="{{item.coverUrl}}" class="margin-top-xs" />
+      </view>
+      <view class="text-center margin-top">
+        <view wx:if="{{item.realPrice<item.price}}">
+          <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+          <text class="text-price text-red text-bold" style="margin-left: 5px;text-decoration:line-through;">{{item.price}}</text>
+        </view>
+        <view wx:else>
+          <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+        </view>
+        <text>{{item.ageStart}}-{{item.ageEnd}}岁</text>
+        <view class="text-gray text-sm padding-lr-sm">已售{{item.saleNum}}</view>
+      </view>
+    </navigator>
+  </view>
+</view>

@@ -1,4 +1,4 @@
-<view class="cu-list menu-avatar bg-white padding-bottom" style="background-color:#f3f4f7 !important;">
+<view class="cu-list menu-avatar padding-bottom ">
   <view class='flex justify-end margin-right'>
     <view class="text-xl margin-top" bindtap="settings">
       <text class="cuIcon-settingsfill text-black"></text>
@@ -12,45 +12,41 @@
     </button>
   </view>
 </view>
-<view class="cu-listradius order-list">
-  <view class="cu-bar">
-    <view class="action">
-      <text class="cuIcon-titles text-black titles-color"></text>成为会员
-    </view>
-    <button class="cu-btn round line-green button-hover">立即加入</button>
+
+<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+  <view class="cu-item arrow">
+    <view class="content">
+        <text class="cuIcon-vip text-orange"></text>
+        <text>成为会员</text>
+      </view>
   </view>
-  <view class="cu-bar">
-    <view class="action">
-      <text class="cuIcon-titles text-black titles-color"></text>我的书屋
-    </view>
-    <button class="cu-btn round line-green button-hover" url="/pages/order/order-list/index">
-      已借阅
-    </button>
-    <button class="cu-btn round line-green button-hover" url="/pages/order/order-list/index">
-      心愿单
-    </button>
-  </view>
-  <view class="cu-bar">
-    <view class="action">
-      <text class="cuIcon-titles text-black titles-color"></text>我的勋章
-    </view>
-  </view>
-  <view class="cu-bar">
-    <navigator class="action" url="/pages/goods/goods-category/index">
-      <text class="cuIcon-titles text-black titles-color" bind></text>我的奖学金兑换
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/course/course-list/index">
+      <text class="cuIcon-list text-orange "></text>
+      <text>我的书屋</text>
     </navigator>
   </view>
-  <view class="cu-bar">
-    <navigator class="action" url="/pages/order/order-list/index">
-      <text class="cuIcon-titles text-black titles-color"></text>我的订单
+  <view class="cu-item arrow">
+    <view class="content">
+      <text class="cuIcon-cascades text-orange "></text>
+      <text>我的勋章</text>
+    </view>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/goods/goods-category/index">
+      <text class="cuIcon-pay text-orange "></text>
+      <text>我的奖学金兑换</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/order/order-list/index">
+      <text class="cuIcon-cartfill text-orange "></text>
+      <text>我的订单</text>
     </navigator>
   </view>
 </view>
-
-<view class="padding bg-white">
-  <view class="flex">
-    <view class="flex-treble" style="text-decoration-line: underline;">联系客服</view>
+<view class="padding flex text-center text-grey bg-white shadow-warp">
+  <view class="flex-treble" style="text-decoration-line: underline;">联系客服</view>
     <view class="flex-treble" style="text-decoration-line: underline;">意见反馈</view>
     <view class="flex-treble" style="text-decoration-line: underline;">关注公众号</view>
-  </view>
 </view>

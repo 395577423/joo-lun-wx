@@ -40,11 +40,15 @@ public class UserAnswer extends Model<UserAnswer> {
     private Long answerId;
 
     /**
-     * 创建时间
+     * 答案ID
      */
-    private LocalDateTime createTime;
+    @Excel(name = "问题ID")
+    private Long questionId;
+
     /**
-     * 最后更新时间
+     * 答案ID
      */
-    private LocalDateTime updateTime;
+    @Excel(name = "问题ID")
+    private Long courseId;
+
 }

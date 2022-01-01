@@ -26,6 +26,62 @@
         <result property="remark" column="remark"/>
         <result property="question" column="question"/>
         <result property="questionAudio" column="question_audio"/>
+        <result property="saleNum" column="sale_num"/>
     </resultMap>
+
+    <sql id="courseSql">
+       i.id,
+       i.title,
+       i.cover_url,
+       i.recommend,
+       i.status,
+       i.start_time,
+       i.end_time,
+       i.age_start,
+       i.age_end,
+       i.price,
+       i.cash_return,
+       i.rates,
+       i.plan,
+       i.create_by,
+       i.create_time,
+       i.update_by,
+       i.update_time,
+       i.remark,
+       i.question,
+       i.question_audio,
+       i.sale_num
+    </sql>
+
+    <select id="selectPage2" resultMap="CourseResult">
+        SELECT
+        <include refid="courseSql"/>
+        FROM course i
+        <where>
+            <if test="query.categorySecond != null">
+               and i.id in (select i.course_id
+                from course_book i
+                where i.book_id in (
+                select c.bookid
+                from (select a.id as bookid
+                from book a
+                , book_category b
+                where a.category_second = b.id
+                and b.id = #{query.categorySecond} ) c))
+            </if>
+            <if test="query.name !=null and query.name != ''">
+                and i.title like concat('%',#{query.name},'%')
+                or i.id in (select i.course_id
+                from course_book i
+                where i.book_id in (
+                select c.bookid
+                from (select a.id as bookid
+                from book a
+                , book_category b
+                where a.category_second = b.id
+                and a.title like concat('%',#{query.name},'%') ) c))
+            </if>
+        </where>
+    </select>
 
 </mapper>

@@ -93,7 +93,25 @@ export default (safe) => {
         label: '介绍',
         prop: 'introduction',
         span: 12,
-        type:'textarea'
+        formslot:true,
+        hide:true
+      },{
+        label: '关联书籍',
+        prop: 'books',
+        type: 'select',
+        multiple:true,
+        props: {
+          label: 'title',
+          value: 'id'
+        },
+        dicUrl: '/course/book/list?name={{key}}',
+        rules:[
+          {
+            required: true,
+            message: '请选择关联书籍',
+            trigger: 'blur'
+          }
+        ]
       }]
 
   }

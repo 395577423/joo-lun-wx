@@ -3,12 +3,14 @@ package com.joolun.mall.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joolun.common.annotation.Excel;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -120,4 +122,16 @@ public class Course extends Model<Course>
      */
     @Excel(name = "音频地址")
     private String questionAudio;
+
+    /**
+     * 销量
+     */
+    private Integer saleNum;
+
+    /**
+     * 关联书籍
+     */
+    @TableField(exist = false)
+    private List<Long> books;
+
 }

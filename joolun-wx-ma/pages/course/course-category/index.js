@@ -6,7 +6,7 @@ Page({
     TabCur: 0,
     MainCur: 0,
     VerticalNavTop: 0,
-    goodsCategory: [],
+    bookCategory: [],
     load: true
   },
   onLoad() { 
@@ -23,11 +23,11 @@ Page({
     })
   },
   booksCategoryGet() {
-    app.api.goodsCategoryGet()
+    app.api.booksCategoryGet()
       .then(res => {
-        let goodsCategory = res.data
+        let bookCategory = res.data
         this.setData({
-          goodsCategory: goodsCategory
+          bookCategory: bookCategory
         })
       })
   },
@@ -40,7 +40,7 @@ Page({
   },
   VerticalMain(e) {
     let that = this
-    let list = this.data.goodsCategory
+    let list = this.data.bookCategory
     let tabHeight = 0
     if (this.data.load) {
       for (let i = 0; i < list.length; i++) {
@@ -55,7 +55,7 @@ Page({
       }
       that.setData({
         load: false,
-        goodsCategory: list
+        bookCategory: list
       })
     }
     let scrollTop = e.detail.scrollTop + 20

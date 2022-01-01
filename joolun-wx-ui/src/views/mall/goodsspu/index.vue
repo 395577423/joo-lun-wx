@@ -48,9 +48,9 @@
                   @change="changeShelf(scope.row)">
           </el-switch>
         </template>
-<!--        <template slot="descriptionForm" slot-scope="scope">-->
-<!--          <BaseEditor v-model="scope.row.description"/>-->
-<!--        </template>-->
+        <template slot="descriptionForm" slot-scope="scope">
+          <BaseEditor v-model="scope.column.description"/>
+        </template>
         <template slot="picUrls" slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
@@ -60,14 +60,18 @@
         </template>
 
       </avue-crud>
+
   </div>
+
+
+
 </template>
 
+
 <script>
-    import {checkPermi, checkRole} from "@/utils/permission"
+    import {checkPermi} from "@/utils/permission"
     import {getPage, getObj, addObj, putObj, delObj, putObjShelf} from '@/api/mall/goodsspu'
     import {tableOption} from '@/const/crud/mall/goodsspu'
-    import {mapGetters} from 'vuex'
     import BaseEditor from '@/components/Editor/index.vue'
 
     export default {
@@ -244,8 +248,7 @@
             handleUpdate: function (row, index, done, loading) {
                 row.categoryFirst = row.categoryId[0]
                 row.categorySecond = row.categoryId[1]
-
-                row.picUrls = row.picUrls?row.picUrls.toString().split(','):''
+                row.picUrls = row.picUrls?row.picUrls.split(','):''
                 putObj(row).then(data => {
                     this.$message({
                         showClose: true,
@@ -267,8 +270,7 @@
             handleSave: function (row, done, loading) {
                 row.categoryFirst = row.categoryId[0]
                 row.categorySecond = row.categoryId[1]
-                console.log(row.picUrls)
-                row.picUrls = row.picUrls?row.picUrls.toString().split(','):''
+                row.picUrls = row.picUrls?row.picUrls.split(','):''
                 addObj(row).then(data => {
                     this.$message({
                         showClose: true,

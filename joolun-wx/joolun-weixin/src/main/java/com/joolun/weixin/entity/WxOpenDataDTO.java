@@ -15,4 +15,6 @@ public class WxOpenDataDTO {
 	private String rawData;
 	private String signature;
 	private String sessionKey;
+	private String money;
+	private Long courseId;
 }

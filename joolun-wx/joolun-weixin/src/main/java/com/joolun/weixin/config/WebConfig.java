@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * web配置
  */
-//@Configuration
+@Configuration
 @AllArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 	private final RedisTemplate redisTemplate;

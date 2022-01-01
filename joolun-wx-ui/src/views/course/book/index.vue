@@ -107,13 +107,28 @@ export default {
     },
     getPage(page, params) {
       this.tableLoading = true
+      if (this.paramsSearch.categoryId) {
+        this.paramsSearch.categoryFirst = this.paramsSearch.categoryId[0]
+        this.paramsSearch.categorySecond = this.paramsSearch.categoryId[1]
+      }
       getPage(Object.assign({
         current: page.currentPage,
         size: page.pageSize,
         descs: this.page.descs,
         ascs: this.page.ascs
       }, params, this.paramsSearch)).then(response => {
-        this.tableData = response.data.records
+        let tableData = response.data.records
+        tableData.forEach(function (item, index) {
+          let categoryId = []
+          if(item.categoryFirst){
+            categoryId.push(item.categoryFirst)
+          }
+          if(item.categorySecond){
+            categoryId.push(item.categorySecond)
+          }
+          item.categoryId = categoryId
+        })
+        this.tableData = tableData
         this.page.total = response.data.total
         this.page.currentPage = page.currentPage
         this.page.pageSize = page.pageSize
@@ -154,6 +169,9 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
+      row.categoryFirst = row.categoryId[0]
+      row.categorySecond = row.categoryId[1]
+
       row.coverUrl = row.coverUrl ? row.coverUrl : ''
       putObj(row).then(data => {
         this.$message({
@@ -174,6 +192,8 @@ export default {
      *
      **/
     handleSave: function(row, done, loading) {
+      row.categoryFirst = row.categoryId[0]
+      row.categorySecond = row.categoryId[1]
       row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
       addObj(row).then(data => {
         this.$message({

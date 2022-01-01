@@ -72,4 +72,9 @@ public class CourseVideo extends Model<CourseVideo> {
      * 创建时间
      */
     private LocalDateTime createTime;
+
+    /**
+     * 视频时长 秒
+     */
+    private Integer duration;
 }

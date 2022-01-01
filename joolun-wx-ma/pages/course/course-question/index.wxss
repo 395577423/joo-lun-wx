@@ -1,0 +1,56 @@
+/* pages/course/course-question/index.wxss */
+page {
+  background-color: #fef2ce;
+}
+
+.answer {
+  border: 1px solid;
+  margin-top: 25rpx;
+  border-radius: 80rpx;
+  padding: 10px;
+}
+
+.question {
+  margin: 0 auto;
+  width: 85%;
+  margin-top: 40rpx;
+}
+
+.swiper {
+  height: 1100rpx;
+  border-radius: 10rpx;
+}
+
+.swiperitem {
+  height: 300rpx;
+  text-align: center;
+}
+
+.swiperitem image {
+  margin: 0 auto;
+}
+
+.swiperitem radio-group{
+  width: 80%;
+}
+
+.title {
+  text-align: center;
+}
+
+.title image {
+  height: 90rpx;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: -75rpx;
+  z-index: 10;
+  position: relative;
+}
+
+.progerss {
+  text-align: center;
+  margin-bottom: -65rpx;
+  margin-top: 20rpx;
+  z-index: 99;
+  position: relative;
+}

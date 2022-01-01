@@ -33,6 +33,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.JdbcType;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -170,4 +171,9 @@ private static final long serialVersionUID = 1L;
    * 会话密钥
    */
     private String sessionKey;
+
+    /**
+     * 余额
+     */
+    private BigDecimal money;
 }

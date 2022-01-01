@@ -6,26 +6,42 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title:'',
-    introduction:'',
-    videoList:[],
-    result:'生成学习报告'
+    title: '',
+    introduction: '',
+    videoList: [],
+    result: '生成学习报告',
+    wxUser: null,
+    //是否拥有课程
+    isOwned: false,
+    courseId: null,
+    buttonStyle: 'cu-btn block line-blue margin-tb-sm lg',
+    modalName: '',
+    coverUrl: '',
+    winHeight: null,
+    realPrice: null,
+    audioUrl: '',
+    question: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let courseId = options.courseId
-    console.log(courseId)
-    app.initPage()
-    .then(res => {
-      this.getDetail(courseId)
-      this.getUserCourse()
+    let wxUser = app.globalData.wxUser
+    this.setData({
+      wxUser: wxUser,
+      courseId: options.courseId,
+      winHeight: app.globalData.winHeight + 300
     })
+    let courseId = options.courseId
+    app.initPage()
+      .then(res => {
+        this.getDetail(courseId)
+        this.getUserCourse()
+      })
   },
 
-  getDetail(courseId){
+  getDetail(courseId) {
     app.api.courseDetail(courseId)
       .then(res => {
         console.log(res)
@@ -33,59 +49,94 @@ Page({
         let video = res.data.video
         this.setData({
           title: course.title,
-          introduction:course.introduction,
-          videoList:video
+          introduction: course.introduction,
+          videoList: video,
+          coverUrl: course.coverUrl,
+          realPrice: course.realPrice,
+          audioUrl: course.questionAudio,
+          question: course.question
+        })
+        wx.setNavigationBarTitle({
+          title: this.data.title,
         })
       })
   },
-  getUserCourse(){},
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  getUserCourse() {
+    let courseId = this.data.courseId
+    let userId = this.data.wxUser.id
+    app.api.getUserCourse(courseId, userId).then(res => {
+      console.log('usercourse', res)
+      if (undefined === res.data) {
+        console.log('未购买课程')
+      } else {
+        console.log('已购买课程')
+        this.setData({
+          isOwned: true
+        })
+      }
+    })
   },
-
   /**
-   * 生命周期函数--监听页面显示
+   * 去视频列表页面
+   * @param {*} e 
    */
-  onShow: function () {
-
+  toVideoPage(e) {
+    if (this.data.isOwned) {
+      let videos = encodeURIComponent(JSON.stringify(this.data.videoList))
+      console.log(this.data.videoList)
+      wx.navigateTo({
+        url: '/pages/course/course-video/index?videoList=' + videos + '&title=' + this.data.title
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
-
   /**
-   * 生命周期函数--监听页面隐藏
+   * 去答案页面
+   * @param {*} e 课程ID 标题
    */
-  onHide: function () {
-
+  toQuestionPage(e) {
+    if (this.data.isOwned) {
+      wx.navigateTo({
+        url: '/pages/course/course-question/index?courseId=' + this.data.courseId + '&title=' + this.data.title
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
-
   /**
-   * 生命周期函数--监听页面卸载
+   * 去音频页面
+   * @param {*} e 
    */
-  onUnload: function () {
-
+  toAudioPage(e) {
+    if (this.data.isOwned) {
+      wx.navigateTo({
+        url: '/pages/course/course-audio/index?courseId=' + this.data.courseId + '&title=' + this.data.title+'&question='+this.data.question+'&audioUrl='+this.data.audioUrl
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  toReportPage(e){
+    if (this.data.isOwned) {
+      wx.navigateTo({
+        url: '/pages/course/course-report/index?courseId=' + this.data.courseId
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  toBuy() {
+    this.showModal('Buy')
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  showModal(name) {
+    this.setData({
+      modalName: name
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
   }
 })

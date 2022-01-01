@@ -1,15 +1,20 @@
 package com.joolun.mall.entity;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Owen
  * @date 2021/12/16 3:07 PM
  **/
-public class BookCategoryTree extends TreeNode {
+@Data
+public class BookCategoryTree {
 
+    private Long id;
 
     /**
      * （1：开启；0：关闭）
@@ -20,7 +25,7 @@ public class BookCategoryTree extends TreeNode {
      * 父分类编号
      */
     @ApiModelProperty(value = "父分类编号")
-    private String parentId;
+    private Long parentId;
     /**
      * 名称
      */
@@ -56,4 +61,18 @@ public class BookCategoryTree extends TreeNode {
      */
     @ApiModelProperty(value = "逻辑删除标记")
     private String delFlag;
+
+    private List<BookCategoryTree> children = new ArrayList<>();
+
+    public void addChildren(BookCategoryTree treeNode) {
+        children.add(treeNode);
+    }
+
+    public List<BookCategoryTree> getChildren() {
+        if (children.size() <= 0) {
+            return null;
+        }
+        return children;
+    }
+
 }

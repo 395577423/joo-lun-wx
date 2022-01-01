@@ -96,6 +96,17 @@ export default (safe) => {
         label: '创建日期',
         prop: 'createTime',
         display: false
+      },
+      {
+        label:'视频时长（秒）',
+        prop:'duration',
+        type:'number',
+        rule:[
+          {
+            min:1,
+            message:'视频时长要大于0'
+          }
+        ]
       }
     ]
   }

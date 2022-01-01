@@ -18,6 +18,7 @@ Page({
       ascs: '', //升序字段
       descs: ''
     },
+    winHeight:null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -29,9 +30,15 @@ Page({
         this.getRecommend()
       })
   },
+  /**
+   * 滑到底部事件
+   */
   onReachBottom() {
     this.getRecommend()
   },
+  /**
+   * 获取奖学金计划课程
+   */
   getPlanCourse() {
     app.api.planCourse()
       .then(res => {
@@ -44,6 +51,9 @@ Page({
         })
       })
   },
+  /**
+   * 获取推荐课程
+   */
   getRecommend() {
     if (!this.data.dataILu) return
     this.data.page.current++
@@ -62,6 +72,10 @@ Page({
         success: (res) => {},
       })
   },
+  /**
+   * 去课程详情页面
+   * @param {*} e 课程ID
+   */
   toDetail(e) {
     let courseId = e.currentTarget.dataset.courseid
     wx.navigateTo({

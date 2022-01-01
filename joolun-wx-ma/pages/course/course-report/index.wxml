@@ -1,0 +1,95 @@
+<scroll-view class="app" style="height: 3500rpx;">
+  <view class="bg-img padding-tb-xl" style="background-image: url('https://static.xfanread.com/dailyCheckpoint/newheader.png');height: 600rpx;">
+    <view class="padding-xl text-white text-center margin-top">
+      <view class="padding-xs text-xl">
+        <image src="https://static.xfanread.com/dailyCheckpoint/dushubaogao@2x.png" style="width: 420rpx;height: 70rpx;" />
+      </view>
+      <view class="padding">
+        <view class="cu-avatar xl round " style="background-image:url({{wxUser.headimgUrl}});"></view>
+      </view>
+      <view class="text-brown text-center">{{wxUser.nickName}}</view>
+      <view class="flex">
+        <view class="flex-sub bg-yellow round margin">
+          <text class="cuIcon-appreciate lg text-pink"></text>
+          <text class="text-bold text-brown ">完成4项挑战</text>
+        </view>
+        <view class="flex-sub bg-cyan round margin">
+          <text class="cuIcon-favorfill lg text-yellow"></text>
+          <text class="text-bold text-blue "> 获得20个星星</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="text-center">
+    <view class="text-bold text-brown margin-sm">小朋友观看《第一次上街买东西》</view>
+    <view class="text-bold text-brown margin-sm">解读视频共5分钟,专注力获得了锻炼,</view>
+    <view class="text-bold text-brown margin-sm">同时也记住了书中精彩的故事情节.</view>
+  </view>
+
+  <view style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb2.png');background-size:100% 100%;height: 600rpx; margin-top: 60rpx;margin-left: 20rpx;margin-right: 20rpx;">
+    <view class="text-center" style="width:45%;margin:0 auto;height:60rpx;line-height:60rpx;position: absolute;top:806rpx;left:189rpx;background: #fa9374;">
+      <view class="text-white text-bold">孩子的收获</view>
+    </view>
+    <view class="padding-xs margin-xl text-brown text-bold text-df">
+      <block wx:for="{{courseQuestion}}" wx:key="index">
+        <view class="margin-xl">
+          <text wx:if="{{item.correct}}" class="cuIcon-check lg text-green margin-sm"></text>
+          <text wx:else class="cuIcon-close lg text-red margin-sm"></text>
+          <text>{{item.question}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb3.png');background-size:100% 100%;height: 600rpx; margin-top: 90rpx;margin-left: 20rpx;margin-right: 20rpx;">
+    <view class="text-center" style="width:45%;margin:0 auto;height:60rpx;line-height:60rpx;position: absolute;top:1490rpx;left:189rpx;background: #74A6FA;">
+      <view class="text-white text-bold">孩子的创造力</view>
+    </view>
+    <view class="cu-timeline text-center">
+      <!-- <view class="padding margin-top">{{course.title}}的故事线</view> -->
+      <view class="cu-time">故事线</view>
+      <block wx:for="{{story}}" wx:key="index">
+        <view class="cu-item text-grey cuIcon-evaluate_fill">
+          <view class="content bg-orange light shadow-blur">
+            <text>{{item.content}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb1.png');background-size:100% 100%;height: 600rpx; margin-top: 370rpx;margin-left: 20rpx;margin-right: 20rpx;">
+    <view class="text-center" style="width:45%;margin:0 auto;height:60rpx;line-height:60rpx;position: absolute;top:2460rpx;left:189rpx;background: #FAE374;">
+      <view class="text-white text-bold">孩子的心声</view>
+    </view>
+    <view class="cu-chat padding">
+      <view class="cu-item">
+        <view class="cu-avatar radius" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></view>
+        <view class="main">
+          <view class=" content shadow bg-orange light" style="font-size:25rpx;">{{course.question}}</view>
+        </view>
+      </view>
+      <view class="cu-item">
+        <view class="cu-avatar radius" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></view>
+        <view class="main">
+          <view class=" content  shadow shadow bg-orange light" bindtap="playAudio">
+            <text class="cuIcon-sound padding-right-xl"></text>
+          </view>
+        </view>
+      </view>
+      <view class="cu-item self">
+        <view class="main">
+          <view class=" content bg-green shadow light" bindtap="playMyAudio">
+            <text class="cuIcon-sound padding-right-xl"> </text>
+          </view>
+        </view>
+        <view class="cu-avatar radius" style="background-image:url({{wxUser.headimgUrl}});"></view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<view class="grid-1 cu-bar foot flex flex-direction ">
+  <button class="cu-btn bg-yellow margin-tb-sm lg text-red text-bold" >
+    分享我的阅读报告
+  </button>
+</view>

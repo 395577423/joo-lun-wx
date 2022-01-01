@@ -230,107 +230,13 @@ export const tableOption = {
     {
       icon: 'el-icon-grape',
       label: '辅助信息',
-      prop: 'group5',
       column: [
         {
           label: '描述',
           prop: 'description',
-          span: 12,
-          type:'textarea'
+          span: 12
         }]
     }
   ]
 }
 
-export const tableOption2 = {
-  dialogType: 'drawer',
-  border: true,
-  stripe: true,
-  menuAlign: 'center',
-  align: 'center',
-  searchShow: false,
-  dialogWidth: '88%',
-  editBtn: false,
-  delBtn: false,
-  addBtn: false,
-  selection: true,
-  menu: false,
-  maxHeight: 450,
-  column: [
-    {
-      label: '商品名称',
-      prop: 'name',
-      search: true
-    },
-    {
-      label: '商品图片',
-      prop: 'picUrls',
-      width: 120,
-    },
-    {
-      label: '类目',
-      prop: 'categoryId',
-      type: 'cascader',
-      search: true,
-      props: {
-        label: 'name',
-        value: 'id'
-      },
-      dicUrl: '/goodscategory/tree'
-    },
-    {
-      label: '卖点',
-      prop: 'sellPoint',
-      sortable: true
-    },
-    {
-      label: '销售价',
-      prop: 'salesPrice',
-      display: false
-    },
-    {
-      label: '市场价',
-      prop: 'marketPrice',
-      display: false
-    },
-    {
-      label: '成本价',
-      prop: 'costPrice',
-      display: false
-    },
-    {
-      label: '库存',
-      prop: 'stock',
-      display: false
-    },
-    {
-      label: '商品编码',
-      prop: 'spuCode',
-      search: true,
-      sortable: true
-    },
-
-    {
-      label: '虚拟销量',
-      prop: 'saleNum',
-      sortable: true
-    },
-    {
-      label: '创建时间',
-      prop: 'createTime',
-      sortable: true
-    },
-    {
-      label: '更新时间',
-      prop: 'updateTime',
-      sortable: true
-    },
-    {
-      label: '是否上架',
-      prop: 'shelf',
-      type: 'radio',
-      search: true,
-      sortable: true,
-    }
-  ]
-}

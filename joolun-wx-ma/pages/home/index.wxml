@@ -8,39 +8,39 @@
 </view>
 <view class="cu-bar bg-white solid-bottom margin-top" style="margin-top: 120rpx;">
   <view class="action">
-    <text class=" text-shadow text-orange">奖学金计划</text>
+    <text class=" text-shadow text-black text-bold">奖学金计划</text>
   </view>
 </view>
-<view class="cu-list grid  no-border">
+<view class="cu-list grid no-border">
   <view class="flex">
-    <image src="{{src}}" style="width: 150rpx;height: 150rpx;"></image>
-    <view class="flex flex-direction">
-      <view class="flex-sub">
-        <text>《{{title}}》</text>
-      </view>
-      <view class="flex-sub">
-        <button class="cu-btn round bg-green button-hover" bindtap="toDetail" data-courseId="{{id}}">立即加入</button>
-      </view>
+    <view>
+      <image src="{{src}}" style="width: 150rpx;height: 150rpx;margin-left: 10rpx;"></image>
+    </view>
+    <view class="margin">
+      <text>《{{title}}》</text>
+    </view>
+    <view class="margin">
+      <button class="cu-btn round bg-blue button-hover" bindtap="toDetail" data-courseId="{{id}}">立即加入</button>
     </view>
   </view>
 </view>
 <scroll-view scroll-y="true" class="bg-white">
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
-      <text class="text-shadow text-orange">大家都在读</text>
+      <text class="text-shadow text-black text-bold">大家都在读</text>
     </view>
   </view>
-  <view class="bg-white padding">
+  <view class="bg-white margin">
     <view wx:for="{{recommends}}" wx:key="index">
       <view class="recommend flex" bindtap="toDetail" data-courseId="{{item.id}}">
         <view>
-          <image src="{{item.coverUrl}}"  style="width: 100rpx;height:100rpx;"></image>
+          <image src="{{item.coverUrl}}" style="width: 120rpx;height:120rpx;"></image>
         </view>
         <view class="flex-direction flex">
-          <text class="text-black text-bold text-cut text-xs">《{{item.title}}》</text>
-          <text class="text-black text-bold">{{item.ageStart}}~{{item.ageEnd}}岁</text>
+          <text class="text-black text-bold text-cut text-xm">《{{item.title}}》</text>
+          <text class="text-black text-bold " style="margin-left: 15rpx;">{{item.ageStart}}~{{item.ageEnd}}岁</text>
           <view wx:if="{{item.realPrice<item.price}}">
-            <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+            <text class="text-price text-blue text-bold" style="margin-left: 9rpx;">{{item.realPrice}}</text>
             <text class="text-price text-red text-bold" style="margin-left: 5px;text-decoration:line-through;">{{item.price}}</text>
           </view>
           <view wx:else>
@@ -52,8 +52,8 @@
   </view>
 </scroll-view>
 <block wx:if="{{dataILu}}">
-  <view class="cu-load bg-blue loading"></view>
+  <view class="cu-load bg-grey  light loading"></view>
 </block>
 <block wx:else>
-  <view class="cu-load bg-blue over"></view>
+  <view class="cu-load bg-grey light over"></view>
 </block>
