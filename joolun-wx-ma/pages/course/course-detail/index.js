@@ -31,7 +31,7 @@ Page({
     this.setData({
       wxUser: wxUser,
       courseId: options.courseId,
-      winHeight: app.globalData.winHeight + 300
+      winHeight: app.globalData.winHeight + 400
     })
     let courseId = options.courseId
     app.initPage()

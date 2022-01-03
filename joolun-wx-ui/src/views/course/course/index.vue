@@ -26,9 +26,9 @@
           @change="changePlan(scope.row)">
         </el-switch>
       </template>
-      <template slot="introductionForm" slot-scope="scope">
-        <BaseEditor v-model="scope.row.introduction" />
-      </template>
+<!--      <template slot="introductionForm" slot-scope="scope">-->
+<!--        <BaseEditor v-model="scope.row.introduction" />-->
+<!--      </template>-->
     </avue-crud>
   </div>
 </template>

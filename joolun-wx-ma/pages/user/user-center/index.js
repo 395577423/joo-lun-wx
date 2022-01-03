@@ -10,22 +10,14 @@ Page({
   data: {
     config: app.globalData.config,
     wxUser: null,
-    userInfo: null,
-    orderCountAll: []
+    userInfo: null
   },
   onShow(){
-    //更新tabbar购物车数量
-    wx.setTabBarBadge({
-      index: 2,
-      text: app.globalData.shoppingCartCount + ''
-    })
-    
     let wxUser = app.globalData.wxUser
     this.setData({
       wxUser: wxUser
     })
     this.wxUserGet()
-    this.orderCountAll()
     if(this.data.config.adEnable){
       // 在页面中定义插屏广告
       let interstitialAd = null
@@ -81,14 +73,6 @@ Page({
       .then(res => {
         this.setData({
           userInfo: res.data
-        })
-      })
-  },
-  orderCountAll(){
-    app.api.orderCountAll()
-      .then(res => {
-        this.setData({
-          orderCountAll: res.data
         })
       })
   }

@@ -12,7 +12,9 @@ Page({
     course:null,
     courseQuestion:[],
     story:[],
-    userAudio:null
+    userAudio:null,
+    showPainter:false,
+    template:{}
   },
 
   /**
@@ -45,6 +47,52 @@ Page({
   playAudio(){
     myaudio.src = this.data.course.questionAudio
     myaudio.play()
+  },
+  share(){
+    // wx.showLoading({
+    //   title: '图片生成中',
+    // })
+    this.getPattle()
+  },
+  getPattle(){
+    let _this = this
+	  _this.setData({
+	    template: {
+	      width:"750rpx",
+	      height:"1624rpx",
+	      views:[
+	         {
+	            type: 'image',
+	            url: "https://campaign.uglobal.com.cn/ikea/images/havemedal.jpg",
+	            css: {
+	              top: '0rpx',
+	              left: '0px',
+	              width: '750rpx',
+	              height: '1624rpx'
+	            }
+	          },{
+	            type: 'image',
+	            url: _this.data.wxUser.headimgUrl,
+	            css: {
+	              top: '450rpx',
+	              left: '270rpx',
+	              width: '200rpx',
+	              height: '200rpx',
+	              borderRadius: '100rpx',
+	              borderWidth: "10rpx",
+				        borderColor: '#fed931'
+	            }
+	          }
+	      ]
+	    },
+		showPainter:true
+	  })
+  }, onImgOK(e) {
+    console.log("onImgOK")
+    console.log(e.detail.path)
+    this.setData({
+      imgURL: e.detail.path
+    })
   }
 
 })

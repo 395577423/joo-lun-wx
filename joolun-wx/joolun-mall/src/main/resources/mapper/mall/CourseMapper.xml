@@ -27,6 +27,7 @@
         <result property="question" column="question"/>
         <result property="questionAudio" column="question_audio"/>
         <result property="saleNum" column="sale_num"/>
+        <result property="essence" column="essence"/>
     </resultMap>
 
     <sql id="courseSql">
@@ -50,7 +51,8 @@
        i.remark,
        i.question,
        i.question_audio,
-       i.sale_num
+       i.sale_num,
+       i.essence
     </sql>
 
     <select id="selectPage2" resultMap="CourseResult">

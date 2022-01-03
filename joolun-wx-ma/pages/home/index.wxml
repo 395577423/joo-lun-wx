@@ -1,49 +1,60 @@
-<view class="cu-bar search bg-white fixed padding" style="box-shadow:none">
+<view class="cu-bar search bg-white fixed padding">
   <view class="search-form">
     <text class="cuIcon-search"></text>
-    <navigator class="response" hover-class='none' url='/pages/course/course-category/index'>
-      <input type="text" placeholder="请输入书籍名称"></input>
+    <navigator class="response" hover-class='none' url='/pages/base/search2/index'>
+      <input type="text" placeholder="请输入书籍名"></input>
     </navigator>
   </view>
 </view>
 <view class="cu-bar bg-white solid-bottom margin-top" style="margin-top: 120rpx;">
   <view class="action">
+    <text class="cuIcon-titles text-blue"></text>
     <text class=" text-shadow text-black text-bold">奖学金计划</text>
   </view>
 </view>
-<view class="cu-list grid no-border">
-  <view class="flex">
-    <view>
-      <image src="{{src}}" style="width: 150rpx;height: 150rpx;margin-left: 10rpx;"></image>
+<view class="padding text-center">
+  <view class="padding-xl radius shadow bg-white">
+    <view class="flex align-center">
+      <view>
+        <image src="{{course.coverUrl}}" style="width: 220rpx;height: 220rpx;"></image>
+      </view>
+      <view>
+        <view>
+          <text class="text-lg">《{{course.title}}》</text>
+        </view>
+        <view class="margin">
+          <button class="cu-btn round bg-blue button-hover text-lg " style="width: 80%;" bindtap="toDetail" data-courseId="{{course.id}}">立即加入</button>
+        </view>
+      </view>
     </view>
-    <view class="margin">
-      <text>《{{title}}》</text>
+    <view class="text-cut">
+      <text class="text-yellow">[课程精华]</text>
+      {{course.essence}}
     </view>
-    <view class="margin">
-      <button class="cu-btn round bg-blue button-hover" bindtap="toDetail" data-courseId="{{id}}">立即加入</button>
-    </view>
+    <view class="text-left">返现 38</view>
   </view>
 </view>
 <scroll-view scroll-y="true" class="bg-white">
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
+      <text class="cuIcon-titles text-blue"></text>
       <text class="text-shadow text-black text-bold">大家都在读</text>
     </view>
   </view>
   <view class="bg-white margin">
     <view wx:for="{{recommends}}" wx:key="index">
-      <view class="recommend flex" bindtap="toDetail" data-courseId="{{item.id}}">
-        <view>
-          <image src="{{item.coverUrl}}" style="width: 120rpx;height:120rpx;"></image>
+      <view class="recommend" bindtap="toDetail" data-courseId="{{item.id}}">
+        <view class="text-center" style="width:350rpx;">
+          <image src="{{item.coverUrl}}" style="width: 220rpx;height:220rpx;"></image>
         </view>
-        <view class="flex-direction flex">
-          <text class="text-black text-bold text-cut text-xm">《{{item.title}}》</text>
-          <text class="text-black text-bold " style="margin-left: 15rpx;">{{item.ageStart}}~{{item.ageEnd}}岁</text>
-          <view wx:if="{{item.realPrice<item.price}}">
-            <text class="text-price text-blue text-bold" style="margin-left: 9rpx;">{{item.realPrice}}</text>
-            <text class="text-price text-red text-bold" style="margin-left: 5px;text-decoration:line-through;">{{item.price}}</text>
+        <view class="flex-direction flex text-center" style="width:350rpx;">
+          <text class="text-black text-bold text-cut text-xm " style="width:350rpx;">《{{item.title}}》</text>
+          <text class="text-black text-bold margin-top-xs ">{{item.ageStart}}~{{item.ageEnd}}岁</text>
+          <view wx:if="{{item.realPrice<item.price}}" class="margin-top-xs">
+            <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+            <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{item.price}}</text>
           </view>
-          <view wx:else>
+          <view wx:else class="margin-top-xs">
             <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
           </view>
         </view>

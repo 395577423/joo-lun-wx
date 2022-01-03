@@ -46,9 +46,8 @@ Page({
       .then(res => {
         this.getQuestion(this.data.courseId, this.data.wxUser.id)
       })
-
-    //获取用户答案
     //部分完成
+
     //全部完成
 
   },
@@ -60,6 +59,13 @@ Page({
   getQuestion(courseId, userId) {
     app.api.getCourseQuestion(courseId, userId)
       .then(res => {
+        for(var i = 0;i<res.data.length;i++){
+          if(res.data[i].correct == null){
+            this.setData({isAllAnswered:false})
+            break;
+          }
+          this.setData({isAllAnswered:true})
+        }
         this.setData({
           questions: res.data,
           total: res.data.length
@@ -80,8 +86,6 @@ Page({
     //1.保存答案
     const choiceId = e.currentTarget.dataset.choiceid
     const questionId = e.currentTarget.dataset.questionid
-
-    console.log(e)
     const choice = {
       userId: this.data.wxUser.id,
       questionId: questionId,

@@ -1,4 +1,8 @@
 <!--pages/course/course-video/index.wxml-->
+<view class="padding">
+  <text class="cuIcon-footprint lg text-gray"></text>
+  <text>任务一 好书放映室</text>
+</view>
 <view wx:for='{{videoList}}' wx:key='index'>
 <view class="cu-card case">
   <view class="cu-item shadow">

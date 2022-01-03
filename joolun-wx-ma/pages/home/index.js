@@ -6,9 +6,6 @@ Page({
    */
   data: {
     config: app.globalData.config,
-    src: '',
-    title: '',
-    id:0,
     recommends: [],
     version: '一',
     dataILu: true,
@@ -18,7 +15,8 @@ Page({
       ascs: '', //升序字段
       descs: ''
     },
-    winHeight:null
+    winHeight:null,
+    course:null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -45,9 +43,7 @@ Page({
         console.log(res)
         let result = res.data;
         this.setData({
-          src: result.coverUrl,
-          title: result.title,
-          id:result.id
+          course:result
         })
       })
   },

@@ -6,7 +6,7 @@
 -->
 <view class="cu-card article no-card">
   <view class="cu-item" wx:for="{{ courseList }}" wx:key="index">
-    <navigator hover-class='none' url='/pages/goods/goods-detail/index?id={{item.id}}'>
+    <navigator hover-class='none' url='/pages/course/course-detail/index?courseId={{item.id}}'>
       <view class="content">
         <image src="{{item.coverUrl}}" mode="aspectFill" class="row-img margin-top-xs"></image>
         <view class="desc solid-bottom row-info">

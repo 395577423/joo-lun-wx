@@ -153,6 +153,9 @@ public class CourseApi {
     @GetMapping("/question/{id}/{userId}")
     public AjaxResult getCourseQuestion(@PathVariable Long id, @PathVariable String userId) {
         List<CourseQuestion> questions = getCourseQuestions(id, userId);
+
+        handleUserAnswer(questions);
+
         return AjaxResult.success(questions);
     }
 
@@ -276,16 +279,7 @@ public class CourseApi {
         //1.查询用户课程问题及答案
         List<CourseQuestion> courseQuestions = getCourseQuestions(id, userId);
 
-        courseQuestions.forEach(question -> {
-            Long choosed = question.getChoiceId();
-            List<CourseQuestionChoice> choices = question.getChoices();
-            choices.forEach(choice -> {
-                if (null != choosed && choice.getChoosed() == 1 && choosed.equals(choice.getId())) {
-                    question.setCorrect(true);
-                }
-            });
-
-        });
+        handleUserAnswer(courseQuestions);
 
         //2.课程故事线
         QueryWrapper<CourseStory> storyWrapper = new QueryWrapper<>();
@@ -307,6 +301,19 @@ public class CourseApi {
         result.put("course", course);
 
         return AjaxResult.success(result);
+    }
+
+    private void handleUserAnswer(List<CourseQuestion> courseQuestions) {
+        courseQuestions.forEach(question -> {
+            Long choosed = question.getChoiceId();
+            List<CourseQuestionChoice> choices = question.getChoices();
+            choices.forEach(choice -> {
+                if (null != choosed && choice.getChoosed() == 1 && choosed.equals(choice.getId())) {
+                    question.setCorrect(true);
+                }
+            });
+
+        });
     }
 
     /**

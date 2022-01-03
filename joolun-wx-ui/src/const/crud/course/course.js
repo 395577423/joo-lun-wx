@@ -92,9 +92,12 @@ export default (safe) => {
       }, {
         label: '介绍',
         prop: 'introduction',
-        span: 12,
-        formslot:true,
+        type: 'textarea',
         hide:true
+      },{
+        label: '课程精华',
+        prop: 'essence',
+        type: 'textarea'
       },{
         label: '关联书籍',
         prop: 'books',

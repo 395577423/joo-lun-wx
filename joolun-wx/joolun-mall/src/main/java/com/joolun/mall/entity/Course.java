@@ -129,6 +129,11 @@ public class Course extends Model<Course>
     private Integer saleNum;
 
     /**
+     * 书籍精华
+     */
+    private String essence;
+
+    /**
      * 关联书籍
      */
     @TableField(exist = false)

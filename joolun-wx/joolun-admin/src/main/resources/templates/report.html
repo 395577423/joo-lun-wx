@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport” content=“width=device-width,initial-scale=1.0">
+    <title>书单打卡</title>
+    <link th:href="@{css/app.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{css/icon.css}" type="text/css" rel="stylesheet">
+</head>
+<body style="font-size: 36px;background-color: #FBECD3">
+<div class="app">
+    <div style="background-image: url('https://static.xfanread.com/dailyCheckpoint/newheader.png');height: 600px;background-size:100% 100%;padding-top:140px;">
+        <div class="padding-xl text-white text-center margin-top">
+            <div class="padding-xs text-xl">
+                <img src="https://static.xfanread.com/dailyCheckpoint/dushubaogao@2x.png"
+                     style="width: 420px;height: 70px;"/>
+            </div>
+            <div class="padding">
+                <link th:href="${wxUser.headimgUrl}" id="headUrl" hidden/>
+                <div class="cu-avatar xl round"></div>
+            </div>
+            <div class="text-brown text-center">
+                <div th:text="${wxUser.nickName}"></div>
+            </div>
+            <div class="flex">
+                <div class="flex-sub bg-yellow round margin">
+                    <span class="cuIcon-appreciate lg text-pink"></span>
+                    <span class="text-bold text-brown ">完成4项挑战</span>
+                </div>
+                <div class="flex-sub bg-cyan round margin">
+                    <span class="cuIcon-favorfill lg text-yellow"></span>
+                    <span class="text-bold text-blue "> 获得20个星星</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <div class="text-bold text-brown margin-sm">小朋友观看《第一次上街买东西》</div>
+        <div class="text-bold text-brown margin-sm">解读视频共5分钟,专注力获得了锻炼,</div>
+        <div class="text-bold text-brown margin-sm">同时也记住了书中精彩的故事情节.</div>
+    </div>
+    <div style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb2.png');background-size:100% 100%;height: 600px; margin-top: 60px;margin-left: 20px;margin-right: 20px;">
+        <div class="text-center bg-cyan"
+             style="width:45%;margin:0 auto;height:80px;line-height:80px;position: absolute;top:980px;left:270px;">
+            <div class="text-white text-bold">故事精华</div>
+        </div>
+        <div class="padding-xs margin-xl text-bold text-center text-shadow" style="height: 80%;">
+            <div style="height:100px;"></div>
+            <span style="line-height: 50px;margin-top: 50px;" th:text="${course.essence}"></span>
+        </div>
+    </div>
+
+    <div style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb2.png');background-size:100% 100%;height: 600px; margin-top: 60px;margin-left: 20px;margin-right: 20px;">
+        <div class="text-center"
+             style="width:45%;margin:0 auto;height:80px;line-height:80px;position: absolute;top:1640px;left:270px;background: #fa9374;">
+            <div class="text-white text-bold">孩子的收获</div>
+        </div>
+        <div class="padding-xs margin-xl text-brown text-bold text-lg">
+            <div th:each="item : ${courseQuestion}">
+                <div class="margin-xl">
+                    <span th:if="${item.correct}" class="cuIcon-check lg text-green margin-sm"></span>
+                    <span th:if="${!item.correct}" class="cuIcon-close lg text-red margin-sm"></span>
+                    <span th:text="${item.question}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 600px; margin-top: 60px;margin-left: 20px;margin-right: 20px;">
+        <div class="text-center"
+             style="width:45%;margin:0 auto;height:80px;line-height:80px;position: absolute;top:2298px;left:270px;background: #74A6FA;">
+            <div class="text-white text-bold">孩子的创造力</div>
+        </div>
+        <div>
+            <div class="cu-timeline text-center" style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb2.png');background-size:100% 100%;background-color: #FBECD3;">
+                <div class="cu-time">故事线</div>
+                <div th:each="item : ${story}">
+                    <div class="cu-item text-grey cuIcon-evaluate_fill">
+                        <div class="content bg-orange light shadow-blur">
+                            <span th:text="${item.content}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background-image: url('https://static.xfanread.com/readingDay2020/reportapp/bb1.png');background-size:100% 100%;height: 600px; margin-top: 290px;margin-left: 20px;margin-right: 20px;padding-bottom: 100px;">
+        <div class="text-center"
+             style="width:45%;margin:0 auto;height:80px;line-height:80px;position: absolute;top:3190px;left:270px;background: #FAE374;">
+            <div class="text-white text-bold">孩子的心声</div>
+        </div>
+        <div class="cu-chat padding">
+            <div class="cu-item">
+                <div class="cu-avatar radius"
+                     style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></div>
+                <div class="main">
+                    <div class=" content shadow bg-orange light" th:text="${course.question}"></div>
+                </div>
+            </div>
+            <div class="cu-item">
+                <div class="cu-avatar radius"
+                     style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></div>
+                <div class="main">
+                    <div class=" content  shadow shadow bg-orange light" >
+                        <span class="cuIcon-sound padding-right-xl"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="cu-item self">
+                <div class="main">
+                    <div class=" content bg-green shadow light" >
+                        <span class="cuIcon-sound padding-right-xl"> </span>
+                    </div>
+                </div>
+                <div class="cu-avatar radius"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 100px;">
+            "          "
+    </div>
+
+</div>
+<script type="text/javascript">
+    window.onload = function(){
+
+    };
+</script>
+</body>
+</html>
