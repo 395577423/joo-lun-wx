@@ -101,7 +101,7 @@ Page({
       }
       console.log('答案对象', choice)
       app.api.setUserChoice(choice).then(res => {
-        console.log(res)
+        this.getQuestion(this.data.courseId, this.data.wxUser.id)
       })
     }
   },

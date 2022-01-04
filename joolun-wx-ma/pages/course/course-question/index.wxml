@@ -24,8 +24,17 @@
                 <radio name="choice" hidden="{{choiceShow}}" />
               </view>
               <view wx:else class="round line-orange radius answer" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}" data-choosedId="{{item.choiceId}}">
-                <text wx:if="{{item.correct && item.choiceId == choice.id}}" class="text-bold text-green">{{choice.choice}}</text>
-                <text wx:else style="color: #57241A;">{{choice.choice}}</text>
+                <block  wx:if="{{item.correct == null}}">
+                  <text style="color: #57241A;">{{choice.choice}}</text>
+                </block>
+                <block wx:if="{{item.correct}}">
+                  <text wx:if="{{item.choiceId == choice.id}}" class="text-bold text-green">{{choice.choice}}</text>
+                  <text wx:else style="color: #57241A;">{{choice.choice}}</text>
+                </block>
+                <block wx:else>
+                  <text wx:if="{{choice.choosed == 1 && item.correct != null}}" class="text-bold text-green">{{choice.choice}}</text>
+                  <text wx:else style="color: red;">{{choice.choice}}</text>
+                </block>
                 <text class="{{answer}}"></text>
                 <radio name="choice" hidden="{{choiceShow}}" />
               </view>
