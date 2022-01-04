@@ -4,29 +4,35 @@
 </view>
 
 <scroll-view style="height: 1200rpx;">
-<view class="progerss">
-  <text>题目进度:{{index}}/{{total}}</text>
-</view>
-<view class="title">
-  <image src="../../../public/img/title.png" />
-</view>
-<view class="cu-item shadow-warp" class="question">
-  <swiper class="bg-white swiper" bindchange="changeItem" >
-    <block wx:for="{{questions}}" wx:key="index" >
-      <swiper-item class="swiperitem">
-        <view style="color: #57241A;" class="padding">{{item.question}}</view>
-        <image src="{{item.imageUrl}}"></image>
-        <radio-group class="flex-direction">
-          <block wx:for="{{item.choices}}" wx:key="index2" wx:for-item="choice">
-            <view class="round line-orange radius answer" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}">
-              <text style="color: #57241A;">{{choice.choice}}</text>
-              <text class="{{answer}}" ></text>
-              <radio name="choice" hidden="{{choiceShow}}"/>
-            </view>
-          </block>
-        </radio-group>
-      </swiper-item>
-    </block>
-  </swiper>
-</view>
+  <view class="progerss">
+    <text>题目进度:{{index}}/{{total}}</text>
+  </view>
+  <view class="title">
+    <image src="../../../public/img/title.png" />
+  </view>
+  <view class="cu-item shadow-warp" class="question">
+    <swiper class="bg-white swiper" bindchange="changeItem">
+      <block wx:for="{{questions}}" wx:key="index">
+        <swiper-item class="swiperitem">
+          <view style="color: #57241A;" class="padding">{{item.question}}</view>
+          <image src="{{item.imageUrl}}"></image>
+          <radio-group class="flex-direction">
+            <block wx:for="{{item.choices}}" wx:key="index2" wx:for-item="choice">
+              <view class="round line-orange radius answer" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}" wx:if="{{isAllAnswered}}">
+                <text style="color: #57241A;">{{choice.choice}}</text>
+                <text class="{{answer}}"></text>
+                <radio name="choice" hidden="{{choiceShow}}" />
+              </view>
+              <view wx:else class="round line-orange radius answer" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}" data-choosedId="{{item.choiceId}}">
+                <text wx:if="{{item.correct && item.choiceId == choice.id}}" class="text-bold text-green">{{choice.choice}}</text>
+                <text wx:else style="color: #57241A;">{{choice.choice}}</text>
+                <text class="{{answer}}"></text>
+                <radio name="choice" hidden="{{choiceShow}}" />
+              </view>
+            </block>
+          </radio-group>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
 </scroll-view>

@@ -1,4 +1,4 @@
-<scroll-view style="height: {{winHeight}}px">
+<scroll-view>
   <view class="text-center text-xl padding">{{title}}</view>
   <view class="text-center">
     <image src="{{coverUrl}}" style="margin:0 auto;" />
@@ -37,13 +37,14 @@
       </view>
     </view>
   </view>
-</scroll-view>
-<view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}">
+  <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">
   <view class="btn-group">
     <text class="text-price text-blue text-bold text-lg">{{realPrice}}</text>
     <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即购买</button>
   </view>
 </view>
+</scroll-view>
+
 <view class="cu-modal {{modalName=='NeedBuy'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">

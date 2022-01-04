@@ -59,12 +59,16 @@ Page({
   getQuestion(courseId, userId) {
     app.api.getCourseQuestion(courseId, userId)
       .then(res => {
-        for(var i = 0;i<res.data.length;i++){
-          if(res.data[i].correct == null){
-            this.setData({isAllAnswered:false})
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].correct == null) {
+            this.setData({
+              isAllAnswered: false
+            })
             break;
           }
-          this.setData({isAllAnswered:true})
+          this.setData({
+            isAllAnswered: true
+          })
         }
         this.setData({
           questions: res.data,
@@ -86,19 +90,20 @@ Page({
     //1.保存答案
     const choiceId = e.currentTarget.dataset.choiceid
     const questionId = e.currentTarget.dataset.questionid
-    const choice = {
-      userId: this.data.wxUser.id,
-      questionId: questionId,
-      courseId: this.data.courseId,
-      answerId: choiceId
+    const choosedId = e.currentTarget.dataset.choosedid
+    console.log(e)
+    if (null == choosedId) {
+      const choice = {
+        userId: this.data.wxUser.id,
+        questionId: questionId,
+        courseId: this.data.courseId,
+        answerId: choiceId
+      }
+      console.log('答案对象', choice)
+      app.api.setUserChoice(choice).then(res => {
+        console.log(res)
+      })
     }
-    console.log('答案对象', choice)
-    app.api.setUserChoice(choice).then(res => {
-      console.log(res)
-    })
-    //2.修改样式
-
-
   },
 
   /**

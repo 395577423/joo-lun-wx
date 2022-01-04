@@ -1,6 +1,5 @@
 package com.joolun.web.util;
 
-import com.sun.tools.internal.ws.wsdl.document.Output;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;

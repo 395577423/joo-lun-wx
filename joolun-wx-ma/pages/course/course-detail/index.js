@@ -17,7 +17,6 @@ Page({
     buttonStyle: 'cu-btn block line-blue margin-tb-sm lg',
     modalName: '',
     coverUrl: '',
-    winHeight: null,
     realPrice: null,
     audioUrl: '',
     question: ''
@@ -30,8 +29,7 @@ Page({
     let wxUser = app.globalData.wxUser
     this.setData({
       wxUser: wxUser,
-      courseId: options.courseId,
-      winHeight: app.globalData.winHeight + 400
+      courseId: options.courseId
     })
     let courseId = options.courseId
     app.initPage()
