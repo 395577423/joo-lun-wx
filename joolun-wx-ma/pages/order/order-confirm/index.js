@@ -20,6 +20,10 @@ Page({
     loading: false,
     userInfo: null,
     spuIds: [],
+    modalName:'',
+    useBalance:false,
+    userMoney:0,
+    totalPrice:0
   },
   onShow() {
     
@@ -63,7 +67,8 @@ Page({
           salesPrice: salesPrice,
           freightPrice: freightPrice,
           paymentPrice: salesPrice,
-          spuIds: spuIds
+          spuIds: spuIds,
+          totalPrice: Number(salesPrice) + Number(freightPrice)
         })
         
       }
@@ -136,5 +141,37 @@ Page({
           loading: false
         })
       })
+  },
+  showBalanceModel(){
+    let userBankMoney = this.data.userInfo.money
+    let userMoney = 0
+    if(userBankMoney < this.data.salesPrice){
+      userMoney = userBankMoney
+    }else{
+      userMoney = this.data.salesPrice
+    }
+    this.setData({
+      modalName:'userBalance',
+      userMoney: userMoney
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+  useBalance(){
+    let totalPrice = 0
+    if(this.data.useBalance){
+      totalPrice = Number(this.data.userMoney) + Number(this.data.freightPrice)
+    }else{
+      totalPrice = Number(this.data.salesPrice) + Number(this.data.freightPrice)
+    }
+
+    this.setData({
+      modalName:'',
+      useBalance: this.data.useBalance?false:true,
+      totalPrice: totalPrice
+    })
   }
 })

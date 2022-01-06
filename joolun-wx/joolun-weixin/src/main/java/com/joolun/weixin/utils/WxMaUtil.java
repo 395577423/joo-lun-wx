@@ -16,7 +16,6 @@ public class WxMaUtil {
 	 * @throws Exception
 	 */
 	public static String getAppId(HttpServletRequest request) {
-		String appId = request.getHeader(ConfigConstant.HEADER_APP_ID);
-		return appId;
+		return request.getHeader(ConfigConstant.HEADER_APP_ID);
 	}
 }

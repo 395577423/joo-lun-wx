@@ -5,7 +5,6 @@
  * 本软件为www.joolun.com开发研制，项目使用请保留此说明
  */
 const WxParse = require('../../../public/wxParse/wxParse.js')
-import Poster from '../../../components/wxa-plugin-canvas/poster/poster'
 const { base64src } = require('../../../utils/base64src.js')
 const app = getApp()
 

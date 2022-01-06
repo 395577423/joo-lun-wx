@@ -1,3 +1,14 @@
-.app{
+.app {
   background-color: #FBECD3;
+}
+
+.widget {
+  width: 0px;
+  height: 0px;
+  overflow: hidden
+}
+
+canvas {
+  position: fixed;
+  left: 9999px
 }

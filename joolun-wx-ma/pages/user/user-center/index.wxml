@@ -21,7 +21,7 @@
       </view>
   </view>
   <view class="cu-item arrow">
-    <navigator class="content" url="/pages/course/course-list/index">
+    <navigator class="content" url="/pages/course/course-list/index?userId={{wxUser.id}}">
       <text class="cuIcon-list text-orange "></text>
       <text>我的书屋</text>
     </navigator>

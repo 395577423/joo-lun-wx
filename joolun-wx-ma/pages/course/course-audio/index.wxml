@@ -38,7 +38,8 @@
       <view class="content">松开停止录音</view>
     </view>
     <view class="padding-xl">
-      <image src="../../../public/img/recorder.gif" style="width:160rpx;height:160rpx;"/>
+      <!-- <image src="../../../public/img/recorder.gif" style="width:160rpx;height:160rpx;"/> -->
+      <text class="cuIcon-recordfill xl text-gray"></text>
     </view>
   </view>
 </view>

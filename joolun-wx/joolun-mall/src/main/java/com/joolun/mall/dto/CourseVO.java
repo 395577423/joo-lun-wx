@@ -11,5 +11,5 @@ public class CourseVO {
 
     private String name;
     private Long categorySecond;
-
+    private String userId;
 }

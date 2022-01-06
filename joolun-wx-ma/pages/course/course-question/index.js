@@ -20,8 +20,7 @@ Page({
     total: 0,
     //当前第几题
     index: 1,
-    wxUser: null,
-    isAllAnswered: false
+    wxUser: null
   },
 
   /**
@@ -59,17 +58,6 @@ Page({
   getQuestion(courseId, userId) {
     app.api.getCourseQuestion(courseId, userId)
       .then(res => {
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].correct == null) {
-            this.setData({
-              isAllAnswered: false
-            })
-            break;
-          }
-          this.setData({
-            isAllAnswered: true
-          })
-        }
         this.setData({
           questions: res.data,
           total: res.data.length
@@ -91,13 +79,15 @@ Page({
     const choiceId = e.currentTarget.dataset.choiceid
     const questionId = e.currentTarget.dataset.questionid
     const choosedId = e.currentTarget.dataset.choosedid
+    const choiceCorrect = e.currentTarget.dataset.choicecorrect
     console.log(e)
     if (null == choosedId) {
       const choice = {
         userId: this.data.wxUser.id,
         questionId: questionId,
         courseId: this.data.courseId,
-        answerId: choiceId
+        answerId: choiceId,
+        correct: choiceCorrect==1?1:0
       }
       console.log('答案对象', choice)
       app.api.setUserChoice(choice).then(res => {

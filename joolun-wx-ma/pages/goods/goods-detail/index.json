@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "商品详情",
   "usingComponents": {
-    "poster": "/components/wxa-plugin-canvas/poster/index"
   }
 }

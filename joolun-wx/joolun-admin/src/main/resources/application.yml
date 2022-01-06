@@ -143,9 +143,9 @@ wx:
       - appId: wxa8f0475c8754393c
         secret: c9e74f9a53620b2eb4008979affdcc57
         # 微信支付商户号，请去微信支付平台申请
-        mchId: 1588227511
+        mchId: 1618888140
         # 微信支付商户密钥，请去微信支付平台申请
-        mchKey: xxxxxxxxxxxxxxxxxxxxx
+        mchKey: VJtkRIu8yn76Ysk78DagUZJ9pBuPOhds
 
 mall:
   # 支付、物流回调地址，即后台服务7500端口的外网访问域名，要保证外网能访问

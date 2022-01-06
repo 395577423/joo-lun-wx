@@ -56,5 +56,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "lazyCodeLoading": "requiredComponents"
 }

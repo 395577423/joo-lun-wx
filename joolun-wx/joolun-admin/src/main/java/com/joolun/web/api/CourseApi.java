@@ -242,8 +242,6 @@ public class CourseApi {
 
             //上传文件放后
             OSSClientUtil.uploadObject2OSS(client, fileLocal, bucketName, "audio/" + LocalDate.now());
-
-
         } catch (Exception e) {
             log.error("CourseApi.uploadAudio", e);
             return AjaxResult.error("文件处理异常，请联系管理员");
@@ -294,11 +292,19 @@ public class CourseApi {
         //4.课程本身信息
         Course course = courseService.getById(id);
 
+        //5.用户课程信息
+        QueryWrapper<UserCourse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id", id);
+        queryWrapper.eq("user_id", userId);
+        UserCourse userCourse = userCourseService.getOne(queryWrapper);
+
+
         Map<String, Object> result = new HashMap<>();
         result.put("courseQuestion", courseQuestions);
         result.put("story", stories);
         result.put("userAudio", userAudio);
         result.put("course", course);
+        result.put("userCourse", userCourse);
 
         return AjaxResult.success(result);
     }
@@ -307,6 +313,7 @@ public class CourseApi {
         courseQuestions.forEach(question -> {
             Long choosed = question.getChoiceId();
             List<CourseQuestionChoice> choices = question.getChoices();
+            question.setCorrect(false);
             choices.forEach(choice -> {
                 if (null != choosed && choice.getChoosed() == 1 && choosed.equals(choice.getId())) {
                     question.setCorrect(true);

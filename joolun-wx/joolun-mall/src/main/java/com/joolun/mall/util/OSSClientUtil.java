@@ -1,10 +1,9 @@
 package com.joolun.mall.util;
 
+import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.Bucket;
-import com.aliyun.oss.model.OSSObject;
-import com.aliyun.oss.model.ObjectMetadata;
-import com.aliyun.oss.model.PutObjectResult;
+import com.aliyun.oss.OSSException;
+import com.aliyun.oss.model.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,11 +42,11 @@ public class OSSClientUtil {
     @Value("${aliyun.bucketName}")
     final static String bucketName = "mall-owen";
 
-    public static String getBucketName(){
+    public static String getBucketName() {
         return bucketName;
     }
 
-    public static String getEndpoint(){
+    public static String getEndpoint() {
         return endpoint;
     }
 
@@ -62,6 +61,17 @@ public class OSSClientUtil {
      */
     public static OSSClient getOSSClient() {
         return new OSSClient(endpoint, accessKeyId, accessKeySecret);
+    }
+
+    /**
+     * 判断文件是否存在
+     * @param client OSS
+     * @param bucketName bucketName
+     * @param key key
+     * @return
+     */
+    public static boolean fileExists(OSSClient client, String bucketName, String key) {
+        return client.doesObjectExist(bucketName, key);
     }
 
     /**

@@ -175,5 +175,8 @@ module.exports = {
   },
   getUserReport:(courseId,userId) =>{ //获取用户读书报告
     return request('/weixin/api/course/report/' + courseId + '/' + userId, 'get', null, false)
+  },
+  generateReport:(id,userId,userName)=>{ //生成报告图片
+    return request('/report/test?id=' + id + '&userId=' + userId+'&userName='+userName, 'get', null, false)
   }
 }

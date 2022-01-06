@@ -29,6 +29,11 @@ Page({
         ['parameter.categorySecond']: options.categorySecond
       })
     }
+    if(options.userId){
+      this.setData({
+        ['parameter.userId']: options.userId
+      })
+    }
     if (options.name) {
       this.setData({
         ['parameter.name']: options.name

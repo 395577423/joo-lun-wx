@@ -83,6 +83,9 @@
                 where a.category_second = b.id
                 and a.title like concat('%',#{query.name},'%') ) c))
             </if>
+            <if test="query.userId !=null and query.userId !=''">
+                and i.id in(select course_id from user_course where user_id = #{query.userId})
+            </if>
         </where>
     </select>
 

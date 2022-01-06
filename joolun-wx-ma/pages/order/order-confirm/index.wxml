@@ -59,6 +59,12 @@
             <view class="text-price">{{freightPrice}}</view>
           </view>
         </view>
+        <view class="cu-item margin-top-sm cu-item arrow" bindtap="showBalanceModel">
+          <text class="text-gray text-sm">使用账户余额抵扣</text>
+          <view class="action">
+            <view class="text-price" wx:if="{{useBalance}}">{{userMoney}}</view>
+          </view>
+        </view>
         
       </view>
     </view>
@@ -75,10 +81,23 @@
     <view class="flex-treble bar-rt">
       <text class="text-sm text-gray">共{{ orderConfirmData.length }}件，</text>
       <text class="text-sm text-gray">合计：</text>
-      <text class="text-xl text-price text-blue text-bold">{{numberUtil.numberAddition(paymentPrice,freightPrice)}}</text>
+      <text class="text-xl text-price text-blue text-bold">{{totalPrice}}</text>
       <button class="cu-btn shadow-blur margin-left-sm" style="background-color: #2967ff;font-weight:300;width:220rpx;" bindtap="orderSub" loading="{{loading}}" disabled="{{loading}}" type="">
         <text class="text-white">提交订单</text>
       </button>
+    </view>
+  </view>
+</view>
+<view class="cu-modal bottom-modal {{modalName=='userBalance'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">账户余额</view>
+      <view class="action cuIcon-close text-red" bindtap="hideModal"></view>
+    </view>
+    <view class="padding-xl">
+      <text class="margin-right-df text-lg">最高可使用账户余额</text>
+      <text class="text-price margin-left-xl text-red text-xl">减 {{userMoney}}</text> 
+      <switch class="sm margin-left-lg" bindtap="useBalance"></switch>
     </view>
   </view>
 </view>

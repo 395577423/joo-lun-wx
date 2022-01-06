@@ -51,4 +51,8 @@ public class UserAnswer extends Model<UserAnswer> {
     @Excel(name = "问题ID")
     private Long courseId;
 
+    /**
+     * 是否正确 1正确 0错误
+     */
+    private Integer correct;
 }

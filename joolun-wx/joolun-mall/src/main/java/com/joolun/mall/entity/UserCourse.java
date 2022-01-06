@@ -73,4 +73,9 @@ public class UserCourse extends Model<UserCourse> {
      * 备注
      */
     private String remark;
+
+    /**
+     * 用户读书报告图片地址
+     */
+    private String report;
 }
