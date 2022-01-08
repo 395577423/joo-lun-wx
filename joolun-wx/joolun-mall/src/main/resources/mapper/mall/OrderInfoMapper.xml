@@ -20,6 +20,7 @@
 		<result property="freightPrice" column="freight_price"/>
 		<result property="paymentWay" column="payment_way"/>
 		<result property="paymentPrice" column="payment_price"/>
+		<result property="couponPrice" column="coupon_price"/>
 		<result property="paymentTime" column="payment_time"/>
 		<result property="deliveryTime" column="delivery_time"/>
 		<result property="receiverTime" column="receiver_time"/>
@@ -55,6 +56,7 @@
 		order_info.`freight_price`,
 		order_info.`payment_way`,
 		order_info.`payment_price`,
+		order_info.`coupon_price`,
 		order_info.`payment_time`,
 		order_info.`delivery_time`,
 		order_info.`receiver_time`,

@@ -1,74 +1,109 @@
 <scroll-view>
-  <view class="text-center text-xl padding">{{title}}</view>
-  <view class="text-center">
-    <image src="{{coverUrl}}" style="margin:0 auto;" />
-  </view>
-  <view class="padding text-center">
-    <view class="padding-xl radius shadow-warp bg-white margin-top"> {{introduction}}</view>
-  </view>
-
-  <view class="padding text-center">
-    <view class="padding-xl radius shadow-warp bg-white margin-top">
-      <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
-        <view class="action">
-          <text class=" text-shadow text-black">任务一 好书放映室</text>
-          <button class="cu-btn round line-blue fr" bindtap="toVideoPage" style="position: relative; left: 186rpx; top: 0rpx">看视频</button>
-        </view>
-      </view>
-
-      <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
-        <view class="action">
-          <text class=" text-shadow text-black">任务二 知识小课堂</text>
-          <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 184rpx; top: -1rpx">去答题</button>
-        </view>
-      </view>
-
-      <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
-        <view class="action">
-          <text class=" text-shadow text-black">任务三 孩子的心声</text>
-          <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage" style="position: relative; left: 181rpx; top: -1rpx">来聊聊</button>
-        </view>
-      </view>
-      <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
-        <view class="action">
-          <text class=" text-shadow text-black">任务四 生成学习报告</text>
-          <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 149rpx; top: 0rpx">看报告</button>
-        </view>
-      </view>
+    <view class="text-center text-xl padding">{{title}}</view>
+    <view class="text-center">
+        <image src="{{coverUrl}}" style="margin:0 auto;"/>
     </view>
-  </view>
-  <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">
-  <view class="btn-group">
-    <text class="text-price text-blue text-bold text-lg">{{realPrice}}</text>
-    <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即购买</button>
-  </view>
-</view>
+    <view class="padding text-center">
+        <view class="padding-xl radius shadow-warp bg-white margin-top">{{introduction}}</view>
+    </view>
+
+    <view class="padding text-center">
+        <view class="padding-xl radius shadow-warp bg-white margin-top">
+            <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
+                <view class="action">
+                    <text class=" text-shadow text-black">任务一 好书放映室</text>
+                    <button class="cu-btn round line-blue fr" bindtap="toVideoPage"
+                            style="position: relative; left: 186rpx; top: 0rpx">看视频
+                    </button>
+                </view>
+            </view>
+
+            <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
+                <view class="action">
+                    <text class=" text-shadow text-black">任务二 知识小课堂</text>
+                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage"
+                            style="position: relative; left: 184rpx; top: -1rpx">去答题
+                    </button>
+                </view>
+            </view>
+
+            <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
+                <view class="action">
+                    <text class=" text-shadow text-black">任务三 孩子的心声</text>
+                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage"
+                            style="position: relative; left: 181rpx; top: -1rpx">来聊聊
+                    </button>
+                </view>
+            </view>
+            <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
+                <view class="action">
+                    <text class=" text-shadow text-black">任务四 生成学习报告</text>
+                    <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage"
+                            style="position: relative; left: 149rpx; top: 0rpx">看报告
+                    </button>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">
+        <view class="btn-group">
+            <text class="text-price text-blue text-bold text-lg">{{realPrice}}</text>
+            <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即购买</button>
+        </view>
+    </view>
 </scroll-view>
 
 <view class="cu-modal {{modalName=='NeedBuy'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content text-blue text-bold text-shadow">友情提示</view>
-      <view class="action" bindtap="hideModal">
-        <text class="cuIcon-close text-red"></text>
-      </view>
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">友情提示</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            请先购买课程,再去做任务喔 ≧◇≦
+        </view>
     </view>
-    <view class="padding-xl">
-      请先购买课程,再去做任务喔 ≧◇≦
-    </view>
-  </view>
 </view>
 
 <view class="cu-modal {{modalName=='Buy'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content text-blue text-bold text-shadow">购买</view>
-      <view class="action" bindtap="hideModal">
-        <text class="cuIcon-close text-red"></text>
-      </view>
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">购买</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            <view class="padding-xl" wx:if="{{wxUser.money > 0 }}">
+                <text class="margin-right-df text-df">使用账户余额</text>
+                <text class="text-price margin-left-xl text-red text-df">可用 {{wxUser.money}}</text>
+                <switch class="sm margin-left-lg" bindtap="useBalance"></switch>
+            </view>
+            <view>
+                <text>课程金额</text>
+                <text class="text-price">{{realPrice}}</text>
+            </view>
+            <view>
+                <text>待支付金额</text>
+                <text class="text-price">{{paymentPrice}}</text>
+            </view>
+            <button bindtap="updateUserCourse">支付</button>
+        </view>
     </view>
-    <view class="padding-xl">
-      请先购买课程,再去做任务喔 ≧◇≦
+</view>
+
+<view class="cu-modal {{modalName=='success'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">购买成功</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            购买成功
+        </view>
     </view>
-  </view>
 </view>

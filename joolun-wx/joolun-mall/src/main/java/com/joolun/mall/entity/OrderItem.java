@@ -86,6 +86,7 @@ public class OrderItem extends Model<OrderItem> {
 	 */
 	@ApiModelProperty(value = "运费金额")
 	private BigDecimal freightPrice;
+
 	/**
 	 * 支付金额（购买单价*商品数量+运费金额）
 	 */

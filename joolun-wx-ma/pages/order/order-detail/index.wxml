@@ -10,10 +10,12 @@
       {{orderInfo.statusDesc}}
     </view>
     <view class="text-black margin-left text-center" wx:if="{{orderInfo.isPay == '0' && !orderInfo.status}}">
-      请在<count-down outTime="{{1000 * orderInfo.outTime}}" bind:countDownDone="countDownDone"/>内付款，超时订单将自动取消
+      请在
+      <count-down outTime="{{1000 * orderInfo.outTime}}" bind:countDownDone="countDownDone" />内付款，超时订单将自动取消
     </view>
     <view class="text-black margin-left text-center" wx:if="{{orderInfo.status == '2'}}">
-      还剩<count-down outTime="{{1000 * orderInfo.outTime}}" bind:countDownDone="countDownDone"/>自动确认
+      还剩
+      <count-down outTime="{{1000 * orderInfo.outTime}}" bind:countDownDone="countDownDone" />自动确认
     </view>
   </view>
   <view class="cu-list cu-card menu-avatar">
@@ -25,7 +27,7 @@
           <view class="text-sm margin-left-sm">{{orderInfo.orderLogistics.logisticsDesc}}</view>
         </view>
         <view class="text-black text-sm overflow-2 loc-info" wx:if="{{orderInfo.orderLogistics.message}}">
-					{{orderInfo.orderLogistics.message}}
+          {{orderInfo.orderLogistics.message}}
         </view>
       </view>
       <view class="action">
@@ -40,7 +42,7 @@
           <view class="text-gray text-sm margin-left-sm">{{orderInfo.orderLogistics.telNum}}</view>
         </view>
         <view class="text-gray text-sm overflow-2 loc-info">
-					{{orderInfo.orderLogistics.address}}
+          {{orderInfo.orderLogistics.address}}
         </view>
       </view>
     </view>
@@ -54,31 +56,37 @@
               <view class="flex align-center">
                 <image src="{{item.picUrl ? item.picUrl : '/public/img/no_pic.png'}}" mode="aspectFill" class="row-img margin-top-xs"></image>
               </view>
-                <view class="desc row-info">
-                  <view class="text-black margin-left margin-top-sm overflow-2">{{item.spuName}}</view>
-                  <view class="text-gray text-sm margin-top-sm overflow-2" wx:if="{{item.specInfo}}">{{item.specInfo}}</view>
-                  <view class="flex justify-between">
-                    <view class="text-bold text-gray margin-top-sm margin-left-xs padding-lr-sm font-weight">数量</view>
-                    <view class="text-black text-sm margin-top-sm margin-right-xs padding-lr-sm">x{{item.quantity}}</view>
-                  </view>
+              <view class="desc row-info">
+                <view class="text-black margin-left margin-top-sm overflow-2">{{item.spuName}}</view>
+                <view class="text-gray text-sm margin-top-sm overflow-2" wx:if="{{item.specInfo}}">{{item.specInfo}}</view>
+                <view class="flex justify-between">
+                  <view class="text-bold text-gray margin-top-sm margin-left-xs padding-lr-sm font-weight">数量</view>
+                  <view class="text-black text-sm margin-top-sm margin-right-xs padding-lr-sm">x{{item.quantity}}</view>
                 </view>
+              </view>
             </view>
           </navigator>
         </view>
         <view class="cu-item margin-top-xs">
-            <text class="text-gray font-weight">订单金额</text>
+          <text class="text-gray font-weight">订单金额</text>
           <view class="action">
             <text class="text-price">{{orderInfo.salesPrice}}</text>
           </view>
         </view>
         <view class="cu-item margin-top-xs">
-            <text class="text-gray font-weight">运费金额</text>
+          <text class="text-gray font-weight">运费金额</text>
           <view class="action">
             + <text class="text-price">{{orderInfo.freightPrice}}</text>
           </view>
         </view>
         <view class="cu-item margin-top-xs">
-            <text class="text-gray font-weight">支付金额</text>
+          <text class="text-gray font-weight">余额抵扣</text>
+          <view class="action">
+            - <text class="text-price">{{orderInfo.couponPrice}}</text>
+          </view>
+        </view>
+        <view class="cu-item margin-top-xs">
+          <text class="text-gray font-weight">支付金额</text>
           <view class="action">
             <text class="text-price text-xl text-blue text-bold">{{orderInfo.paymentPrice}}</text>
           </view>
@@ -109,7 +117,7 @@
       </view>
     </view>
   </view>
-  
+
   <view class="cu-card mar-top-30" wx:if="{{orderInfo.orderLogistics.logisticsDesc}}">
     <view class="cu-item">
       <view class="cu-bar bg-white">
@@ -132,23 +140,14 @@
       </view>
     </view>
   </view>
-  
+
   <view class="cu-card mar-top-30" wx:if="{{orderInfo.userMessage}}">
     <view class="cu-item cu-form-group align-start">
       <view class="title">给卖家留言</view>
       <textarea readonly value="{{orderInfo.userMessage}}"></textarea>
     </view>
-	</view>
+  </view>
 </view>
 <view class="cu-bar tabbar bg-white border foot">
-  <order-operate
-    class="response"
-    orderInfo="{{orderInfo}}"
-    callPay="{{callPay}}"
-    contact="true"
-    bind:orderCancel="orderCancel"
-    bind:orderReceive="orderCancel"
-    bind:orderDel="orderDel"
-    bind:unifiedOrder="unifiedOrder"
-  />
+  <order-operate class="response" orderInfo="{{orderInfo}}" callPay="{{callPay}}" contact="true" bind:orderCancel="orderCancel" bind:orderReceive="orderCancel" bind:orderDel="orderDel" bind:unifiedOrder="unifiedOrder" />
 </view>

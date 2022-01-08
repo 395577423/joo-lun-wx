@@ -195,8 +195,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 			orderLogisticsService.save(orderLogistics);
 			orderInfo.setLogisticsId(orderLogistics.getId());
 			orderInfo.setName(listOrderItem.get(0).getSpuName());
+			//最终的价格为，多个商品的销售价之和 减去 优惠金额
+			BigDecimal paymentPrice = orderInfo.getPaymentPrice();
+			paymentPrice = paymentPrice.subtract(orderInfo.getCouponPrice());
+			orderInfo.setPaymentPrice(paymentPrice);
 			super.save(orderInfo);//保存订单
 			listOrderItem.forEach(orderItem -> orderItem.setOrderId(orderInfo.getId()));
+
 			//保存订单详情
 			orderItemService.saveBatch(listOrderItem);
 			listGoodsSpu.forEach(goodsSpuItem -> {

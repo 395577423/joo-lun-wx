@@ -266,4 +266,9 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
         wxUser = baseMapper.selectById(wxUser.getId());
         return wxUser;
     }
+
+    @Override
+    public void updateMoney(WxUser wxUser) {
+        baseMapper.updateMoney(wxUser);
+    }
 }

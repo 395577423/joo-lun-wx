@@ -79,4 +79,11 @@ public interface WxUserService extends IService<WxUser> {
 	 * @return
 	 */
 	WxUser saveOrUptateWxUser(WxOpenDataDTO wxOpenDataDTO);
+
+
+	/**
+	 * 更新余额
+	 * @param wxUser
+	 */
+	void updateMoney(WxUser wxUser);
 }

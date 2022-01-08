@@ -40,4 +40,6 @@
 		<result property="sessionKey" column="session_key"/>
 		<result property="money" column="money"/>
 	</resultMap>
+
+
 </mapper>

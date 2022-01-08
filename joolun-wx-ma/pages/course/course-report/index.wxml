@@ -1,9 +1,9 @@
 <wxml-to-canvas class="widget"></wxml-to-canvas>
 <scroll-view class="app">
-  <view class="bg-img padding-tb-xl" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/newheader.png');height: 600rpx;">
+  <view class="bg-img padding-tb-xl" style="background-image: url('https://readcommunity.oss-cn-beijing.aliyuncs.com/wechat/newheader.png');height: 600rpx;">
     <view class="padding-xl text-white text-center margin-top">
       <view class="padding-xs text-xl">
-        <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/dushubaogao%402x.png" style="width: 420rpx;height: 70rpx;" />
+        <image src="https://readcommunity.oss-cn-beijing.aliyuncs.com/wechat/dushubaogao%402x.png" style="width: 420rpx;height: 70rpx;" />
       </view>
       <view class="padding">
         <view class="cu-avatar xl round " style="background-image:url({{wxUser.headimgUrl}});"></view>
@@ -26,7 +26,7 @@
     <view class="text-bold text-brown margin-sm">解读视频共5分钟,专注力获得了锻炼,</view>
     <view class="text-bold text-brown margin-sm">同时也记住了书中精彩的故事情节.</view>
   </view>
-  <view style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/bb2.png');background-size:100% 100%;height: 600rpx; margin-top: 60rpx;margin-left: 20rpx;margin-right: 20rpx;">
+  <view style="background-image: url('https://readcommunity.oss-cn-beijing.aliyuncs.com/wechat/bb2.png');background-size:100% 100%;height: 600rpx; margin-top: 60rpx;margin-left: 20rpx;margin-right: 20rpx;">
     <view class="text-center bg-cyan" style="width:45%;margin:0 auto;height:60rpx;line-height:60rpx;position: relative;top:-30rpx;">
       <view class="text-white text-bold">故事精华</view>
     </view>
@@ -35,7 +35,7 @@
     </view>
   </view>
 
-  <view style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/bb2.png');background-size:100% 100%;height: 600rpx; margin-top: 60rpx;margin-left: 20rpx;margin-right: 20rpx;">
+  <view style="background-image: url('https://readcommunity.oss-cn-beijing.aliyuncs.com/wechat/bb2.png');background-size:100% 100%;height: 600rpx; margin-top: 60rpx;margin-left: 20rpx;margin-right: 20rpx;">
     <view class="text-center" style="width:45%;margin:0 auto;height:60rpx;line-height:60rpx;position: relative;top:-30rpx;background: #fa9374;">
       <view class="text-white text-bold">孩子的收获</view>
     </view>
@@ -54,7 +54,7 @@
     <view class="text-center" style="width:45%;margin:0 auto;height:60rpx;line-height:60rpx;position: relative;top:30rpx;background: #74A6FA;">
       <view class="text-white text-bold">孩子的创造力</view>
     </view>
-    <view class="cu-timeline text-center" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/bb2.png');background-size:100% 100%;background-color: #FBECD3;">
+    <view class="cu-timeline text-center" style="background-image: url('https://readcommunity.oss-cn-beijing.aliyuncs.com/wechat/bb2.png');background-size:100% 100%;background-color: #FBECD3;">
       <view class="cu-time">故事线</view>
       <block wx:for="{{story}}" wx:key="index">
         <view class="cu-item text-grey cuIcon-evaluate_fill">
@@ -112,6 +112,19 @@
     </view>
     <view class="padding-xl" bindlongpress="saveImage">
       <image src="{{src}}" style="width: {{width}}px; height: {{height}}px"></image>
+    </view>
+  </view>
+</view>
+<view class="cu-modal {{modalName=='saveImage'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <text>{{msg}}</text>
     </view>
   </view>
 </view>

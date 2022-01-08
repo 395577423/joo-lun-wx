@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -60,6 +61,13 @@ public class PlaceOrderDTO extends Model<ShoppingCart> {
 	 */
 	@ApiModelProperty(value = "订单类型")
 	private String orderType;
+
+	/**
+	 * 优惠金额
+	 */
+	@ApiModelProperty(value = "优惠金额")
+	private BigDecimal couponPrice;
+
 
 	@ApiModelProperty(value = "商品")
 	private List<PlaceOrderGoodsDTO> skus;

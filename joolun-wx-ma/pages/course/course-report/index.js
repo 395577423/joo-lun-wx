@@ -27,7 +27,8 @@ Page({
     reportUrl: '',
     src: '',
     container: null,
-    loadImagePath:''
+    loadImagePath:'',
+    msg:''
   },
 
   /**
@@ -154,19 +155,44 @@ Page({
     })
   },
   saveImage() {
+    let that = this
     wx.saveImageToPhotosAlbum({
       filePath: this.data.src,
+      'success':function(res){
+        console.log('success',res)
+        if(res.errMsg === 'saveImageToPhotosAlbum:ok'){
+          that.getUserMoney()
+        }
+      },
+      'fail':function(res){
+        console.log('fail',res)
+        if(res.errMsg ==='saveImageToPhotosAlbum:fail cancel'){
+          that.setData({
+            modalName:'saveImage',
+            msg: '保存图片并且分享的话,才能拿到返现哦~'
+          })
+        }
+      }
+    })
+    
+  },
+  getUserMoney(){
+    let id = this.data.courseId
+    let userId = this.data.wxUser.id
+    app.api.userMoney(id,userId).then(res=>{
+        console.log(res.code)
+        console.log(res.msg)
+        console.log(res)
+        let msg  = res.msg
+        this.setData({
+          modalName:'saveImage',
+          msg: msg
+        })
     })
   },
-
   onImgOK(e) {
     this.setData({
       imgURL: e.detail.path
-    })
-  },
-  hideModal(e) {
-    this.setData({
-      modalName: null
     })
   },
   hideModal(e) {

@@ -1,19 +1,33 @@
 package com.joolun.web.api;
 
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.json.JSONUtil;
 import com.aliyun.oss.OSSClient;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.service.WxPayService;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.mall.config.CommonConstants;
+import com.joolun.mall.config.MallConfigProperties;
+import com.joolun.mall.dto.CoursePayVO;
+import com.joolun.mall.dto.CourseVO;
 import com.joolun.mall.entity.*;
 import com.joolun.mall.service.*;
 import com.joolun.mall.util.OSSClientUtil;
 import com.joolun.system.service.ISysDictDataService;
-import com.joolun.mall.dto.CourseVO;
 import com.joolun.web.util.FileUtils;
+import com.joolun.weixin.config.WxPayConfiguration;
+import com.joolun.weixin.constant.MyReturnCode;
+import com.joolun.weixin.entity.WxUser;
+import com.joolun.weixin.service.WxUserService;
+import com.joolun.weixin.utils.ThirdSessionHolder;
+import com.joolun.weixin.utils.WxMaUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -94,6 +108,10 @@ public class CourseApi {
      * 课程故事线Service
      */
     private final ICourseStoryService iCourseStoryService;
+
+    private final WxUserService wxUserService;
+
+    private final MallConfigProperties mallConfigProperties;
 
     /**
      * 查询奖学金计划课程
@@ -345,5 +363,173 @@ public class CourseApi {
     @GetMapping("/list")
     public AjaxResult getGoodsSpuPage(Page page, CourseVO course) {
         return AjaxResult.success(courseService.selectDataPage(page, course));
+    }
+
+    /**
+     * 购买课程
+     *
+     * @param vo 课程购买请求VO
+     * @return
+     */
+    @PostMapping("/usercourse")
+    public AjaxResult updateUserCourse(@RequestBody CoursePayVO vo) {
+        try {
+            //用户信息
+            WxUser wxUser = wxUserService.getById(vo.getUserId());
+            //课程信息
+            Course course = courseService.getById(vo.getId());
+            if (course.getRates().compareTo(BigDecimal.ZERO) > 0) {
+                course.setRealPrice(course.getPrice().multiply(course.getRates()));
+            }
+
+            UserCourse userCourse = new UserCourse();
+            userCourse.setUserId(vo.getUserId());
+            userCourse.setCourseId(vo.getId());
+
+            //是否使用余额
+            BigDecimal paymentPrice = BigDecimal.ZERO;
+            BigDecimal leftMoney = wxUser.getMoney();
+            BigDecimal realPrice = course.getRealPrice();
+
+            if (CommonConstants.YES.equals(vo.getUseCoupon())) {
+                //如果用户余额小于课程价格，使用后减去
+                paymentPrice = realPrice.subtract(leftMoney);
+                userCourse.setPrice(paymentPrice);
+            }
+
+            wxUser.setMoney(BigDecimal.ZERO);
+
+
+            userCourse.setReturnable(0L);
+
+            userCourse.setPrice(paymentPrice);
+            userCourse.setCreateTime(LocalDateTime.now());
+            userCourseService.save(userCourse);
+
+            //则更新用户表
+            wxUserService.updateMoney(wxUser);
+
+            return AjaxResult.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error("购买失败，请联系客服");
+        }
+    }
+
+    /**
+     * 调用统一下单接口，并组装生成支付所需参数对象.
+     *
+     * @param vo 统一下单请求参数
+     * @return 返回 {@link com.github.binarywang.wxpay.bean.order}包下的类对象
+     */
+    @ApiOperation(value = "调用统一下单接口")
+    @PostMapping("/unifiedOrder")
+    @Transactional(rollbackFor = Exception.class)
+    public AjaxResult unifiedOrder(HttpServletRequest request, @RequestBody CoursePayVO vo) throws WxPayException {
+        //检验用户session登录
+        WxUser wxUser = wxUserService.getById(vo.getUserId());
+
+        Course course = courseService.getById(vo.getId());
+        if (course.getRates().compareTo(BigDecimal.ZERO) > 0) {
+            course.setRealPrice(course.getPrice().multiply(course.getRates()));
+        }
+
+        QueryWrapper<UserCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", vo.getId()).eq("user_id", vo.getUserId());
+        UserCourse userCourse = userCourseService.getOne(wrapper);
+
+        if (null == course.getId()) {
+            return AjaxResult.error(MyReturnCode.ERR_50000.getCode(), MyReturnCode.ERR_50000.getMsg());
+        }
+        //防止重复购买
+        if (null != userCourse) {
+            return AjaxResult.error(MyReturnCode.ERR_50001.getCode(), MyReturnCode.ERR_50001.getMsg());
+        }
+
+        //用户余额
+        BigDecimal leftMoney;
+        //实际支付价格
+        BigDecimal paymentPrice;
+        BigDecimal userMoney = wxUser.getMoney();
+        BigDecimal realPrice = course.getRealPrice();
+
+        if (CommonConstants.YES.equals(vo.getUseCoupon())) {
+            //如果用户余额大于课程价格,跳过支付，并且保存用户课程表
+            if (userMoney.compareTo(course.getRealPrice()) >= 0) {
+
+                userCourse = new UserCourse();
+                userCourse.setUserId(vo.getUserId());
+                userCourse.setCourseId(vo.getId());
+                //1.设定用户课程价格
+                userCourse.setPrice(BigDecimal.ZERO);
+
+                //2.处理用户余额 先减去课程价格
+
+                leftMoney = userMoney.subtract(realPrice);
+
+                //保存用户表
+                userCourse.setCreateTime(LocalDateTime.now());
+                userCourseService.save(userCourse);
+
+                //如果余额有变动，则更新用户表
+                if (leftMoney.compareTo(userMoney) != 0) {
+                    wxUser.setMoney(leftMoney);
+                    wxUserService.updateMoney(wxUser);
+                }
+                return AjaxResult.success();
+            } else {
+                paymentPrice = realPrice.subtract(userMoney);
+            }
+        } else {
+            paymentPrice = course.getRealPrice();
+        }
+
+
+        String appId = WxMaUtil.getAppId(request);
+        WxPayUnifiedOrderRequest wxPayUnifiedOrderRequest = new WxPayUnifiedOrderRequest();
+        wxPayUnifiedOrderRequest.setAppid(appId);
+        String body = course.getTitle();
+        body = body.length() > 40 ? body.substring(0, 39) : body;
+        wxPayUnifiedOrderRequest.setBody(body);
+        wxPayUnifiedOrderRequest.setOutTradeNo(IdUtil.getSnowflake(0, 0).nextIdStr());
+        wxPayUnifiedOrderRequest.setTotalFee(paymentPrice.multiply(new BigDecimal(100)).intValue());
+        wxPayUnifiedOrderRequest.setTradeType("JSAPI");
+        wxPayUnifiedOrderRequest.setNotifyUrl(mallConfigProperties.getNotifyHost() + "/weixin/api/ma/orderinfo/notify-order");
+        wxPayUnifiedOrderRequest.setSpbillCreateIp("127.0.0.1");
+        wxPayUnifiedOrderRequest.setOpenid(wxUser.getOpenId());
+        WxPayService wxPayService = WxPayConfiguration.getPayService();
+        return AjaxResult.success(JSONUtil.parse(wxPayService.createOrder(wxPayUnifiedOrderRequest)));
+    }
+
+
+    /**
+     * @param id     课程ID
+     * @param userId 用户ID
+     * @return
+     */
+    @GetMapping("/usermoney/{id}/{userId}")
+    public AjaxResult getUserMoney(@PathVariable Long id, @PathVariable String userId) {
+
+        Course course = courseService.getById(id);
+        QueryWrapper<UserCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", id).eq("user_id", userId);
+        UserCourse userCourse = userCourseService.getOne(wrapper);
+
+        //如果是奖学金课程
+        if (CommonConstants.NO.equals(course.getPlan()) && null != userCourse && null != userCourse.getId() && null == userCourse.getCashReturn()) {
+            userCourse.setCashReturn(course.getCashReturn());
+            userCourse.setReturnable(0L);
+            userCourseService.updateById(userCourse);
+            WxUser wxUser = wxUserService.getById(userId);
+            BigDecimal existsMoney = wxUser.getMoney();
+            BigDecimal money = existsMoney.add(course.getCashReturn());
+
+            wxUser.setMoney(money);
+            wxUserService.updateMoney(wxUser);
+            String msg = "恭喜您获得返现" + course.getCashReturn() + "元" ;
+            return AjaxResult.success(msg);
+        } else {
+            return AjaxResult.success();
+        }
     }
 }

@@ -77,7 +77,7 @@
     <view class="cuIcon-servicefill"></view> 
     客服
   </button>
-  <navigator class="action" open-type='switchTab' url='/pages/shopping-cart/index'>
+  <navigator class="action"  url='/pages/shopping-cart/index'>
     <view class="cuIcon-cart">
       <view class="cu-tag badge">{{shoppingCartCount}}</view>
     </view>

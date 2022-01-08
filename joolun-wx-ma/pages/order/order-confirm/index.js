@@ -68,7 +68,7 @@ Page({
           freightPrice: freightPrice,
           paymentPrice: salesPrice,
           spuIds: spuIds,
-          totalPrice: Number(salesPrice) + Number(freightPrice)
+          totalPrice: (Number(salesPrice) + Number(freightPrice)).toFixed(2)
         })
         
       }
@@ -129,7 +129,9 @@ Page({
     orderSubParm.skus = that.data.orderConfirmData
     app.api.orderSub(Object.assign(
       {},
-      { userAddressId: that.data.orderSubParm.deliveryWay == '1' ? userAddress.id : null},
+      { userAddressId: that.data.orderSubParm.deliveryWay == '1' ? userAddress.id : null,
+      couponPrice: that.data.userMoney
+      },
       orderSubParm
     ))
       .then(res => {
@@ -162,11 +164,13 @@ Page({
   },
   useBalance(){
     let totalPrice = 0
-    if(this.data.useBalance){
-      totalPrice = Number(this.data.userMoney) + Number(this.data.freightPrice)
+    if(!this.data.useBalance){
+      totalPrice = Number(this.data.salesPrice) -  Number(this.data.userMoney) + Number(this.data.freightPrice)
     }else{
       totalPrice = Number(this.data.salesPrice) + Number(this.data.freightPrice)
     }
+
+    totalPrice = totalPrice.toFixed(2)
 
     this.setData({
       modalName:'',
