@@ -6,7 +6,6 @@
     <view class="padding text-center">
         <view class="padding-xl radius shadow-warp bg-white margin-top">{{introduction}}</view>
     </view>
-
     <view class="padding text-center">
         <view class="padding-xl radius shadow-warp bg-white margin-top">
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
@@ -48,7 +47,7 @@
     <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">
         <view class="btn-group">
             <text class="text-price text-blue text-bold text-lg">{{realPrice}}</text>
-            <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即购买</button>
+            <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即报名</button>
         </view>
     </view>
 </scroll-view>
@@ -62,7 +61,8 @@
             </view>
         </view>
         <view class="padding-xl">
-            请先购买课程,再去做任务喔 ≧◇≦
+            <text class="padding">请先报名参与奖学金计划，才能做任务哦。具体活动详情请添加客服微信。</text> 
+            <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
         </view>
     </view>
 </view>
@@ -104,6 +104,20 @@
         </view>
         <view class="padding-xl">
             购买成功
+        </view>
+    </view>
+</view>
+
+<view class="cu-modal {{modalName=='showpic'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">客服联系方式</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode.jpeg" style="width: 280rpx;height:280rpx;"></image>
         </view>
     </view>
 </view>

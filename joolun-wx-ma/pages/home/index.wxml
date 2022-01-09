@@ -20,16 +20,22 @@
       </view>
       <view>
         <view>
-          <text class="text-lg">《{{course.title}}》</text>
+          <text class="text-lg">{{course.title}}</text>
         </view>
         <view class="margin">
-          <button class="cu-btn round bg-blue button-hover text-lg " style="width: 80%;" bindtap="toDetail" data-courseId="{{course.id}}">立即加入</button>
+          <button class="cu-btn round bg-blue button-hover text-lg " bindtap="toDetail" data-courseId="{{course.id}}">立即加入</button>
         </view>
       </view>
     </view>
-    <view class="text-cut">
-      <text class="text-yellow">[课程精华]</text>
-      {{course.essence}}
+    <view class="flex solid-bottom padding-sm justify-start">
+      <text class="text-yellow">[共读书籍]</text>
+      <view class="margin-left-sm" wx:for="{{books}}" wx:key="id">
+        {{item.title}}
+      </view>
+    </view>
+    <view class="flex solid-bottom padding-sm justify-start">
+      <text class="text-yellow">[报名时间]</text>
+      <text class="margin-left-sm">{{course.startTime}} - {{course.endTime}}</text>
     </view>
   </view>
 </view>
@@ -37,7 +43,7 @@
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
       <text class="cuIcon-titles text-blue"></text>
-      <text class="text-shadow text-black text-bold">大家都在读</text>
+      <text class="text-shadow text-black text-bold">往期奖学金计划</text>
     </view>
   </view>
   <view class="bg-white margin">
@@ -47,7 +53,7 @@
           <image src="{{item.coverUrl}}" style="width: 220rpx;height:220rpx;"></image>
         </view>
         <view class="flex-direction flex text-center" style="width:350rpx;">
-          <text class="text-black text-bold text-cut text-xm " style="width:350rpx;">《{{item.title}}》</text>
+          <text class="text-black text-bold text-cut text-xm " style="width:350rpx;">{{item.title}}</text>
           <text class="text-black text-bold margin-top-xs ">{{item.ageStart}}~{{item.ageEnd}}岁</text>
           <view wx:if="{{item.realPrice<item.price}}" class="margin-top-xs">
             <text class="text-price text-blue text-bold">{{item.realPrice}}</text>

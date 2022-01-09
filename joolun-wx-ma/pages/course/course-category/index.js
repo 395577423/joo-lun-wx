@@ -17,10 +17,10 @@ Page({
   },
   onShow() {
     //更新tabbar购物车数量
-    wx.setTabBarBadge({
-      index: 2,
-      text: app.globalData.shoppingCartCount + ''
-    })
+    // wx.setTabBarBadge({
+    //   index: 2,
+    //   text: app.globalData.shoppingCartCount + ''
+    // })
   },
   booksCategoryGet() {
     app.api.booksCategoryGet()

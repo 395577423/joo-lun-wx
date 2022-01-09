@@ -26,9 +26,12 @@
           @change="changePlan(scope.row)">
         </el-switch>
       </template>
-<!--      <template slot="introductionForm" slot-scope="scope">-->
+      <template slot="introductionForm" slot-scope="scope">
 <!--        <BaseEditor v-model="scope.row.introduction" />-->
-<!--      </template>-->
+        <BaseEditor v-model="scope.row.introduction"></BaseEditor>
+      </template>
+
+
     </avue-crud>
   </div>
 </template>
@@ -85,8 +88,6 @@ export default {
       }else if(type == 'edit'){
         this.tableLoading = true
         getObj(this.form.id).then(response => {
-          console.log(response)
-          console.log(this.form)
           this.$set(this.form,'introduction', response.data.introduction)
           this.tableLoading = false
           done()

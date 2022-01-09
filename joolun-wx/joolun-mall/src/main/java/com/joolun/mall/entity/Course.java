@@ -139,4 +139,9 @@ public class Course extends Model<Course>
     @TableField(exist = false)
     private List<Long> books;
 
+    /**
+     * 关联书籍名
+     */
+    @TableField(exist = false)
+    private List<String> bookNames;
 }

@@ -44,7 +44,7 @@ Page({
     getDetail(courseId) {
         app.api.courseDetail(courseId)
             .then(res => {
-                console.log(res)
+                
                 let course = res.data.course
                 let video = res.data.video
                 this.setData({
@@ -65,11 +65,11 @@ Page({
         let courseId = this.data.courseId
         let userId = this.data.wxUser.id
         app.api.getUserCourse(courseId, userId).then(res => {
-            console.log('usercourse', res)
+            
             if (undefined === res.data) {
-                console.log('未购买课程')
+                
             } else {
-                console.log('已购买课程')
+                
                 this.setData({
                     isOwned: true
                 })
@@ -83,7 +83,7 @@ Page({
     toVideoPage(e) {
         if (this.data.isOwned) {
             let videos = encodeURIComponent(JSON.stringify(this.data.videoList))
-            console.log(this.data.videoList)
+           
             wx.navigateTo({
                 url: '/pages/course/course-video/index?videoList=' + videos + '&title=' + this.data.title
             })
@@ -129,6 +129,11 @@ Page({
     toBuy() {
         this.showModal('Buy')
     },
+    showPic(){
+        this.setData({
+            modalName:'showpic'
+        })
+    },
     showModal(name) {
         this.setData({
             modalName: name,
@@ -148,11 +153,6 @@ Page({
         let userMoney = this.data.wxUser.money
         let realPrice = this.data.realPrice
         let notUseBalance = this.data.notUseBalance
-
-
-        console.log('userMoney', userMoney)
-        console.log('realPrice', realPrice)
-        console.log('notUseBalance', notUseBalance)
         if (notUseBalance) {
             if (userMoney >= realPrice) {
                 this.setData({
@@ -211,10 +211,10 @@ Page({
                             that.updateUserPayCourse()
                         },
                         'fail': function (res) {
-                            console.log(res)
+                            
                         },
                         'complete': function (res) {
-                            console.log(res)
+                            
                         }
                     })
                 }
@@ -247,7 +247,6 @@ Page({
             userId: userId,
             useCoupon: useCoupon
         }).then(res=>{
-            console.log(res)
             if(res.code === 200){
                 this.getUserCourse()
                 this.userInfoGet()

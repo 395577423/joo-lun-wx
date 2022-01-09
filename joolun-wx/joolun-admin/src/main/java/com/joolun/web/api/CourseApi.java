@@ -120,7 +120,15 @@ public class CourseApi {
      */
     @GetMapping("/plan")
     public AjaxResult getPlan() {
-        return AjaxResult.success(courseService.selectPlan());
+        Course course = courseService.selectPlan();
+
+        List<Book> listByCourse = bookService.getListByCourse(course.getId());
+
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("course", course);
+        result.put("books", listByCourse);
+        return AjaxResult.success(result);
     }
 
     /**

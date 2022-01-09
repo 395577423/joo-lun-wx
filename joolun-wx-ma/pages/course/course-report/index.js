@@ -28,7 +28,8 @@ Page({
     src: '',
     container: null,
     loadImagePath:'',
-    msg:''
+    msg:'',
+    title:''
   },
 
   /**
@@ -49,8 +50,21 @@ Page({
     //获取相册读取权限
     this.getAuth()
 
+  },
+  onReady(){
+    let that = this
     //获取用户报告图片
+    setTimeout(function(){
+      let nickName = that.data.wxUser.nickName
+      let title = that.data.title
+      let totalStar  = that.data.totalStar
 
+      wxml = wxml.replace('userNameText', nickName)
+      .replace('challengeText', '4')
+      .replace('bookText', title)
+      .replace('starText', totalStar)
+      .replace('durationText', '5分钟')
+    },500)   
   },
   getAuth() {
     wx.authorize({
@@ -99,7 +113,8 @@ Page({
         courseQuestion: res.data.courseQuestion,
         story: res.data.story,
         userAudio: res.data.userAudio,
-        userCourseReport: res.data.userCourse.report
+        userCourseReport: res.data.userCourse.report,
+        title:res.data.course.title
       })
     })
     let questions = this.data.courseQuestion
@@ -124,11 +139,7 @@ Page({
     myaudio.play()
   },
   share() {
-    wxml = wxml.replace('userNameText', this.data.wxUser.nickName)
-      .replace('challengeText', '4')
-      .replace('bookText', this.data.course.title)
-      .replace('starText', this.data.totalStar)
-      .replace('durationText', '5分钟')
+    console.log(this.widget)
     const p1 = this.widget.renderToCanvas({
       wxml,
       style
@@ -140,7 +151,8 @@ Page({
     wx.showLoading({
       title: '使劲生成ing.....',
     })
-    setTimeout(this.extraImage,2000)
+
+    setTimeout(this.extraImage,1500)
   },
   extraImage() {
     const p2 = this.widget.canvasToTempFilePath()
@@ -169,7 +181,7 @@ Page({
         if(res.errMsg ==='saveImageToPhotosAlbum:fail cancel'){
           that.setData({
             modalName:'saveImage',
-            msg: '保存图片并且分享的话,才能拿到返现哦~'
+            msg: '保存图片并且分享的话,才能拿到奖励哦~'
           })
         }
       }

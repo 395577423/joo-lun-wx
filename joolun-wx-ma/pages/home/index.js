@@ -41,9 +41,11 @@ Page({
     app.api.planCourse()
       .then(res => {
         console.log(res)
-        let result = res.data;
+        let result = res.data.course;
+        let books = res.data.books
         this.setData({
-          course:result
+          course:result,
+          books:books
         })
       })
   },

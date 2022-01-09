@@ -92,12 +92,12 @@ export default (safe) => {
       }, {
         label: '介绍',
         prop: 'introduction',
-        type: 'textarea',
-        hide:true
+        hide:true,
+        component:'Editor'
       },{
         label: '课程精华',
         prop: 'essence',
-        type: 'textarea'
+        // type: 'textarea'
       },{
         label: '关联书籍',
         prop: 'books',
@@ -115,7 +115,12 @@ export default (safe) => {
             trigger: 'blur'
           }
         ]
-      }]
+      },
+      {
+        label: '地址 暂时',
+        prop: 'remark'
+      }
+    ]
 
   }
 }
