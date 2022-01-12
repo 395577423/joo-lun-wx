@@ -1,8 +1,8 @@
 <view class="cu-bar search bg-white fixed">
   <view class="search-form round">
     <text class="cuIcon-search"></text>
-    <navigator class="response" hover-class='none' url='/pages/base/search2/index'>
-      <input type="text" placeholder="请输入商品名" value="{{parameter.name}}"></input>
+    <navigator class="response" hover-class='none' url='/pages/base/search2/index?userId={{userId}}'>
+      <input type="text" placeholder="请输入课程或书籍名" value="{{parameter.name}}"></input>
     </navigator>
   </view>
   <view class="action">
@@ -11,8 +11,8 @@
     </view>
   </view>
 </view>
-<view class="cu-bar justify-center bg-white fixed" style="margin-top:80rpx;box-shadow:none;">
-  <view class="grid response text-center align-start">
+<view class="{{ userId==''?  'cu-bar justify-center bg-white fixed':'cu-bar fixed'}}" style="margin-top:80rpx;box-shadow:none;" >
+  <view class="grid response text-center align-start" wx:if="{{userId ==''}}">
     <view class="flex-sub padding-sm margin-xs radius text-blue text-bold">{{title}}</view>
     <view class="flex-sub padding-sm margin-xs radius">
       <view class="grid text-center" bindtap="sortHandle" data-type='price'>
@@ -41,7 +41,7 @@
     </view>
   </view>
 </view>
-<view style="margin-top:200rpx">
+<view style="{{userId == ''? 'margin-top:200rpx':'margin-top:100rpx' }}">
   <view wx:if="{{viewType}}">
     <course-card courseList="{{courseList}}"/>
   </view>

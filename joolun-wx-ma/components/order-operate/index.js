@@ -108,7 +108,7 @@ Component({
 
               },
               'complete': function (res) {
-                console.log(res)
+
               }
             })
           }

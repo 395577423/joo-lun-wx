@@ -1,9 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
-  - 注意：
-  - 本软件为www.joolun.com开发研制，项目使用请保留此说明
--->
 <view class="cu-card article no-card">
   <view class="cu-item" wx:for="{{ courseList }}" wx:key="index">
     <navigator hover-class='none' url='/pages/course/course-detail/index?courseId={{item.id}}'>
@@ -13,11 +7,10 @@
           <view class="text-black margin-top-sm overflow-2">{{item.title}}</view>
           <view class="text-gray text-sm margin-top-sm overflow-2"></view>
           <view class="flex justify-between margin-top-sm">
-            <view class="text-price text-bold text-red padding-lr-sm">{{item.realPrice}}</view>
-            <view class="text-gray text-sm padding-lr-sm">已售</view>
+            <view class="text-price text-bold text-blue padding-lr-sm">{{item.realPrice}}</view>
           </view>
           <view class="flex justify-start margin-tb-sm">
-            <view class="cu-tag bg-orange radius sm">积分</view>
+            <view class="cu-tag radius sm">{{item.ageStart}}-{{item.ageEnd}}岁</view>
           </view>
         </view>
       </view>

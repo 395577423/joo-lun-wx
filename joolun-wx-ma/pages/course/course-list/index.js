@@ -17,12 +17,19 @@ Page({
     price: '',
     sales: '',
     createTime: '',
-    title: ''
+    title: '',
+    userId:''
   },
   onLoad(options) {
+    if(''!== options.userId){
+      wx.setNavigationBarTitle({
+        title: '我的书屋',
+      })
+    }
     let title = options.title ? decodeURI(options.title) : '默认'
     this.setData({
-      title: title
+      title: title,
+      userId:options.userId
     })
     if (options.categorySecond){
       this.setData({
@@ -69,7 +76,7 @@ Page({
         this.setData({
           courseList: [...this.data.courseList, ...courseList]
         })
-        console.log(this.data.courseList)
+
         if (courseList.length < this.data.page.size) {
           this.setData({
             loadmore: false

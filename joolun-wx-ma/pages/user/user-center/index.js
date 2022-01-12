@@ -47,7 +47,7 @@ Page({
   settings: function () {
     wx.openSetting({
       success: function (res) {
-        console.log(res.authSetting)
+
       }
     })
   },

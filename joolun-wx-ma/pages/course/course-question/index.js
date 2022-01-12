@@ -80,7 +80,7 @@ Page({
     const questionId = e.currentTarget.dataset.questionid
     const choosedId = e.currentTarget.dataset.choosedid
     const choiceCorrect = e.currentTarget.dataset.choicecorrect
-    console.log(e)
+
     if (null == choosedId) {
       const choice = {
         userId: this.data.wxUser.id,
@@ -89,7 +89,7 @@ Page({
         answerId: choiceId,
         correct: choiceCorrect==1?1:0
       }
-      console.log('答案对象', choice)
+
       app.api.setUserChoice(choice).then(res => {
         this.getQuestion(this.data.courseId, this.data.wxUser.id)
       })

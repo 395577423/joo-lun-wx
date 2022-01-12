@@ -7,7 +7,7 @@ function base64src(base64data, cb) {
   fsm.unlink({
     filePath: filePath,
     fail: res => {
-      console.log(res)
+
     },
     complete: res => {
       const buffer = wx.base64ToArrayBuffer(base64data);

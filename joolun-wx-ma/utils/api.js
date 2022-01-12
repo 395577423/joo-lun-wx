@@ -19,7 +19,7 @@ const request = (url, method, data, showLoading) => {
             success(res) {
                 if (res.statusCode == 200) {
                     if (res.data.code != 200) {
-                        console.log(res.data)
+
                         wx.showModal({
                             title: '提示',
                             content: res.data.msg ? res.data.msg : '没有数据' + '',
@@ -49,7 +49,7 @@ const request = (url, method, data, showLoading) => {
                     })
                     reject()
                 } else {
-                    console.log(res)
+
                     wx.showModal({
                         title: '提示',
                         content: res.errMsg + ':' + res.data.message + ':' + res.data.msg,
@@ -61,7 +61,7 @@ const request = (url, method, data, showLoading) => {
                 }
             },
             fail(error) {
-                console.log(error)
+
                 wx.showModal({
                     title: '提示',
                     content: '接口请求出错：' + error.errMsg,

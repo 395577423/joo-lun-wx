@@ -46,7 +46,7 @@ Page({
       imageUrl: imageUrl,
       success: function (res) {
         if (res.errMsg == 'shareAppMessage:ok') {
-          console.log(res.errMsg)
+
         }
       },
       fail: function (res) {
@@ -188,6 +188,6 @@ Page({
     
   },
   handleContact(e) {
-    console.log(e)
+
   }
 })

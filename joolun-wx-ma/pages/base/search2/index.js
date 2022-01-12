@@ -1,9 +1,17 @@
 const app = getApp()
-
+const util = require('../../../utils/util.js')
 Page({
   data: {
     searchCourseHistory: [],
-    courseList: []
+    courseList: [],
+    page: {
+      searchCount: false,
+      current: 1,
+      size: 10,
+      ascs: '',//升序字段
+      descs: ''
+    },
+    userId:''
   },
   onShow() {
     this.setData({
@@ -11,12 +19,20 @@ Page({
     })
   },
   onLoad(options) {
+    console.log(options)
+    if(''!= options.userId){
+      this.setData({
+        ['parameter.userId']: options.userId,
+        userId:options.userId
+      })
+    }
     app.initPage()
       .then(res => {
         this.coursePage()
       })
   },
   searchHandle(e) {
+    let userId = this.data.userId
     let value
     if (e.detail.value) {
       value = e.detail.value
@@ -39,7 +55,7 @@ Page({
     })
     wx.setStorageSync('searchCourseHistory', searchCourseHistory)
     wx.navigateTo({
-      url: '/pages/course/course-list/index?name=' + value
+      url: '/pages/course/course-list/index?name=' + value + '&userId='+userId
     })
   },
   clearSearchHistory(){
@@ -59,13 +75,11 @@ Page({
     })
   },
   coursePage() {
-    app.api.coursePage({
-      searchCount: false,
-      current: 1,
-      size: 10,
-      ascs: '',//升序字段
-      descs: 'sale_num'
-    })
+    app.api.coursePage(
+      {},
+      this.data.page,
+      util.filterForm(this.data.parameter)
+    )
       .then(res => {
         let courseList = res.data.records
         this.setData({

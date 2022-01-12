@@ -53,7 +53,7 @@ Page({
       path: path,
       success: function (res) {
         if (res.errMsg == 'shareAppMessage:ok') {
-          console.log(res.errMsg)
+
         }
       },
       fail: function (res) {

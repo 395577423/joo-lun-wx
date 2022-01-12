@@ -40,7 +40,7 @@ Page({
   getPlanCourse() {
     app.api.planCourse()
       .then(res => {
-        console.log(res)
+
         let result = res.data.course;
         let books = res.data.books
         this.setData({
