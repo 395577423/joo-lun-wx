@@ -1,4 +1,3 @@
-
 let dicDataSubscribeScene = [{
   label: '公众号搜索',
   value: 'ADD_SCENE_SEARCH'
@@ -44,7 +43,7 @@ let dicDataSex = [{
   value: '2'
 }]
 export const tableOption = {
-  dialogDrag:true,
+  dialogDrag: true,
   border: true,
   index: false,
   indexLabel: '序号',
@@ -58,9 +57,9 @@ export const tableOption = {
   viewBtn: true,
   searchShow: false,
   menuWidth: 150,
-  menuType:'text',
+  menuType: 'text',
   searchMenuSpan: 6,
-  defaultSort:{
+  defaultSort: {
     prop: 'subscribeTime',
     order: 'descending'
   },
@@ -68,74 +67,76 @@ export const tableOption = {
     {
       label: '头像',
       prop: 'headimgUrl',
-      type:'upload',
-      imgWidth:50,
-      listType:'picture-img',
-      editDisplay:false
+      type: 'upload',
+      imgWidth: 50,
+      listType: 'picture-img',
+      editDisplay: false
     },
     {
       label: '昵称',
       prop: 'nickName',
-      width:100,
-      sortable:true,
-      search:true,
-      editDisplay:false
+      width: 100,
+      sortable: true,
+      search: true,
+      editDisplay: false
     },
     {
       label: '是否订阅',
       prop: 'subscribe',
-      width:80,
+      width: 80,
       type: 'select',
-      sortable:true,
-      search:true,
-      editDisplay:false,
+      sortable: true,
+      search: true,
+      slot:true,
+      editDisplay: false,
       dicData: dicDataSubscribe
     },
     {
       label: 'openId',
       prop: 'openId',
-      search:true
+      search: true
     },
     {
       label: '关注渠道',
       prop: 'subscribeScene',
       type: 'select',
-      sortable:true,
-      search:true,
-      editDisplay:false,
+      sortable: true,
+      search: true,
+      editDisplay: false,
       dicData: dicDataSubscribeScene
     },
     {
       label: '关注时间',
       prop: 'subscribeTime',
       type: 'datetime',
-      width:95,
-      sortable:true,
-      editDisplay:false
+      width: 95,
+      sortable: true,
+      editDisplay: false
     },
     {
       label: '性别',
       prop: 'sex',
       width: 60,
       type: 'select',
-      sortable:true,
-      search:true,
-      editDisplay:false,
+      sortable: true,
+      search: true,
+      editDisplay: false,
+      slot:true,
       dicData: dicDataSex
     },
     {
       label: '国家',
       prop: 'country',
-      sortable:true,
-      search:true,
-      editDisplay:false,
+      sortable: true,
+      search: true,
+      editDisplay: false,
       width: 60
     },
     {
       label: '省份',
       prop: 'province',
-      sortable:true,
-      editDisplay:false,
+      sortable: true,
+      editDisplay: false,
       width: 60
     },
     {
@@ -149,8 +150,8 @@ export const tableOption = {
     {
       label: '语言',
       prop: 'language',
-      sortable:true,
-      editDisplay:false,
+      sortable: true,
+      editDisplay: false,
       width: 60
     },
     {
@@ -158,7 +159,8 @@ export const tableOption = {
       prop: 'tagidList',
       type: 'select',
       editDisplay: false,
-      search:true,
+      searchslot:true,
+      search: true,
       props: {
         label: 'name',
         value: 'id'
@@ -178,8 +180,8 @@ export const tableOption = {
     {
       label: 'union_id',
       prop: 'unionId',
-      hide:true,
-      editDisplay:false
+      hide: true,
+      editDisplay: false
     },
     // {
     //   label: '手机号码',
@@ -188,33 +190,33 @@ export const tableOption = {
     {
       label: '关注次数',
       prop: 'subscribeNum',
-      width:50,
-      sortable:true,
-      editDisplay:false
+      width: 50,
+      sortable: true,
+      editDisplay: false
     },
     {
       label: '创建时间',
       prop: 'createTime',
       type: 'datetime',
-      sortable:true,
-      hide:true,
-      editDisplay:false
+      sortable: true,
+      hide: true,
+      editDisplay: false
     },
     {
       label: '更新时间',
       prop: 'updateTime',
       type: 'datetime',
-      sortable:true,
-      hide:true,
-      editDisplay:false
+      sortable: true,
+      hide: true,
+      editDisplay: false
     },
     {
       label: '取关时间',
       prop: 'cancelSubscribeTime',
       type: 'datetime',
-      sortable:true,
-      hide:true,
-      editDisplay:false
+      sortable: true,
+      hide: true,
+      editDisplay: false
     }
   ]
 }
@@ -236,9 +238,9 @@ export const tableOption2 = {
   searchShow: true,
   menu: false,
   menuWidth: 150,
-  menuType:'text',
+  menuType: 'text',
   searchMenuSpan: 6,
-  defaultSort:{
+  defaultSort: {
     prop: 'subscribeTime',
     order: 'descending'
   },
@@ -246,98 +248,99 @@ export const tableOption2 = {
     {
       label: '头像',
       prop: 'headimgUrl',
-      type:'upload',
-      imgWidth:50,
-      listType:'picture-img',
-      editDisplay:false
+      type: 'upload',
+      imgWidth: 50,
+      listType: 'picture-img',
+      editDisplay: false
     },
     {
       label: '昵称',
       prop: 'nickName',
-      width:100,
-      sortable:true,
-      search:true,
-      editDisplay:false
+      width: 100,
+      sortable: true,
+      search: true,
+      editDisplay: false
     },
     {
       label: '关注渠道',
       prop: 'subscribeScene',
       type: 'select',
-      sortable:true,
-      search:true,
-      editDisplay:false,
+      sortable: true,
+      search: true,
+      editDisplay: false,
       dicData: dicDataSubscribeScene
     },
     {
       label: '关注时间',
       prop: 'subscribeTime',
       type: 'datetime',
-      width:95,
-      sortable:true,
-      editDisplay:false
+      width: 95,
+      sortable: true,
+      editDisplay: false
     },
     {
       label: '性别',
       prop: 'sex',
       width: 60,
       type: 'select',
-      sortable:true,
-      search:true,
-      editDisplay:false,
+      sortable: true,
+      search: true,
+      editDisplay: false,
+      slot:true,
       dicUrl: dicDataSex
     },
     {
       label: '国家',
       prop: 'country',
-      sortable:true,
-      search:true,
-      editDisplay:false
+      sortable: true,
+      search: true,
+      editDisplay: false
     },
     {
       label: '省份',
       prop: 'province',
-      sortable:true,
-      editDisplay:false
+      sortable: true,
+      editDisplay: false
     },
     {
       label: '城市',
       prop: 'city',
-      sortable:true,
-      search:true,
-      editDisplay:false
+      sortable: true,
+      search: true,
+      editDisplay: false
     },
     {
       label: '语言',
       prop: 'language',
-      sortable:true,
-      search:true,
-      editDisplay:false
+      sortable: true,
+      search: true,
+      editDisplay: false
     },
     {
       label: '二维码扫码场景',
       prop: 'qrSceneStr',
-      sortable:true,
-      search:true,
-      editDisplay:false
+      sortable: true,
+      search: true,
+      editDisplay: false
     },
     {
       label: '用户标识',
       prop: 'openId',
-      hide:true,
-      editDisplay:false
+      hide: true,
+      editDisplay: false
     },
     {
       label: 'union_id',
       prop: 'unionId',
-      hide:true,
-      editDisplay:false
+      hide: true,
+      editDisplay: false
     },
     {
       label: '关注次数',
       prop: 'subscribeNum',
-      width:50,
-      sortable:true,
-      editDisplay:false
+      width: 50,
+      sortable: true,
+      editDisplay: false
     }
   ]
 }

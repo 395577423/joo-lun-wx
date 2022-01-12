@@ -14,8 +14,6 @@
     "pages/user/user-center/index",
     "pages/user/user-address/list/index",
     "pages/user/user-address/form/index",
-    "pages/plans/plandetail/plandetail",
-    "pages/plans/myplan/myplan",
     "pages/course/course-category/index",
     "pages/course/course-detail/index",
     "pages/course/course-question/index",
@@ -42,12 +40,7 @@
         "selectedIconPath": "public/img/1-002.png",
         "text": "首页"
       },
-      {
-        "pagePath": "pages/course/course-category/index",
-        "iconPath": "public/img/2-001.png",
-        "selectedIconPath": "public/img/2-002.png",
-        "text": "书架"
-      },
+
       {
         "pagePath": "pages/user/user-center/index",
         "iconPath": "public/img/4-001.png",

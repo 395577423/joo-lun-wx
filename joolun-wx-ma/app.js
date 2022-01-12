@@ -15,7 +15,7 @@ App({
     this.updateManager()
     wx.getSystemInfo({
       success: e => {
-        console.log(e)
+
         this.globalData.StatusBar = e.statusBarHeight;
         let custom = wx.getMenuButtonBoundingClientRect();
         this.globalData.Custom = custom;
@@ -64,12 +64,10 @@ App({
         wx.checkSession({//检查登录态是否过期
           success () {
             //session_key 未过期，并且在本生命周期一直有效
-            console.log('session_key 未过期')
             resolve("success")
           },
           fail () {
             // session_key 已经失效，需要重新执行登录流程
-            console.log('session_key 已经失效')
             that.doLogin()
               .then(res => {
                 resolve("success")

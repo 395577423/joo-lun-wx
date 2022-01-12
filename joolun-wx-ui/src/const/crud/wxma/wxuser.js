@@ -60,6 +60,7 @@ export const tableOption = {
       width: 60,
       type: 'select',
       sortable:true,
+      slot:true,
       search:true,
       editDisplay:false,
       dicData: dicDataSex

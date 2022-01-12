@@ -17,7 +17,7 @@ page {
 }
 
 .swiper {
-  height: 1100rpx;
+  height: 800rpx;
   border-radius: 10rpx;
 }
 

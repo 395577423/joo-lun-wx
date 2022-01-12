@@ -1,10 +1,13 @@
+<import src="/public/wxParse/wxParse.wxml"/>
 <scroll-view>
     <view class="text-center text-xl padding">{{title}}</view>
     <view class="text-center">
         <image src="{{coverUrl}}" style="margin:0 auto;"/>
     </view>
-    <view class="padding text-center">
-        <view class="padding-xl radius shadow-warp bg-white margin-top">{{introduction}}</view>
+    <view class="padding text-left">
+        <view class="padding-xl radius shadow-warp bg-white margin-top">
+            <template is="wxParse" data="{{wxParseData:introduction.nodes}}"></template>
+        </view>
     </view>
     <view class="padding text-center">
         <view class="padding-xl radius shadow-warp bg-white margin-top">

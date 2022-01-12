@@ -318,6 +318,8 @@ public class CourseApi {
         //4.课程本身信息
         Course course = courseService.getById(id);
 
+        List<Book> listByCourse = bookService.getListByCourse(course.getId());
+
         //5.用户课程信息
         QueryWrapper<UserCourse> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("course_id", id);
@@ -331,6 +333,7 @@ public class CourseApi {
         result.put("userAudio", userAudio);
         result.put("course", course);
         result.put("userCourse", userCourse);
+        result.put("books", listByCourse);
 
         return AjaxResult.success(result);
     }

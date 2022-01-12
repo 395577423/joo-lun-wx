@@ -22,7 +22,8 @@ export const tableOption = {
       label: '商品图片',
       prop: 'picUrls',
       width: 120,
-      display: false
+      display: false,
+      slot:true
     },
     {
       label: '类目',
@@ -44,6 +45,7 @@ export const tableOption = {
     {
       label: '销售价',
       prop: 'salesPrice',
+      slot: true,
       display: false
     },
     {
@@ -89,6 +91,7 @@ export const tableOption = {
       label: '是否上架',
       prop: 'shelf',
       type: 'radio',
+      slot: true,
       search: true,
       sortable: true,
       display: false,
@@ -234,6 +237,7 @@ export const tableOption = {
         {
           label: '描述',
           prop: 'description',
+          formslot: true,
           span: 12
         }]
     }

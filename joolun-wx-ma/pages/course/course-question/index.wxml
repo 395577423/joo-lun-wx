@@ -3,7 +3,7 @@
   <text>任务二 知识小课堂</text>
 </view>
 
-<scroll-view style="height: 1200rpx;">
+<scroll-view >
   <view class="progerss">
     <text>题目进度:{{index}}/{{total}}</text>
   </view>
@@ -11,11 +11,11 @@
     <image src="../../../public/img/title.png" />
   </view>
   <view class="cu-item shadow-warp" class="question">
-    <swiper class="bg-white swiper" bindchange="changeItem">
+    <swiper class="bg-white swiper margin-top-xl" bindchange="changeItem">
       <block wx:for="{{questions}}" wx:key="index">
         <swiper-item class="swiperitem">
           <view style="color: #57241A;" class="padding">{{item.question}}</view>
-          <image src="{{item.imageUrl}}"></image>
+          <!-- <image src="{{item.imageUrl}}"></image> -->
           <radio-group class="flex-direction">
             <block wx:for="{{item.choices}}" wx:key="index2" wx:for-item="choice">
               <view class="round line-orange radius answer" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}" data-choosedId="{{item.choiceId}}" data-choiceCorrect="{{choice.choosed}}">

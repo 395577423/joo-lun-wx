@@ -29,7 +29,8 @@ Page({
     container: null,
     loadImagePath:'',
     msg:'',
-    title:''
+    title:'',
+    bookName:''
   },
 
   /**
@@ -56,7 +57,7 @@ Page({
     //获取用户报告图片
     setTimeout(function(){
       let nickName = that.data.wxUser.nickName
-      let title = that.data.title
+      let title = that.data.bookName
       let totalStar  = that.data.totalStar
 
       wxml = wxml.replace('userNameText', nickName)
@@ -92,15 +93,15 @@ Page({
                   }
                 },
                 fail: function () {
-                  console.log("授权保存文件失败");
+
                 }
               })
             } else if (res.cancel) {
-              console.log("cancel");
+
             }
           },
           fail() {
-            console.log("openfail");
+
           }
         })
       }
@@ -108,13 +109,15 @@ Page({
   },
   getReport() {
     app.api.getUserReport(this.data.courseId, this.data.wxUser.id).then(res => {
+
       this.setData({
         course: res.data.course,
         courseQuestion: res.data.courseQuestion,
         story: res.data.story,
         userAudio: res.data.userAudio,
         userCourseReport: res.data.userCourse.report,
-        title:res.data.course.title
+        title:res.data.course.title,
+        bookName:res.data.books[0].title
       })
     })
     let questions = this.data.courseQuestion
@@ -139,20 +142,20 @@ Page({
     myaudio.play()
   },
   share() {
-    console.log(this.widget)
+
     const p1 = this.widget.renderToCanvas({
       wxml,
       style
     })
     p1.then((res) => {
-      console.log('container', res.layoutBox)
+
       this.container = res
     })
     wx.showLoading({
       title: '使劲生成ing.....',
     })
 
-    setTimeout(this.extraImage,1500)
+    setTimeout(this.extraImage,2500)
   },
   extraImage() {
     const p2 = this.widget.canvasToTempFilePath()
@@ -171,13 +174,13 @@ Page({
     wx.saveImageToPhotosAlbum({
       filePath: this.data.src,
       'success':function(res){
-        console.log('success',res)
+
         if(res.errMsg === 'saveImageToPhotosAlbum:ok'){
           that.getUserMoney()
         }
       },
       'fail':function(res){
-        console.log('fail',res)
+
         if(res.errMsg ==='saveImageToPhotosAlbum:fail cancel'){
           that.setData({
             modalName:'saveImage',
@@ -192,9 +195,6 @@ Page({
     let id = this.data.courseId
     let userId = this.data.wxUser.id
     app.api.userMoney(id,userId).then(res=>{
-        console.log(res.code)
-        console.log(res.msg)
-        console.log(res)
         let msg  = res.msg
         this.setData({
           modalName:'saveImage',

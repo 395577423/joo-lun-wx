@@ -55,11 +55,13 @@ export const tableOption = {
       overHidden: false,
       align: 'right',
       search: true,
+      slot:true,
       width: 100
     },{
       label: '内容',
       prop: 'repContent',
       overHidden: true,
+      slot:true,
       align: 'left',
     },{
       label: '时间',
@@ -83,6 +85,7 @@ export const tableOption = {
       ],
       search:true,
       sortable:true,
+      slot:true,
       width: 50
     }
   ]

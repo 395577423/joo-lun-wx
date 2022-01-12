@@ -43,6 +43,7 @@ export const tableOption = {
       type: 'radio',
       search: true,
       sortable: true,
+      slot:true,
       span: 24,
       rules: [{
         required: true,

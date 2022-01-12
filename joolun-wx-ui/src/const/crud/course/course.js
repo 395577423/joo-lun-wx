@@ -51,12 +51,14 @@ export default (safe) => {
       }, {
         label: '价格',
         prop: 'price',
-        type: 'number'
+        decimals:true
       },
       {
         label: '返现金额',
         prop: 'cashReturn',
-        type: 'number'
+        rules:[{
+
+        }]
       },
       {
         label: '折扣率',
@@ -93,11 +95,10 @@ export default (safe) => {
         label: '介绍',
         prop: 'introduction',
         hide:true,
-        component:'Editor'
+        formslot:true
       },{
         label: '课程精华',
         prop: 'essence',
-        // type: 'textarea'
       },{
         label: '关联书籍',
         prop: 'books',

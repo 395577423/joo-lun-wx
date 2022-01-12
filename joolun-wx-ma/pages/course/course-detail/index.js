@@ -1,5 +1,6 @@
 // pages/course/course-detail/index.js
 const app = getApp()
+const WxParse = require('../../../public/wxParse/wxParse.js')
 Page({
 
     /**
@@ -7,7 +8,6 @@ Page({
      */
     data: {
         title: '',
-        introduction: '',
         videoList: [],
         result: '生成学习报告',
         wxUser: null,
@@ -47,9 +47,10 @@ Page({
                 
                 let course = res.data.course
                 let video = res.data.video
+                let introduction = course.introduction
+
                 this.setData({
                     title: course.title,
-                    introduction: course.introduction,
                     videoList: video,
                     coverUrl: course.coverUrl,
                     realPrice: course.realPrice,
@@ -59,6 +60,7 @@ Page({
                 wx.setNavigationBarTitle({
                     title: this.data.title,
                 })
+                WxParse.wxParse('introduction', 'html', introduction, this, 0)
             })
     },
     getUserCourse() {
