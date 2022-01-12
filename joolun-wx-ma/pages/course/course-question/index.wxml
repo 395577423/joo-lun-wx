@@ -11,7 +11,7 @@
     <image src="../../../public/img/title.png" />
   </view>
   <view class="cu-item shadow-warp" class="question">
-    <swiper class="bg-white swiper margin-top-xl" bindchange="changeItem">
+    <swiper class="bg-white swiper margin-top-xl" bindchange="changeItem" current="{{index-1}}">
       <block wx:for="{{questions}}" wx:key="index">
         <swiper-item class="swiperitem">
           <view style="color: #57241A;" class="padding">{{item.question}}</view>

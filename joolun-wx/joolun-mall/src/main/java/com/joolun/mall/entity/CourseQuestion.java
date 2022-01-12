@@ -52,6 +52,11 @@ public class CourseQuestion extends Model<CourseQuestion> {
     @Excel(name = "排序")
     private Long sort;
 
+    /**
+     * 正确答案
+     */
+    private String answer;
+
     @TableField(exist = false)
     private List<CourseQuestionChoice> choices;
 
@@ -66,4 +71,5 @@ public class CourseQuestion extends Model<CourseQuestion> {
      */
     @TableField(exist = false)
     private Boolean correct;
+
 }

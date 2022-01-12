@@ -135,7 +135,7 @@ Page({
 
            // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
           // wx.startRecord();
-         recorderManager.start(options);//使用新版录音接口，可以获取录音文件
+         recorderManager.start(res);//使用新版录音接口，可以获取录音文件
       },
       fail(){
 
