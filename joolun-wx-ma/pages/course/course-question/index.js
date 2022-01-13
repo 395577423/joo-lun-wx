@@ -76,11 +76,7 @@ Page({
   },
   chooseChoice(e) {
     let index = this.data.index
-    if(index< this.data.total){
-    this.setData({
-      index: index + 1
-    })
-  }
+    let that = this
     //1.保存答案
     const choiceId = e.currentTarget.dataset.choiceid
     const questionId = e.currentTarget.dataset.questionid
@@ -98,10 +94,20 @@ Page({
 
       app.api.setUserChoice(choice).then(res => {
         this.getQuestion(this.data.courseId, this.data.wxUser.id)
+        if (index < this.data.total) {
+          setTimeout(()=>{
+            that.setData({
+              index: index + 1
+            })
+          },500)
+        }
       })
-
-
-
+    }else{
+      if (index < this.data.total) {
+        this.setData({
+          index: index + 1
+        })
+      }
     }
   },
 
