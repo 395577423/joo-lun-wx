@@ -1,5 +1,4 @@
 export default (safe) => {
-  console.log(safe) //vue的this对象
   return {
     index: true,
     align: 'center',
@@ -39,6 +38,7 @@ export default (safe) => {
       label: '视频地址',
       prop: 'videoUrl',
       type: 'upload',
+      listType: 'text',
       rules: [{
         required: true,
         message: '请选择视频',
@@ -98,13 +98,13 @@ export default (safe) => {
         display: false
       },
       {
-        label:'视频时长（秒）',
-        prop:'duration',
-        type:'number',
-        rule:[
+        label: '视频时长（秒）',
+        prop: 'duration',
+        type: 'number',
+        rule: [
           {
-            min:1,
-            message:'视频时长要大于0'
+            min: 1,
+            message: '视频时长要大于0'
           }
         ]
       }

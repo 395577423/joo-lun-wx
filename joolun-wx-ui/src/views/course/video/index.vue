@@ -17,16 +17,11 @@
                @selection-change="selectionChange"
     >
     </avue-crud>
-    <template slot="recommend" slot-scope="scope">
-      <el-switch
-        active-value="1"
-        inactive-value="0"
-        v-model="scope.row.recommend"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-        @change="changeChoosed(scope.row)"
-      >
-      </el-switch>
+    <template slot="videoUrl" slot-scope="scope">
+      <video
+        style="height: 100px"
+        :src="scope.row.videoUrl"
+      ></video>
     </template>
   </div>
 </template>

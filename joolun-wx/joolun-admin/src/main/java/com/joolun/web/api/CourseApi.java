@@ -249,8 +249,6 @@ public class CourseApi {
             String endPoint = OSSClientUtil.getEndpoint();
             String userId = request.getParameter("userId");
             String courseId = request.getParameter("courseId");
-            System.out.println(userId);
-            System.out.println(courseId);
             UserAudio userAudio;
 
             QueryWrapper<UserAudio> wrapper = new QueryWrapper<>();

@@ -146,7 +146,7 @@ Page({
       modalName: 'record'
     })
     const options = {
-      duration: 30000, //指定录音的时长，单位 ms
+      duration: 60000, //指定录音的时长，单位 ms
       sampleRate: 44100, //采样率
       numberOfChannels: 1, //录音通道数
       encodeBitRate: 96000, //编码码率

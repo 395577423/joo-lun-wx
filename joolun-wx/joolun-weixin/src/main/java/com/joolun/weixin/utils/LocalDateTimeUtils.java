@@ -108,8 +108,4 @@ public class LocalDateTimeUtils {
 		return ldt.atZone(zone).toInstant().toEpochMilli();
 	}
 
-	public static void main(String[] args) {
-		long timeStamp = 1382694957000l;
-		System.out.println(timestamToDatetime(timeStamp));
-	}
 }

@@ -187,7 +187,7 @@ public class ReportController {
             out.close();
 
         } catch (Exception e) {
-            System.out.println("保存图片到本地异常");
+            log.error("保存图片到本地异常",e);
         }
         return imgPath;
 
@@ -196,7 +196,6 @@ public class ReportController {
     @GetMapping
     public ModelAndView toTemplate(Long id, String userId, Model result) {
 
-        System.out.println("================================report================================");
         //1.查询用户课程问题及答案
         List<CourseQuestion> courseQuestions = getCourseQuestions(id, userId);
 

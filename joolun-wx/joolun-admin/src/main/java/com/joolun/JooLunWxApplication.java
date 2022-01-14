@@ -20,11 +20,10 @@ public class JooLunWxApplication {
     public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(JooLunWxApplication.class, args);
-        System.out.println("JooLun微信管理系统启动成功");
     }
 
 
-    @Bean
+//    @Bean
     public TomcatServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
@@ -41,7 +40,7 @@ public class JooLunWxApplication {
         return tomcat;
     }
 
-    @Bean
+//    @Bean
     public Connector httpConnecrot() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");

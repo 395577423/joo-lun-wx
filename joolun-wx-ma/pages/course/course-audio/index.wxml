@@ -20,7 +20,7 @@
   </view>
   <view class="cu-item self" wx:if="{{isRecorded}}">
     <view class="main">
-      <view class="content shadow bg-green light" bindtap="playMyAudio" >
+      <view class="content shadow bg-green light" bindtap="playMyAudio">
         <text class="cuIcon-sound text-xxl padding-right-xl"> </text>
       </view>
     </view>
@@ -28,8 +28,13 @@
   </view>
 </view>
 
+<view class="text-center" style="position: fixed;bottom: 150rpx;width: 100%;">
+  <text>
+    温馨提示:录音时长仅限60秒,可以重复录制
+  </text>
+</view>
 <view class="grid-1 cu-bar foot input flex flex-direction">
-      <view class="cu-btn bg-blue margin-tb-sm lg" bindlongtap="start" bindtouchend="stop" style="width:90%;">按住录音</view>
+  <view class="cu-btn bg-blue margin-tb-sm lg" bindlongtap="start" bindtouchend="stop" style="width:90%;">按住录音</view>
 </view>
 
 <view class="cu-modal {{modalName=='record'?'show':''}}">
