@@ -17,12 +17,6 @@
                @selection-change="selectionChange"
     >
     </avue-crud>
-    <template slot="videoUrl" slot-scope="scope">
-      <video
-        style="height: 100px"
-        :src="scope.row.videoUrl"
-      ></video>
-    </template>
   </div>
 </template>
 
@@ -144,6 +138,9 @@ export default {
      **/
     handleUpdate: function(row, index, done, loading) {
       row.coverUrl = row.coverUrl ? row.coverUrl : ''
+      row.videoUrl = row.videoUrl[0].value
+
+
       putObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -164,6 +161,8 @@ export default {
      **/
     handleSave: function(row, done, loading) {
       row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
+      row.videoUrl = row.videoUrl[0].value
+
       addObj(row).then(data => {
         this.$message({
           showClose: true,

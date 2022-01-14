@@ -38,7 +38,6 @@ export default (safe) => {
       label: '视频地址',
       prop: 'videoUrl',
       type: 'upload',
-      listType: 'text',
       rules: [{
         required: true,
         message: '请选择视频',

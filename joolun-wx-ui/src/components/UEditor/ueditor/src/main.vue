@@ -204,6 +204,7 @@ export default {
         }
         (() => {
           if (this.isAliOSS) {
+            console.log(file.name)
             return client.put(file.name, file)
           } else {
             return this.$axios.post(url, param, { headers })
