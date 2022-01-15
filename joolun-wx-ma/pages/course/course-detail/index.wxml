@@ -1,8 +1,8 @@
-<import src="/public/wxParse/wxParse.wxml"/>
+<import src="/public/wxParse/wxParse.wxml" />
 <scroll-view>
     <view class="text-center text-xl padding">{{title}}</view>
     <view class="text-center">
-        <image src="{{coverUrl}}" style="margin:0 auto;"/>
+        <image src="{{coverUrl}}" style="margin:0 auto;" />
     </view>
     <view class="padding text-left">
         <view class="padding-xl radius shadow-warp bg-white margin-top">
@@ -14,8 +14,7 @@
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
                     <text class=" text-shadow text-black">任务一 好书放映室</text>
-                    <button class="cu-btn round line-blue fr" bindtap="toVideoPage"
-                            style="position: relative; left: 186rpx; top: 0rpx">看视频
+                    <button class="cu-btn round line-blue fr" bindtap="toVideoPage" style="position: relative; left: 186rpx; top: 0rpx">看视频
                     </button>
                 </view>
             </view>
@@ -23,8 +22,7 @@
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
                     <text class=" text-shadow text-black">任务二 知识小课堂</text>
-                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage"
-                            style="position: relative; left: 184rpx; top: -1rpx">去答题
+                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 184rpx; top: -1rpx">去答题
                     </button>
                 </view>
             </view>
@@ -32,20 +30,23 @@
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
                     <text class=" text-shadow text-black">任务三 孩子的心声</text>
-                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage"
-                            style="position: relative; left: 181rpx; top: -1rpx">来聊聊
+                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage" style="position: relative; left: 181rpx; top: -1rpx">来聊聊
                     </button>
                 </view>
             </view>
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
                     <text class=" text-shadow text-black">任务四 生成学习报告</text>
-                    <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage"
-                            style="position: relative; left: 149rpx; top: 0rpx">看报告
+                    <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 149rpx; top: 0rpx">看报告
                     </button>
                 </view>
             </view>
         </view>
+    </view>
+    <view class="text-center" style="bottom: 150rpx;width: 100%;margin-bottom: 50rpx;">
+        <text>
+            温馨提示:报名后记得添加客服征集进群共读书籍。
+        </text>
     </view>
     <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">
         <view class="btn-group">
@@ -64,7 +65,7 @@
             </view>
         </view>
         <view class="padding-xl">
-            <text class="padding">请先报名参与奖学金计划，才能做任务哦。具体活动详情请添加客服微信。</text> 
+            <text class="padding">请先报名参与奖学金计划，才能做任务哦。具体活动详情请添加客服微信。</text>
             <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
         </view>
     </view>
