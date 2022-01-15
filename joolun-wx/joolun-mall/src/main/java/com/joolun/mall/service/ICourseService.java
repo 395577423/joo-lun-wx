@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.joolun.mall.dto.CourseVO;
 import com.joolun.mall.entity.Course;
 
+import java.util.List;
+
 /**
  * 课程Service接口
  *
@@ -13,7 +15,7 @@ import com.joolun.mall.entity.Course;
  * @date 2021-12-08
  */
 public interface ICourseService extends IService<Course> {
-    Course selectPlan();
+    List<Course> selectPlan();
 
     IPage<Course> selectDataPage(Page page, CourseVO course);
 }

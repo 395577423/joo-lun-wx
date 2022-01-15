@@ -67,11 +67,8 @@ Page({
         let courseId = this.data.courseId
         let userId = this.data.wxUser.id
         app.api.getUserCourse(courseId, userId).then(res => {
-            
             if (undefined === res.data) {
-                
             } else {
-                
                 this.setData({
                     isOwned: true
                 })

@@ -16,7 +16,7 @@ Page({
       descs: ''
     },
     winHeight:null,
-    course:null
+    courses:[]
   },
   /**
    * 生命周期函数--监听页面加载
@@ -40,12 +40,10 @@ Page({
   getPlanCourse() {
     app.api.planCourse()
       .then(res => {
-
-        let result = res.data.course;
-        let books = res.data.books
+        console.log(res)
+        let result = res.data
         this.setData({
-          course:result,
-          books:books
+          courses:result
         })
       })
   },

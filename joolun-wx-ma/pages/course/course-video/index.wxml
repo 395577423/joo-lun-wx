@@ -4,38 +4,18 @@
   <text>任务一 好书放映室</text>
 </view>
 <view wx:for='{{videoList}}' wx:key='index'>
-<view class="cu-card case">
-  <view class="cu-item shadow">
-    <view class="image" style="display: {{ _index == index ? 'none' : 'block' }};" bindtap="videoPlay" id="{{index}}">
-      <image src="{{item.coverUrl}}" mode="widthFix"></image>
-      <view class="cu-tag bg-blue">
-        <text class="cuIcon-playfill lg text-gray"></text>
+
+  <view class="cu-card case ">
+    <view class="cu-item shadow" style="height: 450rpx;">
+      <view class="image" style="display: {{ _index == index ? 'none' : 'block' }}; " bindtap="videoPlay" id="{{index}}">
+        <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/videobg.png" mode="widthFix"></image>
+        <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-280rpx;left: 280rpx;" />
+        <text style="top:-520rpx;left:-80rpx;width:40%;position: relative;">{{item.title}}</text>
       </view>
-      <!-- <view class="cu-bar bg-shadeBottom">
-        <text class="text-cut">我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。</text>
-      </view> -->
-    </view>
-     <!-- 视频 -->
-     <video src="{{item.videoUrl}}" id="{{index}}" class='video' wx:if="{{_index == index}}">
+      <!-- 视频 -->
+      <video src="{{item.videoUrl}}" id="{{index}}" class='video' wx:if="{{_index == index}}" autoplay="true">
         <!-- log -->
       </video>
-    <view class="cu-list ">
-      <view class="cu-item">
-        <!-- <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view> -->
-        <view class="content flex-sub">
-          <view class="text-grey">{{item.title}}</view>
-          <view class="text-gray text-sm flex justify-between">
-            {{item.createTime}}
-            <view class="text-gray text-sm">
-              <text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-              <text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-              <text class="cuIcon-messagefill margin-lr-xs"></text> 30
-            </view>
-          </view>
-        </view>
-      </view>
     </view>
-
   </view>
-</view>
 </view>

@@ -12,30 +12,30 @@
     <text class=" text-shadow text-black text-bold">奖学金计划</text>
   </view>
 </view>
-<view class="padding text-center">
+<view class="padding text-center" wx:for="{{courses}}" wx:key="index">
   <view class="padding-xl radius shadow bg-white">
     <view class="flex align-center">
       <view>
-        <image src="{{course.coverUrl}}" style="width: 220rpx;height: 220rpx;"></image>
+        <image src="{{item.coverUrl}}" style="width: 220rpx;height: 220rpx;"></image>
       </view>
       <view>
         <view>
-          <text class="text-lg">{{course.title}}</text>
+          <text class="text-lg">{{item.title}}</text>
         </view>
         <view class="margin">
-          <button class="cu-btn round bg-blue button-hover text-lg " bindtap="toDetail" data-courseId="{{course.id}}">立即加入</button>
+          <button class="cu-btn round bg-blue button-hover text-lg " bindtap="toDetail" data-courseId="{{item.id}}">立即加入</button>
         </view>
       </view>
     </view>
     <view class="flex solid-bottom padding-sm justify-start">
       <text class="text-yellow">[共读书籍]</text>
-      <view class="margin-left-sm" wx:for="{{books}}" wx:key="id">
-        {{item.title}}
+      <view class="margin-left-sm" wx:for="{{item.bookList}}" wx:for-item="book" wx:key="id">
+        {{book.title}}
       </view>
     </view>
     <view class="flex solid-bottom padding-sm justify-start">
       <text class="text-yellow">[报名时间]</text>
-      <text class="margin-left-sm">{{course.startTime}} - {{course.endTime}}</text>
+      <text class="margin-left-sm">{{item.startTime}} - {{item.endTime}}</text>
     </view>
   </view>
 </view>

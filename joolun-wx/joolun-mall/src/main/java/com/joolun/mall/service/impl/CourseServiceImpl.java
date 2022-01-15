@@ -24,10 +24,10 @@ import java.util.List;
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements ICourseService {
 
     @Override
-    public Course selectPlan() {
+    public List<Course> selectPlan() {
         QueryWrapper<Course> wrapper = new QueryWrapper<>();
         wrapper.eq("plan", "1").orderByDesc("create_time");
-        return baseMapper.selectOne(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
     @Override

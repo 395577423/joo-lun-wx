@@ -1,4 +1,5 @@
 // pages/course/course-video/index.js
+const util = require('../../../utils/util.js')
 Page({
 
   /**
@@ -6,14 +7,13 @@ Page({
    */
   data: {
     videoList: [],
-    _index:null
+    _index: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     const videoList = JSON.parse(decodeURIComponent(options.videoList))
     const title = options.title
     wx.setNavigationBarTitle({
@@ -27,13 +27,13 @@ Page({
    * 播放视频
    * @param {*} e 
    */
-  play(e){
-    
+  play(e) {
+
   },
-  videoPlay(e){
+  videoPlay(e) {
     var _index = e.currentTarget.id
     this.setData({
-    _index: _index
+      _index: _index
     })
   }
 })
