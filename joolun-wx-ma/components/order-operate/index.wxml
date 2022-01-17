@@ -5,10 +5,10 @@
   - 本软件为www.joolun.com开发研制，项目使用请保留此说明
 -->
 <view class="flex justify-end">
-  <button class="cu-btn radius margin-right shadow-blur service" open-type="contact" bindcontact="handleContact" wx:if="{{contact}}">
+  <!-- <button class="cu-btn radius margin-right shadow-blur service" open-type="contact" bindcontact="handleContact" wx:if="{{contact}}">
     <view class="cuIcon-servicefill text-white"></view> 
     <text class="text-white">客服</text>
-  </button>
+  </button> -->
   <button class="cu-btn radius margin-right shadow-blur delete-order" bindtap="orderDel" loading="{{loading}}" 
   disabled="{{loading}}" type="" wx:if="{{orderInfo.status == '5' && orderInfo.isPay == '0'}}">
     <text class="text-white">删除订单</text>

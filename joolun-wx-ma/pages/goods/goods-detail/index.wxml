@@ -69,14 +69,14 @@
 <view class="cu-load bg-gray to-down">已经到底啦...</view>
 
 <view class="cu-bar bg-white tabbar border shop foot">
-  <button open-type="contact" bindcontact="handleContact" class="action bg-white"
+  <!-- <button open-type="contact" bindcontact="handleContact" class="action bg-white"
           send-message-title="{{goodsSpu.name}}--咨询"
           send-message-img="{{goodsSpu.picUrls[0] ? goodsSpu.picUrls[0] : '/public/img/no_pic.png'}}"
           show-message-card="true" 
           send-message-path="/pages/goods/goods-detail/index?id={{goodsSpu.id}}" disabled="true">
     <view class="cuIcon-servicefill"></view> 
     客服
-  </button>
+  </button> -->
   <navigator class="action"  url='/pages/shopping-cart/index'>
     <view class="cuIcon-cart">
       <view class="cu-tag badge">{{shoppingCartCount}}</view>

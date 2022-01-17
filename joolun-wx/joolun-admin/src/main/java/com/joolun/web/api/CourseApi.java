@@ -537,7 +537,7 @@ public class CourseApi {
 
             wxUser.setMoney(money);
             wxUserService.updateMoney(wxUser);
-            String msg = "恭喜您获得返现" + course.getCashReturn() + "元" ;
+            String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元" ;
             return AjaxResult.success(msg);
         } else {
             return AjaxResult.success();

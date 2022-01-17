@@ -33,18 +33,26 @@ Page({
     bookName: ''
   },
 
+  userInfoGet() {
+    app.api.wxUserGet()
+      .then(res => {
+        this.setData({
+          wxUser: res.data
+        })
+      })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.widget = this.selectComponent('.widget')
 
+
     //设定用户信息
     this.setData({
-      wxUser: app.globalData.wxUser,
       courseId: options.courseId
     })
-
     app.initPage()
       .then(res => {
         //获取用户报告
