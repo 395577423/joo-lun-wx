@@ -16,6 +16,16 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
+      <template slot="status" slot-scope="scope">
+        <el-switch
+          :active-value=1
+          :inactive-value=0
+          v-model.number="scope.row.status"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changeStatus(scope.row)">
+        </el-switch>
+      </template>
     </avue-crud>
   </div>
 </template>
@@ -57,10 +67,10 @@ export default {
     selectionChange(list) {
       this.selectionData = list
     },
-    changeChoosed(row) {
+    changeStatus(row) {
       putObj({
         id: row.id,
-        choosed: row.choosed
+        status: row.status
       }).then(data => {
       })
     },

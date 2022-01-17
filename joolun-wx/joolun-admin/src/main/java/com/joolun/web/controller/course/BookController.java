@@ -7,8 +7,11 @@ import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.core.domain.entity.SysDictData;
+import com.joolun.common.core.domain.model.LoginUser;
 import com.joolun.common.enums.BusinessType;
+import com.joolun.common.utils.ServletUtils;
 import com.joolun.common.utils.StringUtils;
+import com.joolun.framework.web.service.TokenService;
 import com.joolun.mall.entity.Book;
 import com.joolun.mall.service.IBookService;
 import com.joolun.system.service.ISysDictDataService;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +42,8 @@ public class BookController extends BaseController {
     @Autowired
     private ISysDictTypeService dictTypeService;
 
+    @Autowired
+    private TokenService tokenService;
     /**
      * 查询书籍列表
      */
@@ -60,6 +66,11 @@ public class BookController extends BaseController {
     @Log(title = "书籍", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Book book) {
+        book.setCreateTime(LocalDateTime.now());
+        book.setUpdateTime(LocalDateTime.now());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        book.setCreateBy(loginUser.getUsername());
+        book.setUpdateBy(loginUser.getUsername());
         return AjaxResult.success(bookService.save(book));
     }
 
@@ -69,6 +80,10 @@ public class BookController extends BaseController {
     @Log(title = "书籍", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Book book) {
+        book.setUpdateTime(LocalDateTime.now());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        book.setCreateBy(loginUser.getUsername());
+        book.setUpdateBy(loginUser.getUsername());
         return AjaxResult.success(bookService.updateById(book));
     }
 

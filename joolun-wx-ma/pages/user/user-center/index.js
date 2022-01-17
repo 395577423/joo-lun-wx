@@ -12,13 +12,13 @@ Page({
     wxUser: null,
     userInfo: null
   },
-  onShow(){
+  onShow() {
     let wxUser = app.globalData.wxUser
     this.setData({
       wxUser: wxUser
     })
     this.wxUserGet()
-    if(this.data.config.adEnable){
+    if (this.data.config.adEnable) {
       // 在页面中定义插屏广告
       let interstitialAd = null
       // 在页面onLoad回调事件中创建插屏广告实例
@@ -26,9 +26,9 @@ Page({
         interstitialAd = wx.createInterstitialAd({
           adUnitId: this.data.config.adInsertScreenID
         })
-        interstitialAd.onLoad(() => { })
-        interstitialAd.onError((err) => { })
-        interstitialAd.onClose(() => { })
+        interstitialAd.onLoad(() => {})
+        interstitialAd.onError((err) => {})
+        interstitialAd.onClose(() => {})
       }
       // 在适合的场景显示插屏广告
       if (interstitialAd) {
@@ -38,12 +38,12 @@ Page({
       }
     }
   },
-  onLoad(){
-    
+  onLoad() {
+
   },
   /**
    * 小程序设置
-  */
+   */
   settings: function () {
     wx.openSetting({
       success: function (res) {
@@ -56,24 +56,34 @@ Page({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (detail) => {
         app.api.wxUserSave(detail)
-        .then(res => {
-          let wxUser = res.data
-          this.setData({
-            wxUser: wxUser
+          .then(res => {
+            let wxUser = res.data
+            this.setData({
+              wxUser: wxUser
+            })
+            app.globalData.wxUser = wxUser
+            this.wxUserGet()
           })
-          app.globalData.wxUser = wxUser
-          this.wxUserGet()
-        })
       }
     })
   },
   //获取商城用户信息
-  wxUserGet(){
+  wxUserGet() {
     app.api.wxUserGet()
       .then(res => {
         this.setData({
           userInfo: res.data
         })
       })
+  },
+  showPic() {
+    this.setData({
+      modalName: 'showpic'
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
   }
 })

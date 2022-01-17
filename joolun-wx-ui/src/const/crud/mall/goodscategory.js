@@ -75,7 +75,7 @@ export const tableOption = {
       listType: 'picture-img',
       width: 250,
       rules: [{
-        required: true,
+        required: false,
         message: '图片不能为空',
         trigger: 'change'
       }],

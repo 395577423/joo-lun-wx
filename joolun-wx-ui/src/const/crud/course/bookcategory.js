@@ -43,6 +43,7 @@ export const tableOption = {
       type: 'radio',
       search: true,
       sortable: true,
+      slot:true,
       span: 24,
       rules: [{
         required: true,
@@ -73,8 +74,9 @@ export const tableOption = {
       type: 'upload',
       listType: 'picture-img',
       width: 250,
+      hide:true,
       rules: [{
-        required: true,
+        required: false,
         message: '图片不能为空',
         trigger: 'change'
       }],

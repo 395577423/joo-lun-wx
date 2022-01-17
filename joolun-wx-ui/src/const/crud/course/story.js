@@ -10,6 +10,7 @@ export default (safe) => {
       prop: 'courseId',
       type: 'select',
       remote: true,
+      search: true,
       props: {
         label: 'title',
         value: 'id'
@@ -23,7 +24,6 @@ export default (safe) => {
     }, {
       label: '内容',
       prop: 'content',
-      search: true,
       type:'textarea',
       rules: [{
         required: true,

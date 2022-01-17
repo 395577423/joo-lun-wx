@@ -11,6 +11,7 @@ export default (safe)=>{
       prop: "courseId",
       type: 'select',
       remote: true,
+      search: true,
       props:{
         label:'title',
         value:'id'
@@ -22,26 +23,19 @@ export default (safe)=>{
         trigger: "blur"
       }]
     }, {
-      label: "封面地址",
-      prop: "imageUrl",
-      type: 'upload',
-      listType: 'picture-img',
-      rules: [{
-        required: true,
-        message: "请选择封面",
-        trigger: "blur"
-      }],
-      oss: 'ali',
-      loadText: '附件上传中，请稍等',
-      span: 24,
-      tip: '只能上传jpg/png文件，且不超过50kb'
-    }, {
       label: "问题",
       prop: "question",
-      search: true,
       rules: [{
         required: true,
         message: "请输入课程问题",
+        trigger: "blur"
+      }]
+    }, {
+      label: "正确答案",
+      prop: "answer",
+      rules: [{
+        required: true,
+        message: "请输入正确答案",
         trigger: "blur"
       }]
     }, {

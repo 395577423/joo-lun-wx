@@ -27,10 +27,10 @@ Page({
     reportUrl: '',
     src: '',
     container: null,
-    loadImagePath:'',
-    msg:'',
-    title:'',
-    bookName:''
+    loadImagePath: '',
+    msg: '',
+    title: '',
+    bookName: ''
   },
 
   /**
@@ -45,27 +45,28 @@ Page({
       courseId: options.courseId
     })
 
-    //获取用户报告
-    this.getReport()
-
-    //获取相册读取权限
-    this.getAuth()
-
+    app.initPage()
+      .then(res => {
+        //获取用户报告
+        this.getReport()
+        //获取相册读取权限
+        this.getAuth()
+      })
   },
-  onReady(){
+  onReady() {
     let that = this
     //获取用户报告图片
-    setTimeout(function(){
+    setTimeout(function () {
       let nickName = that.data.wxUser.nickName
       let title = that.data.bookName
-      let totalStar  = that.data.totalStar
+      let totalStar = that.data.totalStar
 
       wxml = wxml.replace('userNameText', nickName)
-      .replace('challengeText', '4')
-      .replace('bookText', title)
-      .replace('starText', totalStar)
-      .replace('durationText', '5分钟')
-    },500)   
+        .replace('challengeText', '4')
+        .replace('bookText', title)
+        .replace('starText', totalStar)
+        .replace('durationText', '5分钟')
+    }, 500)
   },
   getAuth() {
     wx.authorize({
@@ -116,8 +117,8 @@ Page({
         story: res.data.story,
         userAudio: res.data.userAudio,
         userCourseReport: res.data.userCourse.report,
-        title:res.data.course.title,
-        bookName:res.data.books[0].title
+        title: res.data.course.title,
+        bookName: res.data.books[0].title
       })
     })
     let questions = this.data.courseQuestion
@@ -155,12 +156,14 @@ Page({
       title: '使劲生成ing.....',
     })
 
-    setTimeout(this.extraImage,2500)
+    setTimeout(this.extraImage, 2500)
   },
   extraImage() {
     const p2 = this.widget.canvasToTempFilePath()
     p2.then(res => {
-      this.setData({modalName:'share'})
+      this.setData({
+        modalName: 'share'
+      })
       wx.hideLoading()
       this.setData({
         src: res.tempFilePath,
@@ -173,33 +176,34 @@ Page({
     let that = this
     wx.saveImageToPhotosAlbum({
       filePath: this.data.src,
-      'success':function(res){
-
-        if(res.errMsg === 'saveImageToPhotosAlbum:ok'){
+      'success': function (res) {
+        console.log(res)
+        if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
           that.getUserMoney()
         }
       },
-      'fail':function(res){
+      'fail': function (res) {
 
-        if(res.errMsg ==='saveImageToPhotosAlbum:fail cancel'){
+        if (res.errMsg === 'saveImageToPhotosAlbum:fail cancel') {
           that.setData({
-            modalName:'saveImage',
+            modalName: 'saveImage',
             msg: '保存图片并且分享的话,才能拿到奖励哦~'
           })
         }
       }
     })
-    
+
   },
-  getUserMoney(){
+  getUserMoney() {
     let id = this.data.courseId
     let userId = this.data.wxUser.id
-    app.api.userMoney(id,userId).then(res=>{
-        let msg  = res.msg
-        this.setData({
-          modalName:'saveImage',
-          msg: msg
-        })
+    app.api.userMoney(id, userId).then(res => {
+      console.log(res)
+      let msg = res.msg
+      this.setData({
+        modalName: 'saveImage',
+        msg: msg
+      })
     })
   },
   onImgOK(e) {

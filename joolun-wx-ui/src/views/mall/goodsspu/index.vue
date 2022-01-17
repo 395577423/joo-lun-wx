@@ -248,7 +248,8 @@
             handleUpdate: function (row, index, done, loading) {
                 row.categoryFirst = row.categoryId[0]
                 row.categorySecond = row.categoryId[1]
-                row.picUrls = row.picUrls?row.picUrls.split(','):''
+                console.log('商品图片',row.picUrls)
+                row.picUrls = row.picUrls?row.picUrls.toString().split(','):''
                 putObj(row).then(data => {
                     this.$message({
                         showClose: true,

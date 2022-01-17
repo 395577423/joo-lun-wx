@@ -7,6 +7,7 @@
                    :table-loading="tableLoading"
                    :option="tableOption"
                    :permission="permissionList"
+                   v-model="form"
                    @on-load="getPage"
                    @refresh-change="refreshChange"
                    @row-update="handleUpdate"
@@ -34,6 +35,7 @@
         name: 'wxuser',
         data() {
             return {
+              form: {},
                 tableData: [],
                 page: {
                     total: 0, // 总页数

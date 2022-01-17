@@ -125,7 +125,7 @@
     </button>
   </view>
   <view class="action bar-rt" wx:if="{{!operation}}">
-    <button class="cu-btn shadow-blur collection" disabled="{{selectValue.length <= 0}}" bindtap="userCollectAdd"><text class="text-white">移入收藏夹</text></button>
+    <!-- <button class="cu-btn shadow-blur collection" disabled="{{selectValue.length <= 0}}" bindtap="userCollectAdd"><text class="text-white">移入收藏夹</text></button> -->
     <button class="cu-btn shadow-blur margin-left-sm delete" disabled="{{selectValue.length <= 0}}" bindtap="shoppingCartDel"><text class="text-white">删除</text></button>
   </view>
 </view>

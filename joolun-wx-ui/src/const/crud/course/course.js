@@ -66,9 +66,10 @@ export default (safe) => {
         type: 'number'
       },
       {
-        label: '资学金计划',
+        label: '奖学金计划',
         prop: 'plan',
         type: 'radio',
+        slot:true,
         rules: [{
           required: true,
           message: '请选择是否开启奖学金计划',
@@ -99,6 +100,8 @@ export default (safe) => {
       },{
         label: '课程精华',
         prop: 'essence',
+        hide:true,
+        type:'textarea'
       },{
         label: '关联书籍',
         prop: 'books',

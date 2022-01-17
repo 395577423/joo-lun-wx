@@ -173,6 +173,7 @@ export default {
       }
     },
     uploadFile (file) {
+      debugger;
       return new Promise((resolve, reject) => {
 
         const headers = Object.assign(this.headers, {
@@ -204,7 +205,7 @@ export default {
         }
         (() => {
           if (this.isAliOSS) {
-            console.log(file.name)
+            console.log('使用阿里上传文件',file.name)
             return client.put(file.name, file)
           } else {
             return this.$axios.post(url, param, { headers })

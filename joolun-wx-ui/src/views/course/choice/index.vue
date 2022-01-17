@@ -4,7 +4,7 @@
                :page="page"
                :data="tableData"
                :table-loading="tableLoading"
-               :option="option"
+               :option="tableOption"
                :before-open="beforeOpen"
                v-model="form"
                @on-load="getPage"
@@ -16,24 +16,25 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
+      <template slot="choosed" slot-scope="scope">
+        <el-switch
+          :active-value=1
+          :inactive-value=0
+          v-model="scope.row.choosed"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changeChoosed(scope.row)"
+        >
+        </el-switch>
+      </template>
     </avue-crud>
-    <template slot="recommend" slot-scope="scope">
-      <el-switch
-        active-value="1"
-        inactive-value="0"
-        v-model="scope.row.recommend"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-        @change="changeChoosed(scope.row)"
-      >
-      </el-switch>
-    </template>
+
   </div>
 </template>
 
 <script>
 import { addObj, delObj, getPage, putObj } from '@/api/course/choice'
-import option from '@/const/crud/course/choice'
+import {tableOption} from '@/const/crud/course/choice'
 
 export default {
   name: 'choice',
@@ -51,7 +52,7 @@ export default {
       },
       paramsSearch: {},
       tableLoading: false,
-      option: option(this),
+      tableOption: tableOption,
       dialogAppraises: false,
       selectionData: '',
       pointsConfig: null
@@ -190,3 +191,5 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+</style>

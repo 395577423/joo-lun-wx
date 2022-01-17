@@ -16,12 +16,6 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
-      <template slot="coverUrl" slot-scope="scope">
-        <img
-          style="height: 100px"
-          :src="scope.row.coverUrl"
-        >
-      </template>
       <template slot="status" slot-scope="scope">
         <el-switch
           active-value="1"
@@ -29,10 +23,10 @@
           v-model="scope.row.status"
           active-color="#13ce66"
           inactive-color="#ff4949"
-          @change="changeStatus(scope.row)"
-        >
+          @change="changeStatus(scope.row)">
         </el-switch>
       </template>
+
     </avue-crud>
   </div>
 </template>

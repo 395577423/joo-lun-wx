@@ -55,7 +55,7 @@ public class UserCourse extends Model<UserCourse> {
     /**
      * 是否有返现权限
      */
-    @Excel(name = "是否有返现权限")
+    @Excel(name = "是否有返现权限 1:有 0:无")
     private Long returnable;
 
     /**

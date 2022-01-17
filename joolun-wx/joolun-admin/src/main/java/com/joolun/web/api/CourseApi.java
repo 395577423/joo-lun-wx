@@ -308,6 +308,7 @@ public class CourseApi {
         //3.用户录音
         QueryWrapper<UserAudio> audioWrapper = new QueryWrapper<>();
         audioWrapper.eq("course_id", id);
+        audioWrapper.eq("user_id", userId);
         UserAudio userAudio = userAudioService.getOne(audioWrapper);
 
         //4.课程本身信息
@@ -406,7 +407,9 @@ public class CourseApi {
             wxUser.setMoney(BigDecimal.ZERO);
 
 
-            userCourse.setReturnable(0L);
+            if(course.getPlan().equals(CommonConstants.YES)){
+                userCourse.setReturnable(1L);
+            }
 
             userCourse.setPrice(paymentPrice);
             userCourse.setCreateTime(LocalDateTime.now());
@@ -468,7 +471,9 @@ public class CourseApi {
                 userCourse.setCourseId(vo.getId());
                 //1.设定用户课程价格
                 userCourse.setPrice(BigDecimal.ZERO);
-
+                if(course.getPlan().equals(CommonConstants.YES)){
+                    userCourse.setReturnable(1L);
+                }
                 //2.处理用户余额 先减去课程价格
 
                 leftMoney = userMoney.subtract(realPrice);
@@ -522,7 +527,7 @@ public class CourseApi {
         UserCourse userCourse = userCourseService.getOne(wrapper);
 
         //如果是奖学金课程
-        if (CommonConstants.NO.equals(course.getPlan()) && null != userCourse && null != userCourse.getId() && null == userCourse.getCashReturn()) {
+        if (CommonConstants.YES.equals(course.getPlan()) && null != userCourse && null != userCourse.getId() && null == userCourse.getCashReturn()) {
             userCourse.setCashReturn(course.getCashReturn());
             userCourse.setReturnable(0L);
             userCourseService.updateById(userCourse);

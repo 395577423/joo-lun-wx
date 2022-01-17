@@ -5,8 +5,7 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   menuType: 'text',
-  searchShow: false,
-  excelBtn: true,
+  searchShow: true,
   printBtn: true,
   dialogWidth: '88%',
   selection: true,
@@ -22,7 +21,6 @@ export const tableOption = {
       label: '封面地址',
       prop: 'coverUrl',
       type: 'upload',
-      width: 250,
       display: false,
       listType: 'picture-img'
     },
@@ -52,23 +50,25 @@ export const tableOption = {
       label: '创建时间',
       prop: 'createTime',
       sortable: true,
-      display: false
+      editDisplay:false
     },
     {
       label: '更新时间',
       prop: 'updateTime',
-      display: false
+      editDisplay:false
     },
     {
       label: '创建者',
       prop: 'createBy',
       sortable: true,
-      display: false
+      display: false,
+      editDisplay:false
     },
     {
       label: '更新者',
       prop: 'updateBy',
-      display: false
+      display: false,
+      editDisplay:false
     },
     {
       label: '状态',
@@ -76,6 +76,7 @@ export const tableOption = {
       type: 'radio',
       sortable: true,
       display: false,
+      slot:true,
       dicData: [{
         label: '正常',
         value: '1'

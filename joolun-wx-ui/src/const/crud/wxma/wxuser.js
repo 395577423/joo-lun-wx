@@ -17,7 +17,7 @@ export const tableOption = {
   stripe: true,
   menuAlign: 'center',
   align: 'center',
-  editBtn: false,
+  editBtn: true,
   delBtn: false,
   addBtn: false,
   excelBtn: true,
@@ -116,6 +116,11 @@ export const tableOption = {
       sortable:true,
       hide:true,
       editDisplay:false
+    },{
+      label: '余额',
+      prop: 'money',
+      sortable:true,
+      editDisplay:true
     }
   ]
 }

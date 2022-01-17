@@ -80,11 +80,6 @@
             </view>
         </view>
         <view class="padding-xl">
-            <view class="padding-xl" wx:if="{{wxUser.money > 0 }}">
-                <text class="margin-right-df text-df">使用账户余额</text>
-                <text class="text-price margin-left-xl text-red text-df">可用 {{wxUser.money}}</text>
-                <switch class="sm margin-left-lg" bindtap="useBalance"></switch>
-            </view>
             <view>
                 <text>课程金额</text>
                 <text class="text-price">{{realPrice}}</text>

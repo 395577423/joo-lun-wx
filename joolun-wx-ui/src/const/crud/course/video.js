@@ -21,20 +21,6 @@ export default (safe) => {
         trigger: 'blur'
       }]
     }, {
-      label: '视频缩略图片地址',
-      prop: 'coverUrl',
-      type: 'upload',
-      listType: 'picture-img',
-      rules: [{
-        required: true,
-        message: '请选择封面',
-        trigger: 'blur'
-      }],
-      oss: 'ali',
-      loadText: '附件上传中，请稍等',
-      span: 24,
-      tip: '只能上传jpg/png文件，且不超过50kb'
-    }, {
       label: '视频地址',
       prop: 'videoUrl',
       type: 'upload',
@@ -46,7 +32,8 @@ export default (safe) => {
       oss: 'ali',
       loadText: '附件上传中，请稍等',
       span: 24,
-      tip: '只能上传视频文件，尽量控制大小'
+      tip: '只能上传视频文件，尽量控制大小',
+      hide: true
     }, {
       label: '标题',
       prop: 'title',
@@ -61,13 +48,13 @@ export default (safe) => {
       prop: 'status',
       type: 'radio',
       search: true,
-      display: false,
+      slot:true,
       dicData: [{
         label: '正常',
-        value: '1'
+        value: 1
       }, {
         label: '停用',
-        value: '0'
+        value: 0
       }],
       rules: [
         {
