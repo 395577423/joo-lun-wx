@@ -47,7 +47,7 @@ Page({
    */
   onLoad: function (options) {
     this.widget = this.selectComponent('.widget')
-
+    this.userInfoGet()
 
     //设定用户信息
     this.setData({
@@ -117,8 +117,8 @@ Page({
     })
   },
   getReport() {
-    app.api.getUserReport(this.data.courseId, this.data.wxUser.id).then(res => {
 
+    app.api.getUserReport(this.data.courseId, this.data.wxUser.id).then(res => {
       this.setData({
         course: res.data.course,
         courseQuestion: res.data.courseQuestion,
