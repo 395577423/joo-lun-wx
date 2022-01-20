@@ -13,7 +13,7 @@
   </view>
   <view class="content text-center">
     <text class="margin-right-sm">我的奖学金:</text> 
-    <text class="text-price text-red">{{wxUser.money}}</text>
+    <text class="text-price text-red">{{wxUser.money == null?0:wxUser.money}}</text>
   </view>
 </view>
 

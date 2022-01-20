@@ -15,8 +15,9 @@ Page({
       ascs: '', //升序字段
       descs: ''
     },
-    winHeight:null,
-    courses:[]
+    winHeight: null,
+    courses: [],
+    userInfo: null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -26,6 +27,7 @@ Page({
       .then(res => {
         this.getPlanCourse()
         this.getRecommend()
+        this.wxUserGet()
       })
   },
   /**
@@ -40,10 +42,9 @@ Page({
   getPlanCourse() {
     app.api.planCourse()
       .then(res => {
-        console.log(res)
         let result = res.data
         this.setData({
-          courses:result
+          courses: result
         })
       })
   },
@@ -64,18 +65,55 @@ Page({
           })
         }
       })
-      wx.hideLoading({
-        success: (res) => {},
-      })
+    wx.hideLoading({
+      success: (res) => {},
+    })
   },
   /**
    * 去课程详情页面
    * @param {*} e 课程ID
    */
   toDetail(e) {
-    let courseId = e.currentTarget.dataset.courseid
-    wx.navigateTo({
-      url: '/pages/course/course-detail/index?courseId=' + courseId,
+    console.log(this.data.userInfo)
+    let userInfo = this.data.userInfo
+    if (null == userInfo.headimgUrl) {
+      this.getUserProfile(e)
+    } else {
+      let courseId = e.currentTarget.dataset.courseid
+      wx.navigateTo({
+        url: '/pages/course/course-detail/index?courseId=' + courseId,
+      })
+    }
+
+  },
+  getUserProfile(e) {
+
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (detail) => {
+        app.api.wxUserSave(detail)
+          .then(res => {
+            let wxUser = res.data
+            this.setData({
+              wxUser: wxUser
+            })
+            app.globalData.wxUser = wxUser
+            this.wxUserGet()
+          })
+        let courseId = e.currentTarget.dataset.courseid
+        wx.navigateTo({
+          url: '/pages/course/course-detail/index?courseId=' + courseId,
+        })
+      }
     })
-  }
+  },
+  wxUserGet() {
+    app.api.wxUserGet()
+      .then(res => {
+        console.log(res)
+        this.setData({
+          userInfo: res.data
+        })
+      })
+  },
 })

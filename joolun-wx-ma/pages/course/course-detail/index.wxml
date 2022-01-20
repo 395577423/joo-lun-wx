@@ -80,13 +80,9 @@
             </view>
         </view>
         <view class="padding-xl">
-            <view>
-                <text>课程金额</text>
-                <text class="text-price">{{realPrice}}</text>
-            </view>
-            <view>
-                <text>待支付金额</text>
-                <text class="text-price">{{paymentPrice}}</text>
+            <view class="padding margin-bottom">
+                <text>课程金额:</text>
+                <text class="text-price text-red margin-left text-lg">{{paymentPrice}}</text>
             </view>
             <button bindtap="updateUserCourse">支付</button>
         </view>
@@ -103,6 +99,20 @@
         </view>
         <view class="padding-xl">
             购买成功
+        </view>
+    </view>
+</view>
+
+<view class="cu-modal {{modalName=='tip'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">提示</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            {{tip}}
         </view>
     </view>
 </view>

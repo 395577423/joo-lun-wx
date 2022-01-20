@@ -1,4 +1,4 @@
-export default (safe) => {
+export default () => {
   return {
     index: true,
     align: 'center',
@@ -51,25 +51,30 @@ export default (safe) => {
       }, {
         label: '价格',
         prop: 'price',
-        decimals:true
+        type: 'number',
+        precision: 2
       },
       {
         label: '返现金额',
         prop: 'cashReturn',
-        rules:[{
-
-        }]
+        type: 'number',
+        precision: 2
       },
       {
         label: '折扣率',
         prop: 'rates',
-        type: 'number'
+        type: 'number',
+        precision: 1,
+        rules:[
+          {required: true,
+          message: '请输入折扣率，默认为1'}
+        ]
       },
       {
         label: '奖学金计划',
         prop: 'plan',
         type: 'radio',
-        slot:true,
+        slot: true,
         rules: [{
           required: true,
           message: '请选择是否开启奖学金计划',
@@ -95,24 +100,24 @@ export default (safe) => {
       }, {
         label: '介绍',
         prop: 'introduction',
-        hide:true,
-        formslot:true
-      },{
+        hide: true,
+        formslot: true
+      }, {
         label: '课程精华',
         prop: 'essence',
-        hide:true,
-        type:'textarea'
-      },{
+        hide: true,
+        type: 'textarea'
+      }, {
         label: '关联书籍',
         prop: 'books',
         type: 'select',
-        multiple:true,
+        multiple: true,
         props: {
           label: 'title',
           value: 'id'
         },
         dicUrl: '/course/book/list?name={{key}}',
-        rules:[
+        rules: [
           {
             required: true,
             message: '请选择关联书籍',
@@ -123,6 +128,24 @@ export default (safe) => {
       {
         label: '地址 暂时',
         prop: 'remark'
+      },
+      {
+        label:'课程音频问题',
+        prop:'question'
+      },{
+        label: '课程音频文件',
+        prop: 'questionAudio',
+        type: 'upload',
+        rules: [{
+          required: true,
+          message: '请选择音频',
+          trigger: 'blur'
+        }],
+        oss: 'ali',
+        loadText: '附件上传中，请稍等',
+        span: 24,
+        tip: '只能上传音频文件，尽量控制大小',
+        hide: true
       }
     ]
 

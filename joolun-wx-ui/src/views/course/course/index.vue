@@ -164,7 +164,8 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
-      row.imageUrl = row.imageUrl ? row.imageUrl : ''
+      row.imageUrl = row.imageUrl ? row.imageUrl.toString() : ''
+      row.questionAudio = row.questionAudio[0].value
       putObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -185,6 +186,7 @@ export default {
      **/
     handleSave: function(row, done, loading) {
       row.imageUrl = row.imageUrl ? row.imageUrl.toString() : ''
+      row.questionAudio = row.questionAudio[0].value
       addObj(row).then(data => {
         this.$message({
           showClose: true,

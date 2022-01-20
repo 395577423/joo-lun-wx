@@ -1,5 +1,4 @@
-export default (safe)=>{
-  console.log(safe) //vue的this对象
+export default ()=>{
   return {
     index: true,
     align: 'center',
@@ -48,6 +47,9 @@ export default (safe)=>{
           message: "请输入排序号"
         }
       ]
-    }],
+    },{
+      label:'问题选项',
+      prop:'choices',
+    }]
   }
 }

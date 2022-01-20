@@ -22,7 +22,9 @@ Page({
         question: '',
         paymentPrice: 0,
         //使用余额
-        notUseBalance: true
+        notUseBalance: true,
+        course: null,
+        tip: ''
     },
 
     /**
@@ -44,12 +46,13 @@ Page({
     getDetail(courseId) {
         app.api.courseDetail(courseId)
             .then(res => {
-                
+
                 let course = res.data.course
                 let video = res.data.video
                 let introduction = course.introduction
 
                 this.setData({
+                    course: course,
                     title: course.title,
                     videoList: video,
                     coverUrl: course.coverUrl,
@@ -67,8 +70,7 @@ Page({
         let courseId = this.data.courseId
         let userId = this.data.wxUser.id
         app.api.getUserCourse(courseId, userId).then(res => {
-            if (undefined === res.data) {
-            } else {
+            if (undefined === res.data) {} else {
                 this.setData({
                     isOwned: true
                 })
@@ -82,7 +84,7 @@ Page({
     toVideoPage(e) {
         if (this.data.isOwned) {
             let videos = encodeURIComponent(JSON.stringify(this.data.videoList))
-           
+
             wx.navigateTo({
                 url: '/pages/course/course-video/index?videoList=' + videos + '&title=' + this.data.title
             })
@@ -126,11 +128,51 @@ Page({
         }
     },
     toBuy() {
+        console.log(new Date())
+        let startTime = this.data.course.startTime
+        let endTime = this.data.course.endTime
+
+        if (this.compareDate(new Date(), new Date(endTime))) {
+            this.setData({
+                tip: '已经过了报名时间'
+            })
+            this.showModal('tip')
+            return
+        }
+        if (this.compareDate(new Date(startTime), new Date())) {
+            this.setData({
+                tip: '还没到报名时间'
+            })
+            this.showModal('tip')
+            return
+        }
+
         this.showModal('Buy')
     },
-    showPic(){
+    /**
+     * 判断日期1是否大于日期2，只到年月日
+     * @param {*} date1 
+     * @param {*} date2 
+     */
+    compareDate(date1, date2) {
+        var result = false;
+        if (date1.getFullYear() > date2.getFullYear()) {
+            result = true;
+        } else if (date1.getFullYear() == date2.getFullYear()) {
+            if (date1.getMonth() > date2.getMonth()) {
+                result = true;
+            } else if (date1.getMonth() == date2.getMonth()) {
+                if (date1.getDate() > date2.getDate()) {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    },
+
+    showPic() {
         this.setData({
-            modalName:'showpic'
+            modalName: 'showpic'
         })
     },
     showModal(name) {
@@ -210,10 +252,10 @@ Page({
                             that.updateUserPayCourse()
                         },
                         'fail': function (res) {
-                            
+
                         },
                         'complete': function (res) {
-                            
+
                         }
                     })
                 }
@@ -233,7 +275,7 @@ Page({
                 })
             })
     },
-    updateUserPayCourse(){
+    updateUserPayCourse() {
 
         let courseId = this.data.courseId
         let userId = this.data.wxUser.id
@@ -245,8 +287,8 @@ Page({
             id: courseId,
             userId: userId,
             useCoupon: useCoupon
-        }).then(res=>{
-            if(res.code === 200){
+        }).then(res => {
+            if (res.code === 200) {
                 this.getUserCourse()
                 this.userInfoGet()
                 this.setData({
