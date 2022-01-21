@@ -176,4 +176,6 @@ private static final long serialVersionUID = 1L;
      * 余额
      */
     private BigDecimal money;
+
+    private String phoneNumber;
 }

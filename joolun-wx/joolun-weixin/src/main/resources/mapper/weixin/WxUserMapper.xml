@@ -39,6 +39,7 @@
 		<result property="precision" column="precision"/>
 		<result property="sessionKey" column="session_key"/>
 		<result property="money" column="money"/>
+		<result property="phoneNumber" column="phoneNumber"/>
 	</resultMap>
 
 

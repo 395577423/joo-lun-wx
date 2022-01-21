@@ -121,6 +121,11 @@ export const tableOption = {
       prop: 'money',
       sortable:true,
       editDisplay:true
+    },{
+      label: '手机号',
+      prop: 'phoneNumber',
+      sortable:true,
+      editDisplay:false
     }
   ]
 }

@@ -17,7 +17,9 @@ Page({
     },
     winHeight: null,
     courses: [],
-    userInfo: null
+    userInfo: null,
+    modalName: '',
+    detail:null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -74,38 +76,43 @@ Page({
    * @param {*} e 课程ID
    */
   toDetail(e) {
-    console.log(this.data.userInfo)
+
     let userInfo = this.data.userInfo
     if (null == userInfo.headimgUrl) {
       this.getUserProfile(e)
+    } else if (null == userInfo.getPhoneNumber) {
+      this.setData({
+        modalName: 'getPhone'
+      })
     } else {
       let courseId = e.currentTarget.dataset.courseid
       wx.navigateTo({
         url: '/pages/course/course-detail/index?courseId=' + courseId,
       })
     }
-
   },
   getUserProfile(e) {
 
     wx.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (detail) => {
+        console.log(detail)
+        this.setData({
+          detail:detail
+        })
         app.api.wxUserSave(detail)
           .then(res => {
             let wxUser = res.data
             this.setData({
-              wxUser: wxUser
+              wxUser: wxUser,
+              modalName: 'getPhone'
             })
             app.globalData.wxUser = wxUser
             this.wxUserGet()
           })
-        let courseId = e.currentTarget.dataset.courseid
-        wx.navigateTo({
-          url: '/pages/course/course-detail/index?courseId=' + courseId,
-        })
       }
     })
+
   },
   wxUserGet() {
     app.api.wxUserGet()
@@ -116,4 +123,35 @@ Page({
         })
       })
   },
+  getPhoneNumber(e) {
+    if (e.detail.iv) {
+      server.post(api.user.bindWXPhoneNumber(), {
+        encrypted_data: e.detail.encryptedData,
+        encrypt_iv: e.detail.iv
+      }, data => {
+        wx.showToast({
+          title: '绑定成功'
+        })
+        // do something
+      }, error => {
+        wx.showModal({
+          title: '绑定失败',
+          content: '[服务端返回的错误信息]',
+          showCancel: false,
+          success: res => {
+            if (res.confirm) { // 用户确认后
+              // do something
+            }
+          }
+        })
+      })
+    } else { // 用户拒绝授权
+      // do something
+    }
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: ''
+    })
+  }
 })

@@ -73,3 +73,18 @@
 <block wx:else>
   <view class="cu-load bg-grey light over"></view>
 </block>
+
+<view class="cu-modal {{modalName=='getPhone'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">绑定手机号</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <text>
+          请先绑定手机号再进行此操作
+        </text>
+        <button class="cu-btn block bg-blue margin-tb-sm lg button-hover" open-type="getPhoneNumber" bindgetphonenumber='getPhoneNumber'>微信用户一键绑定</button>
+    </view>
+</view>
