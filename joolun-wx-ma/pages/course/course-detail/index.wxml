@@ -45,7 +45,7 @@
     </view>
     <view class="text-center" style="bottom: 150rpx;width: 100%;margin-bottom: 50rpx;">
         <text>
-            温馨提示:报名后记得添加客服征集进群共读书籍。
+            温馨提示:报名后记得添加客服微信进群共读书籍。
         </text>
     </view>
     <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">

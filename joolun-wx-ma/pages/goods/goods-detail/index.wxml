@@ -27,7 +27,7 @@
 <view class="cu-bar bg-white solid-bottom">
   <view class="text-sm padding-lr-sm text-gray">
     <text wx:if="{{goodsSpu.marketPrice}}">市场价：</text>
-    <text class="text-price text-gray">{{goodsSpu.marketPrice}}</text>
+    <text class="text-price text-gray">{{goodsSpu.marketPrice == null?goodsSpu.salesPrice:goodsSpu.marketPrice}}</text>
   </view>
   <view class="text-sm margin-right text-gray">
     <text>库存：{{goodsSpu.stock}}</text>
