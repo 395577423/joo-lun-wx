@@ -34,11 +34,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public IPage<Course> selectDataPage(Page page, CourseVO course) {
         IPage<Course> courseIPage = baseMapper.selectPage2(page, course);
         List<Course> courseList = courseIPage.getRecords();
-        courseList.forEach(t -> {
-            if (t.getRates().compareTo(BigDecimal.ZERO) >0) {
-                t.setRealPrice(t.getPrice().multiply(t.getRates()));
-            }
-        });
         courseIPage.setRecords(courseList);
         return courseIPage;
     }

@@ -184,5 +184,8 @@ module.exports = {
     },
     userMoney:(id,userId) =>{
         return request('/weixin/api/course/usermoney/'+id+'/'+userId,'get',null,false)
+    },
+    bindWXPhoneNumber:(data) => {
+        return request('/weixin/api/ma/wxuser/phone', 'post', data, true)
     }
 }

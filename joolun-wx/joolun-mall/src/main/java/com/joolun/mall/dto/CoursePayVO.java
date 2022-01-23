@@ -12,5 +12,4 @@ import lombok.Data;
 public class CoursePayVO {
     private Long id;
     private String userId;
-    private String useCoupon;
 }

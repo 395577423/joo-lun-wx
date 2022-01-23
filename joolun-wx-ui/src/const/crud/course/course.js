@@ -61,14 +61,10 @@ export default () => {
         precision: 2
       },
       {
-        label: '折扣率',
+        label: '折扣价',
         prop: 'rates',
         type: 'number',
-        precision: 1,
-        rules:[
-          {required: true,
-          message: '请输入折扣率，默认为1'}
-        ]
+        precision: 1
       },
       {
         label: '奖学金计划',

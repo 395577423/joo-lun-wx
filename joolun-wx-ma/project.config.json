@@ -42,7 +42,7 @@
     "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.21.2",
+  "libVersion": "2.21.3",
   "appid": "wxa8f0475c8754393c",
   "projectname": "joolun-wx-ma",
   "debugOptions": {

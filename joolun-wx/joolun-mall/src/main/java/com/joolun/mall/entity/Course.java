@@ -73,15 +73,12 @@ public class Course extends Model<Course>
     @Excel(name = "课程价格")
     private BigDecimal price;
 
-    @TableField(exist = false)
-    private BigDecimal realPrice;
-
     /** 返现金额 */
     @Excel(name = "返现金额")
     private BigDecimal cashReturn;
 
-    /** 折扣率 0-1 */
-    @Excel(name = "折扣率 0-1")
+    /** 折扣价 */
+    @Excel(name = "折扣价")
     private BigDecimal rates;
 
     /** 是否参与奖学金计划 1 参加 0 不参加 */

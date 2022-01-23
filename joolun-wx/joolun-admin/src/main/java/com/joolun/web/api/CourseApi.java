@@ -140,7 +140,7 @@ public class CourseApi {
         wrapper.eq("recommend", "1");
         wrapper.eq("plan", "0");
         wrapper.orderByDesc("create_time");
-        wrapper.select("id,title,price,cover_url,age_start,age_end,rates,(price*rates) as realPrice");
+        wrapper.select("id,title,price,cover_url,age_start,age_end,rates");
         return AjaxResult.success(courseService.page(page, wrapper));
     }
 
@@ -153,11 +153,6 @@ public class CourseApi {
     @GetMapping("/detail/{id}")
     public AjaxResult getCourseDetail(@PathVariable Long id) {
         Course course = courseService.getById(id);
-        if (null != course.getRates() && course.getRates().compareTo(BigDecimal.ZERO) > 0) {
-            course.setRealPrice(course.getPrice().multiply(course.getRates()));
-        } else {
-            course.setRealPrice(course.getPrice());
-        }
         QueryWrapper<CourseVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", id).orderByAsc("sort");
         List<CourseVideo> courseVideoList = courseVideoService.list(wrapper);
@@ -381,42 +376,26 @@ public class CourseApi {
     @PostMapping("/usercourse")
     public AjaxResult updateUserCourse(@RequestBody CoursePayVO vo) {
         try {
-            //用户信息
-            WxUser wxUser = wxUserService.getById(vo.getUserId());
             //课程信息
             Course course = courseService.getById(vo.getId());
-            if (course.getRates().compareTo(BigDecimal.ZERO) > 0) {
-                course.setRealPrice(course.getPrice().multiply(course.getRates()));
-            }
-
             UserCourse userCourse = new UserCourse();
             userCourse.setUserId(vo.getUserId());
             userCourse.setCourseId(vo.getId());
 
-            //是否使用余额
-            BigDecimal paymentPrice = BigDecimal.ZERO;
-            BigDecimal leftMoney = wxUser.getMoney();
-            BigDecimal realPrice = course.getRealPrice();
-
-            if (CommonConstants.YES.equals(vo.getUseCoupon())) {
-                //如果用户余额小于课程价格，使用后减去
-                paymentPrice = realPrice.subtract(leftMoney);
-                userCourse.setPrice(paymentPrice);
+            BigDecimal realPrice;
+            if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0) {
+                realPrice = course.getRates();
+            }else{
+                realPrice = course.getPrice();
             }
-
-            wxUser.setMoney(BigDecimal.ZERO);
-
 
             if(course.getPlan().equals(CommonConstants.YES)){
                 userCourse.setReturnable(1L);
             }
 
-            userCourse.setPrice(paymentPrice);
+            userCourse.setPrice(realPrice);
             userCourse.setCreateTime(LocalDateTime.now());
             userCourseService.save(userCourse);
-
-            //则更新用户表
-            wxUserService.updateMoney(wxUser);
 
             return AjaxResult.success();
         } catch (Exception e) {
@@ -439,9 +418,6 @@ public class CourseApi {
         WxUser wxUser = wxUserService.getById(vo.getUserId());
 
         Course course = courseService.getById(vo.getId());
-        if (course.getRates().compareTo(BigDecimal.ZERO) > 0) {
-            course.setRealPrice(course.getPrice().multiply(course.getRates()));
-        }
 
         QueryWrapper<UserCourse> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", vo.getId()).eq("user_id", vo.getUserId());
@@ -455,46 +431,12 @@ public class CourseApi {
             return AjaxResult.error(MyReturnCode.ERR_50001.getCode(), MyReturnCode.ERR_50001.getMsg());
         }
 
-        //用户余额
-        BigDecimal leftMoney;
-        //实际支付价格
-        BigDecimal paymentPrice;
-        BigDecimal userMoney = wxUser.getMoney();
-        BigDecimal realPrice = course.getRealPrice();
-
-        if (CommonConstants.YES.equals(vo.getUseCoupon())) {
-            //如果用户余额大于课程价格,跳过支付，并且保存用户课程表
-            if (userMoney.compareTo(course.getRealPrice()) >= 0) {
-
-                userCourse = new UserCourse();
-                userCourse.setUserId(vo.getUserId());
-                userCourse.setCourseId(vo.getId());
-                //1.设定用户课程价格
-                userCourse.setPrice(BigDecimal.ZERO);
-                if(course.getPlan().equals(CommonConstants.YES)){
-                    userCourse.setReturnable(1L);
-                }
-                //2.处理用户余额 先减去课程价格
-
-                leftMoney = userMoney.subtract(realPrice);
-
-                //保存用户表
-                userCourse.setCreateTime(LocalDateTime.now());
-                userCourseService.save(userCourse);
-
-                //如果余额有变动，则更新用户表
-                if (leftMoney.compareTo(userMoney) != 0) {
-                    wxUser.setMoney(leftMoney);
-                    wxUserService.updateMoney(wxUser);
-                }
-                return AjaxResult.success();
-            } else {
-                paymentPrice = realPrice.subtract(userMoney);
-            }
-        } else {
-            paymentPrice = course.getRealPrice();
+        BigDecimal realPrice;
+        if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0) {
+            realPrice = course.getRates();
+        }else{
+            realPrice = course.getPrice();
         }
-
 
         String appId = WxMaUtil.getAppId(request);
         WxPayUnifiedOrderRequest wxPayUnifiedOrderRequest = new WxPayUnifiedOrderRequest();
@@ -503,7 +445,7 @@ public class CourseApi {
         body = body.length() > 40 ? body.substring(0, 39) : body;
         wxPayUnifiedOrderRequest.setBody(body);
         wxPayUnifiedOrderRequest.setOutTradeNo(IdUtil.getSnowflake(0, 0).nextIdStr());
-        wxPayUnifiedOrderRequest.setTotalFee(paymentPrice.multiply(new BigDecimal(100)).intValue());
+        wxPayUnifiedOrderRequest.setTotalFee(realPrice.multiply(new BigDecimal(100)).intValue());
         wxPayUnifiedOrderRequest.setTradeType("JSAPI");
         wxPayUnifiedOrderRequest.setNotifyUrl(mallConfigProperties.getNotifyHost() + "/weixin/api/ma/orderinfo/notify-order");
         wxPayUnifiedOrderRequest.setSpbillCreateIp("127.0.0.1");

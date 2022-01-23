@@ -15,9 +15,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * 微信用户
@@ -33,6 +35,19 @@ import javax.servlet.http.HttpServletRequest;
 public class WxUserApi {
 
     private final WxUserService wxUserService;
+
+    @PostMapping("/phone")
+    public AjaxResult savePhone(@RequestBody WxOpenDataDTO wxOpenDataDTO) {
+        try {
+            String phone = WxMaUtil.getPhone(wxOpenDataDTO.getCode());
+            WxUser wxUser = wxUserService.getById(wxOpenDataDTO.getUserId());
+            wxUser.setPhone(phone);
+            wxUserService.updateById(wxUser);
+            return AjaxResult.success();
+        } catch (Exception e) {
+            return AjaxResult.error();
+        }
+    }
 
     /**
      * 小程序用户登录

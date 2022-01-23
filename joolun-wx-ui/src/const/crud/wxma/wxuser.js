@@ -119,11 +119,13 @@ export const tableOption = {
     },{
       label: '余额',
       prop: 'money',
+      type: 'number',
+      precision: 2,
       sortable:true,
       editDisplay:true
     },{
       label: '手机号',
-      prop: 'phoneNumber',
+      prop: 'phone',
       sortable:true,
       editDisplay:false
     }

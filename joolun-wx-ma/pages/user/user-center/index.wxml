@@ -63,8 +63,9 @@
                 <text class="cuIcon-close text-red"></text>
             </view>
         </view>
-        <view class="padding-xl">
-            <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode.jpeg" style="width: 280rpx;height:280rpx;"></image>
+        <view class="padding-xl flex-direction text-center">
+            <text class="content flex" style="width: 66%;margin: 0 auto;">温馨提示：截图保存后可扫码哦</text>
+            <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode.jpeg" style="width: 280rpx;height:280rpx;margin:0 auto;" class="flex"></image>
         </view>
     </view>
 </view>

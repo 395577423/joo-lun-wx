@@ -55,8 +55,8 @@
         <view class="flex-direction flex text-center" style="width:350rpx;">
           <text class="text-black text-bold text-cut text-xm " style="width:350rpx;">{{item.title}}</text>
           <text class="text-black text-bold margin-top-xs ">{{item.ageStart}}~{{item.ageEnd}}岁</text>
-          <view wx:if="{{item.realPrice<item.price}}" class="margin-top-xs">
-            <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+          <view wx:if="{{item.rates > 0}}" class="margin-top-xs">
+            <text class="text-price text-blue text-bold">{{item.rates}}</text>
             <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{item.price}}</text>
           </view>
           <view wx:else class="margin-top-xs">
@@ -73,18 +73,3 @@
 <block wx:else>
   <view class="cu-load bg-grey light over"></view>
 </block>
-
-<view class="cu-modal {{modalName=='getPhone'?'show':''}}">
-    <view class="cu-dialog">
-        <view class="cu-bar bg-white justify-end">
-            <view class="content text-blue text-bold text-shadow">绑定手机号</view>
-            <view class="action" bindtap="hideModal">
-                <text class="cuIcon-close text-red"></text>
-            </view>
-        </view>
-        <text>
-          请先绑定手机号再进行此操作
-        </text>
-        <button class="cu-btn block bg-blue margin-tb-sm lg button-hover" open-type="getPhoneNumber" bindgetphonenumber='getPhoneNumber'>微信用户一键绑定</button>
-    </view>
-</view>

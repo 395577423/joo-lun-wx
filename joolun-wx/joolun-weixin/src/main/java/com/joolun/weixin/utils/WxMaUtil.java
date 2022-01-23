@@ -51,8 +51,8 @@ public class WxMaUtil {
         System.out.println(result);
 
         JSONObject obj = JSON.parseObject(result);
-        Integer errorcode = (Integer) obj.get("errorcode");
-        if (null != errorcode && 0 == errorcode) {
+        Integer errcode = (Integer) obj.get("errcode");
+        if (null != errcode && 0 == errcode) {
             JSONObject phoneInfo = (JSONObject) obj.get("phone_info");
             String purePhoneNumber = (String) phoneInfo.get("purePhoneNumber");
             return purePhoneNumber;

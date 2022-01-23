@@ -21,8 +21,6 @@ Page({
         audioUrl: '',
         question: '',
         paymentPrice: 0,
-        //使用余额
-        notUseBalance: true,
         course: null,
         tip: ''
     },
@@ -46,17 +44,23 @@ Page({
     getDetail(courseId) {
         app.api.courseDetail(courseId)
             .then(res => {
-
                 let course = res.data.course
                 let video = res.data.video
                 let introduction = course.introduction
+
+                let realPrice
+                if (null !== course.rates && course.price > course.rates) {
+                    realPrice = course.rates
+                } else {
+                    realPrice = course.price
+                }
 
                 this.setData({
                     course: course,
                     title: course.title,
                     videoList: video,
                     coverUrl: course.coverUrl,
-                    realPrice: course.realPrice,
+                    realPrice: realPrice,
                     audioUrl: course.questionAudio,
                     question: course.question
                 })
@@ -128,7 +132,16 @@ Page({
         }
     },
     toBuy() {
-        console.log(new Date())
+        let wxUser = this.data.wxUser
+        console.log(wxUser)
+        if (null == wxUser.phone) {
+            this.showModal('getPhone')
+            return
+        }
+        this.buy()
+    },
+
+    buy() {
         let startTime = this.data.course.startTime
         let endTime = this.data.course.endTime
 
@@ -177,43 +190,21 @@ Page({
     },
     showModal(name) {
         this.setData({
-            modalName: name,
-            paymentPrice: this.data.realPrice
+            modalName: name
         })
     },
     hideModal(e) {
-        this.setData({
-            modalName: null
-        })
-    },
-    //支付相关
-
-    // 使用用户余额
-    useBalance() {
-        //使用余额
-        let userMoney = this.data.wxUser.money
-        let realPrice = this.data.realPrice
-        let notUseBalance = this.data.notUseBalance
-        if (notUseBalance) {
-            if (userMoney >= realPrice) {
-                this.setData({
-                    paymentPrice: 0
-                })
-            } else {
-                this.setData({
-                    paymentPrice: (Number(realPrice) - Number(userMoney)).toFixed(2)
-                })
-            }
+        let modelName = this.data.modalName
+        console.log(modelName)
+        if ('getPhone' === modelName) {
+            this.buy()
         } else {
             this.setData({
-                paymentPrice: realPrice
+                modalName: null
             })
         }
-
-        this.setData({
-            notUseBalance: !notUseBalance
-        })
     },
+    //支付相关
 
     //添加课程归属,并且修改用户余额信息
     updateUserCourse() {
@@ -223,14 +214,10 @@ Page({
         var that = this
         let courseId = that.data.courseId
         let userId = that.data.wxUser.id
-        let useCoupon = '1'
-        if (that.data.notUseBalance) {
-            useCoupon = '0'
-        }
+
         app.api.courseUnifiedOrder({
                 id: courseId,
-                userId: userId,
-                useCoupon: useCoupon
+                userId: userId
             })
             .then(res => {
                 this.setData({
@@ -279,14 +266,9 @@ Page({
 
         let courseId = this.data.courseId
         let userId = this.data.wxUser.id
-        let useCoupon = '1'
-        if (this.data.notUseBalance) {
-            useCoupon = '0'
-        }
         app.api.userCourse({
             id: courseId,
-            userId: userId,
-            useCoupon: useCoupon
+            userId: userId
         }).then(res => {
             if (res.code === 200) {
                 this.getUserCourse()
@@ -297,5 +279,19 @@ Page({
             }
 
         })
+    },
+    getPhoneNumber(e) {
+        let userId = this.data.wxUser.id
+        if (e.detail.iv) {
+            app.api.bindWXPhoneNumber({
+                code: e.detail.code,
+                userId: userId
+            }).then(res => {
+                this.userInfoGet()
+                this.buy()
+            })
+        } else { // 用户拒绝授权
+            this.buy()
+        }
     }
 })
