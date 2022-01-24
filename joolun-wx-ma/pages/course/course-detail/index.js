@@ -20,7 +20,6 @@ Page({
         realPrice: null,
         audioUrl: '',
         question: '',
-        paymentPrice: 0,
         course: null,
         tip: ''
     },
@@ -214,7 +213,6 @@ Page({
         var that = this
         let courseId = that.data.courseId
         let userId = that.data.wxUser.id
-
         app.api.courseUnifiedOrder({
                 id: courseId,
                 userId: userId
@@ -223,29 +221,23 @@ Page({
                 this.setData({
                     loading: false
                 })
-                if (that.data.paymentPrice <= 0) { //0元付款
-                    this.setData({
-                        modalName: 'success'
-                    })
-                } else {
-                    let payData = res.data
-                    wx.requestPayment({
-                        'timeStamp': payData.timeStamp,
-                        'nonceStr': payData.nonceStr,
-                        'package': payData.packageValue,
-                        'signType': payData.signType,
-                        'paySign': payData.paySign,
-                        'success': function (res) {
-                            that.updateUserPayCourse()
-                        },
-                        'fail': function (res) {
+                let payData = res.data
+                wx.requestPayment({
+                    'timeStamp': payData.timeStamp,
+                    'nonceStr': payData.nonceStr,
+                    'package': payData.packageValue,
+                    'signType': payData.signType,
+                    'paySign': payData.paySign,
+                    'success': function (res) {
+                        that.updateUserPayCourse()
+                    },
+                    'fail': function (res) {
 
-                        },
-                        'complete': function (res) {
+                    },
+                    'complete': function (res) {
 
-                        }
-                    })
-                }
+                    }
+                })
                 that.getUserCourse()
                 that.userInfoGet()
             }).catch(() => {
