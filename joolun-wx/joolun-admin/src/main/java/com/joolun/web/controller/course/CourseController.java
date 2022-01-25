@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,6 +66,9 @@ public class CourseController extends BaseController {
     @Log(title = "课程", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Course course) {
+        if(course.getRates().compareTo(BigDecimal.ZERO) == 0){
+            course.setRates(null);
+        }
         boolean save = courseService.save(course);
         //删除关联表中的记录
         bookService.deleteRelatedBooks(course.getId());
@@ -85,8 +88,10 @@ public class CourseController extends BaseController {
     @PutMapping
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult edit(@RequestBody Course course) {
+        if(course.getRates().compareTo(BigDecimal.ZERO) == 0){
+            course.setRates(null);
+        }
         boolean udpate = courseService.updateById(course);
-
         //删除关联表中的记录
         bookService.deleteRelatedBooks(course.getId());
         //添加记录
