@@ -121,7 +121,7 @@ public class CourseApi {
     @GetMapping("/plan")
     public AjaxResult getPlan() {
         List<Course> courses = courseService.selectPlan();
-        courses.forEach(t->{
+        courses.forEach(t -> {
             List<Book> listByCourse = bookService.getListByCourse(t.getId());
             t.setBookList(listByCourse);
         });
@@ -385,11 +385,11 @@ public class CourseApi {
             BigDecimal realPrice;
             if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0) {
                 realPrice = course.getRates();
-            }else{
+            } else {
                 realPrice = course.getPrice();
             }
 
-            if(course.getPlan().equals(CommonConstants.YES)){
+            if (course.getPlan().equals(CommonConstants.YES)) {
                 userCourse.setReturnable(1L);
             }
 
@@ -434,7 +434,7 @@ public class CourseApi {
         BigDecimal realPrice;
         if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0) {
             realPrice = course.getRates();
-        }else{
+        } else {
             realPrice = course.getPrice();
         }
 
@@ -468,18 +468,17 @@ public class CourseApi {
         wrapper.eq("course_id", id).eq("user_id", userId);
         UserCourse userCourse = userCourseService.getOne(wrapper);
 
-        //如果是奖学金课程
-        if (CommonConstants.YES.equals(course.getPlan()) && null != userCourse && null != userCourse.getId() && null == userCourse.getCashReturn()) {
+        //如果是有返现
+        if (course.getCashReturn().compareTo(BigDecimal.ZERO) > 0 && null != userCourse && null != userCourse.getId() && null == userCourse.getCashReturn()) {
             userCourse.setCashReturn(course.getCashReturn());
             userCourse.setReturnable(0L);
             userCourseService.updateById(userCourse);
             WxUser wxUser = wxUserService.getById(userId);
             BigDecimal existsMoney = wxUser.getMoney();
             BigDecimal money = existsMoney.add(course.getCashReturn());
-
             wxUser.setMoney(money);
             wxUserService.updateMoney(wxUser);
-            String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元" ;
+            String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元";
             return AjaxResult.success(msg);
         } else {
             return AjaxResult.success();

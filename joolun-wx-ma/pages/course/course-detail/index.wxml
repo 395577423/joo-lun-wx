@@ -48,7 +48,7 @@
             温馨提示:报名后记得添加客服微信进群共读书籍。
         </text>
     </view>
-    <view class="cu-bar bg-white tabbar border shop foot" hidden="{{isOwned}}" style="position: relative;">
+    <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned}}" style="position: relative;">
         <view class="btn-group">
             <text class="text-price text-blue text-bold text-lg">{{course.rates !=null && course.price>course.rates? course.rates:course.price }}</text>
             <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即报名</button>

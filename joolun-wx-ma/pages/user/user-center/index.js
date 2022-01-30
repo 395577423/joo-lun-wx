@@ -12,12 +12,12 @@ Page({
     wxUser: null,
     userInfo: null
   },
+
   onShow() {
     let wxUser = app.globalData.wxUser
     this.setData({
       wxUser: wxUser
     })
-    this.wxUserGet()
     if (this.data.config.adEnable) {
       // 在页面中定义插屏广告
       let interstitialAd = null
@@ -39,7 +39,9 @@ Page({
     }
   },
   onLoad() {
-
+    this.wxUserGet()
+  },
+  onReady(){
   },
   /**
    * 小程序设置

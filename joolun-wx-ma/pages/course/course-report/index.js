@@ -48,15 +48,14 @@ Page({
   onLoad: function (options) {
     this.widget = this.selectComponent('.widget')
     this.userInfoGet()
-
     //设定用户信息
     this.setData({
       courseId: options.courseId
     })
+    this.getReport()
     app.initPage()
       .then(res => {
         //获取用户报告
-        this.getReport()
         //获取相册读取权限
         this.getAuth()
       })
@@ -117,8 +116,9 @@ Page({
     })
   },
   getReport() {
-
-    app.api.getUserReport(this.data.courseId, this.data.wxUser.id).then(res => {
+    console.log(app.globalData.wxUser.id)
+    console.log(this.data.courseId)
+    app.api.getUserReport(this.data.courseId, app.globalData.wxUser.id).then(res => {
       this.setData({
         course: res.data.course,
         courseQuestion: res.data.courseQuestion,

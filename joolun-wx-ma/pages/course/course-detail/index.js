@@ -32,11 +32,11 @@ Page({
             courseId: options.courseId
         })
         this.userInfoGet()
+        this.getUserCourse()
         let courseId = options.courseId
         app.initPage()
             .then(() => {
                 this.getDetail(courseId)
-                this.getUserCourse()
             })
     },
 
@@ -71,7 +71,7 @@ Page({
     },
     getUserCourse() {
         let courseId = this.data.courseId
-        let userId = this.data.wxUser.id
+        let userId = app.globalData.wxUser.id
         app.api.getUserCourse(courseId, userId).then(res => {
             if (undefined === res.data) {} else {
                 this.setData({
