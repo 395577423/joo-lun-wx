@@ -88,7 +88,7 @@ public class CourseController extends BaseController {
     @PutMapping
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult edit(@RequestBody Course course) {
-        if(course.getRates().compareTo(BigDecimal.ZERO) == 0){
+        if(null == course.getRates()||course.getRates().compareTo(BigDecimal.ZERO) == 0){
             course.setRates(null);
         }
         boolean udpate = courseService.updateById(course);
