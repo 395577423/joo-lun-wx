@@ -383,7 +383,7 @@ public class CourseApi {
             userCourse.setCourseId(vo.getId());
 
             BigDecimal realPrice;
-            if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0) {
+            if (null != course.getRates() && course.getRates().compareTo(BigDecimal.ZERO) > 0 && course.getRates().compareTo(course.getPrice()) < 0) {
                 realPrice = course.getRates();
             } else {
                 realPrice = course.getPrice();
@@ -396,8 +396,8 @@ public class CourseApi {
             userCourse.setPrice(realPrice);
             userCourse.setCreateTime(LocalDateTime.now());
             userCourseService.save(userCourse);
-
             return AjaxResult.success();
+
         } catch (Exception e) {
             e.printStackTrace();
             return AjaxResult.error("购买失败，请联系客服");

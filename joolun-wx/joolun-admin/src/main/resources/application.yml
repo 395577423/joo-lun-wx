@@ -32,6 +32,8 @@ logging:
   level:
     com.joolun: debug
     org.springframework: warn
+  file:
+    name: joolun.log
 
 # Spring配置
 spring:
