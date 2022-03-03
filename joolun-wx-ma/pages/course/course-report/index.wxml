@@ -1,6 +1,6 @@
 <wxml-to-canvas class="widget"></wxml-to-canvas>
 <scroll-view class="app">
-  <view class="bg-img padding-tb-xl" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/newheader.png');height: 600rpx;">
+  <view class="bg-img padding-tb-xl" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/newheader.jpeg');height: 600rpx;">
     <view class="padding-xl text-white text-center margin-top">
       <view class="padding-xs text-xl">
         <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/dushubaogao%402x.png" style="width: 420rpx;height: 70rpx;" />
@@ -14,15 +14,15 @@
           <text class="cuIcon-appreciate lg text-pink"></text>
           <text class="text-bold text-brown ">完成4项挑战</text>
         </view>
-        <view class="flex-sub bg-cyan round margin">
+        <!-- <view class="flex-sub bg-cyan round margin">
           <text class="cuIcon-favorfill lg text-yellow"></text>
           <text class="text-bold text-blue "> 获得20个星星</text>
-        </view>
+        </view> -->
       </view>
     </view>
   </view>
   <view class="text-center">
-    <view class="text-bold text-brown margin-sm">小朋友观看《{{course.title}}》</view>
+    <view class="text-bold text-brown margin-sm">小朋友观看《{{bookName}}》</view>
     <view class="text-bold text-brown margin-sm">解读视频共5分钟,专注力获得了锻炼,</view>
     <view class="text-bold text-brown margin-sm">同时也记住了书中精彩的故事情节.</view>
   </view>

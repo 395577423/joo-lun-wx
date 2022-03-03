@@ -1,7 +1,7 @@
 let wxml = `
 <view class="container">
   <view class="bg">
-    <image class="img" src="https://mall-owen.oss-cn-beijing.aliyuncs.com/report2.png"></image>
+    <image class="img" src="https://mall-owen.oss-cn-beijing.aliyuncs.com/report3.png"></image>
   </view>
   <text class="useName">userNameText</text>
   <text class="challenge">challengeText</text>

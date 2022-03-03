@@ -83,6 +83,11 @@ Page({
       modalName: 'showpic'
     })
   },
+  showPic2() {
+    this.setData({
+      modalName: 'showpic2'
+    })
+  },
   hideModal(e) {
     this.setData({
       modalName: null

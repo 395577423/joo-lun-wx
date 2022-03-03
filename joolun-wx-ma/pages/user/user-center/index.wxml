@@ -18,24 +18,24 @@
 </view>
 
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-  <view class="cu-item arrow">
+  <!-- <view class="cu-item arrow">
     <view class="content">
         <text class="cuIcon-vip text-orange"></text>
         <text>成为会员</text>
       </view>
-  </view>
+  </view> -->
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/course/course-list/index?userId={{wxUser.id}}">
       <text class="cuIcon-list text-orange "></text>
       <text>我的书屋</text>
     </navigator>
   </view>
-  <view class="cu-item arrow">
+  <!-- <view class="cu-item arrow">
     <view class="content">
       <text class="cuIcon-cascades text-orange "></text>
       <text>我的勋章</text>
     </view>
-  </view>
+  </view> -->
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/goods/goods-category/index">
       <text class="cuIcon-pay text-orange "></text>
@@ -51,8 +51,8 @@
 </view>
 <view class="padding flex text-center text-grey bg-white shadow-warp">
   <view class="flex-treble" style="text-decoration-line: underline;" bindtap="showPic">联系客服</view>
-    <view class="flex-treble" style="text-decoration-line: underline;">意见反馈</view>
-    <view class="flex-treble" style="text-decoration-line: underline;">关注公众号</view>
+    <!-- <view class="flex-treble" style="text-decoration-line: underline;">意见反馈</view> -->
+    <view class="flex-treble" style="text-decoration-line: underline;" bindtap="showPic2">关注公众号</view>
 </view>
 
 <view class="cu-modal {{modalName=='showpic'?'show':''}}">
@@ -66,6 +66,21 @@
         <view class="padding-xl flex-direction text-center">
             <text class="content flex" style="width: 68%;margin: 0 auto;">温馨提示：截图保存后可扫码哦</text>
             <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode.jpeg" style="width: 280rpx;height:280rpx;margin:0 auto;" class="flex"></image>
+        </view>
+    </view>
+</view>
+
+<view class="cu-modal {{modalName=='showpic2'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">公众号</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl flex-direction text-center">
+            <text class="content flex" style="width: 68%;margin: 0 auto;">温馨提示：截图保存后可扫码哦</text>
+            <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode2.jpeg" style="width: 280rpx;height:280rpx;margin:0 auto;" class="flex"></image>
         </view>
     </view>
 </view>

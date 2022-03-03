@@ -71,7 +71,7 @@ Page({
       wxml = wxml.replace('userNameText', nickName)
         .replace('challengeText', '4')
         .replace('bookText', title)
-        .replace('starText', totalStar)
+        .replace('starText', '')
         .replace('durationText', '5分钟')
     }, 500)
   },
