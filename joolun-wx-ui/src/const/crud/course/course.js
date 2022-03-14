@@ -78,10 +78,10 @@ export default () => {
         }],
         dicData: [{
           label: '开启',
-          value: '0'
+          value: '1'
         }, {
           label: '关闭',
-          value: '1'
+          value: '0'
         }]
       }, {
         label: '创建时间',
