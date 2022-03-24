@@ -2,7 +2,7 @@
 <scroll-view>
     <view class="text-center text-xl padding">{{title}}</view>
     <view class="text-center">
-        <image src="{{coverUrl}}" style="margin:0 auto;" />
+        <image src="{{coverUrl}}" style="margin: 0 auto; position: relative; left: -13rpx; top: -6rpx" />
     </view>
     <view class="padding text-left">
         <view class="padding-xl radius shadow-warp bg-white margin-top">
@@ -14,7 +14,7 @@
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
                     <text class=" text-shadow text-black">任务一 好书放映室</text>
-                    <button class="cu-btn round line-blue fr" bindtap="toVideoPage" style="position: relative; left: 186rpx; top: 0rpx">看视频
+                    <button class="cu-btn round line-blue fr" bindtap="toVideoPage" data-type="1" style="position: relative; left: 186rpx; top: 0rpx">看视频
                     </button>
                 </view>
             </view>
@@ -22,7 +22,7 @@
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
                     <text class=" text-shadow text-black">任务二 知识小课堂</text>
-                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 184rpx; top: -1rpx">去答题
+                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toVideoPage" data-type="2" style="position: relative; left: 184rpx; top: -1rpx">上学堂
                     </button>
                 </view>
             </view>
@@ -34,9 +34,19 @@
                     </button>
                 </view>
             </view>
+
             <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
                 <view class="action">
-                    <text class=" text-shadow text-black">任务四 生成学习报告</text>
+                    <text class=" text-shadow text-black">任务四 大闯关</text>
+                    <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 236rpx; top: 0rpx">去答题
+                    </button>
+                </view>
+            </view>
+
+            
+            <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
+                <view class="action">
+                    <text class=" text-shadow text-black">任务五 生成学习报告</text>
                     <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 149rpx; top: 0rpx">看报告
                     </button>
                 </view>
@@ -48,7 +58,7 @@
             温馨提示:报名后记得添加客服微信进群共读书籍。
         </text>
     </view>
-    <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned}}" style="position: relative;">
+    <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember}}" style="position: relative;">
         <view class="btn-group">
             <text class="text-price text-blue text-bold text-lg">{{course.rates !=null && course.price>course.rates? course.rates:course.price }}</text>
             <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即报名</button>
@@ -142,7 +152,7 @@
             </view>
         </view>
         <text>
-          为了方便你更好地学习，请先绑定手机号
+            为了方便你更好地学习，请先绑定手机号
         </text>
         <button class="cu-btn block bg-blue margin-tb-sm lg button-hover" open-type="getPhoneNumber" bindgetphonenumber='getPhoneNumber'>微信用户一键绑定</button>
     </view>

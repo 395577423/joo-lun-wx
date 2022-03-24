@@ -20,7 +20,7 @@ import java.util.Arrays;
  * @date 2021-12-08
  */
 @RestController
-@RequestMapping("/course/audio")
+@RequestMapping("/course/useraudio")
 public class UserAudioController extends BaseController {
     @Autowired
     private IUserAudioService userAudioService;

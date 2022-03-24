@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 课程Service接口
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface ICourseService extends IService<Course> {

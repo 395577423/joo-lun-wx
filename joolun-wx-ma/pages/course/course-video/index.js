@@ -7,7 +7,8 @@ Page({
    */
   data: {
     videoList: [],
-    _index: null
+    _index: null,
+    titleType: '任务一 好书放映室'
   },
 
   /**
@@ -16,6 +17,12 @@ Page({
   onLoad: function (options) {
     const videoList = JSON.parse(decodeURIComponent(options.videoList))
     const title = options.title
+    const type = options.type
+    if(type == "2"){
+      this.setData({
+        titleType:'任务二 知识小课堂'
+      })
+    }
     wx.setNavigationBarTitle({
       title: title + '视频列表',
     })

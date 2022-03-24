@@ -16,7 +16,7 @@ Page({
     course: null,
     courseQuestion: [],
     story: [],
-    userAudio: null,
+    userAudio: [],
     showPainter: false,
     template: {},
     winHeight: null,
@@ -69,7 +69,7 @@ Page({
       let totalStar = that.data.totalStar
 
       wxml = wxml.replace('userNameText', nickName)
-        .replace('challengeText', '4')
+        .replace('challengeText', '5')
         .replace('bookText', title)
         .replace('starText', '')
         .replace('durationText', '5分钟')
@@ -124,7 +124,7 @@ Page({
         courseQuestion: res.data.courseQuestion,
         story: res.data.story,
         userAudio: res.data.userAudio,
-        userCourseReport: res.data.userCourse.report,
+        userCourseReport: res.data.userCourse == null?'':res.data.userCourse.report,
         title: res.data.course.title,
         bookName: res.data.books[0].title
       })
@@ -142,12 +142,14 @@ Page({
     })
   },
 
-  playMyAudio() {
-    myaudio.src = this.data.userAudio.audioUrl
+  playMyAudio(e) {
+    const url = e.currentTarget.dataset.useraudio
+    myaudio.src = url
     myaudio.play()
   },
-  playAudio() {
-    myaudio.src = this.data.course.questionAudio
+  playAudio(e) {
+    const url = e.currentTarget.dataset.courseaudio
+    myaudio.src = url
     myaudio.play()
   },
   share() {

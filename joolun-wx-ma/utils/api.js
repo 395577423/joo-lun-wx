@@ -170,8 +170,8 @@ module.exports = {
     setUserChoice: (data) => { //保存用户问题答案
         return request('/weixin/api/course/choice', 'post', data, false)
     },
-    getUserAudio: (courseId, userId) => { //查询用户录音
-        return request('/weixin/api/course/audio/' + courseId + '/' + userId, 'get', null, false)
+    getUserAudio: (courseId, userId, audioId) => { //查询用户录音
+        return request('/weixin/api/course/audio/' + courseId + '/' + userId+'/'+audioId, 'get', null, false)
     },
     getUserReport: (courseId, userId) => { //获取用户读书报告
         return request('/weixin/api/course/report/' + courseId + '/' + userId, 'get', null, false)
@@ -187,5 +187,8 @@ module.exports = {
     },
     bindWXPhoneNumber:(data) => {
         return request('/weixin/api/ma/wxuser/phone', 'post', data, true)
+    },
+    courseAudio:(id) =>{
+        return request('/weixin/api/course/audios/'+id,'get',null,false)
     }
 }

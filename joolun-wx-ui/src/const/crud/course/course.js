@@ -83,7 +83,25 @@ export default () => {
           label: '关闭',
           value: '0'
         }]
-      }, {
+      },
+      {
+        label: '是否推荐',
+        prop: 'recommend',
+        type: 'radio',
+        slot: true,
+        rules: [{
+          required: true,
+          message: '请选择是否推荐课程',
+          trigger: 'blur'
+        }],
+        dicData: [{
+          label: '开启',
+          value: '1'
+        }, {
+          label: '关闭',
+          value: '0'
+        }]
+      },{
         label: '创建时间',
         prop: 'createTime',
         sortable: true,
@@ -128,20 +146,6 @@ export default () => {
       {
         label:'课程音频问题',
         prop:'question'
-      },{
-        label: '课程音频文件',
-        prop: 'questionAudio',
-        type: 'upload',
-        rules: [{
-          required: true,
-          message: '请选择音频',
-          trigger: 'blur'
-        }],
-        oss: 'ali',
-        loadText: '附件上传中，请稍等',
-        span: 24,
-        tip: '只能上传音频文件，尽量控制大小',
-        hide: true
       }
     ]
 

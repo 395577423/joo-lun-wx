@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询用户书籍录音列表
-export function listAudio(query) {
+export function getPage(query) {
   return request({
     url: '/course/audio/page',
     method: 'get',
@@ -10,7 +10,7 @@ export function listAudio(query) {
 }
 
 // 查询用户书籍录音详细
-export function getAudio(id) {
+export function getObj(id) {
   return request({
     url: '/course/audio/' + id,
     method: 'get'
@@ -18,7 +18,7 @@ export function getAudio(id) {
 }
 
 // 新增用户书籍录音
-export function addAudio(data) {
+export function addObj(data) {
   return request({
     url: '/course/audio',
     method: 'post',
@@ -27,7 +27,7 @@ export function addAudio(data) {
 }
 
 // 修改用户书籍录音
-export function updateAudio(data) {
+export function putObj(data) {
   return request({
     url: '/course/audio',
     method: 'put',
@@ -36,18 +36,9 @@ export function updateAudio(data) {
 }
 
 // 删除用户书籍录音
-export function delAudio(id) {
+export function delObj(id) {
   return request({
     url: '/course/audio/' + id,
     method: 'delete'
-  })
-}
-
-// 导出用户书籍录音
-export function exportAudio(query) {
-  return request({
-    url: '/course/audio/export',
-    method: 'get',
-    params: query
   })
 }

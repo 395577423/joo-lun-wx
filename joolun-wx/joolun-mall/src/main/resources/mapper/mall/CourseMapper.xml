@@ -24,8 +24,6 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
-        <result property="question" column="question"/>
-        <result property="questionAudio" column="question_audio"/>
         <result property="saleNum" column="sale_num"/>
         <result property="essence" column="essence"/>
     </resultMap>
@@ -49,8 +47,6 @@
        i.update_by,
        i.update_time,
        i.remark,
-       i.question,
-       i.question_audio,
        i.sale_num,
        i.essence
     </sql>

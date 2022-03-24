@@ -6,7 +6,7 @@ import com.joolun.mall.entity.CourseQuestionChoice;
 /**
  * 书籍问题选项Service接口
  * 
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface ICourseQuestionChoiceService extends IService<CourseQuestionChoice>

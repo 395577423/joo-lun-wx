@@ -1,7 +1,4 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- */
+
 package com.joolun.mall.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;

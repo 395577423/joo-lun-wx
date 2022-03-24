@@ -1,6 +1,6 @@
 <view class="padding">
   <text class="cuIcon-footprint lg text-gray"></text>
-  <text>任务二 知识小课堂</text>
+  <text>任务四 大闯关</text>
 </view>
 
 <scroll-view >

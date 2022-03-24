@@ -1,7 +1,4 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- */
+
 package com.joolun.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

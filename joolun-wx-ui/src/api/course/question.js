@@ -10,7 +10,7 @@ export function getPage(query) {
 }
 
 // 查询书籍问题详细
-export function getQuestion(id) {
+export function getObj(id) {
   return request({
     url: '/course/question/' + id,
     method: 'get'

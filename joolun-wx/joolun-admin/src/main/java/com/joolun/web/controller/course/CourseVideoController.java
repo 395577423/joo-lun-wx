@@ -18,7 +18,7 @@ import java.util.Arrays;
 /**
  * 课程视频Controller
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 @RestController

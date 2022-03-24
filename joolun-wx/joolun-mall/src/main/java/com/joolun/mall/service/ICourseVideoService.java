@@ -6,7 +6,7 @@ import com.joolun.mall.entity.CourseVideo;
 /**
  * 课程视频Service接口
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface ICourseVideoService extends IService<CourseVideo> {

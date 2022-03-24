@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 书籍Mapper接口
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface BookMapper extends BaseMapper<Book> {

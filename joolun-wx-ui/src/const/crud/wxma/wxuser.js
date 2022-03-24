@@ -128,6 +128,26 @@ export const tableOption = {
       prop: 'phone',
       sortable:true,
       editDisplay:false
-    }
+    },
+    {
+      label: '会员',
+      prop: 'member',
+      type: 'radio',
+      slot: true,
+      rules: [{
+        required: true,
+        message: '设置是否为会员',
+        trigger: 'blur'
+      }],
+      dicData: [{
+        label: '开启',
+        value: '1'
+      }, {
+        label: '关闭',
+        value: '0'
+      }],
+      sortable:true,
+      editDisplay:true
+    },
   ]
 }

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * 课程Controller
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 @RestController

@@ -78,4 +78,14 @@ public class UserCourse extends Model<UserCourse> {
      * 用户读书报告图片地址
      */
     private String report;
+
+    /**
+     * 是否奖学金计划内购买
+     */
+    private String isPlanCourse;
+
+    /**
+     * 奖学金应返金额
+     */
+    private BigDecimal originalMoney;
 }

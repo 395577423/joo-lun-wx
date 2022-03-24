@@ -1,11 +1,11 @@
 package com.joolun.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.joolun.common.annotation.Excel;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.time.LocalDateTime;
 
@@ -30,15 +30,28 @@ public class UserAudio extends Model<UserAudio> {
     /**
      * 课程ID
      */
-    @Excel(name = "课程ID")
     private Long courseId;
 
+    /**
+     * 课程音频ID
+     */
+    private Long audioId;
+
+    /**
+     * 用户ID
+     */
     private String userId;
+
     /**
      * 录音地址
      */
-    @Excel(name = "录音地址")
     private String audioUrl;
 
     private LocalDateTime createTime;
+
+    @TableField(exist = false)
+    private String question;
+
+    @TableField(exist = false)
+    private String courseUrl;
 }

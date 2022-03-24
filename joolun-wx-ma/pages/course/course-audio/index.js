@@ -11,6 +11,7 @@ Page({
    */
   data: {
     courseId: null,
+    audioId: null,
     title: '',
     question: '',
     audioUrl: '',
@@ -30,7 +31,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     let that = this
     myAudioManager.onEnded(function(){
       myAudioManager.stop()
@@ -51,6 +51,7 @@ Page({
       title: options.title,
       question: options.question,
       courseAudio: options.audioUrl,
+      audioId: options.audioId,
       wxUser: app.globalData.wxUser
     })
     wx.setNavigationBarTitle({
@@ -68,7 +69,9 @@ Page({
   queryUserAudio() {
     let courseId = this.data.courseId
     let userId = this.data.wxUser.id
-    app.api.getUserAudio(courseId, userId).then(res => {
+    let audioId = this.data.audioId
+    console.log('audioId :'+ audioId)
+    app.api.getUserAudio(courseId, userId, audioId).then(res => {
       if (undefined === res.data) {
 
       } else {
@@ -195,7 +198,8 @@ Page({
         },
         formData: {
           'userId': that.data.wxUser.id,
-          'courseId': that.data.courseId
+          'courseId': that.data.courseId,
+          'audioId': that.data.audioId
         },
         success(res) {
           let result = JSON.parse(res.data)

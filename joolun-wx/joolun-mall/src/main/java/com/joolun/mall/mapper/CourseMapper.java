@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 /**
  * 课程Mapper接口
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface CourseMapper extends BaseMapper<Course> {

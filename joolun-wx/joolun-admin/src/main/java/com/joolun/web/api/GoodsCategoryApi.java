@@ -1,7 +1,3 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- */
 package com.joolun.web.api;
 
 import com.joolun.common.core.domain.AjaxResult;

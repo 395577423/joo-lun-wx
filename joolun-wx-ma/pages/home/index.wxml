@@ -43,7 +43,7 @@
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
       <text class="cuIcon-titles text-blue"></text>
-      <text class="text-shadow text-black text-bold">往期奖学金计划</text>
+      <text class="text-shadow text-black text-bold">推荐书籍</text>
     </view>
   </view>
   <view class="bg-white margin">
@@ -60,7 +60,7 @@
             <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{item.price}}</text>
           </view>
           <view wx:else class="margin-top-xs">
-            <text class="text-price text-blue text-bold">{{item.realPrice}}</text>
+            <text class="text-price text-blue text-bold">{{item.price}}</text>
           </view>
         </view>
       </view>

@@ -9,7 +9,6 @@
     <version>3.3.1</version>
 
     <name>joolun-wx</name>
-    <url>http://www.joolun.com</url>
     <description>JooLun微信管理系统</description>
     
     <properties>

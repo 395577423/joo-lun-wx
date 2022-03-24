@@ -22,6 +22,16 @@
                     {{scope.row.$sex}}
                 </el-tag>
             </template>
+          <template slot="member" slot-scope="scope">
+            <el-switch
+              active-value="1"
+              inactive-value="0"
+              v-model="scope.row.member"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              @change="changeMember(scope.row)">
+            </el-switch>
+          </template>
         </avue-crud>
     </div>
 </template>
@@ -77,7 +87,14 @@
                 this.getPage(this.page, params)
                 done()
             },
+          changeMember(row) {
+            putObj({
+              id: row.id,
+              member: row.member
+            }).then(data => {
 
+            })
+          },
             sortChange(val) {
                 let prop = val.prop ? val.prop.replace(/([A-Z])/g, "_$1").toLowerCase() : '';
                 if (val.order == 'ascending') {

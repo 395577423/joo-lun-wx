@@ -15,6 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="reason"    column="reason"    />
         <result property="remark"    column="remark"    />
         <result property="report"    column="report"    />
+        <result property="isPlanCourse"    column="is_plan_course"    />
+        <result property="originalMoney"    column="original_money"    />
     </resultMap>
 
 </mapper>

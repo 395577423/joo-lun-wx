@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="courseId"    column="course_id"    />
         <result property="userId" column="user_id"/>
+        <result property="audioId" column="audio_id"/>
         <result property="audioUrl"    column="audio_url"    />
         <result property="createTime"    column="create_time"    />
     </resultMap>

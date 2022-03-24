@@ -9,6 +9,8 @@ Page({
     data: {
         title: '',
         videoList: [],
+        //知识小课堂
+        videoList2:[],
         result: '生成学习报告',
         wxUser: null,
         //是否拥有课程
@@ -21,7 +23,8 @@ Page({
         audioUrl: '',
         question: '',
         course: null,
-        tip: ''
+        tip: '',
+        isMember:false
     },
 
     /**
@@ -46,6 +49,7 @@ Page({
                 let course = res.data.course
                 let video = res.data.video
                 let introduction = course.introduction
+                let clazz = res.data.clazz
 
                 let realPrice
                 if (null !== course.rates && course.price > course.rates) {
@@ -58,6 +62,7 @@ Page({
                     course: course,
                     title: course.title,
                     videoList: video,
+                    videoList2: clazz,
                     coverUrl: course.coverUrl,
                     realPrice: realPrice,
                     audioUrl: course.questionAudio,
@@ -85,11 +90,18 @@ Page({
      * @param {*} e
      */
     toVideoPage(e) {
-        if (this.data.isOwned) {
-            let videos = encodeURIComponent(JSON.stringify(this.data.videoList))
+        const type = e.target.dataset.type
+        let videoList = ''
+        if(type ==2){
+            videoList = this.data.videoList2
+        }else if(type ==1){
+            videoList = this.data.videoList
+        }
 
+        if (this.data.isOwned|| this.data.isMember) {
+            let videos = encodeURIComponent(JSON.stringify(videoList))
             wx.navigateTo({
-                url: '/pages/course/course-video/index?videoList=' + videos + '&title=' + this.data.title
+                url: '/pages/course/course-video/index?videoList=' + videos + '&title=' + this.data.title + '&type='+type
             })
         } else {
             this.showModal('NeedBuy')
@@ -100,7 +112,7 @@ Page({
      * @param {*} e 课程ID 标题
      */
     toQuestionPage(e) {
-        if (this.data.isOwned) {
+        if (this.data.isOwned || this.data.isMember) {
             wx.navigateTo({
                 url: '/pages/course/course-question/index?courseId=' + this.data.courseId + '&title=' + this.data.title
             })
@@ -113,16 +125,16 @@ Page({
      * @param {*} e
      */
     toAudioPage(e) {
-        if (this.data.isOwned) {
+        if (this.data.isOwned|| this.data.isMember) {
             wx.navigateTo({
-                url: '/pages/course/course-audio/index?courseId=' + this.data.courseId + '&title=' + this.data.title + '&question=' + this.data.question + '&audioUrl=' + this.data.audioUrl
+                url: '/pages/course/course-audio-list/index?courseId=' + this.data.courseId + '&title=' + this.data.title + '&question=' + this.data.question + '&audioUrl=' + this.data.audioUrl
             })
         } else {
             this.showModal('NeedBuy')
         }
     },
     toReportPage(e) {
-        if (this.data.isOwned) {
+        if (this.data.isOwned|| this.data.isMember) {
             wx.navigateTo({
                 url: '/pages/course/course-report/index?courseId=' + this.data.courseId
             })
@@ -250,7 +262,8 @@ Page({
         app.api.wxUserGet()
             .then(res => {
                 this.setData({
-                    wxUser: res.data
+                    wxUser: res.data,
+                    isMember: res.data.member == "1" ? true : false
                 })
             })
     },

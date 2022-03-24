@@ -67,10 +67,8 @@ public class CourseApi {
      */
     private final ICourseQuestionService courseQuestionService;
 
-    /**
-     * 课程闯关问题答案Service
-     */
-    private final ICourseQuestionChoiceService courseQuestionChoiceService;
+
+    private final ICourseClazzService iCourseClazzService;
 
     /**
      * 书籍Service
@@ -78,11 +76,6 @@ public class CourseApi {
     private final IBookService bookService;
 
     private final IBookCategoryService bookCategoryService;
-
-    /**
-     * 系统数据字典Service
-     */
-    private final ISysDictDataService sysDictDataService;
 
     /**
      * 用户课程Service
@@ -109,7 +102,12 @@ public class CourseApi {
      */
     private final ICourseStoryService iCourseStoryService;
 
+    /**
+     * 小程序用户
+     */
     private final WxUserService wxUserService;
+
+    private final ICourseAudioService iCourseAudioService;
 
     private final MallConfigProperties mallConfigProperties;
 
@@ -144,6 +142,21 @@ public class CourseApi {
         return AjaxResult.success(courseService.page(page, wrapper));
     }
 
+
+    /**
+     * 课程音频列表
+     *
+     * @param id 课程ID
+     * @return
+     */
+    @GetMapping("/audios/{id}")
+    public AjaxResult getCourseAudios(@PathVariable Long id) {
+        QueryWrapper<CourseAudio> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", id);
+        List<CourseAudio> audios = iCourseAudioService.list(wrapper);
+        return AjaxResult.success(audios);
+    }
+
     /**
      * 查询课程详情
      *
@@ -156,9 +169,15 @@ public class CourseApi {
         QueryWrapper<CourseVideo> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", id).orderByAsc("sort");
         List<CourseVideo> courseVideoList = courseVideoService.list(wrapper);
+
+        QueryWrapper<CourseClazz> clazzQueryWrapper = new QueryWrapper<>();
+        clazzQueryWrapper.eq("course_id", id).orderByAsc("sort");
+        List<CourseClazz> clazzList = iCourseClazzService.list(clazzQueryWrapper);
+
         Map<String, Object> result = new HashMap<>();
         result.put("course", course);
         result.put("video", courseVideoList);
+        result.put("clazz", clazzList);
         return AjaxResult.success(result);
     }
 
@@ -216,10 +235,10 @@ public class CourseApi {
      * @param userId   用户Id
      * @return 用户录音对象
      */
-    @GetMapping("/audio/{courseId}/{userId}")
-    public AjaxResult getAudio(@PathVariable Long courseId, @PathVariable String userId) {
+    @GetMapping("/audio/{courseId}/{userId}/{audioId}")
+    public AjaxResult getAudio(@PathVariable Long courseId, @PathVariable String userId, @PathVariable Long audioId) {
         QueryWrapper<UserAudio> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id", userId).eq("course_id", courseId);
+        wrapper.eq("user_id", userId).eq("course_id", courseId).eq("audio_id", audioId);
         return AjaxResult.success(userAudioService.getOne(wrapper));
     }
 
@@ -241,16 +260,18 @@ public class CourseApi {
             String endPoint = OSSClientUtil.getEndpoint();
             String userId = request.getParameter("userId");
             String courseId = request.getParameter("courseId");
+            String audioId = request.getParameter("audioId");
             UserAudio userAudio;
 
             QueryWrapper<UserAudio> wrapper = new QueryWrapper<>();
-            wrapper.eq("user_id", userId).eq("course_id", courseId);
+            wrapper.eq("user_id", userId).eq("course_id", courseId).eq("audio_id", audioId);
             userAudio = userAudioService.getOne(wrapper);
             if (null == userAudio) {
                 userAudio = new UserAudio();
             }
             userAudio.setUserId(userId);
             userAudio.setCourseId(Long.parseLong(courseId));
+            userAudio.setAudioId(Long.parseLong(audioId));
             userAudio.setCreateTime(LocalDateTime.now());
             audioUrl = "https://" + bucketName + "." + endPoint + "/audio/" + LocalDate.now() + "/" + file.getOriginalFilename();
             userAudio.setAudioUrl(audioUrl);
@@ -301,10 +322,7 @@ public class CourseApi {
         List<CourseStory> stories = iCourseStoryService.list(storyWrapper);
 
         //3.用户录音
-        QueryWrapper<UserAudio> audioWrapper = new QueryWrapper<>();
-        audioWrapper.eq("course_id", id);
-        audioWrapper.eq("user_id", userId);
-        UserAudio userAudio = userAudioService.getOne(audioWrapper);
+        List<UserAudio> userAudio = userAudioService.listUserAudio(userId, id);
 
         //4.课程本身信息
         Course course = courseService.getById(id);
@@ -391,6 +409,10 @@ public class CourseApi {
 
             if (course.getPlan().equals(CommonConstants.YES)) {
                 userCourse.setReturnable(1L);
+                userCourse.setIsPlanCourse("1");
+                userCourse.setOriginalMoney(course.getCashReturn());
+            } else {
+                userCourse.setIsPlanCourse("0");
             }
 
             userCourse.setPrice(realPrice);
@@ -469,13 +491,14 @@ public class CourseApi {
         UserCourse userCourse = userCourseService.getOne(wrapper);
 
         //如果是有返现
-        if (course.getCashReturn().compareTo(BigDecimal.ZERO) > 0 && null != userCourse && null != userCourse.getId() && null == userCourse.getCashReturn()) {
-            userCourse.setCashReturn(course.getCashReturn());
+        if (null != userCourse && null != userCourse.getId() && userCourse.getCashReturn().compareTo(BigDecimal.ZERO) == 0 && "1".equals(userCourse.getIsPlanCourse())) {
+            userCourse.setCashReturn(userCourse.getOriginalMoney());
             userCourse.setReturnable(0L);
             userCourseService.updateById(userCourse);
             WxUser wxUser = wxUserService.getById(userId);
             BigDecimal existsMoney = wxUser.getMoney();
-            BigDecimal money = existsMoney.add(course.getCashReturn());
+            //加上当时购买时设定的返现金额
+            BigDecimal money = existsMoney.add(userCourse.getOriginalMoney());
             wxUser.setMoney(money);
             wxUserService.updateMoney(wxUser);
             String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元";

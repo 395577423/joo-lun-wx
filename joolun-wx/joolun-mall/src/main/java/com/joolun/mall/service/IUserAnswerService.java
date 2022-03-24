@@ -6,7 +6,7 @@ import com.joolun.mall.entity.UserAnswer;
 /**
  * 用户答案Service接口
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface IUserAnswerService extends IService<UserAnswer> {

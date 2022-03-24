@@ -1,0 +1,20 @@
+<view class="padding">
+  <text class="cuIcon-footprint lg text-gray"></text>
+  <text>任务三 孩子的心声</text>
+</view>
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text class="text-shadow text-black text-bold">{{title}}</text>
+  </view>
+</view>
+<view class="cu-list menu">
+  <view class="cu-item" wx:for="{{list}}" wx:key="index">
+    <text>{{item.question}}</text>
+    <view class="action">
+      <button class="cu-btn round line-blue margin-right-xs" bindtap="toRecordPage" data-audio="{{item.audio}}" data-question="{{item.question}}" data-id="{{item.id}}">
+        <text>去录音</text>
+      </button>
+    </view>
+  </view>
+</view>

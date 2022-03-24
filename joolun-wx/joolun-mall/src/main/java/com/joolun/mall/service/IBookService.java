@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 书籍Service接口
  *
- * @author www.joolun.com
+ * @author Owen
  * @date 2021-12-08
  */
 public interface IBookService extends IService<Book> {
