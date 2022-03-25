@@ -67,14 +67,14 @@
         mounted: function () {
         },
         computed: {
-            permissionList() {
-                return {
-                    addBtn: checkPermi(['wxma:wxuser:add']),
-                    delBtn: checkPermi(['wxma:wxuser:del']),
-                    editBtn: checkPermi(['wxma:wxuser:edit']),
-                    viewBtn: checkPermi(['wxma:wxuser:get'])
-                }
-            }
+            // permissionList() {
+            //     return {
+            //         addBtn: checkPermi(['wxma:wxuser:add']),
+            //         delBtn: checkPermi(['wxma:wxuser:del']),
+            //         editBtn: checkPermi(['wxma:wxuser:edit']),
+            //         viewBtn: checkPermi(['wxma:wxuser:get'])
+            //     }
+            // }
         },
         methods: {
             selectionChange(list) {

@@ -10,7 +10,9 @@
 </view>
 <view class="cu-list menu">
   <view class="cu-item" wx:for="{{list}}" wx:key="index">
-    <text>{{item.question}}</text>
+    <view class="content">
+      <text>{{item.question}}</text>
+    </view>
     <view class="action">
       <button class="cu-btn round line-blue margin-right-xs" bindtap="toRecordPage" data-audio="{{item.audio}}" data-question="{{item.question}}" data-id="{{item.id}}">
         <text>去录音</text>
