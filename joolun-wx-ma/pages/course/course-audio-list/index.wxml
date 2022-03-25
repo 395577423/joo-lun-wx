@@ -11,7 +11,7 @@
 <view class="cu-list menu">
   <view class="cu-item" wx:for="{{list}}" wx:key="index">
     <view class="content">
-      <text>{{item.question}}</text>
+      <text>第{{index+1}}题</text>
     </view>
     <view class="action">
       <button class="cu-btn round line-blue margin-right-xs" bindtap="toRecordPage" data-audio="{{item.audio}}" data-question="{{item.question}}" data-id="{{item.id}}">
