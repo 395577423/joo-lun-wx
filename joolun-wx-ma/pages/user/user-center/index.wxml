@@ -7,8 +7,8 @@
   <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头' : ''}}</view>
   <view class="content text-center margin-top-sm">
     <view class="margin-top-xs text-xxl text-bold text-black" wx:if="{{wxUser.nickName}}">{{wxUser.nickName}}</view>
-    <button class="cu-btn round sm margin-top-xs" bindtap="getUserProfile">
-      {{!wxUser.nickName ? '获取昵称' : '更新昵称'}}
+    <button class="cu-btn round text-lg margin-top-xs line-blue" bindtap="getUserProfile">
+      {{!wxUser.nickName ? '登录' : '更新昵称'}}
     </button>
   </view>
   <view class="content text-center">

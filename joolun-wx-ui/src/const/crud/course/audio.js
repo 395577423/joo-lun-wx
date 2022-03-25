@@ -31,13 +31,13 @@ export default () => {
       }]
     }, {
       label: '课程音频文件',
-      prop: 'questionAudio',
+      prop: 'audio',
       type: 'upload',
-      // rules: [{
-      //   required: true,
-      //   message: '请选择音频',
-      //   trigger: 'blur'
-      // }],
+      rules: [{
+        required: true,
+        message: '请选择音频',
+        trigger: 'blur'
+      }],
       oss: 'ali',
       loadText: '附件上传中，请稍等',
       span: 24,
