@@ -66,7 +66,7 @@ public class CourseController extends BaseController {
     @Log(title = "课程", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Course course) {
-        if(course.getRates().compareTo(BigDecimal.ZERO) == 0){
+        if(null == course.getRates() || course.getRates().compareTo(BigDecimal.ZERO) == 0){
             course.setRates(null);
         }
         boolean save = courseService.save(course);

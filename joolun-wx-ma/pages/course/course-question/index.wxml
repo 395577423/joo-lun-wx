@@ -14,11 +14,11 @@
     <swiper class="bg-white swiper margin-top-xl" bindchange="changeItem" current="{{index-1}}">
       <block wx:for="{{questions}}" wx:key="index">
         <swiper-item class="swiperitem">
-          <view style="color: #57241A;" class="padding">{{item.question}}</view>
+          <view style="color: #57241A;" class="padding text-xl">{{item.question}}</view>
           <!-- <image src="{{item.imageUrl}}"></image> -->
           <radio-group class="flex-direction">
             <block wx:for="{{item.choices}}" wx:key="index2" wx:for-item="choice">
-              <view class="round line-orange radius answer" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}" data-choosedId="{{item.choiceId}}" data-choiceCorrect="{{choice.choosed}}">
+              <view class="round line-orange radius answer text-xl" bindtap="chooseChoice" data-choiceId="{{choice.id}}" data-questionId="{{item.id}}" data-choosedId="{{item.choiceId}}" data-choiceCorrect="{{choice.choosed}}">
                 <block wx:if="{{item.choiceId == null}}">
                   <text>{{item.choiecId}}</text>
                   <text style="color: #57241A;">{{choice.choice}}</text>

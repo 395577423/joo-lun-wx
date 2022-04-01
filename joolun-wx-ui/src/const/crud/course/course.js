@@ -142,10 +142,6 @@ export default () => {
       {
         label: '地址 暂时',
         prop: 'remark'
-      },
-      {
-        label:'课程音频问题',
-        prop:'question'
       }
     ]
 

@@ -1,9 +1,6 @@
 // pages/course/course-audio/index.js
 import __config from '../../../config/env'
 const app = getApp()
-const myAudioManager = wx.createInnerAudioContext()
-const courseManager = wx.createInnerAudioContext()
-
 Page({
 
   /**
@@ -14,38 +11,23 @@ Page({
     audioId: null,
     title: '',
     question: '',
-    audioUrl: '',
     wxUser: '',
     courseAudio: '',
     isRecorded: false,
     modalName: '',
-    userAudioUrl: '',
+    userAudio: '',
     isPlayingCourse: false,
     isPlayingUser: false,
     tempFilePath:'',
     auth:false,
-    log:''
+    coursePlaying:false,
+    userPlaying:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this
-    myAudioManager.onEnded(function(){
-      myAudioManager.stop()
-      that.setData({
-        isPlayingUser: false
-      })
-    })
-
-    courseManager.onEnded(function(){
-      courseManager.stop()
-      that.setData({
-        isPlayingCourse: false
-      })
-    })
-
     this.setData({
       courseId: options.courseId,
       title: options.title,
@@ -59,80 +41,81 @@ Page({
     })
     this.queryUserAudio()
     this.getAuth()
+    this.innerAudio = wx.createInnerAudioContext()
+
+    let that = this
+    this.innerAudio.onEnded(function(){
+      that.setData({
+        coursePlaying:false,
+        userPlaying:false
+      })
+    })
   },
 
   onReady(){
-    this.setData({
-      log:this.data.log
-    })
+
   },
+  
   queryUserAudio() {
     let courseId = this.data.courseId
     let userId = this.data.wxUser.id
     let audioId = this.data.audioId
-    console.log('audioId :'+ audioId)
     app.api.getUserAudio(courseId, userId, audioId).then(res => {
       if (undefined === res.data) {
-
       } else {
-
         this.setData({
-          userAudioUrl: res.data.audioUrl,
-          isRecorded: true,
-          log:'查询用户音频成功,音频路径为:'+res.data.audioUrl+'\n'
+          userAudio: res.data.audioUrl,
+          isRecorded: true
         })
       }
     })
   },
-  playCourseAudio() {
-    let isPlayingCourse = this.data.isPlayingCourse
-    let isPlayingUser = this.data.isPlayingUser
-
-    let log = this.data.log
-    if(isPlayingUser){
-      myAudioManager.stop()
-    }
-    if (isPlayingCourse) {
-      courseManager.stop()
+  /**
+   * 播放课程音频
+   */
+  playAudio(e) {
+    let url = ''
+    let type = e.currentTarget.dataset.type
+    if(type == 'course'){
+      url = this.data.courseAudio
       this.setData({
-        isPlayingCourse: false,
-        log:log+'停止播放课程音频\n'
+        coursePlaying:true,
+        userPlaying:false
       })
-    } else {
-      myAudioManager.stop()
-      courseManager.src = this.data.courseAudio
-      courseManager.play()
+    }else if(type == 'user'){
+      url = this.data.userAudio
       this.setData({
-        isPlayingCourse: true,
-        log:log+'开始播放课程音频\n'
+        coursePlaying:false,
+        userPlaying:true
       })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '系统异常，请联系管理员', // 可以自己编辑
+        showCancel: true,
+        success: function (res) {},
+      })
+      return
     }
+    this.innerAudio.stop()
+    this.innerAudio.src = url
+    this.innerAudio.play()
   },
 
-  playMyAudio() {
-    let isPlayingUser = this.data.isPlayingUser
-    let isPlayingCourse = this.data.isPlayingCourse
-    let log = this.data.log
-    if(isPlayingCourse){
-      courseManager.stop()
-    }
-    if (isPlayingUser) {
-      myAudioManager.stop()
+  stopAudio(e){
+    let type = e.currentTarget.dataset.type
+    if(type == 'course'){
       this.setData({
-        isPlayingUser: false,
-        log:log+'停止播放用户音频\n'
+        coursePlaying:false
       })
-    } else {
-      courseManager.stop()
-      myAudioManager.src = this.data.userAudioUrl
-      myAudioManager.play()
+    }else if(type == 'user'){
       this.setData({
-        isPlayingUser: true,
-        log:log+'开始播放用户音频\n'
+        userPlaying:false
       })
-
     }
+    this.innerAudio.stop()
   },
+
   start() {
     let auth = this.data.auth
     if(!auth){
@@ -158,21 +141,11 @@ Page({
     }
     //开始录音
     recorderManager.start(options)
-
-    let log = this.data.log
-    this.setData({
-      log:log+'开始录音\n'
-    })
   },
 
   stop() {
     let recorderManager = wx.getRecorderManager()
     recorderManager.stop();
-    let log = this.data.log
-    this.setData({
-      log:log+'结束录音'
-    })
-
     let that = this
     this.setData({
       modalName: ''
@@ -182,11 +155,6 @@ Page({
       let {
         tempFilePath
       } = res
-      log = that.data.log
-      that.setData({
-        log:log+'结束录音,录音临时文件目录为:'+tempFilePath+'\n'
-      })
-
       wx.uploadFile({
         filePath: tempFilePath,
         name: 'file',
@@ -203,35 +171,26 @@ Page({
         },
         success(res) {
           let result = JSON.parse(res.data)
-          log = that.data.log
           that.setData({
-            log:log+'成功上传录音文件,后台返回数据为:'+res.data+'\n'
-          })
-          that.setData({
-            userAudioUrl: result.msg,
+            userAudio: result.msg,
             isRecorded: true
           })
           let data = JSON.parse(res.data)
           myAudioManager.src = data.msg
         },
-        fail(res){
-          log = that.data.log
-          that.setData({
-            log:log+'录音上传失败,'+res+'\n'+JSON.stringify(res)
-          })
+        fail(){
         }
       })
     })
   },
   getAuth() {
     let that = this
-    let log = this.data.log
+
     wx.authorize({
       scope: 'scope.record',
       success(res) {
         that.setData({
-          auth:true,
-          log:log+'获取录音权限成功\n'
+          auth:true
         })
       },
       fail() {
