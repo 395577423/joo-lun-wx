@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,7 +59,7 @@ public class CourseQuestion extends Model<CourseQuestion> {
     private String answer;
 
     @TableField(exist = false)
-    private List<CourseQuestionChoice> choices;
+    private List<CourseQuestionChoice> choices = new ArrayList<>();
 
     /**
      * 用户答案

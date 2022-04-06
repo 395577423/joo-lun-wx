@@ -42,7 +42,9 @@
         <BaseEditor v-model="scope.row.introduction"/>
       </template>
 
-
+      <template slot="essenceForm" slot-scope="scope">
+        <BaseEditor v-model="scope.row.essence"/>
+      </template>
     </avue-crud>
   </div>
 </template>
@@ -108,6 +110,7 @@ export default {
         this.tableLoading = true
         getObj(this.form.id).then(response => {
           this.$set(this.form,'introduction', response.data.introduction)
+          this.$set(this.form,'essence', response.data.essence)
           this.tableLoading = false
           done()
         })

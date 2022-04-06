@@ -1,6 +1,7 @@
 // pages/course/course-report/index.js
 const app = getApp()
 const myaudio = wx.createInnerAudioContext()
+const WxParse = require('../../../public/wxParse/wxParse.js')
 let {
   wxml,
   style
@@ -128,6 +129,7 @@ Page({
         title: res.data.course.title,
         bookName: res.data.books[0].title
       })
+      WxParse.wxParse('essence', 'html', res.data.course.essence, this, 0)
     })
     let questions = this.data.courseQuestion
     let total = questions.length

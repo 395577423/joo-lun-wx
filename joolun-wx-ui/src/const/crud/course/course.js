@@ -85,23 +85,6 @@ export default () => {
         }]
       },
       {
-        label: '是否推荐',
-        prop: 'recommend',
-        type: 'radio',
-        slot: true,
-        rules: [{
-          required: true,
-          message: '请选择是否推荐课程',
-          trigger: 'blur'
-        }],
-        dicData: [{
-          label: '开启',
-          value: '1'
-        }, {
-          label: '关闭',
-          value: '0'
-        }]
-      },{
         label: '创建时间',
         prop: 'createTime',
         sortable: true,
@@ -120,7 +103,7 @@ export default () => {
         label: '课程精华',
         prop: 'essence',
         hide: true,
-        type: 'textarea'
+        formslot: true
       }, {
         label: '关联书籍',
         prop: 'books',
@@ -142,6 +125,23 @@ export default () => {
       {
         label: '地址 暂时',
         prop: 'remark'
+      },{
+        label: '是否推荐',
+        prop: 'recommend',
+        type: 'radio',
+        slot: true,
+        rules: [{
+          required: true,
+          message: '请选择是否推荐课程',
+          trigger: 'blur'
+        }],
+        dicData: [{
+          label: '开启',
+          value: '1'
+        }, {
+          label: '关闭',
+          value: '0'
+        }]
       }
     ]
 

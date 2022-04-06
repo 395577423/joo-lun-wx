@@ -1,3 +1,4 @@
+<import src="/public/wxParse/wxParse.wxml" />
 <wxml-to-canvas class="widget"></wxml-to-canvas>
 <scroll-view class="app">
   <view class="bg-img padding-tb-xl" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/newheader.jpeg');height: 600rpx;">
@@ -53,7 +54,7 @@
       </view>
     </view>
     <view class="padding-sm text-bold text-df text-left text-shadow text-lg" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/bb2_body.png');background-size:100% 100%;">
-      <text class="text-lg">{{course.essence}}</text>
+      <template is="wxParse" data="{{wxParseData:essence.nodes}}"></template>
     </view>
     <view style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/bb2_foot.png');background-size:100% 100%;height: 60rpx;"></view>
 

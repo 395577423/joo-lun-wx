@@ -8,10 +8,12 @@ import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.enums.BusinessType;
 import com.joolun.common.utils.StringUtils;
+import com.joolun.mall.dto.CourseQuestionDto;
 import com.joolun.mall.entity.Course;
 import com.joolun.mall.entity.CourseQuestion;
 import com.joolun.mall.entity.CourseQuestionChoice;
 import com.joolun.mall.service.ICourseQuestionService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +53,10 @@ public class CourseQuestionController extends BaseController {
      */
     @Log(title = "书籍问题", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CourseQuestion courseQuestion) {
-        return AjaxResult.success(courseQuestionService.save(courseQuestion));
+    public AjaxResult add(@RequestBody CourseQuestionDto courseQuestion) {
+        CourseQuestion question = new CourseQuestion();
+        BeanUtils.copyProperties(courseQuestion,question);
+        return AjaxResult.success(courseQuestionService.save(question));
     }
 
     /**
