@@ -18,12 +18,12 @@
 </view>
 
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-  <!-- <view class="cu-item arrow">
-    <view class="content">
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/course/empower/index?userId={{wxUser.id}}">
         <text class="cuIcon-vip text-orange"></text>
-        <text>成为会员</text>
-      </view>
-  </view> -->
+        <text>赋能中心</text>
+    </navigator>
+  </view>
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/course/course-list/index?userId={{wxUser.id}}">
       <text class="cuIcon-list text-orange "></text>

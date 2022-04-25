@@ -23,7 +23,7 @@ public class JooLunWxApplication {
     }
 
 
-    @Bean
+//    @Bean
     public TomcatServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
@@ -40,7 +40,7 @@ public class JooLunWxApplication {
         return tomcat;
     }
 
-    @Bean
+//    @Bean
     public Connector httpConnecrot() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");

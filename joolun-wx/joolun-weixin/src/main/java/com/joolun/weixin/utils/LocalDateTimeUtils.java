@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.util.Date;
 
 /**
  * LocalDateTime时间工具
@@ -84,6 +85,10 @@ public class LocalDateTimeUtils {
 	public static long datatimeToTimestamp(LocalDateTime ldt){
 		ZoneId zone = ZoneId.systemDefault();
 		return ldt.atZone(zone).toInstant().toEpochMilli();
+	}
+
+	public static Date asDate(LocalDateTime localDateTime) {
+		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
 }

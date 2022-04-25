@@ -122,10 +122,11 @@ export default () => {
           }
         ]
       },
+      // {
+      //   label: '地址 暂时',
+      //   prop: 'remark'
+      // },
       {
-        label: '地址 暂时',
-        prop: 'remark'
-      },{
         label: '是否推荐',
         prop: 'recommend',
         type: 'radio',

@@ -50,6 +50,7 @@ export default ()=>{
     },{
       label:'问题选项',
       prop:'choices',
+
     }]
   }
 }

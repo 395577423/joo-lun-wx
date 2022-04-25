@@ -51,7 +51,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 	@Transactional(rollbackFor = Exception.class)
 	public boolean updateById(OrderInfo entity) {
 		if(StrUtil.isNotBlank(entity.getLogistics()) && StrUtil.isNotBlank(entity.getLogisticsNo())){//发货。更新快递单号
-			entity.setDeliveryTime(LocalDateTime.now());
+			entity.setDeliveryTime(new Date());
 			OrderLogistics orderLogistics = orderLogisticsService.getOne(Wrappers.<OrderLogistics>lambdaQuery()
 					.eq(OrderLogistics::getId,entity.getLogisticsId()));
 			//第一次发货调起收到倒计时
@@ -128,7 +128,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 	@Transactional(rollbackFor = Exception.class)
 	public void orderReceive(OrderInfo orderInfo) {
 		orderInfo.setStatus(OrderInfoEnum.STATUS_3.getValue());
-		orderInfo.setReceiverTime(LocalDateTime.now());
+		orderInfo.setReceiverTime(new Date());
 		baseMapper.updateById(orderInfo);
 	}
 
@@ -148,7 +148,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 		orderInfo.setSalesPrice(BigDecimal.ZERO);
 		orderInfo.setPaymentPrice(BigDecimal.ZERO);
 		orderInfo.setFreightPrice(BigDecimal.ZERO);
-		orderInfo.setCreateTime(LocalDateTime.now());
 		List<OrderItem> listOrderItem = new ArrayList<>();
 		List<GoodsSpu> listGoodsSpu = new ArrayList<>();
 		placeOrderDTO.getSkus().forEach(orderGoods -> {//过滤

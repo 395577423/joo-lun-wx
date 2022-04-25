@@ -179,8 +179,14 @@ module.exports = {
     userCourse: (data) => {
         return request('/weixin/api/course/usercourse', 'post', data, false)
     },
+    userEmpower: (data) => {
+        return request('/weixin/api/course/userempower', 'post', data, false)
+    },
     courseUnifiedOrder:(data) =>{ //
         return request('/weixin/api/course/unifiedOrder', 'post', data, true)
+    },
+    empowerUnifiedOrder:(data) =>{ //
+        return request('/weixin/api/course/unifiedEmpower', 'post', data, true)
     },
     userMoney:(id,userId) =>{
         return request('/weixin/api/course/usermoney/'+id+'/'+userId,'get',null,false)
@@ -190,5 +196,8 @@ module.exports = {
     },
     courseAudio:(id) =>{
         return request('/weixin/api/course/audios/'+id,'get',null,false)
+    },
+    empowerVideo:(userId,name)=>{
+        return request('/weixin/api/course/empower/'+userId+'?name='+name,'get',null,false)
     }
 }

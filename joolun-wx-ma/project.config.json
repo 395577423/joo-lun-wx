@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": false,
     "postcss": true,
@@ -42,7 +42,7 @@
     "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.21.3",
+  "libVersion": "2.23.4",
   "appid": "wxa8f0475c8754393c",
   "projectname": "joolun-wx-ma",
   "debugOptions": {

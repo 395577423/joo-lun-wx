@@ -53,7 +53,6 @@ public class SysDictDataController extends BaseController {
     /**
      * 查询字典数据详细
      */
-    @PreAuthorize("@ss.hasPermi('system:dict:query')")
     @GetMapping(value = "/{dictCode}")
     public AjaxResult getInfo(@PathVariable Long dictCode) {
         return AjaxResult.success(dictDataService.selectDictDataById(dictCode));
@@ -66,7 +65,7 @@ public class SysDictDataController extends BaseController {
     public AjaxResult dictType(@PathVariable String dictType) {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data)) {
-            data = new ArrayList<SysDictData>();
+            data = new ArrayList<>();
         }
         return AjaxResult.success(data);
     }

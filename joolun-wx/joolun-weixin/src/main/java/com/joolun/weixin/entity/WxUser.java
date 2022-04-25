@@ -160,4 +160,10 @@ private static final long serialVersionUID = 1L;
      */
     private String member;
 
+    /**
+     * 赋能级别
+     */
+    private Short level;
+
+
 }

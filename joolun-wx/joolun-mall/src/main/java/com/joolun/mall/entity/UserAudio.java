@@ -1,13 +1,16 @@
 package com.joolun.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 用户书籍录音对象 user_audio
@@ -47,7 +50,9 @@ public class UserAudio extends Model<UserAudio> {
      */
     private String audioUrl;
 
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     @TableField(exist = false)
     private String question;

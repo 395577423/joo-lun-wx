@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -177,7 +178,7 @@ public class OrderInfoApi {
             return AjaxResult.error(MyReturnCode.ERR_70004.getCode(), MyReturnCode.ERR_70004.getMsg());
         }
         if (orderInfo.getPaymentPrice().compareTo(BigDecimal.ZERO) == 0) {//0元购买不调支付
-            orderInfo.setPaymentTime(LocalDateTime.now());
+            orderInfo.setPaymentTime(new Date());
             orderInfoService.notifyOrder(orderInfo);
             return AjaxResult.success();
         }
@@ -216,7 +217,7 @@ public class OrderInfoApi {
             if (orderInfo.getPaymentPrice().multiply(new BigDecimal(100)).intValue() == notifyResult.getTotalFee()) {
                 String timeEnd = notifyResult.getTimeEnd();
                 LocalDateTime paymentTime = LocalDateTimeUtils.parse(timeEnd);
-                orderInfo.setPaymentTime(paymentTime);
+                orderInfo.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
                 orderInfo.setTransactionId(notifyResult.getTransactionId());
                 orderInfoService.notifyOrder(orderInfo);
                 return WxPayNotifyResponse.success("成功");

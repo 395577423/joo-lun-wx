@@ -66,8 +66,6 @@ public class BookController extends BaseController {
     @Log(title = "书籍", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Book book) {
-        book.setCreateTime(LocalDateTime.now());
-        book.setUpdateTime(LocalDateTime.now());
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         book.setCreateBy(loginUser.getUsername());
         book.setUpdateBy(loginUser.getUsername());
@@ -80,7 +78,6 @@ public class BookController extends BaseController {
     @Log(title = "书籍", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Book book) {
-        book.setUpdateTime(LocalDateTime.now());
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         book.setCreateBy(loginUser.getUsername());
         book.setUpdateBy(loginUser.getUsername());

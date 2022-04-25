@@ -12,27 +12,48 @@
                @row-update="handleUpdate"
                @row-save="handleSave"
                @row-del="handleDel"
-               @row-manage="handleChoice"
                @sort-change="sortChange"
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
-      <template slot="imageUrl" slot-scope="scope">
-        <img
-          style="height: 100px"
-          :src="scope.row.imageUrl">
+      <template slot="plan" slot-scope="scope">
+        <el-switch
+          active-value="1"
+          inactive-value="0"
+          v-model="scope.row.plan"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changePlan(scope.row)">
+        </el-switch>
       </template>
+
+      <template slot="recommend" slot-scope="scope">
+        <el-switch
+          active-value="1"
+          inactive-value="0"
+          v-model="scope.row.recommend"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changeCommend(scope.row)">
+        </el-switch>
+      </template>
+
+      <template slot="introductionForm" slot-scope="scope">
+        <BaseEditor v-model="scope.row.introduction"/>
+      </template>
+
     </avue-crud>
   </div>
 </template>
 
 <script>
-import { addObj, delObj, getPage, putObj } from '@/api/course/question'
-import option from '@/const/crud/course/question'
+import { addObj, delObj,getObj, getPage, putObj } from '@/api/course/empower'
+import option from '@/const/crud/course/empower'
+import BaseEditor from '@/components/Editor/index.vue'
 
 export default {
-  name: 'question',
-  components: {},
+  name: 'empower',
+  components: {BaseEditor},
   data() {
     return {
       form: {},
@@ -42,7 +63,7 @@ export default {
         currentPage: 1, // 当前页数
         pageSize: 20, // 每页显示多少条
         ascs: [],//升序字段
-        descs: 'course_id'//降序字段
+        descs: 'create_time'//降序字段
       },
       paramsSearch: {},
       tableLoading: false,
@@ -63,15 +84,33 @@ export default {
     selectionChange(list) {
       this.selectionData = list
     },
-    changeStatus(row) {
+    changePlan(row) {
       putObj({
         id: row.id,
-        status: row.status
+        plan: row.plan
       }).then(data => {
+
+      })
+    },
+    changeCommend(row) {
+      putObj({
+        id: row.id,
+        recommend: row.recommend
+      }).then(data => {
+
       })
     },
     beforeOpen(done, type) {
-      done()
+      if(type == 'add'){
+        done()
+      }else if(type == 'edit'){
+        this.tableLoading = true
+        getObj(this.form.id).then(response => {
+          this.$set(this.form,'introduction', response.data.introduction)
+          this.tableLoading = false
+          done()
+        })
+      }
     },
     searchChange(params, done) {
       params = this.filterForm(params)
@@ -135,24 +174,6 @@ export default {
       }).catch(function(err) {
       })
     },
-    handleChoice:function(row,index){
-      var _this = this
-      this.$confirm('是否确认删除此数据', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return delObj(row.id)
-      }).then(data => {
-        _this.$message({
-          showClose: true,
-          message: '删除成功',
-          type: 'success'
-        })
-        this.getPage(this.page)
-      }).catch(function(err) {
-      })
-    },
     /**
      * @title 数据更新
      * @param row 为当前的数据
@@ -161,7 +182,7 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
-      row.imageUrl = row.imageUrl ? row.imageUrl : ''
+      row.url = row.url[0].value
       putObj(row).then(data => {
         this.$message({
           showClose: true,
@@ -181,7 +202,8 @@ export default {
      *
      **/
     handleSave: function(row, done, loading) {
-      row.imageUrl = row.imageUrl ? row.imageUrl.toString() : ''
+      console.log(row)
+      row.url = row.url[0].value
       addObj(row).then(data => {
         this.$message({
           showClose: true,

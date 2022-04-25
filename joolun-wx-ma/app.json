@@ -21,7 +21,8 @@
     "pages/course/course-audio/index",
     "pages/course/course-video/index",
     "pages/course/course-list/index",
-    "pages/course/course-report/index"
+    "pages/course/course-report/index",
+    "pages/course/empower/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

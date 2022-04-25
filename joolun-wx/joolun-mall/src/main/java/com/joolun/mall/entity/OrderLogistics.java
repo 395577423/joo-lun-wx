@@ -2,18 +2,17 @@
 package com.joolun.mall.entity;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.mall.enums.OrderLogisticsEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 订单物流
@@ -43,12 +42,15 @@ public class OrderLogistics extends Model<OrderLogistics> {
    * 创建时间
    */
 	@ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
     /**
    * 最后更新时间
    */
 	@ApiModelProperty(value = "最后更新时间")
-    private LocalDateTime updateTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
     /**
    * 邮编
    */

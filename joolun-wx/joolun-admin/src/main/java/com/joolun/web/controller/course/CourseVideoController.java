@@ -50,7 +50,6 @@ public class CourseVideoController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody CourseVideo courseVideo) {
         courseVideo.setCreateBy(SecurityUtils.getUsername());
-        courseVideo.setCreateTime(LocalDateTime.now());
         return AjaxResult.success(courseVideoService.save(courseVideo));
     }
 

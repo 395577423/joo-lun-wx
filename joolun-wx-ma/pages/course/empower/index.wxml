@@ -1,0 +1,55 @@
+<view class="cu-bar search bg-white">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" placeholder="请输入视频名称" confirm-type="search" bindchange="handlewords"  value="{{search}}"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-green shadow-blur round" bindtap="handleSearch">搜索</button>
+    </view>
+</view>
+<view wx:for='{{videoList}}' wx:key='index'>
+<view class="cu-card case ">
+  <view class="cu-item shadow" style="height: 450rpx;">
+    <view class="image" style="display: {{ theNum == index ? 'none' : 'block' }}; " bindtap="videoPlay" id="{{index}}">
+      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/videobg.png" mode="widthFix"></image>
+      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-280rpx;left: 280rpx;" />
+      <text style="top:-520rpx;left:-80rpx;width:40%;position: relative;">{{item.title}}</text>
+    </view>
+    <!-- 视频 -->
+    <video src="{{item.url}}" id="{{index}}" class='video' wx:if="{{theNum == index}}" autoplay="true">
+      <!-- log -->
+    </video>
+  </view>
+</view>
+</view>
+<view class="cu-modal {{modalName=='toBuy'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">购买</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            <view class="padding margin-bottom">
+                <text>视频金额:</text>
+                <text class="text-price text-red margin-left text-lg">{{realPrice}}</text>
+            </view>
+            <button bindtap="pay">支付</button>
+        </view>
+    </view>
+</view>
+<view class="cu-modal {{modalName=='success'?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-blue text-bold text-shadow">购买成功</view>
+            <view class="action" bindtap="hideModal">
+                <text class="cuIcon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl">
+            购买成功
+        </view>
+    </view>
+</view>
+<!-- <template is="wxParse" data="{{wxParseData:item['introduction'].nodes}}" style="color: black;" /> -->

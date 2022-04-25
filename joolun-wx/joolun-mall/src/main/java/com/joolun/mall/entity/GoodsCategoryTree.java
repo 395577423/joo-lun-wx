@@ -1,11 +1,15 @@
 
 package com.joolun.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 商品类目
@@ -51,12 +55,16 @@ public class GoodsCategoryTree extends TreeNode {
    * 创建时间
    */
 	@ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
     /**
    * 最后更新时间
    */
 	@ApiModelProperty(value = "最后更新时间")
-    private LocalDateTime updateTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
     /**
    * 逻辑删除标记（0：显示；1：隐藏）
    */

@@ -148,6 +148,25 @@ export const tableOption = {
       }],
       sortable:true,
       editDisplay:true
+    },{
+      label: '赋能级别',
+      prop: 'level',
+      type: 'select',
+      multiple: false,
+      props: {
+        label: 'dictLabel',
+        value: 'dictValue'
+      },
+      dicUrl: '/system/dict/data/type/empower_level?data={{key}}',
+      rules: [
+        {
+          required: true,
+          message: '请选择关联书籍',
+          trigger: 'blur'
+        }
+      ],
+      sortable:true,
+      editDisplay:true
     },
   ]
 }

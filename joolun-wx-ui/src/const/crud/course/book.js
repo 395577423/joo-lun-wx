@@ -50,12 +50,14 @@ export const tableOption = {
       label: '创建时间',
       prop: 'createTime',
       sortable: true,
-      editDisplay:false
+      editDisplay:false,
+      addDisplay:false
     },
     {
       label: '更新时间',
       prop: 'updateTime',
-      editDisplay:false
+      editDisplay:false,
+      addDisplay:false
     },
     {
       label: '创建者',
@@ -148,15 +150,6 @@ export const tableOption = {
             message: '请选择类目',
             trigger: 'blur'
           }]
-        },
-        {
-          label: '创建时间',
-          prop: 'createTime',
-          sortable: true,
-        },
-        {
-          label: '更新时间',
-          prop: 'updateTime',
         },
         {
           label: '创建者',

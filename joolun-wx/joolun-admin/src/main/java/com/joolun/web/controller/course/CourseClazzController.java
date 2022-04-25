@@ -51,7 +51,6 @@ public class CourseClazzController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody CourseClazz courseClazz) {
         courseClazz.setCreateBy(SecurityUtils.getUsername());
-        courseClazz.setCreateTime(LocalDateTime.now());
         return AjaxResult.success(courseClazzService.save(courseClazz));
     }
 

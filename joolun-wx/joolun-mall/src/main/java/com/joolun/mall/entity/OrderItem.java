@@ -1,16 +1,17 @@
 
 package com.joolun.mall.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 商城订单详情
@@ -40,12 +41,16 @@ public class OrderItem extends Model<OrderItem> {
 	 * 创建时间
 	 */
 	@ApiModelProperty(value = "创建时间")
-	private LocalDateTime createTime;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
 	/**
 	 * 最后更新时间
 	 */
 	@ApiModelProperty(value = "最后更新时间")
-	private LocalDateTime updateTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Date updateTime;
 	/**
 	 * 订单编号
 	 */

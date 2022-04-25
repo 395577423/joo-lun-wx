@@ -1,10 +1,7 @@
 
 package com.joolun.mall.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.enums.OrderInfoEnum;
@@ -17,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,12 +45,16 @@ public class OrderInfo extends Model<OrderInfo> {
 	 * 创建时间
 	 */
 	@ApiModelProperty(value = "创建时间")
-	private LocalDateTime createTime;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
 	/**
 	 * 最后更新时间
 	 */
 	@ApiModelProperty(value = "最后更新时间")
-	private LocalDateTime updateTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Date updateTime;
 	/**
 	 * 用户id
 	 */
@@ -107,22 +109,22 @@ public class OrderInfo extends Model<OrderInfo> {
 	 * 付款时间
 	 */
 	@ApiModelProperty(value = "付款时间")
-	private LocalDateTime paymentTime;
+	private Date paymentTime;
 	/**
 	 * 发货时间
 	 */
 	@ApiModelProperty(value = "发货时间")
-	private LocalDateTime deliveryTime;
+	private Date deliveryTime;
 	/**
 	 * 收货时间
 	 */
 	@ApiModelProperty(value = "收货时间")
-	private LocalDateTime receiverTime;
+	private Date receiverTime;
 	/**
 	 * 成交时间
 	 */
 	@ApiModelProperty(value = "成交时间")
-	private LocalDateTime closingTime;
+	private Date closingTime;
 	/**
 	 * 买家留言
 	 */
@@ -161,11 +163,11 @@ public class OrderInfo extends Model<OrderInfo> {
 
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@TableField(exist = false)
-	private LocalDateTime beginTime;
+	private Date beginTime;
 
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@TableField(exist = false)
-	private LocalDateTime endTime;
+	private Date endTime;
 	/**
 	 * 订单物流
 	 */

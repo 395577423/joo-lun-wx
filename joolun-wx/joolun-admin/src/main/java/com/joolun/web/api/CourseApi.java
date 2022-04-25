@@ -4,6 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import com.aliyun.oss.OSSClient;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -16,13 +17,11 @@ import com.joolun.mall.dto.CourseVO;
 import com.joolun.mall.entity.*;
 import com.joolun.mall.service.*;
 import com.joolun.mall.util.OSSClientUtil;
-import com.joolun.system.service.ISysDictDataService;
 import com.joolun.web.util.FileUtils;
 import com.joolun.weixin.config.WxPayConfiguration;
 import com.joolun.weixin.constant.MyReturnCode;
 import com.joolun.weixin.entity.WxUser;
 import com.joolun.weixin.service.WxUserService;
-import com.joolun.weixin.utils.ThirdSessionHolder;
 import com.joolun.weixin.utils.WxMaUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -35,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,9 +105,19 @@ public class CourseApi {
      */
     private final WxUserService wxUserService;
 
+    /**
+     * 课程视频服务
+     */
     private final ICourseAudioService iCourseAudioService;
 
     private final MallConfigProperties mallConfigProperties;
+
+    /**
+     * 赋能中心视频服务
+     */
+    private final IEmpowerVideoService iEmpowerVideoService;
+
+    private final IUserEmpowerService iUserEmpowerService;
 
     /**
      * 查询奖学金计划课程
@@ -272,7 +280,6 @@ public class CourseApi {
             userAudio.setUserId(userId);
             userAudio.setCourseId(Long.parseLong(courseId));
             userAudio.setAudioId(Long.parseLong(audioId));
-            userAudio.setCreateTime(LocalDateTime.now());
             audioUrl = "https://" + bucketName + "." + endPoint + "/audio/" + LocalDate.now() + "/" + file.getOriginalFilename();
             userAudio.setAudioUrl(audioUrl);
             userAudioService.saveOrUpdate(userAudio);
@@ -416,8 +423,28 @@ public class CourseApi {
             }
 
             userCourse.setPrice(realPrice);
-            userCourse.setCreateTime(LocalDateTime.now());
             userCourseService.save(userCourse);
+            return AjaxResult.success();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error("购买失败，请联系客服");
+        }
+    }
+
+    /**
+     * 购买课程
+     *
+     * @param vo 课程购买请求VO
+     * @return
+     */
+    @PostMapping("/userempower")
+    public AjaxResult updateUserEmpower(@RequestBody CoursePayVO vo) {
+        try {
+            UserEmpower empower = new UserEmpower();
+            empower.setEmpowerId(vo.getId());
+            empower.setUserId(vo.getUserId());
+            iUserEmpowerService.save(empower);
             return AjaxResult.success();
 
         } catch (Exception e) {
@@ -476,6 +503,55 @@ public class CourseApi {
         return AjaxResult.success(JSONUtil.parse(wxPayService.createOrder(wxPayUnifiedOrderRequest)));
     }
 
+    /**
+     * 调用统一下单接口，并组装生成支付所需参数对象.
+     *
+     * @param vo 统一下单请求参数
+     * @return 返回 {@link com.github.binarywang.wxpay.bean.order}包下的类对象
+     */
+    @ApiOperation(value = "调用统一下单接口")
+    @PostMapping("/unifiedEmpower")
+    @Transactional(rollbackFor = Exception.class)
+    public AjaxResult unifiedEmpower(HttpServletRequest request, @RequestBody CoursePayVO vo) throws WxPayException {
+        //检验用户session登录
+        WxUser wxUser = wxUserService.getById(vo.getUserId());
+
+        EmpowerVideo empowerVideo = iEmpowerVideoService.getById(vo.getId());
+
+        QueryWrapper<UserEmpower> wrapper = new QueryWrapper<>();
+        wrapper.eq("empower_id", vo.getId()).eq("user_id", vo.getUserId());
+        UserEmpower userEMpower = iUserEmpowerService.getOne(wrapper);
+
+        if (null == empowerVideo.getId()) {
+            return AjaxResult.error(MyReturnCode.ERR_50000.getCode(), MyReturnCode.ERR_50000.getMsg());
+        }
+        //防止重复购买
+        if (null != userEMpower) {
+            return AjaxResult.error(MyReturnCode.ERR_50001.getCode(), MyReturnCode.ERR_50001.getMsg());
+        }
+
+        BigDecimal realPrice;
+        if (null != empowerVideo.getRates() && empowerVideo.getRates().compareTo(empowerVideo.getPrice()) < 0) {
+            realPrice = empowerVideo.getRates();
+        } else {
+            realPrice = empowerVideo.getPrice();
+        }
+
+        String appId = WxMaUtil.getAppId(request);
+        WxPayUnifiedOrderRequest wxPayUnifiedOrderRequest = new WxPayUnifiedOrderRequest();
+        wxPayUnifiedOrderRequest.setAppid(appId);
+        String body = empowerVideo.getTitle();
+        body = body.length() > 40 ? body.substring(0, 39) : body;
+        wxPayUnifiedOrderRequest.setBody(body);
+        wxPayUnifiedOrderRequest.setOutTradeNo(IdUtil.getSnowflake(0, 0).nextIdStr());
+        wxPayUnifiedOrderRequest.setTotalFee(realPrice.multiply(new BigDecimal(100)).intValue());
+        wxPayUnifiedOrderRequest.setTradeType("JSAPI");
+        wxPayUnifiedOrderRequest.setNotifyUrl(mallConfigProperties.getNotifyHost() + "/weixin/api/ma/orderinfo/notify-order");
+        wxPayUnifiedOrderRequest.setSpbillCreateIp("127.0.0.1");
+        wxPayUnifiedOrderRequest.setOpenid(wxUser.getOpenId());
+        WxPayService wxPayService = WxPayConfiguration.getPayService();
+        return AjaxResult.success(JSONUtil.parse(wxPayService.createOrder(wxPayUnifiedOrderRequest)));
+    }
 
     /**
      * @param id     课程ID
@@ -506,5 +582,20 @@ public class CourseApi {
         } else {
             return AjaxResult.success();
         }
+    }
+
+
+    /**
+     * 分页查询赋能中心视频列表
+     *
+     * @param userId 用户ID
+     * @return 赋能中心视频列表
+     */
+    @GetMapping("/empower/{userId}")
+    public AjaxResult getEmpowerVideo(@PathVariable String userId, String name, Page page) {
+        page.setCurrent(1);
+        page.setSize(100);
+        IPage<EmpowerVideo> result = iEmpowerVideoService.getPage(userId, name, page);
+        return AjaxResult.success(result);
     }
 }
