@@ -4,7 +4,7 @@
       <input type="text" placeholder="请输入视频名称" confirm-type="search" bindchange="handlewords"  value="{{search}}"></input>
     </view>
     <view class="action">
-      <button class="cu-btn bg-green shadow-blur round" bindtap="handleSearch">搜索</button>
+      <button class="cu-btn bg-blue shadow-blur round" bindtap="handleSearch">搜索</button>
     </view>
 </view>
 <view wx:for='{{videoList}}' wx:key='index'>
@@ -19,9 +19,11 @@
     <video src="{{item.url}}" id="{{index}}" class='video' wx:if="{{theNum == index}}" autoplay="true">
       <!-- log -->
     </video>
+    
   </view>
 </view>
 </view>
+<view class='padding response text-center' wx:if="{{ !videoList.children }}">暂无数据</view>
 <view class="cu-modal {{modalName=='toBuy'?'show':''}}">
     <view class="cu-dialog">
         <view class="cu-bar bg-white justify-end">
