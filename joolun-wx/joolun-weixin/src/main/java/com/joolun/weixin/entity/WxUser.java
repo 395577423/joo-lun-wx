@@ -165,5 +165,9 @@ private static final long serialVersionUID = 1L;
      */
     private Short level;
 
+    /**
+     * 赋能积分
+     */
+    private Integer empowerNum;
 
 }

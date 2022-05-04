@@ -11,15 +11,21 @@
       {{!wxUser.nickName ? '登录' : '更新昵称'}}
     </button>
   </view>
-  <view class="content text-center">
-    <text class="margin-right-sm">我的奖学金:</text> 
-    <text class="text-price text-red">{{userInfo.money == null?0:userInfo.money}}</text>
+  <view class="grid col-4 margin-top text-center">
+    <view></view>
+    <view><text class="margin-right-sm text-right">我的奖学金:</text> </view>
+    <view><text class="text-price text-red text-left">{{userInfo.money == null?0:userInfo.money}}</text></view>
+    <view></view>
+    <view></view>
+    <view><text class="margin-right-sm text-right">我的1UP值:</text> </view>
+    <view><text class="text-red text-left">{{userInfo.empowerNum}}</text></view>
+    <view></view>
   </view>
 </view>
 
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
   <view class="cu-item arrow">
-    <navigator class="content" url="/pages/course/empower/index?userId={{wxUser.id}}">
+    <navigator class="content" url="/pages/course/empower-video/index?userId={{wxUser.id}}">
         <text class="cuIcon-vip text-orange"></text>
         <text>赋能中心</text>
     </navigator>

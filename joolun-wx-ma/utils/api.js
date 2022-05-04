@@ -199,5 +199,8 @@ module.exports = {
     },
     empowerVideo:(userId,name)=>{
         return request('/weixin/api/course/empower/'+userId+'?name='+name,'get',null,false)
+    },
+    empowerVideoDetail:(id,userId)=>{
+        return request('/weixin/api/course/empower/'+id+'/'+userId,'get',null,false)
     }
 }

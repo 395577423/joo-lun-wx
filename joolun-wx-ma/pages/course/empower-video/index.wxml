@@ -1,0 +1,29 @@
+<import src="/public/wxParse/wxParse.wxml" />
+<view class="cu-bar search bg-white">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" placeholder="请输入视频名称" confirm-type="search" bindchange="handlewords"  value="{{search}}"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-blue shadow-blur round" bindtap="handleSearch">搜索</button>
+    </view>
+</view>
+<view class="cu-card article no-card">
+  <view class="cu-item shadow borderBottom" >
+    <view class="content solids-top margin-bottom" wx:for="{{videoList}}" >
+      <image src='{{item.coverUrl}}' mode="aspectFit"></image>
+      <navigator class="desc" url="/pages/course/empower/index?empowerid={{item.id}}">
+        <view class="text-content">
+          <view class="text-bold text-xl margin-top">{{item.title}}</view>
+          <template is="wxParse" data="{{wxParseData:item['introduction'].nodes}}" style="color: black;" />
+          <view></view>
+        </view>
+        <view class="margin-top-xs">
+          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 1}}">初级</view>
+          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 2}}">中级</view>
+          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 3}}">高级</view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view>

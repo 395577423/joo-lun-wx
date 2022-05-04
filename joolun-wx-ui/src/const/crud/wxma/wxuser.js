@@ -168,5 +168,11 @@ export const tableOption = {
       sortable:true,
       editDisplay:true
     },
+    {
+      label:'1UP值',
+      prop:'empowerNum',
+      type: 'number',
+      editDisplay: true
+    }
   ]
 }

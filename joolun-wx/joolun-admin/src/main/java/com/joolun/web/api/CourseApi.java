@@ -561,27 +561,27 @@ public class CourseApi {
     @GetMapping("/usermoney/{id}/{userId}")
     public AjaxResult getUserMoney(@PathVariable Long id, @PathVariable String userId) {
 
-        Course course = courseService.getById(id);
-        QueryWrapper<UserCourse> wrapper = new QueryWrapper<>();
-        wrapper.eq("course_id", id).eq("user_id", userId);
-        UserCourse userCourse = userCourseService.getOne(wrapper);
+//        Course course = courseService.getById(id);
+//        QueryWrapper<UserCourse> wrapper = new QueryWrapper<>();
+//        wrapper.eq("course_id", id).eq("user_id", userId);
+//        UserCourse userCourse = userCourseService.getOne(wrapper);
 
-        //如果是有返现
-        if (null != userCourse && null != userCourse.getId() && userCourse.getCashReturn().compareTo(BigDecimal.ZERO) == 0 && "1".equals(userCourse.getIsPlanCourse())) {
-            userCourse.setCashReturn(userCourse.getOriginalMoney());
-            userCourse.setReturnable(0L);
-            userCourseService.updateById(userCourse);
-            WxUser wxUser = wxUserService.getById(userId);
-            BigDecimal existsMoney = wxUser.getMoney();
-            //加上当时购买时设定的返现金额
-            BigDecimal money = existsMoney.add(userCourse.getOriginalMoney());
-            wxUser.setMoney(money);
-            wxUserService.updateMoney(wxUser);
-            String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元";
-            return AjaxResult.success(msg);
-        } else {
+//        //如果是有返现
+//        if (null != userCourse && null != userCourse.getId() && userCourse.getCashReturn().compareTo(BigDecimal.ZERO) == 0 && "1".equals(userCourse.getIsPlanCourse())) {
+//            userCourse.setCashReturn(userCourse.getOriginalMoney());
+//            userCourse.setReturnable(0L);
+//            userCourseService.updateById(userCourse);
+//            WxUser wxUser = wxUserService.getById(userId);
+//            BigDecimal existsMoney = wxUser.getMoney();
+//            //加上当时购买时设定的返现金额
+//            BigDecimal money = existsMoney.add(userCourse.getOriginalMoney());
+//            wxUser.setMoney(money);
+//            wxUserService.updateMoney(wxUser);
+//            String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元";
+//            return AjaxResult.success(msg);
+//        } else {
             return AjaxResult.success();
-        }
+//        }
     }
 
 
@@ -596,6 +596,13 @@ public class CourseApi {
         page.setCurrent(1);
         page.setSize(100);
         IPage<EmpowerVideo> result = iEmpowerVideoService.getPage(userId, name, page);
+        return AjaxResult.success(result);
+    }
+
+    @GetMapping("/empower/{id}/{userId}")
+    public AjaxResult getEmpowerVideoById(@PathVariable Long id,@PathVariable String userId){
+
+        EmpowerVideo result =  iUserEmpowerService.getOneById(userId,id);
         return AjaxResult.success(result);
     }
 }

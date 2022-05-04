@@ -92,4 +92,5 @@
   overflow: hidden;
   color:black;
   margin-top:20rpx;
+  margin-left:20rpx;
 }

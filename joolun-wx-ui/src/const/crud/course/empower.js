@@ -18,6 +18,21 @@ export default () => {
         ]
       },
       {
+        label: '封面图片',
+        prop: 'coverUrl',
+        type: 'upload',
+        listType: 'picture-img',
+        rules: [{
+          required: true,
+          message: '请选择封面',
+          trigger: 'blur'
+        }],
+        oss: 'ali',
+        loadText: '附件上传中，请稍等',
+        span: 24,
+        tip: '只能上传jpg/png文件，且不超过50kb'
+      },
+      {
         label: '视频',
         prop: 'url',
         type: 'upload',

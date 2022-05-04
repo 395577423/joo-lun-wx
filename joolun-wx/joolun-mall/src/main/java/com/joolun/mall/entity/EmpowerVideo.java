@@ -60,4 +60,7 @@ public class EmpowerVideo extends Model<EmpowerVideo>
     @TableField(exist = false)
     private String userId;
 
+    /**封面url*/
+    private String coverUrl;
+
 }

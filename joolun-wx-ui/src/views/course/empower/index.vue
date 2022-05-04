@@ -16,28 +16,6 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
-      <template slot="plan" slot-scope="scope">
-        <el-switch
-          active-value="1"
-          inactive-value="0"
-          v-model="scope.row.plan"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          @change="changePlan(scope.row)">
-        </el-switch>
-      </template>
-
-      <template slot="recommend" slot-scope="scope">
-        <el-switch
-          active-value="1"
-          inactive-value="0"
-          v-model="scope.row.recommend"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          @change="changeCommend(scope.row)">
-        </el-switch>
-      </template>
-
       <template slot="introductionForm" slot-scope="scope">
         <BaseEditor v-model="scope.row.introduction"/>
       </template>
@@ -83,22 +61,6 @@ export default {
 
     selectionChange(list) {
       this.selectionData = list
-    },
-    changePlan(row) {
-      putObj({
-        id: row.id,
-        plan: row.plan
-      }).then(data => {
-
-      })
-    },
-    changeCommend(row) {
-      putObj({
-        id: row.id,
-        recommend: row.recommend
-      }).then(data => {
-
-      })
     },
     beforeOpen(done, type) {
       if(type == 'add'){
@@ -182,6 +144,8 @@ export default {
      *
      **/
     handleUpdate: function(row, index, done, loading) {
+      console.log(row)
+      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
       row.url = row.url[0].value
       putObj(row).then(data => {
         this.$message({
@@ -202,7 +166,7 @@ export default {
      *
      **/
     handleSave: function(row, done, loading) {
-      console.log(row)
+      row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
       row.url = row.url[0].value
       addObj(row).then(data => {
         this.$message({

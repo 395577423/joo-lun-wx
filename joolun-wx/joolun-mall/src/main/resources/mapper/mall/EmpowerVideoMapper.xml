@@ -13,10 +13,11 @@
         <result property="rates"    column="rates"    />
         <result property="introduction"    column="introduction"    />
         <result property="createTime"    column="create_time"    />
+        <result property="coverUrl"    column="cover_url"    />
     </resultMap>
 
     <sql id="selectEmpowerVideoVo">
-        select id, title, url, video_level, price, rates, introduction, create_time from empower_video
+        select id, title, url, video_level, price, rates, introduction, create_time,cover_url from empower_video
     </sql>
 
     <select id="selectEmpowerVideoList" parameterType="EmpowerVideo" resultMap="EmpowerVideoResult">

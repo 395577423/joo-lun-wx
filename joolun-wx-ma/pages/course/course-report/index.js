@@ -189,7 +189,6 @@ Page({
     wx.saveImageToPhotosAlbum({
       filePath: this.data.src,
       'success': function (res) {
-        console.log(res)
         if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
           that.getUserMoney()
         }

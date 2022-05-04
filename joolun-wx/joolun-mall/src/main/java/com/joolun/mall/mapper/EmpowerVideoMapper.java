@@ -14,12 +14,12 @@ import org.apache.ibatis.annotations.Select;
 public interface EmpowerVideoMapper extends BaseMapper<EmpowerVideo> {
 
     @Select("<script>" +
-            "select a.id, title, url, video_level, price, rates, introduction, create_time,(select b.user_id " +
+            "select a.id, title, url, video_level, price, rates, introduction, create_time,cover_url,(select b.user_id " +
             "from user_empower b where b.user_id = #{userId} and b.empower_id = a.id) user_id from empower_video a " +
             "where 1=1 " +
             " <if test=\"name != null and name != '' \" >" +
-            "and  a.title like  CONCAT( '%',#{name},'%') " +
-            "</if>"+
+            "and  a.title like  CONCAT( '%',#{name},'%')" +
+            "</if>  order by a.video_level"+
             "</script>")
     IPage<EmpowerVideo> selectPage2(Page page, @Param("name") String name, @Param("userId") String userId);
 }
