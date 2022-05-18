@@ -61,7 +61,7 @@
     <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}" style="position: relative;">
         <view class="btn-group">
             <text class="text-price text-blue text-bold text-lg">{{course.rates !=null && course.price>course.rates? course.rates:course.price }}</text>
-            <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">立即报名</button>
+            <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">购买</button>
         </view>
     </view>
 </scroll-view>
@@ -75,7 +75,7 @@
             </view>
         </view>
         <view class="padding-xl">
-            <text class="padding">请先报名参与奖学金计划，才能做任务哦。具体活动详情请添加客服微信。</text>
+            <text class="padding">请先点击下方购买才能做任务哦。如有疑问请添加客服微信。</text>
             <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
         </view>
     </view>

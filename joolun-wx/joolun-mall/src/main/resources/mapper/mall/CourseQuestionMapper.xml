@@ -12,4 +12,16 @@
         <result property="sort" column="sort"/>
         <result property="answer" column="answer"/>
     </resultMap>
+    <select id="page2" resultType="com.joolun.mall.dto.QuestionDTO">
+        select i.id, course_id, question, sort, answer, j.title
+        from course_question i,
+        course j
+        <where>
+            i.course_id = j.id
+            <if test="null != query.courseId"> and i.course_id = #{query.courseId}</if>
+            <if test="null != query.courseName"> and j.title like "%"#{query.courseName}"%"</if>
+            <if test="null != query.name"> and i.question like "%"#{query.name}"%"</if>
+        </where>
+
+    </select>
 </mapper>

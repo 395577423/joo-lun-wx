@@ -1,5 +1,6 @@
 package com.joolun.web.controller.course;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.annotation.Log;
@@ -68,5 +69,11 @@ public class CourseQuestionChoiceController extends BaseController {
         return AjaxResult.success(bookQuestionChoiceService.removeByIds(Arrays.asList(ids)));
     }
 
+    @GetMapping("/list/{id}")
+    public AjaxResult listByQuestion(@PathVariable Long id) {
+        QueryWrapper<CourseQuestionChoice> wrapper = new QueryWrapper<>();
+        wrapper.eq("question_id", id);
+        return AjaxResult.success(bookQuestionChoiceService.list(wrapper));
+    }
 
 }

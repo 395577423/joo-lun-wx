@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { addObj, delObj,getObj, getPage, putObj } from '@/api/course/course'
+import { addObj, delObj,getObj, getCoursePage, putObj } from '@/api/course/course'
 import option from '@/const/crud/course/course'
 import BaseEditor from '@/components/Editor/index.vue'
 
@@ -139,7 +139,7 @@ export default {
     },
     getPage(page, params) {
       this.tableLoading = true
-      getPage(Object.assign({
+      getCoursePage(Object.assign({
         current: page.currentPage,
         size: page.pageSize,
         descs: this.page.descs,

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询书籍问题选项列表
-export function getPage(query) {
+export function getChoicePage(query) {
   return request({
     url: '/course/choice/page',
     method: 'get',
@@ -10,7 +10,7 @@ export function getPage(query) {
 }
 
 // 查询书籍问题选项详细
-export function getObj(id) {
+export function getChoiceObj(id) {
   return request({
     url: '/course/choice/' + id,
     method: 'get'
@@ -18,7 +18,7 @@ export function getObj(id) {
 }
 
 // 新增书籍问题选项
-export function addObj(data) {
+export function addChoiceObj(data) {
   return request({
     url: '/course/choice',
     method: 'post',
@@ -27,7 +27,7 @@ export function addObj(data) {
 }
 
 // 修改书籍问题选项
-export function putObj(data) {
+export function putChoiceObj(data) {
   return request({
     url: '/course/choice',
     method: 'put',
@@ -36,10 +36,17 @@ export function putObj(data) {
 }
 
 // 删除书籍问题选项
-export function delObj(id) {
+export function delChoiceObj(id) {
   return request({
     url: '/course/choice/' + id,
     method: 'delete'
   })
 }
 
+// 删除书籍问题选项
+export function listByQuestion(id) {
+  return request({
+    url: '/course/choice/list/' + id,
+    method: 'get'
+  })
+}

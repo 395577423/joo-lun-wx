@@ -127,7 +127,7 @@ Page({
    * @param {*} e 课程ID 标题
    */
   toQuestionPage(e) {
-    if (this.data.isOwned || this.data.isMember) {
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
       wx.navigateTo({
         url: '/pages/course/course-question/index?courseId=' + this.data.courseId + '&title=' + this.data.title
       })
@@ -140,7 +140,7 @@ Page({
    * @param {*} e
    */
   toAudioPage(e) {
-    if (this.data.isOwned || this.data.isMember) {
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
       wx.navigateTo({
         url: '/pages/course/course-audio-list/index?courseId=' + this.data.courseId + '&title=' + this.data.title + '&question=' + this.data.question + '&audioUrl=' + this.data.audioUrl
       })
@@ -149,7 +149,7 @@ Page({
     }
   },
   toReportPage(e) {
-    if (this.data.isOwned || this.data.isMember) {
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
       wx.navigateTo({
         url: '/pages/course/course-report/index?courseId=' + this.data.courseId
       })
@@ -159,7 +159,6 @@ Page({
   },
   toBuy() {
     let wxUser = this.data.wxUser
-    console.log(wxUser)
     if (null == wxUser.phone) {
       this.showModal('getPhone')
       return
@@ -168,24 +167,26 @@ Page({
   },
 
   buy() {
-    let startTime = this.data.course.startTime
-    let endTime = this.data.course.endTime
+    let plan = this.data.course.plan
+    if (plan == 1) {
+      let startTime = this.data.course.startTime
+      let endTime = this.data.course.endTime
 
-    if (this.compareDate(new Date(), new Date(endTime))) {
-      this.setData({
-        tip: '已经过了报名时间'
-      })
-      this.showModal('tip')
-      return
+      if (this.compareDate(new Date(), new Date(endTime))) {
+        this.setData({
+          tip: '已经过了报名时间'
+        })
+        this.showModal('tip')
+        return
+      }
+      if (this.compareDate(new Date(startTime), new Date())) {
+        this.setData({
+          tip: '还没到报名时间'
+        })
+        this.showModal('tip')
+        return
+      }
     }
-    if (this.compareDate(new Date(startTime), new Date())) {
-      this.setData({
-        tip: '还没到报名时间'
-      })
-      this.showModal('tip')
-      return
-    }
-
     this.showModal('Buy')
   },
   /**

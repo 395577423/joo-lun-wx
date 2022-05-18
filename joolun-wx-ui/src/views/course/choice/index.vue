@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { addObj, delObj, getPage, putObj } from '@/api/course/choice'
+import {getChoicePage,getChoiceObj,addChoiceObj,putChoiceObj,delChoiceObj,listByQuestion} from '@/api/course/choice'
 import {tableOption} from '@/const/crud/course/choice'
 
 export default {
@@ -70,7 +70,7 @@ export default {
       this.selectionData = list
     },
     changeChoosed(row) {
-      putObj({
+      putChoiceObj({
         id: row.id,
         choosed: row.choosed
       }).then(data => {
@@ -102,7 +102,7 @@ export default {
     },
     getPage(page, params) {
       this.tableLoading = true
-      getPage(Object.assign({
+      getChoicePage(Object.assign({
         current: page.currentPage,
         size: page.pageSize,
         descs: this.page.descs,
@@ -130,7 +130,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
-        return delObj(row.id)
+        return delChoiceObj(row.id)
       }).then(data => {
         _this.$message({
           showClose: true,
@@ -150,7 +150,7 @@ export default {
      **/
     handleUpdate: function(row, index, done, loading) {
       row.coverUrl = row.coverUrl ? row.coverUrl : ''
-      putObj(row).then(data => {
+      putChoiceObj(row).then(data => {
         this.$message({
           showClose: true,
           message: '修改成功',
@@ -170,7 +170,7 @@ export default {
      **/
     handleSave: function(row, done, loading) {
       row.coverUrl = row.coverUrl ? row.coverUrl.toString() : ''
-      addObj(row).then(data => {
+      addChoiceObj(row).then(data => {
         this.$message({
           showClose: true,
           message: '添加成功',
