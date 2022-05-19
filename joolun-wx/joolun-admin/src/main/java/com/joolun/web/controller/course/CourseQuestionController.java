@@ -156,9 +156,10 @@ public class CourseQuestionController extends BaseController {
     public AjaxResult addQuestionAndChoices(@RequestBody QuestionDetailDTO questionDTO) {
 
         CourseQuestion question = new CourseQuestion();
-        question.setQuestion(question.getQuestion());
-        question.setAnswer(question.getAnswer());
-        question.setSort(question.getSort());
+        question.setQuestion(questionDTO.getQuestion());
+        question.setAnswer(questionDTO.getAnswer());
+        question.setSort(questionDTO.getSort());
+        question.setCourseId(questionDTO.getCourseId());
         courseQuestionService.save(question);
         List<CourseQuestionChoice> choices = questionDTO.getChoices();
         if (Objects.nonNull(choices) && choices.size() > 0) {
