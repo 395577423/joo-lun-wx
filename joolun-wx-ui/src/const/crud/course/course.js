@@ -122,10 +122,11 @@ export default () => {
           }
         ]
       },
-      // {
-      //   label: '地址 暂时',
-      //   prop: 'remark'
-      // },
+      {
+        label: '参与人数',
+        prop: 'participant',
+        type: 'number'
+      },
       {
         label: '是否推荐',
         prop: 'recommend',

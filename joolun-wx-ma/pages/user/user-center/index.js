@@ -10,11 +10,28 @@ Page({
   data: {
     config: app.globalData.config,
     wxUser: null,
-    userInfo: null
+    userInfo: null,
+    level:''
   },
 
   onShow() {
     let wxUser = app.globalData.wxUser
+    let level = wxUser.level
+
+    let str = '书迷'
+    if(level ==1 ){
+       str = '阅读推广大使'
+    }else if(level == 2){
+      str = '大Boss'
+    }else if(level == 3){
+      str ='城市合伙人'
+    }
+
+    this.setData({
+      level:str
+    })
+
+
     this.setData({
       wxUser: wxUser
     })

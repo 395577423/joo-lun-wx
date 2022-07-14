@@ -17,8 +17,8 @@
     <view><text class="text-price text-red text-left">{{userInfo.money == null?0:userInfo.money}}</text></view>
     <view></view>
     <view></view>
-    <view><text class="margin-right-sm text-right">我的1UP值:</text> </view>
-    <view><text class="text-red text-left">{{userInfo.empowerNum}}</text></view>
+    <view class="margin-left-xs"><text class="margin-right-sm text-right">我的身份:</text> </view>
+    <view><text class="text-red text-left">{{level}}</text></view>
     <view></view>
   </view>
 </view>

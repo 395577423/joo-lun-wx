@@ -68,7 +68,7 @@ Page({
           })
         }
         let realPrice
-        if (null !== course.rates && course.price > course.rates) {
+        if (null !== course.rates &&  course.rates > 0) {
           realPrice = course.rates
         } else {
           realPrice = course.price

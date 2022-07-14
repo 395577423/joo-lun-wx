@@ -26,6 +26,7 @@
         <result property="remark" column="remark"/>
         <result property="saleNum" column="sale_num"/>
         <result property="essence" column="essence"/>
+        <result property="participant" column="participant"/>
     </resultMap>
 
     <sql id="courseSql">
@@ -48,7 +49,8 @@
        i.update_time,
        i.remark,
        i.sale_num,
-       i.essence
+       i.essence,
+       i.participant
     </sql>
 
     <select id="selectPage2" resultMap="CourseResult">

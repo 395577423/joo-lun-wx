@@ -3,7 +3,7 @@
   <view class="cu-item shadow" style="height: 450rpx;">
     <view class="image" style="display: {{ playing ? 'none' : 'block' }}; " bindtap="videoPlay">
       <image src="{{video.coverUrl}}" mode="widthFix"></image>
-      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-500rpx;left: 280rpx;" />
+      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-290rpx;left: 280rpx;" />
     </view>
     <!-- 视频 -->
     <video src="{{video.url}}" id="{{index}}" class='video' wx:if="{{playing}}" autoplay="false"></video>
@@ -26,7 +26,7 @@
 
 <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!canPlay}}">
   <view class="btn-group">
-    <view class="text-price text-lg text-bold">{{realPrice}}</view>
+    <view class="text-price text-lg text-bold text-red">{{realPrice}}</view>
     <button class="cu-btn bg-blue buy-now" bindtap="toBuy"><text>立即购买</text></button>
   </view>
 </view>
@@ -41,7 +41,7 @@
     </view>
     <view class="padding-xl">
       <view class="padding margin-bottom">
-        <text>视频金额:</text>
+        <text>视频价格:</text>
         <text class="text-price text-red margin-left text-lg">{{realPrice}}</text>
       </view>
       <button bindtap="pay">支付</button>

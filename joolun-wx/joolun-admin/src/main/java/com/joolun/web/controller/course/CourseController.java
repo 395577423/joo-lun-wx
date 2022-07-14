@@ -89,7 +89,7 @@ public class CourseController extends BaseController {
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult edit(@RequestBody Course course) {
         if(null == course.getRates()||course.getRates().compareTo(BigDecimal.ZERO) == 0){
-            course.setRates(null);
+            course.setRates(BigDecimal.ZERO);
         }
         boolean udpate = courseService.updateById(course);
         //删除关联表中的记录

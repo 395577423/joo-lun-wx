@@ -119,7 +119,7 @@
 
   <view class="grid-1 cu-bar foot flex flex-direction margin-top-xl" style="position: relative;">
     <button class="cu-btn bg-yellow margin-tb-sm lg text-red text-bold" bindtap="share">
-      生成我的阅读报告
+      生成我的读书报告
     </button>
   </view>
 </scroll-view>

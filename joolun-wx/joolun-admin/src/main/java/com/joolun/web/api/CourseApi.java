@@ -146,7 +146,7 @@ public class CourseApi {
         wrapper.eq("recommend", "1");
         wrapper.eq("plan", "0");
         wrapper.orderByDesc("create_time");
-        wrapper.select("id,title,price,cover_url,age_start,age_end,rates");
+        wrapper.select("id,title,price,cover_url,age_start,age_end,rates,participant");
         return AjaxResult.success(courseService.page(page, wrapper));
     }
 

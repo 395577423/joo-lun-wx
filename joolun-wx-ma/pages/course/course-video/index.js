@@ -8,7 +8,7 @@ Page({
   data: {
     videoList: [],
     _index: null,
-    titleType: '任务一 好书放映室'
+    titleType: '第6-7天 好书放映室'
   },
 
   /**
@@ -20,7 +20,7 @@ Page({
     const type = options.type
     if(type == "2"){
       this.setData({
-        titleType:'任务二 知识小课堂'
+        titleType:'第8-11天 知识小课堂'
       })
     }
     wx.setNavigationBarTitle({

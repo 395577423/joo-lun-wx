@@ -43,24 +43,37 @@
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
       <text class="cuIcon-titles text-blue"></text>
-      <text class="text-shadow text-black text-bold">推荐书籍</text>
+      <text class="text-shadow text-black text-bold">更多名著导读</text>
     </view>
   </view>
   <view class="bg-white margin">
     <view wx:for="{{recommends}}" wx:key="index">
-      <view class="recommend" bindtap="toDetail" data-courseId="{{item.id}}">
-        <view class="text-center" style="width:350rpx;">
-          <image src="{{item.coverUrl}}" style="width: 220rpx;height:220rpx;"></image>
-        </view>
-        <view class="flex-direction flex text-center" style="width:350rpx;">
-          <text class="text-black text-bold text-cut text-xm " style="width:350rpx;">{{item.title}}</text>
-          <text class="text-black text-bold margin-top-xs ">{{item.ageStart}}~{{item.ageEnd}}岁</text>
-          <view wx:if="{{item.rates > 0}}" class="margin-top-xs">
-            <text class="text-price text-blue text-bold">{{item.rates}}</text>
-            <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{item.price}}</text>
-          </view>
-          <view wx:else class="margin-top-xs">
-            <text class="text-price text-blue text-bold">{{item.price}}</text>
+      <view class="cu-card article no-card shadow margin-top-xl" style="height:250rpx;" bindtap="toDetail" data-courseId="{{item.id}}">
+        <view class="cu-item shadow">
+          <!-- <view class="title">
+            <view class="text-cut">{{item.title}}</view>
+          </view> -->
+          <view class="content" style="height:250rpx;" >
+            <image src="{{item.coverUrl}}" mode="aspectFill" style="height:250rpx;" ></image>
+            <view class="desc margin-left">
+              <view class="text-content" style="line-height: 3.9;" style="height:300rpx;">
+                <view class="margin-top"><text class="text-lg text-black">{{item.title}}</text></view>
+                <!-- <view wx:if="{{item.rates > 0}}" >
+                  <text class="text-price text-blue text-bold">{{item.rates}}</text>
+                  <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{item.price}}</text>
+                </view>
+                <view wx:else >
+                  <text class="text-price text-blue text-bold">{{item.price}}</text>
+                </view> -->
+                <view></view>
+                <view>
+                  <view>{{item.participant}}人参与过学习</view>
+                </view>
+                <view>
+                  <view class="cu-tag bg-red light sm round">{{item.ageStart}}~{{item.ageEnd}}岁</view>
+                </view>
+              </view>
+            </view>
           </view>
         </view>
       </view>

@@ -149,6 +149,7 @@ public class CourseQuestionController extends BaseController {
         List<CourseQuestionChoice> choices = questionDTO.getChoices();
         choices.forEach(t->t.setQuestionId(questionId));
         iCourseQuestionChoiceService.saveOrUpdateBatch(choices);
+        courseQuestionService.updateById(question);
         return AjaxResult.success();
     }
 

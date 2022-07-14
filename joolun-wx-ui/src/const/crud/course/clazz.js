@@ -25,7 +25,7 @@ export default (safe) => {
       prop: 'videoUrl',
       type: 'upload',
       rules: [{
-        required: true,
+        required: false,
         message: '请选择视频',
         trigger: 'blur'
       }],

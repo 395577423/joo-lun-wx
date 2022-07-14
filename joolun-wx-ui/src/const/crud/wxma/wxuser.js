@@ -158,13 +158,6 @@ export const tableOption = {
         value: 'dictValue'
       },
       dicUrl: '/system/dict/data/type/empower_level?data={{key}}',
-      rules: [
-        {
-          required: true,
-          message: '请选择关联书籍',
-          trigger: 'blur'
-        }
-      ],
       sortable:true,
       editDisplay:true
     },

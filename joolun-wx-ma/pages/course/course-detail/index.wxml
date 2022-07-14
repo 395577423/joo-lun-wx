@@ -13,23 +13,23 @@
     <view class="padding-xl radius shadow-warp bg-white margin-top">
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">任务一 好书放映室</text>
-          <button class="cu-btn round line-blue fr" bindtap="toVideoPage" data-type="1" style="position: relative; left: 186rpx; top: 0rpx">看视频
+          <text class=" text-shadow text-black">第 6-7 天 好书放映室</text>
+          <button class="cu-btn round line-blue fr" bindtap="toVideoPage" data-type="1" style="position: relative; left: 166rpx; top: 0rpx">看视频
           </button>
         </view>
       </view>
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">任务二 知识小课堂</text>
-          <button class="cu-btn round line-blue margin-right-xs" bindtap="toVideoPage" data-type="2" style="position: relative; left: 184rpx; top: -1rpx">上学堂
+          <text class=" text-shadow text-black">第 8-11天 知识小课堂</text>
+          <button class="cu-btn round line-blue margin-right-xs" bindtap="toVideoPage" data-type="2" style="position: relative; left: 160rpx; top: -1rpx">上学堂
           </button>
         </view>
       </view>
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">任务三 孩子的心声</text>
+          <text class=" text-shadow text-black">第 12 天 孩子的心声</text>
           <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage" style="position: relative; left: 181rpx; top: -1rpx">来聊聊
           </button>
         </view>
@@ -37,7 +37,7 @@
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">任务四 大闯关</text>
+          <text class=" text-shadow text-black">第 13 天 大闯关</text>
           <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 236rpx; top: 0rpx">去答题
           </button>
         </view>
@@ -46,7 +46,7 @@
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">任务五 生成学习报告</text>
+          <text class=" text-shadow text-black">第 14 天 生成读书报告</text>
           <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 149rpx; top: 0rpx">看报告
           </button>
         </view>
@@ -60,7 +60,13 @@
   </view>
   <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}" style="position: relative;">
     <view class="btn-group">
-      <text class="text-price text-blue text-bold text-lg">{{course.rates !=null && course.price>course.rates? course.rates:course.price }}</text>
+      <view wx:if="{{course.rates > 0 && course.price>course.rates}}">
+        <text class="text-price text-blue text-bold">{{course.rates}}</text>
+        <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{course.price}}</text>
+      </view>
+      <view wx:else>
+        <text class="text-price text-blue text-bold">{{course.price}}</text>
+      </view>
       <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">购买</button>
     </view>
   </view>

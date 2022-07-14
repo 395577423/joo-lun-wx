@@ -19,9 +19,9 @@
           <view></view>
         </view>
         <view class="margin-top-xs">
-          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 1}}">初级</view>
-          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 2}}">中级</view>
-          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 3}}">高级</view>
+          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 1}}">初级  <text class="text-price margin-left-xl text-red"> {{item.price}}</text> </view>
+          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 2}}">中级  <text class="text-price margin-left-xl text-red"> {{item.price}}</text> </view>
+          <view class="text-blue light sm round fl" wx:if="{{item.videoLevel == 3}}">高级  <text class="text-price margin-left-xl text-red"> {{item.price}}</text> </view>
         </view>
       </navigator>
     </view>
