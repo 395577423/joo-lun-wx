@@ -23,7 +23,8 @@
     "pages/course/course-list/index",
     "pages/course/course-report/index",
     "pages/course/empower-video/index",
-    "pages/course/empower/index"
+    "pages/course/empower/index",
+    "pages/map/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -52,5 +53,10 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "permission": {
+    "scope.userLocation": {
+      "desc":"你的位置将用于小程序定位"
+    }
+  }
 }

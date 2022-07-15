@@ -1,0 +1,8 @@
+   <view>
+    
+   </view>
+   <map id="map" 
+   longitude="{{longitude}}" 
+   latitude="{{latitude}}"   
+   show-location="true" >    
+   </map>
