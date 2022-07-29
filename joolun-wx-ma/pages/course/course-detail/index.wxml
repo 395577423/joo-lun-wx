@@ -57,8 +57,8 @@
     <text>
       温馨提示:报名后记得添加客服微信进群共读书籍。
     </text>
-    <navigator url='/pages/map/index'>
-      去借书
+    <navigator url='/pages/map/index' class="margin-top">
+      <button class="cu-btn round bg-blue">去借书</button>
     </navigator>
   </view>
   <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}" style="position: relative;">

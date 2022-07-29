@@ -202,5 +202,8 @@ module.exports = {
     },
     empowerVideoDetail:(id,userId)=>{
         return request('/weixin/api/course/empower/'+id+'/'+userId,'get',null,false)
+    },
+    getLibiary:(data)=>{
+      return request('/weixin/api/bookstore/library','post',data,true)
     }
 }

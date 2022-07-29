@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.LibraryMapper">
+
+    <resultMap type="Library" id="LibraryResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="geoHash"    column="geo_hash"    />
+        <result property="createAt"    column="create_at"    />
+        <result property="description"    column="description"    />
+        <result property="contact"    column="contact"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="address"    column="address"    />
+    </resultMap>
+
+    <sql id="selectLibraryVo">
+        select id, name, longitude, latitude, geo_hash, create_at, description, contact, mobile, telephone from library
+    </sql>
+
+</mapper>

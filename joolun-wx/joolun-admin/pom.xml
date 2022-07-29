@@ -84,7 +84,6 @@
             <groupId>com.joolun</groupId>
             <artifactId>joolun-mall</artifactId>
         </dependency>
-
         <!--thymleaf-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -94,7 +93,11 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.spatial4j</groupId>
+            <artifactId>spatial4j</artifactId>
+            <version>0.5</version>
+        </dependency>
     </dependencies>
 
     <build>
