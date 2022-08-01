@@ -41,7 +41,9 @@ public class CourseController extends BaseController {
      */
     @GetMapping("/page")
     public AjaxResult page(Page page, Course course) {
-        Page<Course> courses = courseService.page(page, Wrappers.query(course));
+        QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
+        courseQueryWrapper.like(StringUtils.isNotEmpty(course.getTitle()), "title", course.getTitle());
+        Page<Course> courses = courseService.page(page, courseQueryWrapper);
         List<Course> records = courses.getRecords();
         records.forEach(t -> {
             List<Book> books = bookService.getListByCourse(t.getId());
@@ -66,7 +68,7 @@ public class CourseController extends BaseController {
     @Log(title = "课程", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Course course) {
-        if(null == course.getRates() || course.getRates().compareTo(BigDecimal.ZERO) == 0){
+        if (null == course.getRates() || course.getRates().compareTo(BigDecimal.ZERO) == 0) {
             course.setRates(null);
         }
         boolean save = courseService.save(course);
@@ -74,7 +76,7 @@ public class CourseController extends BaseController {
         bookService.deleteRelatedBooks(course.getId());
         //添加记录
         if (null != course.getBooks() && course.getBooks().size() > 0) {
-            course.getBooks().forEach(t->{
+            course.getBooks().forEach(t -> {
                 bookService.addRelatedCourse(course.getId(), t);
             });
         }
@@ -88,7 +90,7 @@ public class CourseController extends BaseController {
     @PutMapping
     @Transactional(rollbackFor = Exception.class)
     public AjaxResult edit(@RequestBody Course course) {
-        if(null == course.getRates()||course.getRates().compareTo(BigDecimal.ZERO) == 0){
+        if (null == course.getRates() || course.getRates().compareTo(BigDecimal.ZERO) == 0) {
             course.setRates(BigDecimal.ZERO);
         }
         boolean udpate = courseService.updateById(course);
@@ -96,7 +98,7 @@ public class CourseController extends BaseController {
         bookService.deleteRelatedBooks(course.getId());
         //添加记录
         if (null != course.getBooks() && course.getBooks().size() > 0) {
-            course.getBooks().forEach(t->{
+            course.getBooks().forEach(t -> {
                 bookService.addRelatedCourse(course.getId(), t);
             });
         }

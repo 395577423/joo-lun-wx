@@ -101,9 +101,9 @@
     <el-dialog :title="title" :visible.sync="open" width="60%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="课程" prop="courseId">
-          <el-select v-model="form.courseId">
+          <el-select v-model="form.courseId" @change="handleSearch" filterable>
             <el-option
-              v-for="item in courseList"
+              v-for="item in courseList2"
               :key="item.id"
               :label="item.title"
               :value="item.id"
@@ -241,6 +241,7 @@ export default {
       // 显示搜索条件
       showSearch: true,
       courseList: [],
+      courseList2:[],
       queryParams: {
         current: 1,
         size: 10,
@@ -276,6 +277,7 @@ export default {
   },
   created() {
     this.getList()
+    this.getList2()
   },
   methods: {
 
@@ -289,7 +291,20 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
     },
-
+    handleSearch(){
+      console.log('search')
+    },
+    getList2(){
+      let param = {
+        current :1,
+        size:100
+      }
+      getCoursePage(param).then(
+        resp => {
+          this.courseList2 = resp.data.records
+        }
+      )
+    },
     /**查询课程问题列表*/
     getList() {
       this.loading = true
