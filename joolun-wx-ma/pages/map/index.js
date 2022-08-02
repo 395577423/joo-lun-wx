@@ -2,6 +2,21 @@ var app = getApp()
 var mymap = '';
 var lat = '';
 var long = '';
+const INIT_MARKER = {
+	callout: {
+		content: '腾讯总部大楼',
+		padding: 10,
+		borderRadius: 2,
+		display: 'ALWAYS'
+	},
+	latitude: 40.040415,
+	longitude: 116.273511,
+	iconPath: './imgs/Marker1_Activated@3x.png',
+	width: '34px',
+	height: '34px',
+	rotate: 0,
+	alpha: 1
+};
 Page({
   data: {
     controls: [{
@@ -14,12 +29,12 @@ Page({
       },
       clickable: true
     }],
-    latitude: undefined,
-    longitude: undefined,
+    latitude: null,
+    longitude: null,
     name: '',
     markers: [],
     showModalStatus: false,
-    marker: undefined
+    marker: {}
   },
   //引入数据库
   onLoad: function (option) {
@@ -37,7 +52,9 @@ Page({
         })
       }
     })
-
+  },
+  onShow(){
+    let that = this
     let latitude = this.data.latitude
     let longitude = this.data.longitude
     this.setData({
@@ -45,8 +62,38 @@ Page({
       longitude: longitude
     })
     app.api.getLibiary({}).then(res => {
+      let markerArray = res.data
+      let marker = []
+      let iconPath = '/public/img/location.png'
+      markerArray.forEach(i => {
+        let markObj = {
+          id: i.id,
+          latitude: i.latitude,
+          longitude: i.longitude,
+          iconPath,
+          width: i.width,
+          height: i.height,
+          // 这个zIndex一定要有，并且不能是一个固定值，否则会出现标记点和label，callout层级混乱
+          zIndex: i.id + 1,
+          name:i.name,
+          address:i.address,
+          contact:i.contact,
+          callout: {
+            fontSize: 15,
+            borderRadius: 30,
+            bgColor: '#ffffff',
+            padding: 10,
+            textAlign: 'center',
+            content: i.name,
+            display: 'ALWAYS'
+          }
+        }
+        marker.push(markObj)
+
+      });
+
       that.setData({
-        markers: res.data
+        markers: marker
       })
     })
   },
