@@ -2,21 +2,6 @@ var app = getApp()
 var mymap = '';
 var lat = '';
 var long = '';
-const INIT_MARKER = {
-	callout: {
-		content: '腾讯总部大楼',
-		padding: 10,
-		borderRadius: 2,
-		display: 'ALWAYS'
-	},
-	latitude: 40.040415,
-	longitude: 116.273511,
-	iconPath: './imgs/Marker1_Activated@3x.png',
-	width: '34px',
-	height: '34px',
-	rotate: 0,
-	alpha: 1
-};
 Page({
   data: {
     controls: [{
@@ -34,7 +19,8 @@ Page({
     name: '',
     markers: [],
     showModalStatus: false,
-    marker: {}
+    marker: {},
+    hasMarkers: false
   },
   //引入数据库
   onLoad: function (option) {
@@ -93,7 +79,8 @@ Page({
       });
 
       that.setData({
-        markers: marker
+        markers: marker,
+        hasMarkers:true
       })
     })
   },

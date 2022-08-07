@@ -1,4 +1,4 @@
-<map id="myMap" longitude="{{longitude}}" latitude="{{latitude}}" scale="13" markers="{{markers}}" show-location="true" show-compass="true" style="width: 100%;height:100vh;" bindmarkertap="showModal">
+<map id="myMap" longitude="{{longitude}}" latitude="{{latitude}}" scale="13" markers="{{markers}}" show-location="true" show-compass="true" style="width: 100%;height:100vh;" bindmarkertap="showModal" wx:if="{{hasMarkers}}">
 </map>
 <view class="radius cu-modal bottom-modal {{showModalStatus?'show':''}}" bindtap="hideModal">
   <view class="cu-dialog" catchtap>
@@ -14,7 +14,10 @@
       </view>
       <view class="flex">
         <view class="flex-sub padding-sm  radius text-left">{{marker.contact}}</view>
-        <text class="cuIcon-phone lg text-gray margin-right-xl "style="font-size:80rpx;"  bindtap="calling"></text>
+        <view bindtap="calling">
+          <text class="cuIcon-phone lg text-gray margin-right-xl "style="font-size:80rpx;"></text>
+        </view>
+       
       </view>
     </view>
   </view>

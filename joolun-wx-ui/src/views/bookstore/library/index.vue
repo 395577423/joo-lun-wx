@@ -54,6 +54,7 @@
       <el-table-column label="店主键ID" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="简介" align="center" prop="description" />
+      <el-table-column label="详细地址" align="center" prop="address" />
       <el-table-column label="联系人" align="center" prop="contact" />
       <el-table-column label="手机号" align="center" prop="mobile" />
       <el-table-column label="电话" align="center" prop="telephone" />
@@ -77,12 +78,12 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      :page.sync="queryParams.current"
+      :limit.sync="queryParams.size"
       @pagination="getList"
     />
 
@@ -94,6 +95,9 @@
         </el-form-item>
         <el-form-item label="简介" prop="description">
           <el-input v-model="form.description" placeholder="请输入简介" />
+        </el-form-item>
+        <el-form-item label="详细地址" prop="description">
+          <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
         <el-form-item label="联系人" prop="contact">
           <el-input v-model="form.contact" placeholder="请输入联系人" />
@@ -148,8 +152,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         userId: null,
         libraryId: null,
       },
@@ -157,6 +161,15 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        name: [
+          { required: true, message: "名称不能为空", trigger: "blur" }
+        ],
+        longitude: [
+          { required: true, message: "经度不能为空", trigger: "blur" }
+        ],
+        latitude: [
+          { required: true, message: "纬度不能为空", trigger: "blur" }
+        ]
       }
     };
   },
@@ -191,7 +204,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

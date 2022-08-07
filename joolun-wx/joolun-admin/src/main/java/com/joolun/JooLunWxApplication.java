@@ -23,30 +23,30 @@ public class JooLunWxApplication {
     }
 
 
-    @Bean
-    public TomcatServletWebServerFactory servletContainer() {
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-            @Override
-            protected void postProcessContext(Context context) {
-                SecurityConstraint constraint = new SecurityConstraint();
-                constraint.setUserConstraint("CONFIDENTIAL");
-                SecurityCollection collection = new SecurityCollection();
-                collection.addPattern("/*");
-                constraint.addCollection(collection);
-                context.addConstraint(constraint);
-            }
-        };
-        tomcat.addAdditionalTomcatConnectors(httpConnecrot());
-        return tomcat;
-    }
+//    @Bean
+//    public TomcatServletWebServerFactory servletContainer() {
+//        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+//            @Override
+//            protected void postProcessContext(Context context) {
+//                SecurityConstraint constraint = new SecurityConstraint();
+//                constraint.setUserConstraint("CONFIDENTIAL");
+//                SecurityCollection collection = new SecurityCollection();
+//                collection.addPattern("/*");
+//                constraint.addCollection(collection);
+//                context.addConstraint(constraint);
+//            }
+//        };
+//        tomcat.addAdditionalTomcatConnectors(httpConnecrot());
+//        return tomcat;
+//    }
 
-    @Bean
-    public Connector httpConnecrot() {
-        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-        connector.setScheme("http");
-        connector.setPort(8080);
-        connector.setSecure(true);
-        connector.setRedirectPort(7500);
-        return connector;
-    }
+//    @Bean
+//    public Connector httpConnecrot() {
+//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        connector.setScheme("http");
+//        connector.setPort(8080);
+//        connector.setSecure(true);
+//        connector.setRedirectPort(7500);
+//        return connector;
+//    }
 }
