@@ -11,7 +11,7 @@ const service = axios.create({
   baseURL: `https://read.yiqishijian.com:7500`,
   // baseURL: `http://localhost:7500`,
   // 超时
-  timeout: 10000
+  timeout: 60000
 })
 // request拦截器
 service.interceptors.request.use(config => {
