@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.ActivityRelatedCourseMapper">
+    
+    <resultMap type="com.joolun.mall.entity.ActivityRelatedCourse" id="ActivityRelatedCourseResult">
+        <result property="id"    column="id"    />
+        <result property="activityId"    column="activity_id"    />
+        <result property="courseId"    column="course_id"    />
+    </resultMap>
+
+    <sql id="selectActivityRelatedCourseVo">
+        select id, activity_id, course_id from activity_related_course
+    </sql>
+
+    <select id="selectActivityRelatedCourseList" parameterType="com.joolun.mall.entity.ActivityRelatedCourse" resultMap="ActivityRelatedCourseResult">
+        <include refid="selectActivityRelatedCourseVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityRelatedCourseById" parameterType="java.lang.Long" resultMap="ActivityRelatedCourseResult">
+        <include refid="selectActivityRelatedCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertActivityRelatedCourse" parameterType="com.joolun.mall.entity.ActivityRelatedCourse">
+        insert into activity_related_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="activityId != null">activity_id,</if>
+            <if test="courseId != null">course_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="activityId != null">#{activityId},</if>
+            <if test="courseId != null">#{courseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActivityRelatedCourse" parameterType="com.joolun.mall.entity.ActivityRelatedCourse">
+        update activity_related_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActivityRelatedCourseById" parameterType="java.lang.Long">
+        delete from activity_related_course where id = #{id}
+    </delete>
+
+    <delete id="deleteActivityRelatedCourseByIds" parameterType="java.lang.String">
+        delete from activity_related_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

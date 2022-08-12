@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.ActivityCategoryMapper">
+    
+    <resultMap type="com.joolun.mall.entity.ActivityCategory" id="ActivityCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="categoryName"    column="category_name"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectActivityCategoryVo">
+        select id, category_name, creator_id, creator, create_time from activity_category
+    </sql>
+
+    <select id="selectActivityCategoryList" parameterType="com.joolun.mall.entity.ActivityCategory" resultMap="ActivityCategoryResult">
+        <include refid="selectActivityCategoryVo"/>
+        <where>  
+            <if test="categoryName != null  and categoryName != ''"> and category_name like concat('%', #{categoryName}, '%')</if>
+            <if test="creatorId != null "> and creator_id = #{creatorId}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityCategoryById" parameterType="java.lang.Long" resultMap="ActivityCategoryResult">
+        <include refid="selectActivityCategoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertActivityCategory" parameterType="com.joolun.mall.entity.ActivityCategory">
+        insert into activity_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="categoryName != null and categoryName != ''">category_name,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="creator != null and creator != ''">creator,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+            <if test="creatorId != null">#{creatorId},</if>
+            <if test="creator != null and creator != ''">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActivityCategory" parameterType="com.joolun.mall.entity.ActivityCategory">
+        update activity_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryName != null and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="creator != null and creator != ''">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActivityCategoryById" parameterType="java.langLong">
+        delete from activity_category where id = #{id}
+    </delete>
+
+    <delete id="deleteActivityCategoryByIds" parameterType="java.lang.String">
+        delete from activity_category where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

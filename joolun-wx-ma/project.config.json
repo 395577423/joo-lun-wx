@@ -44,7 +44,7 @@
     "useStaticServer": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.23.4",
+  "libVersion": "2.17.0",
   "appid": "wxa8f0475c8754393c",
   "projectname": "joolun-wx-ma",
   "simulatorType": "wechat",

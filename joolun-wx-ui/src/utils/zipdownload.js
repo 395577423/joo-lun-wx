@@ -8,7 +8,7 @@ const mimeMap = {
 
 const baseUrl = process.env.VUE_APP_BASE_API
 export function downLoadZip(str, filename) {
-  var url = baseUrl + str
+  var url = "https://localhost:7500" + str
   axios({
     method: 'get',
     url: url,
