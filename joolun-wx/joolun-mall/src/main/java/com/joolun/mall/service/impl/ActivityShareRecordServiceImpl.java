@@ -1,12 +1,13 @@
 package com.joolun.mall.service.impl;
 
-import java.util.List;
 import com.joolun.common.utils.DateUtils;
+import com.joolun.mall.entity.ActivityShareRecord;
+import com.joolun.mall.mapper.ActivityShareRecordMapper;
+import com.joolun.mall.service.IActivityShareRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.joolun.system.mapper.ActivityShareRecordMapper;
-import com.joolun.system.domain.ActivityShareRecord;
-import com.joolun.system.service.IActivityShareRecordService;
+
+import java.util.List;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -15,7 +16,7 @@ import com.joolun.system.service.IActivityShareRecordService;
  * @date 2022-08-12
  */
 @Service
-public class ActivityShareRecordServiceImpl implements IActivityShareRecordService 
+public class ActivityShareRecordServiceImpl implements IActivityShareRecordService
 {
     @Autowired
     private ActivityShareRecordMapper activityShareRecordMapper;

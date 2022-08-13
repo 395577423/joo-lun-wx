@@ -1,12 +1,13 @@
 package com.joolun.mall.service.impl;
 
-import java.util.List;
 import com.joolun.common.utils.DateUtils;
+import com.joolun.mall.entity.Activity;
+import com.joolun.mall.mapper.ActivityMapper;
+import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.joolun.system.mapper.ActivityMapper;
-import com.joolun.system.domain.Activity;
-import com.joolun.system.service.IActivityService;
+
+import java.util.List;
 
 /**
  * 社会活动Service业务层处理
@@ -15,7 +16,7 @@ import com.joolun.system.service.IActivityService;
  * @date 2022-08-12
  */
 @Service
-public class ActivityServiceImpl implements IActivityService 
+public class ActivityServiceImpl implements IActivityService
 {
     @Autowired
     private ActivityMapper activityMapper;

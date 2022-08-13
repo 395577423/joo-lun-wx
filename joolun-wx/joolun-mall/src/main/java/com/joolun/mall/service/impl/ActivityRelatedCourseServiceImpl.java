@@ -1,11 +1,12 @@
 package com.joolun.mall.service.impl;
 
-import java.util.List;
+import com.joolun.mall.entity.ActivityRelatedCourse;
+import com.joolun.mall.mapper.ActivityRelatedCourseMapper;
+import com.joolun.mall.service.IActivityRelatedCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.joolun.system.mapper.ActivityRelatedCourseMapper;
-import com.joolun.system.domain.ActivityRelatedCourse;
-import com.joolun.system.service.IActivityRelatedCourseService;
+
+import java.util.List;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -14,7 +15,7 @@ import com.joolun.system.service.IActivityRelatedCourseService;
  * @date 2022-08-12
  */
 @Service
-public class ActivityRelatedCourseServiceImpl implements IActivityRelatedCourseService 
+public class ActivityRelatedCourseServiceImpl implements IActivityRelatedCourseService
 {
     @Autowired
     private ActivityRelatedCourseMapper activityRelatedCourseMapper;
