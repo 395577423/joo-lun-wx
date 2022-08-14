@@ -1,9 +1,11 @@
 package com.joolun.mall.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.common.annotation.Excel;
+import lombok.Data;
 
 /**
  * 【请填写功能名称】对象 activity_share_record
@@ -11,6 +13,7 @@ import com.joolun.common.annotation.Excel;
  * @author Owen
  * @date 2022-08-12
  */
+@Data
 public class ActivityShareRecord extends Model<ActivityShareRecord>
 {
     private static final long serialVersionUID = 1L;
@@ -43,4 +46,5 @@ public class ActivityShareRecord extends Model<ActivityShareRecord>
     private Integer withdraw;
 
 
+    private Date createTime;
 }

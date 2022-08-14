@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteActivityCategoryById" parameterType="java.langLong">
+    <delete id="deleteActivityCategoryById" parameterType="java.lang.Long">
         delete from activity_category where id = #{id}
     </delete>
 

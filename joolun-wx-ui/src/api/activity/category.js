@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
 // 查询【请填写功能名称】列表
-export function listCategory(query) {
+export function pageListCategory(query) {
   return request({
-    url: '/activity/category/list',
+    url: '/activity/category/page',
     method: 'get',
     params: query
   })

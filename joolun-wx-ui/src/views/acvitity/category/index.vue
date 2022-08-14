@@ -1,28 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="活动分类名称" prop="categoryName">
+      <el-form-item label="名称" prop="categoryName">
         <el-input
           v-model="queryParams.categoryName"
           placeholder="请输入活动分类名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="创建人id" prop="creatorId">
-        <el-input
-          v-model="queryParams.creatorId"
-          placeholder="请输入创建人id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="创建人姓名" prop="creator">
-        <el-input
-          v-model="queryParams.creator"
-          placeholder="请输入创建人姓名"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -67,24 +49,12 @@
           v-hasPermi="['system:category:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['system:category:export']"
-        >导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="活动分类名称" align="center" prop="categoryName" />
-      <el-table-column label="创建人id" align="center" prop="creatorId" />
       <el-table-column label="创建人姓名" align="center" prop="creator" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -105,7 +75,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -116,15 +86,9 @@
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="活动分类名称" prop="categoryName">
           <el-input v-model="form.categoryName" placeholder="请输入活动分类名称" />
-        </el-form-item>
-        <el-form-item label="创建人id" prop="creatorId">
-          <el-input v-model="form.creatorId" placeholder="请输入创建人id" />
-        </el-form-item>
-        <el-form-item label="创建人姓名" prop="creator">
-          <el-input v-model="form.creator" placeholder="请输入创建人姓名" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -136,7 +100,7 @@
 </template>
 
 <script>
-import { listCategory, getCategory, delCategory, addCategory, updateCategory, exportCategory } from "@/api/system/category";
+import { pageListCategory, getCategory, delCategory, addCategory, updateCategory } from "@/api/activity/category";
 
 export default {
   name: "Category",
@@ -176,15 +140,6 @@ export default {
       rules: {
         categoryName: [
           { required: true, message: "活动分类名称不能为空", trigger: "blur" }
-        ],
-        creatorId: [
-          { required: true, message: "创建人id不能为空", trigger: "blur" }
-        ],
-        creator: [
-          { required: true, message: "创建人姓名不能为空", trigger: "blur" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
         ]
       }
     };
@@ -196,7 +151,7 @@ export default {
     /** 查询【请填写功能名称】列表 */
     getList() {
       this.loading = true;
-      listCategory(this.queryParams).then(response => {
+      pageListCategory(this.queryParams).then(response => {
         this.categoryList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -238,7 +193,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加活动分类";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -247,7 +202,7 @@ export default {
       getCategory(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改活动分类";
       });
     },
     /** 提交按钮 */
@@ -273,7 +228,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除活动分类编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -282,19 +237,6 @@ export default {
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        })
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportCategory(queryParams);
-        }).then(response => {
-          this.download(response.msg);
         })
     }
   }

@@ -3,8 +3,10 @@ package com.joolun.web.controller.activity;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.common.core.page.TableDataInfo;
 import com.joolun.common.enums.BusinessType;
+import com.joolun.common.utils.SecurityUtils;
 import com.joolun.common.utils.poi.ExcelUtil;
 import com.joolun.mall.entity.Activity;
 import com.joolun.mall.service.IActivityService;
@@ -16,14 +18,13 @@ import java.util.List;
 
 /**
  * 社会活动Controller
- * 
+ *
  * @author Owen
  * @date 2022-08-12
  */
 @RestController
 @RequestMapping("/activity")
-public class ActivityController extends BaseController
-{
+public class ActivityController extends BaseController {
     @Autowired
     private IActivityService activityService;
 
@@ -32,8 +33,7 @@ public class ActivityController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Activity activity)
-    {
+    public TableDataInfo list(Activity activity) {
         startPage();
         List<Activity> list = activityService.selectActivityList(activity);
         return getDataTable(list);
@@ -45,8 +45,7 @@ public class ActivityController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:activity:export')")
     @Log(title = "社会活动", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
-    public AjaxResult export(Activity activity)
-    {
+    public AjaxResult export(Activity activity) {
         List<Activity> list = activityService.selectActivityList(activity);
         ExcelUtil<Activity> util = new ExcelUtil<Activity>(Activity.class);
         return util.exportExcel(list, "activity");
@@ -57,8 +56,7 @@ public class ActivityController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return AjaxResult.success(activityService.selectActivityById(id));
     }
 
@@ -68,8 +66,10 @@ public class ActivityController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:activity:add')")
     @Log(title = "社会活动", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Activity activity)
-    {
+    public AjaxResult add(@RequestBody Activity activity) {
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        activity.setCreator(user.getUserName());
+        activity.setCreatorId(user.getUserId());
         return toAjax(activityService.insertActivity(activity));
     }
 
@@ -79,8 +79,7 @@ public class ActivityController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:activity:edit')")
     @Log(title = "社会活动", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Activity activity)
-    {
+    public AjaxResult edit(@RequestBody Activity activity) {
         return toAjax(activityService.updateActivity(activity));
     }
 
@@ -89,9 +88,8 @@ public class ActivityController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:activity:remove')")
     @Log(title = "社会活动", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(activityService.deleteActivityByIds(ids));
     }
 }
