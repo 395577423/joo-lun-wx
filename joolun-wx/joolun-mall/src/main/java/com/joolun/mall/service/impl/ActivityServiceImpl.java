@@ -1,8 +1,11 @@
 package com.joolun.mall.service.impl;
 
 import com.joolun.common.utils.DateUtils;
+import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
+import com.joolun.mall.entity.ActivityRelatedCourse;
 import com.joolun.mall.mapper.ActivityMapper;
+import com.joolun.mall.mapper.ActivityRelatedCourseMapper;
 import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class ActivityServiceImpl implements IActivityService
 {
     @Autowired
     private ActivityMapper activityMapper;
+
+    @Autowired
+    private ActivityRelatedCourseMapper activityRelatedCourseMapper;
 
     /**
      * 查询社会活动
@@ -92,5 +98,24 @@ public class ActivityServiceImpl implements IActivityService
     public int deleteActivityById(Long id)
     {
         return activityMapper.deleteActivityById(id);
+    }
+
+    /**
+     * 活动关联课程
+     *
+     * @param activityRelateCourseDto
+     */
+    @Override
+    public void doRelateCourse(ActivityRelateCourseDto activityRelateCourseDto) {
+        Long activityId = activityRelateCourseDto.getActivityId();
+        activityRelatedCourseMapper.deleteActivityRelatedCourseByByActivityId(activityId);
+        Long[] courseIds = activityRelateCourseDto.getCourseIds();
+        for (Long courseId : courseIds) {
+            ActivityRelatedCourse activityRelatedCourse = new ActivityRelatedCourse();
+            activityRelatedCourse.setActivityId(activityId);
+            activityRelatedCourse.setCourseId(courseId);
+            activityRelatedCourseMapper.insertActivityRelatedCourse(activityRelatedCourse);
+
+        }
     }
 }

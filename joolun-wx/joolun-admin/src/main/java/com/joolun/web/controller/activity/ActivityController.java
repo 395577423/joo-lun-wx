@@ -8,6 +8,7 @@ import com.joolun.common.core.page.TableDataInfo;
 import com.joolun.common.enums.BusinessType;
 import com.joolun.common.utils.SecurityUtils;
 import com.joolun.common.utils.poi.ExcelUtil;
+import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
 import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,17 @@ public class ActivityController extends BaseController {
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(activityService.deleteActivityByIds(ids));
     }
+
+    /**
+     * 活动关联课程
+     * @param activityRelateCourseDto
+     * @return
+     */
+    @PostMapping("/relate/course")
+    @Log(title = "活动关联课程", businessType = BusinessType.OTHER)
+    public AjaxResult relateCourse(@RequestBody ActivityRelateCourseDto activityRelateCourseDto){
+        activityService.doRelateCourse(activityRelateCourseDto);
+        return AjaxResult.success();
+    }
+
 }

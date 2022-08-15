@@ -60,4 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <delete id="deleteActivityRelatedCourseByByActivityId" parameterType="java.lang.Long">
+        delete from activity_related_course where activity_id = #{activityId}
+    </delete>
 </mapper>

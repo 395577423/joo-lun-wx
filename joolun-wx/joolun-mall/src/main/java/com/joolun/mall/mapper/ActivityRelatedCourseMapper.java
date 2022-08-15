@@ -59,4 +59,11 @@ public interface ActivityRelatedCourseMapper
      * @return 结果
      */
     public int deleteActivityRelatedCourseByIds(Long[] ids);
+
+    /**
+     * 根据activityId删除数据
+     * @param activityId
+     * @return
+     */
+    int deleteActivityRelatedCourseByByActivityId(Long activityId);
 }

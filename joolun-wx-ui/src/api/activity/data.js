@@ -51,3 +51,11 @@ export function exportActivity(query) {
     params: query
   })
 }
+
+export function relateCourse(data) {
+  return request({
+    url: '/activity/relate/course',
+    method: 'post',
+    data: data
+  })
+}

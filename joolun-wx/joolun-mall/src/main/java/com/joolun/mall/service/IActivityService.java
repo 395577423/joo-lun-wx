@@ -1,5 +1,6 @@
 package com.joolun.mall.service;
 
+import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
 
 import java.util.List;
@@ -59,4 +60,10 @@ public interface IActivityService
      * @return 结果
      */
     public int deleteActivityById(Long id);
+
+    /**
+     * 活动关联课程
+     * @param activityRelateCourseDto
+     */
+    void doRelateCourse(ActivityRelateCourseDto activityRelateCourseDto);
 }
