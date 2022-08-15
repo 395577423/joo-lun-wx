@@ -1,6 +1,8 @@
 package com.joolun.mall.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.joolun.mall.entity.ActivityRelatedCourse;
+import com.joolun.mall.entity.Course;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * @author Owen
  * @date 2022-08-12
  */
-public interface IActivityRelatedCourseService 
+public interface IActivityRelatedCourseService extends IService<ActivityRelatedCourse>
 {
     /**
      * 查询【请填写功能名称】
@@ -59,4 +61,11 @@ public interface IActivityRelatedCourseService
      * @return 结果
      */
     public int deleteActivityRelatedCourseById(Long id);
+
+    /**
+     * 获取关联课程
+     * @param activityId
+     * @return
+     */
+    List<Course> getRelateCourse(Long activityId);
 }

@@ -166,6 +166,12 @@ export const tableOption = {
           prop: 'explanation',
           span: 20,
           formslot: true
+        },
+        {
+          label: '关联课程',
+          prop: 'course',
+          span: 20,
+          formslot: true
         }
       ]
     }
@@ -207,5 +213,11 @@ export const courseTableOption = {
       prop: 'endTime',
       type: 'datetime'
     }
+  ]
+}
+
+export const imgTextOption = {
+  span:8,
+  data:[
   ]
 }

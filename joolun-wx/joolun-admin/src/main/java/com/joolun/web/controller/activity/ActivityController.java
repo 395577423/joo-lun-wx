@@ -10,6 +10,7 @@ import com.joolun.common.utils.SecurityUtils;
 import com.joolun.common.utils.poi.ExcelUtil;
 import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
+import com.joolun.mall.service.IActivityRelatedCourseService;
 import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +29,9 @@ import java.util.List;
 public class ActivityController extends BaseController {
     @Autowired
     private IActivityService activityService;
+
+    @Autowired
+    private IActivityRelatedCourseService activityRelatedCourseService;
 
     /**
      * 查询社会活动列表
@@ -106,4 +110,9 @@ public class ActivityController extends BaseController {
         return AjaxResult.success();
     }
 
+    @GetMapping("/relate/course/{activityId}")
+    public AjaxResult getRelateCourse(@PathVariable("activityId") Long activityId) {
+
+        return AjaxResult.success(activityRelatedCourseService.getRelateCourse(activityId));
+    }
 }

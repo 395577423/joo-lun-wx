@@ -59,3 +59,11 @@ export function relateCourse(data) {
     data: data
   })
 }
+
+
+export function getRelateCourse(activityId) {
+  return request({
+    url: '/activity/relate/course/'+activityId,
+    method: 'get'
+  })
+}

@@ -1,5 +1,6 @@
 package com.joolun.mall.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.joolun.mall.entity.ActivityRelatedCourse;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Owen
  * @date 2022-08-12
  */
-public interface ActivityRelatedCourseMapper 
+public interface ActivityRelatedCourseMapper extends BaseMapper<ActivityRelatedCourse>
 {
     /**
      * 查询【请填写功能名称】
