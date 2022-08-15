@@ -23,7 +23,7 @@ public class ActivityServiceImpl implements IActivityService
 
     /**
      * 查询社会活动
-     * 
+     *
      * @param id 社会活动ID
      * @return 社会活动
      */

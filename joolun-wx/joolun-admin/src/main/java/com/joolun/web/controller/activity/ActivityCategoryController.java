@@ -3,8 +3,10 @@ package com.joolun.web.controller.activity;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.common.core.page.TableDataInfo;
 import com.joolun.common.enums.BusinessType;
+import com.joolun.common.utils.SecurityUtils;
 import com.joolun.common.utils.poi.ExcelUtil;
 import com.joolun.mall.entity.ActivityCategory;
 import com.joolun.mall.service.IActivityCategoryService;
@@ -31,8 +33,8 @@ public class ActivityCategoryController extends BaseController
      * 查询【请填写功能名称】列表
      */
     @PreAuthorize("@ss.hasPermi('system:category:list')")
-    @GetMapping("/list")
-    public TableDataInfo list(ActivityCategory activityCategory)
+    @GetMapping("/page")
+    public TableDataInfo page(ActivityCategory activityCategory)
     {
         startPage();
         List<ActivityCategory> list = activityCategoryService.selectActivityCategoryList(activityCategory);
@@ -63,13 +65,16 @@ public class ActivityCategoryController extends BaseController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增【活动分类】
      */
     @PreAuthorize("@ss.hasPermi('system:category:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ActivityCategory activityCategory)
     {
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        activityCategory.setCreatorId(user.getUserId());
+        activityCategory.setCreator(user.getUserName());
         return toAjax(activityCategoryService.insertActivityCategory(activityCategory));
     }
 
@@ -93,5 +98,12 @@ public class ActivityCategoryController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(activityCategoryService.deleteActivityCategoryByIds(ids));
+    }
+
+    @GetMapping("/list")
+    public AjaxResult list(ActivityCategory activityCategory)
+    {
+        List<ActivityCategory> list = activityCategoryService.selectActivityCategoryList(activityCategory);
+        return AjaxResult.success(list);
     }
 }

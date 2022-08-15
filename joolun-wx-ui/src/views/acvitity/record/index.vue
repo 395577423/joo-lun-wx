@@ -135,7 +135,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import { listRecord, getRecord, delRecord, addRecord, updateRecord, exportRecord } from "@/api/system/record";
+import { listRecord, getRecord, delRecord, addRecord, updateRecord, exportRecord } from "@/api/activity/record";
 
 export default {
   name: "Record",

@@ -45,5 +45,6 @@ public class ActivityShareRecord extends Model<ActivityShareRecord>
     @Excel(name = "是否已提取")
     private Integer withdraw;
 
+
     private Date createTime;
 }
