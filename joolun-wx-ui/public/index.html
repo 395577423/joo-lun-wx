@@ -11,6 +11,15 @@
     <meta name="referrer" content="no-referrer"/>
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <script src="https://avuejs.com/cdn/aliyun-oss-sdk.min.js"></script>
+    <!-- 高德地图包 -->
+    <script>
+        window._AMapSecurityConfig = {
+            securityJsCode: '40aea952b55651f7167e664758dd34ad',
+        }
+    </script>
+    <script
+      src="https://webapi.amap.com/maps?v=1.4.15&key=99f1daf29cf6a392743586a6a9b6311e&plugin=AMap.Geocoder"></script>
+    <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
     <title><%= webpackConfig.name %></title>
 	  <style>
     html,

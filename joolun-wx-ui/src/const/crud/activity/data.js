@@ -113,21 +113,11 @@ export const tableOption = {
         {
           label: '活动地址',
           prop: 'address',
+          span: 20,
+          formslot:true,
           rules: [{
             required: true,
             message: '活动地址不能为空',
-            trigger: 'blur'
-          }, {
-            max: 20,
-            message: '长度在不能超过50个字符'
-          }]
-        }, {
-          label: '活动地址经纬度',
-          prop: 'location',
-          placeholder: "请输入活动地址经纬度，格式如128.12,32.23。经度,纬度",
-          rules: [{
-            required: true,
-            message: '活动地址经纬度不能为空',
             trigger: 'blur'
           }, {
             max: 20,
