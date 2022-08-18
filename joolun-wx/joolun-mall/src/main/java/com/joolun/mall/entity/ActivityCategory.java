@@ -24,6 +24,10 @@ public class ActivityCategory extends Model<ActivityCategory>
     @Excel(name = "活动分类名称")
     private String categoryName;
 
+
+    @Excel(name = "图标")
+    private String coverImage;
+
     /** 创建人id */
     @Excel(name = "创建人id")
     private Long creatorId;

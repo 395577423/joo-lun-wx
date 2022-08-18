@@ -55,6 +55,7 @@
     <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="活动分类名称" align="center" prop="categoryName" />
+      <el-table-column label="封面图片" align="center" prop="coverImage" />
       <el-table-column label="创建人姓名" align="center" prop="creator" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -89,6 +90,9 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="活动分类名称" prop="categoryName">
           <el-input v-model="form.categoryName" placeholder="请输入活动分类名称" />
+        </el-form-item>
+        <el-form-item label="图片" prop="coverImage">
+          <el-input v-model="form.coverImage" placeholder="请上传图片" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
