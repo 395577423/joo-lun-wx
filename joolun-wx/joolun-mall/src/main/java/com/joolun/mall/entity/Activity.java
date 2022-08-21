@@ -2,8 +2,12 @@ package com.joolun.mall.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.joolun.common.annotation.Excel;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -37,11 +41,15 @@ public class Activity extends Model<Activity>
 
     /** 活动地点 */
     @Excel(name = "活动地点")
-    private String address;
+    @TableField(typeHandler = FastjsonTypeHandler.class)
+    private Object address;
 
     /** $column.columnComment */
-    @Excel(name = "活动地点")
+    @Excel(name = "活动封面图片")
     private String imageUrl;
+
+    @Excel(name = "是否发布")
+    private Boolean published;
 
     /** 活动位置信息 */
     @Excel(name = "活动位置信息")

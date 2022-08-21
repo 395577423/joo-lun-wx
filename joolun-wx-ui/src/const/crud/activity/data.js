@@ -36,6 +36,14 @@ export const tableOption = {
       listType: 'picture-img'
     },
     {
+      label: '是否发布',
+      prop: 'published',
+      type: 'radio',
+      slot:true,
+      display: false,
+      editDisplay: false
+    },
+    {
       label: '活动地址',
       prop: 'address',
       display: false
@@ -119,9 +127,6 @@ export const tableOption = {
             required: true,
             message: '活动地址不能为空',
             trigger: 'blur'
-          }, {
-            max: 20,
-            message: '长度在不能超过50个字符'
           }]
         },
         {

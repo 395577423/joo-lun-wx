@@ -24,7 +24,9 @@
     "pages/course/course-report/index",
     "pages/course/empower-video/index",
     "pages/course/empower/index",
-    "pages/map/index"
+    "pages/map/index",
+    "pages/activity/category/index",
+    "pages/activity/detail/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -44,7 +46,12 @@
         "selectedIconPath": "public/img/1-002.png",
         "text": "首页"
       },
-
+      {
+        "pagePath": "pages/activity/category/index",
+        "iconPath": "public/img/8-001.png",
+        "selectedIconPath": "public/img/8-002.png",
+        "text": "活动"
+      },
       {
         "pagePath": "pages/user/user-center/index",
         "iconPath": "public/img/4-001.png",

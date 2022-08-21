@@ -101,7 +101,7 @@ Page({
     var that = this
     let id = that.data.id
     let userId = that.data.userId
-    app.api.empowerUnifiedOrder({
+  app.api.empowerUnifiedOrder({
         id: id,
         userId: userId
       })

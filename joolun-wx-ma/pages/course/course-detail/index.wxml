@@ -13,7 +13,7 @@
     <view class="padding-xl radius shadow-warp bg-white margin-top">
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">第 6-7 天 好书放映室</text>
+          <text class=" text-shadow text-black">任务一：了解这本好书</text>
           <button class="cu-btn round line-blue fr" bindtap="toVideoPage" data-type="1" style="position: relative; left: 166rpx; top: 0rpx">看视频
           </button>
         </view>
@@ -21,7 +21,7 @@
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">第 8-11天 知识小课堂</text>
+          <text class=" text-shadow text-black">任务二：拓展百科知识</text>
           <button class="cu-btn round line-blue margin-right-xs" bindtap="toVideoPage" data-type="2" style="position: relative; left: 160rpx; top: -1rpx">上学堂
           </button>
         </view>
@@ -29,7 +29,7 @@
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">第 12 天 孩子的心声</text>
+          <text class=" text-shadow text-black">任务三：启发孩子思考</text>
           <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage" style="position: relative; left: 181rpx; top: -1rpx">来聊聊
           </button>
         </view>
@@ -37,7 +37,7 @@
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">第 13 天 大闯关</text>
+          <text class=" text-shadow text-black">任务四：积累常识考点</text>
           <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 236rpx; top: 0rpx">去答题
           </button>
         </view>
@@ -46,7 +46,7 @@
 
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
-          <text class=" text-shadow text-black">第 14 天 生成读书报告</text>
+          <text class=" text-shadow text-black">任务五：生成读书报告</text>
           <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 149rpx; top: 0rpx">看报告
           </button>
         </view>

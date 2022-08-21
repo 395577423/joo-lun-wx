@@ -1,5 +1,8 @@
 package com.joolun.web.controller.activity;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.common.collect.Lists;
 import com.joolun.common.annotation.Log;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
@@ -10,12 +13,14 @@ import com.joolun.common.utils.SecurityUtils;
 import com.joolun.common.utils.poi.ExcelUtil;
 import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
+import com.joolun.mall.entity.Course;
 import com.joolun.mall.service.IActivityRelatedCourseService;
 import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +45,7 @@ public class ActivityController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Activity activity) {
         startPage();
-        List<Activity> list = activityService.selectActivityList(activity);
+        List<Activity> list = activityService.list(Wrappers.lambdaQuery(activity).orderByDesc(Activity::getCreateTime));
         return getDataTable(list);
     }
 
@@ -51,7 +56,7 @@ public class ActivityController extends BaseController {
     @Log(title = "社会活动", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public AjaxResult export(Activity activity) {
-        List<Activity> list = activityService.selectActivityList(activity);
+        List<Activity> list = activityService.list(Wrappers.lambdaQuery(activity));
         ExcelUtil<Activity> util = new ExcelUtil<Activity>(Activity.class);
         return util.exportExcel(list, "activity");
     }
@@ -62,7 +67,7 @@ public class ActivityController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return AjaxResult.success(activityService.selectActivityById(id));
+        return AjaxResult.success(activityService.getById(id));
     }
 
     /**
@@ -73,9 +78,11 @@ public class ActivityController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody Activity activity) {
         SysUser user = SecurityUtils.getLoginUser().getUser();
+        activity.setPublished(false);
         activity.setCreator(user.getUserName());
         activity.setCreatorId(user.getUserId());
-        return toAjax(activityService.insertActivity(activity));
+        boolean save = activityService.save(activity);
+        return toAjax(save ? 1 : 0);
     }
 
     /**
@@ -85,7 +92,15 @@ public class ActivityController extends BaseController {
     @Log(title = "社会活动", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Activity activity) {
-        return toAjax(activityService.updateActivity(activity));
+        //发布是校验是否已关联课程
+        if (activity.getPublished()) {
+            List<Course> relateCourse = activityRelatedCourseService.getRelateCourse(activity.getId());
+            if (CollectionUtil.isEmpty(relateCourse)) {
+                return AjaxResult.error("发布前请先关联课程！");
+            }
+        }
+        boolean success = activityService.updateById(activity);
+        return toAjax(success ? 1 : 0);
     }
 
     /**
@@ -95,17 +110,18 @@ public class ActivityController extends BaseController {
     @Log(title = "社会活动", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
-        return toAjax(activityService.deleteActivityByIds(ids));
+        return toAjax(activityService.removeByIds(Lists.newArrayList(ids)) ? 1 : 0);
     }
 
     /**
      * 活动关联课程
+     *
      * @param activityRelateCourseDto
      * @return
      */
     @PostMapping("/relate/course")
     @Log(title = "活动关联课程", businessType = BusinessType.OTHER)
-    public AjaxResult relateCourse(@RequestBody ActivityRelateCourseDto activityRelateCourseDto){
+    public AjaxResult relateCourse(@RequestBody ActivityRelateCourseDto activityRelateCourseDto) {
         activityService.doRelateCourse(activityRelateCourseDto);
         return AjaxResult.success();
     }

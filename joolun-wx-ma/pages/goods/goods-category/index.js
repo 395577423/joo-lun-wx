@@ -10,7 +10,6 @@ Page({
   data: {
     config: app.globalData.config,
     TabCur: 0,
-    MainCur: 0,
     VerticalNavTop: 0,
     goodsCategory: [],
     load: true
@@ -40,7 +39,6 @@ Page({
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,
-      MainCur: e.currentTarget.dataset.id,
       VerticalNavTop: (e.currentTarget.dataset.id - 1) * 50
     })
   },

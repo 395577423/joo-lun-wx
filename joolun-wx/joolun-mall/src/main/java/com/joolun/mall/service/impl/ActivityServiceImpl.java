@@ -1,104 +1,44 @@
 package com.joolun.mall.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.joolun.common.utils.DateUtils;
 import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
 import com.joolun.mall.entity.ActivityRelatedCourse;
 import com.joolun.mall.mapper.ActivityMapper;
 import com.joolun.mall.mapper.ActivityRelatedCourseMapper;
+import com.joolun.mall.service.IActivityCategoryService;
+import com.joolun.mall.service.IActivityRelatedCourseService;
 import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 社会活动Service业务层处理
- * 
+ *
  * @author Owen
  * @date 2022-08-12
  */
 @Service
-public class ActivityServiceImpl implements IActivityService
-{
-    @Autowired
-    private ActivityMapper activityMapper;
+public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements IActivityService {
+
 
     @Autowired
-    private ActivityRelatedCourseMapper activityRelatedCourseMapper;
+    private IActivityCategoryService activityCategoryService;
 
-    /**
-     * 查询社会活动
-     *
-     * @param id 社会活动ID
-     * @return 社会活动
-     */
-    @Override
-    public Activity selectActivityById(Long id)
-    {
-        return activityMapper.selectActivityById(id);
-    }
+    @Autowired
+    private IActivityRelatedCourseService activityRelatedCourseService;
 
-    /**
-     * 查询社会活动列表
-     * 
-     * @param activity 社会活动
-     * @return 社会活动
-     */
-    @Override
-    public List<Activity> selectActivityList(Activity activity)
-    {
-        return activityMapper.selectActivityList(activity);
-    }
 
-    /**
-     * 新增社会活动
-     * 
-     * @param activity 社会活动
-     * @return 结果
-     */
-    @Override
-    public int insertActivity(Activity activity)
-    {
-        activity.setCreateTime(DateUtils.getNowDate());
-        return activityMapper.insertActivity(activity);
-    }
-
-    /**
-     * 修改社会活动
-     * 
-     * @param activity 社会活动
-     * @return 结果
-     */
-    @Override
-    public int updateActivity(Activity activity)
-    {
-        return activityMapper.updateActivity(activity);
-    }
-
-    /**
-     * 批量删除社会活动
-     * 
-     * @param ids 需要删除的社会活动ID
-     * @return 结果
-     */
-    @Override
-    public int deleteActivityByIds(Long[] ids)
-    {
-        return activityMapper.deleteActivityByIds(ids);
-    }
-
-    /**
-     * 删除社会活动信息
-     * 
-     * @param id 社会活动ID
-     * @return 结果
-     */
-    @Override
-    public int deleteActivityById(Long id)
-    {
-        return activityMapper.deleteActivityById(id);
-    }
 
     /**
      * 活动关联课程
@@ -108,14 +48,37 @@ public class ActivityServiceImpl implements IActivityService
     @Override
     public void doRelateCourse(ActivityRelateCourseDto activityRelateCourseDto) {
         Long activityId = activityRelateCourseDto.getActivityId();
-        activityRelatedCourseMapper.deleteActivityRelatedCourseByByActivityId(activityId);
+        activityRelatedCourseService.remove(Wrappers.lambdaQuery(ActivityRelatedCourse.class)
+                .eq(ActivityRelatedCourse::getActivityId,activityId));
         Long[] courseIds = activityRelateCourseDto.getCourseIds();
+        List<ActivityRelatedCourse> activityRelatedCourses = new ArrayList<>(courseIds.length);
         for (Long courseId : courseIds) {
             ActivityRelatedCourse activityRelatedCourse = new ActivityRelatedCourse();
             activityRelatedCourse.setActivityId(activityId);
             activityRelatedCourse.setCourseId(courseId);
-            activityRelatedCourseMapper.insertActivityRelatedCourse(activityRelatedCourse);
-
+            activityRelatedCourses.add(activityRelatedCourse);
         }
+        activityRelatedCourseService.saveBatch(activityRelatedCourses);
+    }
+
+    /**
+     * 查看课程关联的活动信息
+     *
+     * @param courseId
+     * @return
+     */
+    @Override
+    public List<Activity> listByCourseId(Long courseId) {
+
+        QueryWrapper<ActivityRelatedCourse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(ActivityRelatedCourse::getCourseId, courseId);
+        List<ActivityRelatedCourse> activityRelatedCourses = activityRelatedCourseService.list(queryWrapper);
+        if (CollectionUtil.isNotEmpty(activityRelatedCourses)) {
+            List<Long> activityIds = activityRelatedCourses.stream().map(ActivityRelatedCourse::getActivityId)
+                    .collect(Collectors.toList());
+            List<Activity> activities = this.listByIds(activityIds);
+            return activities;
+        }
+        return null;
     }
 }

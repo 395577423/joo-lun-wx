@@ -16,26 +16,35 @@
                @selection-change="selectionChange"
     >
       <template slot-scope="scope" slot="menu">
-        <el-button icon="el-icon-connection" size="small" type="text" @click="selectCourse(scope.row,scope.index)">关联课程
+        <el-button icon="el-icon-connection" size="small" type="text" @click="selectCourse(scope.row,scope.row.$index)">关联课程
         </el-button>
-        <el-button icon="el-icon-position" size="small" type="text" @click="publish(scope.row)">发布</el-button>
+      </template>
+
+      <template slot="published" slot-scope="scope">
+        <el-switch
+          v-model="scope.row.published"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="handlePublish(scope)"
+        >
+        </el-switch>
       </template>
 
       <template slot="introductionForm" slot-scope="row">
-        <BaseEditor v-model="row.introduction"></BaseEditor>
+        <BaseEditor v-model="form.introduction"></BaseEditor>
       </template>
 
       <template slot="explanationForm" slot-scope="row">
-        <BaseEditor v-model="row.explanation"></BaseEditor>
+        <BaseEditor v-model="form.explanation"></BaseEditor>
       </template>
       <template slot="courseForm">
         <avue-data-imgtext :option="imgTextOption"></avue-data-imgtext>
       </template>
 
       <template slot="addressForm">
-        <el-row >
+        <el-row>
           <el-col>
-            <avue-input-map  :params="mapParams" placeholder="请选择地图" v-model="amap_data" ></avue-input-map>
+            <avue-input-map :params="mapParams" placeholder="请选择地图" v-model="form.address"></avue-input-map>
           </el-col>
         </el-row>
       </template>
@@ -57,7 +66,6 @@
                  @search-change="searchCourseChange"
                  @selection-change="selectionCourseChange"
                  @refresh-change="refreshCourseChange"
-                 @before-open="beforeOpen"
       >
         <template slot="header">
           <el-button type="success" size="small" @click="handleRelate">确定</el-button>
@@ -94,7 +102,7 @@
                 page: {
                     total: 0, // 总页数
                     currentPage: 1, // 当前页数
-                    pageSize: 20, // 每页显示多少条
+                    pageSize: 10, // 每页显示多少条
                     ascs: [],//升序字段
                     descs: 'create_time',//降序字段
                 },
@@ -121,8 +129,7 @@
                 relateCourseData: {},
                 mapParams: {
                     zoom: 10,
-                },
-                amap_data: [ 112.93888200000004, 28.228304, "湖南省长沙市" ]
+                }
             }
         },
         watch: {},
@@ -137,6 +144,8 @@
             },
             beforeOpen(done, type) {
                 if (type == 'add') {
+                    this.imgTextOption.data = [];
+                    this.$set(this.form, 'address', [112.93888200000004, 28.228304, "湖南省长沙市"])
                     done()
                 } else if (type == 'edit') {
                     this.tableLoading = true
@@ -153,6 +162,7 @@
                         })
                         this.$set(this.form, 'introduction', response.data.introduction)
                         this.$set(this.form, 'explanation', response.data.explanation)
+                        this.$set(this.form, 'address', JSON.parse(response.data.address))
                         this.tableLoading = false
                         done()
                     })
@@ -168,14 +178,14 @@
             getPage(page, params) {
                 this.tableLoading = true
                 listActivity(Object.assign({
-                    current: page.currentPage,
-                    size: page.pageSize,
+                    pageNum: page.currentPage,
+                    pageSize: page.pageSize,
                     descs: this.page.descs,
                     ascs: this.page.ascs
                 }, params, this.paramsSearch)).then(response => {
                     let tableData = response.rows
                     this.tableData = tableData
-                    this.page.total = response.data.total
+                    this.page.total = response.total
                     this.page.currentPage = page.currentPage
                     this.page.pageSize = page.pageSize
                     this.tableLoading = false
@@ -225,7 +235,6 @@
                     done()
                     this.getPage(this.page)
                 }).catch(() => {
-                    loading()
                 })
             },
             /**
@@ -256,10 +265,6 @@
             selectCourse(row, index) {
                 this.selectedActivityId = row.id;
                 this.open = true;
-                debugger
-            },
-            publish(row) {
-
             },
             getCoursePage() {
                 this.tableLoading = true
@@ -316,6 +321,18 @@
                 list.forEach(item => {
                     this.selectionCourseId.push(item.id)
                 });
+            },
+            handlePublish(scope) {
+                let row = scope.row;
+                updateActivity(row).then(data => {
+                    this.$message({
+                        showClose: true,
+                        message: '发布成功',
+                        type: 'success'
+                    })
+                }).catch(() => {
+                    row.published = false;
+                })
             }
 
 

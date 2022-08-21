@@ -205,5 +205,14 @@ module.exports = {
     },
     getLibiary:(data)=>{
       return request('/weixin/api/bookstore/library','post',data,true)
+    },
+    getActivityCategory:(data)=>{
+      return request('/weixin/api/activity/category/list','get',data)
+    },
+    getActivityList:(categoryId,pageNo,pageSize)=>{
+      return request('/weixin/api/activity/list?categoryId='+categoryId+'&current='+pageNo+'&size='+pageSize,'post')
+    },
+    getActivityDetail:(activityId) =>{
+      return request('/weixin/api/activity/'+activityId,'get')
     }
 }

@@ -1,5 +1,7 @@
 package com.joolun.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.mall.entity.ActivityRelatedCourse;
 import com.joolun.mall.entity.Course;
@@ -20,83 +22,17 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ActivityRelatedCourseServiceImpl extends ServiceImpl<ActivityRelatedCourseMapper, ActivityRelatedCourse> implements IActivityRelatedCourseService {
-    @Autowired
-    private ActivityRelatedCourseMapper activityRelatedCourseMapper;
 
     @Autowired
     ICourseService courseService;
 
-    /**
-     * 查询【请填写功能名称】
-     *
-     * @param id 【请填写功能名称】ID
-     * @return 【请填写功能名称】
-     */
-    @Override
-    public ActivityRelatedCourse selectActivityRelatedCourseById(Long id) {
-        return activityRelatedCourseMapper.selectActivityRelatedCourseById(id);
-    }
 
-    /**
-     * 查询【请填写功能名称】列表
-     *
-     * @param activityRelatedCourse 【请填写功能名称】
-     * @return 【请填写功能名称】
-     */
-    @Override
-    public List<ActivityRelatedCourse> selectActivityRelatedCourseList(ActivityRelatedCourse activityRelatedCourse) {
-        return activityRelatedCourseMapper.selectActivityRelatedCourseList(activityRelatedCourse);
-    }
-
-    /**
-     * 新增【请填写功能名称】
-     *
-     * @param activityRelatedCourse 【请填写功能名称】
-     * @return 结果
-     */
-    @Override
-    public int insertActivityRelatedCourse(ActivityRelatedCourse activityRelatedCourse) {
-        return activityRelatedCourseMapper.insertActivityRelatedCourse(activityRelatedCourse);
-    }
-
-    /**
-     * 修改【请填写功能名称】
-     *
-     * @param activityRelatedCourse 【请填写功能名称】
-     * @return 结果
-     */
-    @Override
-    public int updateActivityRelatedCourse(ActivityRelatedCourse activityRelatedCourse) {
-        return activityRelatedCourseMapper.updateActivityRelatedCourse(activityRelatedCourse);
-    }
-
-    /**
-     * 批量删除【请填写功能名称】
-     *
-     * @param ids 需要删除的【请填写功能名称】ID
-     * @return 结果
-     */
-    @Override
-    public int deleteActivityRelatedCourseByIds(Long[] ids) {
-        return activityRelatedCourseMapper.deleteActivityRelatedCourseByIds(ids);
-    }
-
-    /**
-     * 删除【请填写功能名称】信息
-     *
-     * @param id 【请填写功能名称】ID
-     * @return 结果
-     */
-    @Override
-    public int deleteActivityRelatedCourseById(Long id) {
-        return activityRelatedCourseMapper.deleteActivityRelatedCourseById(id);
-    }
 
     @Override
     public List<Course> getRelateCourse(Long activityId) {
-        ActivityRelatedCourse queryBean = new ActivityRelatedCourse();
-        queryBean.setActivityId(activityId);
-        List<ActivityRelatedCourse> activityRelatedCourses = selectActivityRelatedCourseList(queryBean);
+        LambdaQueryWrapper<ActivityRelatedCourse> queryWrapper = Wrappers.lambdaQuery(ActivityRelatedCourse.class)
+                .eq(ActivityRelatedCourse::getActivityId, activityId);
+        List<ActivityRelatedCourse> activityRelatedCourses = this.list(queryWrapper);
         if (!activityRelatedCourses.isEmpty()) {
             List<Long> courseIdList = activityRelatedCourses.stream()
                     .map(ActivityRelatedCourse::getCourseId).collect(Collectors.toList());

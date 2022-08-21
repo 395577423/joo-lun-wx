@@ -18,7 +18,7 @@
       {{item.name}}
     </view>
   </scroll-view>
-  <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">
+  <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)"  bindscroll="VerticalMain">
     <view class="padding-tb-xs padding-lr-sm" wx:for="{{goodsCategory}}" wx:key="index" id="main-{{index}}">
       <view class='cu-bar solid-bottom bg-white'>
         <view class='action'>
