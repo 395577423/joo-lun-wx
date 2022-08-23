@@ -32,10 +32,21 @@ public interface MallConstants {
 	 * redis订单key
 	 */
 	String REDIS_ORDER_KEY_IS_PAY_0 = "mall:order:is_pay_0:";
+
+	/**
+	 * redis活动订单key
+	 */
+	String REDIS_ACTIVITY_ORDER_KEY_IS_PAY_0 = "activity:order:is_pay_0:";
 	/**
 	 * redis订单key
 	 */
 	String REDIS_ORDER_KEY_STATUS_2 = "mall:order:status_2:";
+
+	/**
+	 * redis订单key
+	 */
+	String REDIS_ACTIVITY_ORDER_KEY_STATUS_2 = "activity:order:status_2:";
+
 	/**
 	 * 应用类型1小程序
 	 */

@@ -10,4 +10,6 @@ import com.joolun.mall.entity.ActivityOrderInfo;
  */
 public interface IActivityOrderInfoService extends IService<ActivityOrderInfo> {
 
+
+    ActivityOrderInfo queryById(Long id);
 }

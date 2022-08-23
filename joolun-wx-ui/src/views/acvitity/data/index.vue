@@ -90,8 +90,7 @@
     } from "@/api/activity/data";
     import {getCoursePage} from '@/api/course/course'
     import {courseTableOption, tableOption, imgTextOption} from "@/const/crud/activity/data";
-    import BaseEditor from '@/components/Editor/index.vue'
-
+    import BaseEditor from '@/components/Editor/index'
     export default {
         name: "Data",
         components: {BaseEditor},
@@ -163,6 +162,11 @@
                         this.$set(this.form, 'introduction', response.data.introduction)
                         this.$set(this.form, 'explanation', response.data.explanation)
                         this.$set(this.form, 'address', JSON.parse(response.data.address))
+                      if(response.data.subInfo){
+                        this.$set(this.form, 'subInfo', JSON.parse(response.data.subInfo))
+                      }else{
+                        this.$set(this.form, 'subInfo', [])
+                      }
                         this.tableLoading = false
                         done()
                     })
@@ -226,6 +230,9 @@
              **/
             handleUpdate: function (row, index, done, loading) {
                 row.coverUrl = row.coverUrl ? row.coverUrl : ''
+              if(row.subInfo){
+                row.subInfo = JSON.stringify(row.subInfo);
+              }
                 updateActivity(row).then(data => {
                     this.$message({
                         showClose: true,
@@ -244,6 +251,9 @@
              *
              **/
             handleSave: function (row, done, loading) {
+                if(row.subInfo){
+                  row.subInfo = JSON.stringify(row.subInfo);
+                }
                 addActivity(row).then(data => {
                     this.$message({
                         showClose: true,

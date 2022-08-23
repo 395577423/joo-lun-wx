@@ -167,6 +167,51 @@ export const tableOption = {
           prop: 'course',
           span: 20,
           formslot: true
+        },
+        {
+          label: '套餐',
+          prop: 'subInfo',
+          type: 'dynamic',
+          span:24,
+          children: {
+            type:'form',
+            align: 'center',
+            headerAlign: 'center',
+            rowAdd:(done)=>{
+              done();
+            },
+            rowDel:(row,done)=>{
+              done();
+            },
+            column: [{
+              width: 380,
+              label: '套餐名称',
+              prop: "subTitle",
+              formslot: true,
+            }, {
+              width: 200,
+              label: '多选',
+              prop: "subType",
+              type: 'checkbox',
+              dicData: [{
+                label: '成人',
+                value: 1
+              }, {
+                label: '儿童',
+                value: 2
+              }]
+            }, {
+              width: 200,
+              label: '原价',
+              prop: "salesPrice",
+              type: 'number'
+            }, {
+              width: 200,
+              label: '折扣价',
+              prop: "discountPrice",
+              type: 'number'
+            }]
+          }
         }
       ]
     }

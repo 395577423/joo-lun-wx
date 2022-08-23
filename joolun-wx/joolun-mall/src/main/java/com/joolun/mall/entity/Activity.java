@@ -67,6 +67,8 @@ public class Activity extends Model<Activity>
     @Excel(name = "佣金")
     private BigDecimal commission;
 
+    private String subInfo;
+
     /** 创建人id */
     @Excel(name = "创建人id")
     private Long creatorId;

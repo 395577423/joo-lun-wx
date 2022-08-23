@@ -194,21 +194,23 @@ export default {
           param.append('token', token)
           url = 'http://up.qiniu.com/'
         } else if (this.isAliOSS) {
-          oss_config = this.ali
           client = getClient({
-            region: oss_config.region,
-            endpoint: oss_config.endpoint,
-            accessKeyId: oss_config.accessKeyId,
-            accessKeySecret: oss_config.accessKeySecret,
-            bucket: oss_config.bucket,
+            region: 'oss-cn-beijing',
+            endpoint: 'oss-cn-beijing.aliyuncs.com',
+            stsToken: '',
+            accessKeyId: 'LTAI5tAZrUD3jqveb1iB5oeJ',
+            accessKeySecret: '6bKjdqMCnHbWXB8RJVXdtNSyB8qfHu',
+            bucket: 'mall-owen',
+            secure: true
           })
         }
         (() => {
-          if (this.isAliOSS) {
+          if (this.isQiniuOSS) {
+            return this.$axios.post(url, param, { headers })
+          } else {
             console.log('使用阿里上传文件',file.name)
             return client.put(file.name, file)
-          } else {
-            return this.$axios.post(url, param, { headers })
+
           }
         })()
           .then((res) => {

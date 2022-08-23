@@ -49,6 +49,7 @@ export default {
             ["clean"],                                       // 清除文本格式
             ["link", "image", "video"]                       // 链接、图片、视频
           ],
+
         },
         placeholder: "请输入内容",
         readOnly: false,
@@ -107,6 +108,43 @@ export default {
       });
       this.Quill.on("editor-change", (eventName, ...args) => {
         this.$emit("on-editor-change", eventName, ...args);
+      });
+      var toolbar = this.Quill.getModule('toolbar');
+      toolbar.addHandler('image', function (){
+        var _this3 = this;
+        var fileInput = this.container.querySelector('input.ql-image[type=file]');
+        if (fileInput == null) {
+          fileInput = document.createElement('input');
+          fileInput.setAttribute('type', 'file');
+          fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+          fileInput.classList.add('ql-image');
+          fileInput.addEventListener('change', function () {
+            if (fileInput.files != null && fileInput.files[0] != null) {
+              let client = new OSS({
+                region: 'oss-cn-beijing',
+                endpoint: 'oss-cn-beijing.aliyuncs.com',
+                stsToken: '',
+                accessKeyId: 'LTAI5tAZrUD3jqveb1iB5oeJ',
+                accessKeySecret: '6bKjdqMCnHbWXB8RJVXdtNSyB8qfHu',
+                bucket: 'mall-owen',
+                secure: true
+              });
+
+              console.log(client)
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                var range = _this3.quill.getSelection(true);
+                _this3.quill.updateContents(new _quillDelta2.default().retain(range.index).delete(range.length).insert({ image: e.target.result }), _emitter2.default.sources.USER);
+                _this3.quill.setSelection(range.index + 1, _emitter2.default.sources.SILENT);
+                fileInput.value = "";
+              };
+              debugger
+              reader.readAsDataURL(fileInput.files[0]);
+            }
+          });
+          this.container.appendChild(fileInput);
+        }
+        fileInput.click();
       });
     },
   },
