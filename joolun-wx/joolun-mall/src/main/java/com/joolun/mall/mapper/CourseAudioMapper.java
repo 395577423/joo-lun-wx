@@ -8,4 +8,5 @@ import com.joolun.mall.entity.CourseAudio;
  * @date 2022/3/21 15:36
  */
 public interface CourseAudioMapper extends BaseMapper<CourseAudio> {
+
 }
