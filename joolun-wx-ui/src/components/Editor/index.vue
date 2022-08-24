@@ -110,8 +110,8 @@ export default {
         this.$emit("on-editor-change", eventName, ...args);
       });
       var toolbar = this.Quill.getModule('toolbar');
+      let quill = this.Quill;
       toolbar.addHandler('image', function (){
-        var _this3 = this;
         var fileInput = this.container.querySelector('input.ql-image[type=file]');
         if (fileInput == null) {
           fileInput = document.createElement('input');
@@ -119,6 +119,7 @@ export default {
           fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
           fileInput.classList.add('ql-image');
           fileInput.addEventListener('change', function () {
+              console.log(fileInput.files)
             if (fileInput.files != null && fileInput.files[0] != null) {
               let client = new OSS({
                 region: 'oss-cn-beijing',
@@ -129,17 +130,22 @@ export default {
                 bucket: 'mall-owen',
                 secure: true
               });
+              (() => {
+                  return client.put(fileInput.files[0].name, fileInput.files[0])
+              })()
+                  .then((res) => {
+                      let list = {}
+                      var result = ''
+                      list = res
+                      result = list.url
+                      var html = result
+                      console.log(res);
+                      quill.insertEmbed(10, 'image', result);
+                  })
+                  .catch((err) => {
+                      console.log(err);
+                  })
 
-              console.log(client)
-              var reader = new FileReader();
-              reader.onload = function (e) {
-                var range = _this3.quill.getSelection(true);
-                _this3.quill.updateContents(new _quillDelta2.default().retain(range.index).delete(range.length).insert({ image: e.target.result }), _emitter2.default.sources.USER);
-                _this3.quill.setSelection(range.index + 1, _emitter2.default.sources.SILENT);
-                fileInput.value = "";
-              };
-              debugger
-              reader.readAsDataURL(fileInput.files[0]);
             }
           });
           this.container.appendChild(fileInput);
