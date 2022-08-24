@@ -26,7 +26,8 @@
     "pages/course/empower/index",
     "pages/map/index",
     "pages/activity/category/index",
-    "pages/activity/detail/index"
+    "pages/activity/detail/index",
+    "pages/activity/confirm/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

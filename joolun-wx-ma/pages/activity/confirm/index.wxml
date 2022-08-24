@@ -1,0 +1,27 @@
+<view class="margin-bottom-bar">
+  <view class="cu-card bg-white margin-sm radius">
+    <view  class="radius padding" >
+      <image class="img" src="{{activityContent.imageUrl}}"></image>
+    </view>
+    <view class="padding-sm text-xxl">
+      <text class="text-price text-red">{{activityContent.price}}</text>
+    </view>  
+    <view class="padding-left padding-bottom text-xxl">
+      <text>{{activityContent.name}}</text>
+    </view>
+  </view>
+  <view class="cu-card bg-white margin-sm radius">
+  <view class="flex justify-between">
+    <view class="padding ">
+      选择日期
+    </view>
+    <view class="padding cuIcon-right"></view>
+  </view>
+
+    <view class="padding-left padding-bottom">
+      2022-08-12
+    </view>
+  </view>
+  <view class="cu-card bg-white margin-sm radius"></view>
+  <view class="cu-card bg-white margin-sm radius"></view>
+</view>

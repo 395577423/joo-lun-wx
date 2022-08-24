@@ -39,5 +39,7 @@
       </view>
       购物车
     </view>
-    <view class="bg-red submit">立即参与</view>
+    <view class="bg-red submit">
+      <navigator url="/pages/activity/confirm/index?activityId={{activityContent.id}}">立即参与</navigator>
+    </view>
   </view>

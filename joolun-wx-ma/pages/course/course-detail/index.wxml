@@ -30,7 +30,7 @@
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
           <text class=" text-shadow text-black">任务三：启发孩子思考</text>
-          <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage" style="position: relative; left: 181rpx; top: -1rpx">来聊聊
+          <button class="cu-btn round line-blue margin-right-xs" bindtap="toAudioPage" style="position: relative; left: 160rpx; top: -1rpx">来聊聊
           </button>
         </view>
       </view>
@@ -38,7 +38,7 @@
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
           <text class=" text-shadow text-black">任务四：积累常识考点</text>
-          <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 236rpx; top: 0rpx">去答题
+          <button class="cu-btn round line-blue margin-right-xs" bindtap="toQuestionPage" style="position: relative; left: 160rpx; top: 0rpx">去答题
           </button>
         </view>
       </view>
@@ -47,7 +47,7 @@
       <view class="cu-bar bg-cusred solid-bottom margin-top-sm">
         <view class="action">
           <text class=" text-shadow text-black">任务五：生成读书报告</text>
-          <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 149rpx; top: 0rpx">看报告
+          <button class="cu-btn round line-blue margin-right-xs " bindtap="toReportPage" style="position: relative; left: 160rpx; top: 0rpx">看报告
           </button>
         </view>
       </view>
