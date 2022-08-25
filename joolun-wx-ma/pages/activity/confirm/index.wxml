@@ -12,7 +12,7 @@
   </view>
   <view class="cu-card bg-white margin-sm radius">
   <view class="flex justify-between">
-    <view class="padding ">
+    <view class="padding text-xl">
       选择日期
     </view>
     <view class="padding cuIcon-right"></view>
@@ -22,6 +22,16 @@
       2022-08-12
     </view>
   </view>
-  <view class="cu-card bg-white margin-sm radius"></view>
+  <view class="cu-card bg-white margin-sm radius">
+    <view class=" margin-left margin-right padding-bottom padding-top solids-bottom  text-xl">
+      选择套餐
+    </view>
+    <view class="margin" wx:for="{{subInfo}}" wx:key="index">
+      <view class="flex justify-between">
+        <view class="text">{{item.subTitle}}</view>
+      </view>
+    </view>
+
+  </view>
   <view class="cu-card bg-white margin-sm radius"></view>
 </view>

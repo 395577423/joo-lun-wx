@@ -6,40 +6,42 @@
 </swiper>
 <view class="solids-bottom padding-xs flex align-center">
   <view class="flex-sub text-left">
-    <view class="solid-bottom text-xxl price-padding">
+    <view class="solid-bottom text-xxl padding">
       <text class="text-price text-red">{{activityContent.price}}</text>
     </view>
-    <view class="price-padding">{{activityContent.name}}</view>
+    <view class="padding">{{activityContent.name}}</view>
   </view>
 </view>
-<view class="padding text-left" style="padding-top: 5px;">
-  <view class="padding-xl radius shadow shadow-lg bg-white margin-top">
+<view class="padding-sm text-left">
+  <view class="padding radius shadow shadow-lg bg-white margin-top">
     <text class="cuIcon-location lg text-gray"></text>
     <text>{{address}}</text>
   </view>
 </view>
-<view class="padding text-left">
-    <view class="padding-xl radius shadow-warp bg-white margin-top">
+<view class="padding-sm text-left">
+  <view class="padding-xl radius shadow-warp bg-white margin-top">
     <view class="solid-bottom text-xl padding">
       <text class="text-black text-bold">活动介绍</text>
     </view>
-      <template is="wxParse" data="{{wxParseData:introduction.nodes}}"></template>
-    </view>
+    <template is="wxParse" data="{{wxParseData:introduction.nodes}}"></template>
   </view>
-  <view class="cu-bar bg-white tabbar border shop foot">
-    <button class="action" bindtap="onCreatePoster">
-      <view class="cuIcon-share text-green">
-        <view class="cu-tag badge"></view>
-      </view>
-      分享
-    </button>
-    <view class="action">
-      <view class="cuIcon-cart">
-        <view class="cu-tag badge">99</view>
-      </view>
-      购物车
+</view>
+<view class="cu-bar bg-white tabbar border shop foot">
+  <button class="action" bindtap="onCreatePoster">
+    <view class="cuIcon-share text-green">
+      <view class="cu-tag badge"></view>
     </view>
-    <view class="bg-red submit">
-      <navigator url="/pages/activity/confirm/index?activityId={{activityContent.id}}">立即参与</navigator>
+    分享
+  </button>
+  <view class="action">
+    <view class="cuIcon-cart">
+      <view class="cu-tag badge">99</view>
     </view>
+    购物车
   </view>
+
+  <view class="bg-red submit" bindtap="confirmOrder" data-id="{{activityContent.id}}">
+    立即参与
+  </view>
+
+</view>

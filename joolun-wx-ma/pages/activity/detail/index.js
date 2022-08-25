@@ -39,5 +39,11 @@ Page({
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
     })
+  },
+  confirmOrder(e) {
+    let activityId = e.target.dataset.id
+    wx.navigateTo({
+      url: '/pages/activity/confirm/index?activityId='+activityId,
+    })
   }
 })

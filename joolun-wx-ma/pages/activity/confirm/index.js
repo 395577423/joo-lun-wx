@@ -10,6 +10,7 @@ Page({
   data: {
     activityId: 0,
     activityContent: {},
+    subInfo:[]
   },
   onLoad: function (options) {
     this.setData({
@@ -24,8 +25,10 @@ Page({
   getDetail(activityId) {
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data
+      let subInfo = JSON.parse(activityContent.subInfo);
       this.setData({
-        activityContent: activityContent
+        activityContent: activityContent,
+        subInfo: subInfo
       })
     })
   }
