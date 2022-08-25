@@ -3,3 +3,26 @@
   margin:0 auto;
   border-radius: 10rpx;
 }
+
+.radius-lightgray{
+  border-style: solid;
+  border-width: 2rpx;
+  border-color: lightgray;
+  border-radius: 10rpx;
+}
+
+.radius-orange{
+  border-style: solid;
+  border-width: 2rpx;
+  border-color: green;
+  border-radius: 10rpx;
+}
+
+.foot{
+  position: fixed;
+	width: 100%;
+	bottom: 0;
+	z-index: 1024;
+	box-shadow: 0 -1rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+

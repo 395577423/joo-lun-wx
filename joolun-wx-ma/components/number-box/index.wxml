@@ -1,0 +1,6 @@
+<!-- 数量加减框 -->
+<view class='num-box'>
+  <view class='minus-num bg-size {{number>min?"minus-active":"minus-forbidden"}}' bindtap='minusNumber'></view>
+  <view class='number'><input class="input" data-index="{{index}}" bindblur="inputBlur" value='{{number}}' type="number"></input></view>
+  <view class='plus-num bg-size {{number<max?"add-active":"add-forbidden"}}' bindtap='plusNumber'></view>
+</view>

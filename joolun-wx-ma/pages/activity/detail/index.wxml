@@ -4,7 +4,7 @@
     <image src="{{activityContent.imageUrl}}" mode="aspectFill"></image>
   </swiper-item>
 </swiper>
-<view class="solids-bottom padding-xs flex align-center">
+<view class="padding-xs flex align-center">
   <view class="flex-sub text-left">
     <view class="solid-bottom text-xxl padding">
       <text class="text-price text-red">{{activityContent.price}}</text>
@@ -13,13 +13,13 @@
   </view>
 </view>
 <view class="padding-sm text-left">
-  <view class="padding radius shadow shadow-lg bg-white margin-top">
+  <view class="padding radius shadow shadow-lg bg-white">
     <text class="cuIcon-location lg text-gray"></text>
     <text>{{address}}</text>
   </view>
 </view>
 <view class="padding-sm text-left">
-  <view class="padding-xl radius shadow-warp bg-white margin-top">
+  <view class="padding-xl radius shadow-warp bg-white">
     <view class="solid-bottom text-xl padding">
       <text class="text-black text-bold">活动介绍</text>
     </view>
@@ -33,12 +33,6 @@
     </view>
     分享
   </button>
-  <view class="action">
-    <view class="cuIcon-cart">
-      <view class="cu-tag badge">99</view>
-    </view>
-    购物车
-  </view>
 
   <view class="bg-red submit" bindtap="confirmOrder" data-id="{{activityContent.id}}">
     立即参与

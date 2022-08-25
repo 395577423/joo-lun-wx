@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "确认订单",
   "usingComponents": {
-
+    "num-box":"/components/number-box/index"
   }
 }
