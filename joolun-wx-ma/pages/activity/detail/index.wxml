@@ -14,8 +14,10 @@
 </view>
 <view class="padding-sm text-left">
   <view class="padding radius shadow shadow-lg bg-white">
-    <text class="cuIcon-location lg text-gray"></text>
-    <text>{{address}}</text>
+    <navigator url="/pages/activity/map/index?lon={{longitude}}&lat={{latitude}}&address={{address}}">
+      <text class="cuIcon-location lg text-gray"></text>
+      <text>{{address}}</text>
+    </navigator>
   </view>
 </view>
 <view class="padding-sm text-left">

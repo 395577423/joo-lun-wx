@@ -40,8 +40,11 @@
         <view class="flex-twice flex">
           <view class="padding-xs" wx:for="{{item.subType}}" wx:for-item="item2" wx:key="index">
             <view wx:if="{{item2==1}}" class="cu-tag line-yellow">
+              <image src="/public/img/child_care.png" style="width: 30rpx;height: 30rpx;"></image>
               儿童</view>
-            <view wx:if="{{item2==2}}" class="cu-tag line-orange">成人</view>
+            <view wx:if="{{item2==2}}" class="cu-tag line-orange">
+              <image src="/public/img/adult.png" style="width: 30rpx;height: 30rpx;"></image>
+            成人</view>
           </view>
         </view>
         <view class="flex-sub">

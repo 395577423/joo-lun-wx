@@ -31,11 +31,15 @@ Page({
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data
       let introduction = activityContent.introduction
-      let address = JSON.parse(activityContent.address)[2];
-      console.log(address);
+      let addressInfo = JSON.parse(activityContent.address);
+      let address = addressInfo[2];
+      let lat = addressInfo[1];
+      let lon = addressInfo[0]
       this.setData({
         activityContent: activityContent,
-        address: address
+        address: address,
+        longitude:lon,
+        latitude:lat
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
     })
