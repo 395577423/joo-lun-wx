@@ -214,5 +214,11 @@ module.exports = {
     },
     getActivityDetail:(activityId) =>{
       return request('/weixin/api/activity/'+activityId,'get')
+    },
+    getActitityPersons:() =>{
+      return request('/weixin/api/activity/person/list','get')
+    },
+    saveActivityPerson:(data) =>{
+      return request('/weixin/api/activity/person','post',data)
     }
 }

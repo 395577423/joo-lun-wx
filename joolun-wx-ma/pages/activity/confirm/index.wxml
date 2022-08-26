@@ -41,10 +41,12 @@
           <view class="padding-xs" wx:for="{{item.subType}}" wx:for-item="item2" wx:key="index">
             <view wx:if="{{item2==1}}" class="cu-tag line-yellow">
               <image src="/public/img/child_care.png" style="width: 30rpx;height: 30rpx;"></image>
-              儿童</view>
+              儿童
+            </view>
             <view wx:if="{{item2==2}}" class="cu-tag line-orange">
               <image src="/public/img/adult.png" style="width: 30rpx;height: 30rpx;"></image>
-            成人</view>
+              成人
+            </view>
           </view>
         </view>
         <view class="flex-sub">
@@ -55,19 +57,25 @@
 
   </view>
   <view class="cu-card bg-white margin-sm radius">
-    <view class="flex justify-between">
-      <view class="padding text-xl radius-bottom">
-        选择出行人
+    <navigator url="/pages/activity/person/index">
+      <view class="flex justify-between radius-bottom">
+        <view class="padding text-xl ">
+          选择出行人
+        </view>
+        <view class="padding cuIcon-right">
+        </view>
       </view>
-      <view class="padding cuIcon-right">
-      </view>
+    </navigator>
+    <view class="grid col-5 text-center margin-bottom-sm">
+      <view class="radius-lightgray padding-sm margin-left-sm margin-top-sm" wx:for="{{persons}}" wx:key="{{index}}">{{item.name}}</view>
+    
     </view>
   </view>
-  <view class="cu-card bg-white margin-sm radius" >
+  <view class="cu-card bg-white margin-sm radius">
     <textarea class="padding-sm" maxlength="-1" bindinput="textareaAInput" placeholder="请输入备注信息(非必填)"></textarea>
   </view>
 
-<view style="height: 180rpx;"></view>
+  <view style="height: 180rpx;"></view>
 
   <view class="bg-white border shop foot">
     <view class="flex justify-between padding">

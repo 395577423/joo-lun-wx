@@ -15,7 +15,8 @@ Page({
     minData:1,
     maxData:99,
     number:1,
-    date:'2022-08-25'
+    date:'2022-08-25',
+    persons:[]
   },
   onLoad: function (options) {
     var DATE = util.formatDate(new Date());
@@ -36,6 +37,14 @@ Page({
       this.setData({
         activityContent: activityContent,
         subInfo: subInfo
+      })
+    })
+  },
+  getPersons() {
+    app.api.getActitityPersons().then(res => {
+      let persons = res.data;
+      this.setData({
+        persons:persons
       })
     })
   },

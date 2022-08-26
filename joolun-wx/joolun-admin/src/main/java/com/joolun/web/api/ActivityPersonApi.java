@@ -33,6 +33,8 @@ public class ActivityPersonApi {
      *
      * @return
      */
+    @ApiOperation(value = "获取当前用户的出行人信息")
+    @GetMapping("/list")
     public AjaxResult list() {
         String wxUserId = ThirdSessionHolder.getWxUserId();
         LambdaQueryWrapper<ActivityPerson> queryWrapper = Wrappers.lambdaQuery();

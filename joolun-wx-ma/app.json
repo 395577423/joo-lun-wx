@@ -28,7 +28,9 @@
     "pages/activity/category/index",
     "pages/activity/detail/index",
     "pages/activity/confirm/index",
-    "pages/activity/map/index"
+    "pages/activity/map/index",
+    "pages/activity/person/index",
+    "pages/activity/person/edit/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
