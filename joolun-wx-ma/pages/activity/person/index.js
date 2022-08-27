@@ -23,4 +23,9 @@ Page({
       })
     })
   },
+  toEditPage(e) {
+    wx.navigateTo({
+      url: '/pages/activity/person/edit/index',
+    })
+  }
 })

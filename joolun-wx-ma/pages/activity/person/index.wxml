@@ -2,7 +2,5 @@
 
 </view>
 <view class="padding flex flex-direction foot">
-  <navigator url>
-    <button class="cu-btn bg-blue lg margin-bottom padding">新增出行人</button>
-  </navigator>
+  <button class="cu-btn bg-blue lg margin-bottom padding" bindtap="toEditPage">新增出行人</button>
 </view>

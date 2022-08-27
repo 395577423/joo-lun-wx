@@ -1,2 +1,21 @@
-<view>
-</view>
+<form>
+  <view class="cu-form-group margin-top">
+    <view class="grid col-3 grid-square flex-sub padding-top">
+      <view class="solids" bindtap="ChooseImage">
+        <text class="cuIcon-cameraadd"></text>
+      </view>
+    </view>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">姓名</view>
+    <input placeholder="请输入姓名" value="{{person.name}}"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">电话</view>
+    <input placeholder="请输入电话" value="{{person.tel}}"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">身份证号码</view>
+    <input placeholder="请输入身份证号码" value="{{person.identityNo}}"></input>
+  </view>
+</form>
