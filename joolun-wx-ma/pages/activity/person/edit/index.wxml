@@ -1,21 +1,37 @@
-<form>
-  <view class="cu-form-group margin-top">
-    <view class="grid col-3 grid-square flex-sub padding-top">
-      <view class="solids" bindtap="ChooseImage">
-        <text class="cuIcon-cameraadd"></text>
-      </view>
+<form bindsubmit="save">
+  <view class="bg-white margin-top">
+    <view class="flex justify-center padding-top ">
+      <view wx:for="{{images}}" wx:key="index" bindtap="ViewImage" data-url="{{images[index]}}">
+				<image style="height: 150rpx;" src='{{images[index]}}' mode='aspectFill'></image>
+			</view>
+      <view class="flex align-center" bindtap="ChooseImage" >
+        <text class="cuIcon-cameraadd" class="cuIcon-cameraadd {{person.image==null?'display':'hide'}}"></text>
+      </view> 
     </view>
   </view>
   <view class="cu-form-group">
-    <view class="title">姓名</view>
-    <input placeholder="请输入姓名" value="{{person.name}}"></input>
+    <view class="title"><text class="text-red">*</text> 姓名</view>
+    <input placeholder="请输入姓名" name="name" value="{{person.name}}"></input>
   </view>
   <view class="cu-form-group">
-    <view class="title">电话</view>
-    <input placeholder="请输入电话" value="{{person.tel}}"></input>
+    <view class="title"><text class="text-red">*</text> 手机号</view>
+    <input placeholder="请输入手机号" name="tel" value="{{person.tel}}"></input>
   </view>
   <view class="cu-form-group">
-    <view class="title">身份证号码</view>
-    <input placeholder="请输入身份证号码" value="{{person.identityNo}}"></input>
+    <view class="title"><text class="text-red">*</text> 身份证号码</view>
+    <input placeholder="请输入身份证号码" name="identityNo" value="{{person.identityNo}}"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title"><text class="text-red">*</text> 性别</view>
+    <view class="cu-form-group">
+      <radio-group name="gender">
+        <radio class="blue radio" value="1" checked="{{maleChecked}}" ></radio> 男
+        <radio class="red  radio margin-left-sm" value="0" checked="{{femaleChecked}}"></radio> 女
+      </radio-group>
+    </view>
+  </view>
+
+  <view class="padding margin flex flex-direction">
+    <button form-type="submit" class="cu-btn bg-blue margin-bottom padding" >保存</button>
   </view>
 </form>

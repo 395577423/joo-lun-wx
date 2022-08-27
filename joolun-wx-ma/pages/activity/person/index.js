@@ -12,7 +12,7 @@ Page({
   onLoad: function (options) {
     app.initPage()
     .then(() => {
-      this.getDetail(activityId)
+      this.getPersons()
     })
   },
   getPersons() {
@@ -23,9 +23,10 @@ Page({
       })
     })
   },
-  toEditPage(e) {
+  edit(e) {
+    let id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/activity/person/edit/index',
+      url: '/pages/activity/person/edit/index?id=' + id,
     })
   }
 })

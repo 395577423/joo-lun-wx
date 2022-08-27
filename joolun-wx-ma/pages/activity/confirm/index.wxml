@@ -67,7 +67,7 @@
       </view>
     </navigator>
     <view class="grid col-5 text-center margin-bottom-sm">
-      <view class="radius-lightgray padding-sm margin-left-sm margin-top-sm" wx:for="{{persons}}" wx:key="{{index}}">{{item.name}}</view>
+      <view class="radius-lightgray padding-sm margin-left-sm margin-top-sm" wx:for="{{persons}}" wx:key="index">{{item.name}}</view>
     
     </view>
   </view>

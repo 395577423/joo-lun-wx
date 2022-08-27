@@ -1,0 +1,26 @@
+.flex.justify-center>view {
+	border-radius: 6rpx;
+  border-color: var(--grey);
+  height: 150rpx;
+  width: 150rpx;
+  border-width: 2rpx;
+  background-color: #f5efefdc;
+}
+
+.flex.justify-center>view>text[class*="cuIcon-"] {
+	font-size: 52rpx;
+	color: var(--grey);
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+hide{
+  display: none;
+}

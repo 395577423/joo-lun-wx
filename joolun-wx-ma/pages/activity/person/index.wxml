@@ -1,5 +1,15 @@
-<view class="bg-white radius margin" wx:for="{{persons}}">
-
+<view class="cu-list menu-avatar">
+  <view class="cu-item margin radius" wx:for="{{persons}}" wx:key="index">
+    <view class="cu-avatar round lg" style="background-image:url({{item.image==null?'':item.image}});"></view>
+    <view class="content">
+        <view >{{item.name}}</view>
+        <view class="text-gray text-sm"> 性别：{{item.gender==0?'女':'男'}}</view>
+        <view class="text-gray text-sm">身份证：{{item.identityNo}}</view>
+      </view>
+  <view class="padding-right-sm" bindtap="edit" data-id="{{item.id}}">
+    <text class="cuIcon-edit lg text-grey"></text>
+  </view>
+</view>
 </view>
 <view class="padding flex flex-direction foot">
   <button class="cu-btn bg-blue lg margin-bottom padding" bindtap="toEditPage">新增出行人</button>

@@ -19,10 +19,9 @@ import java.util.List;
  * @author YangLinWei
  * @date 2022-08-25 14:06:58
  */
-@Api(tags = "")
 @Slf4j
 @RestController
-@RequestMapping("/activity/person")
+@RequestMapping("/weixin/api/activity/person")
 public class ActivityPersonApi {
     @Autowired
     private IActivityPersonService activityPersonService;
@@ -57,7 +56,7 @@ public class ActivityPersonApi {
      * 新增or更新
      */
     @ApiOperation(value = "保存")
-    @PostMapping
+    @PostMapping("/save")
     public AjaxResult save(@RequestBody ActivityPerson activityPerson) {
         String wxUserId = ThirdSessionHolder.getWxUserId();
         activityPerson.setUserId(wxUserId);
