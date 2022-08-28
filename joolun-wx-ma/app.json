@@ -30,7 +30,10 @@
     "pages/activity/confirm/index",
     "pages/activity/map/index",
     "pages/activity/person/index",
-    "pages/activity/person/edit/index"
+    "pages/activity/person/edit/index",
+    "pages/activity/order/list/index",
+    "pages/activity/order/detail/index",
+    "pages/activity/relation/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

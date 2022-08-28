@@ -223,5 +223,26 @@ module.exports = {
   },
   getActivityPerson: (data) => {
     return request('/weixin/api/activity/person/' + data, 'get')
+  },
+  subActivityOrder: (data) => {
+    return request('/weixin/api/activity/order/add','post',data)
+  },
+  unifiedActivityOrder: (data) => {
+    return request('/weixin/api/activity/order/unifiedOrder','post',data)
+  },
+  listActivityOrder: (data) => {
+    return request('/weixin/api/activity/order/page', 'get', data, false)
+  },
+  cancelActivityOrder: (orderId) => {
+    return request('/weixin/api/activity/order/cancel/'+orderId, 'put', false)
+  },
+  deleteActivityOrder: (orderId) => {
+    return request('/weixin/api/activity/order/'+orderId, 'delete', false)
+  },
+  getActivityOrder: (orderId) => {
+    return request('/weixin/api/activity/order/'+orderId, 'get', false)
+  },
+  getRelationActivity: (courseId) => {
+    return request('/weixin/api/activity/listByCourseId?courseId='+courseId, 'get', false)
   }
 }

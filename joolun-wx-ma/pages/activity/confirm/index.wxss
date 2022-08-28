@@ -14,7 +14,7 @@
 .radius-orange{
   border-style: solid;
   border-width: 2rpx;
-  border-color: green;
+  border-color: var(--blue);
   border-radius: 10rpx;
 }
 

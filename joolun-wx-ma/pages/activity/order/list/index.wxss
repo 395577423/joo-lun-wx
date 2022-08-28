@@ -1,0 +1,12 @@
+.payment{
+  background-color: #2967ff !important; 
+  width:200rpx;
+}
+.delete-order{
+  background-color: #E54D42 !important; 
+  width:200rpx;
+}
+.cancel-order{
+  background-color: #2d2d2f !important; 
+  width:200rpx;
+}

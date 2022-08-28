@@ -1,8 +1,11 @@
 
 package com.joolun.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joolun.common.annotation.Excel;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -25,6 +28,7 @@ public class ActivityOrderInfo extends Model<ActivityOrderInfo> {
 	private static final long serialVersionUID = 1L;
 
 	/** PK */
+	@TableId(type = IdType.ASSIGN_ID)
 	private String id;
 
 	/** 逻辑删除标记（0：显示；1：隐藏） */
@@ -68,6 +72,7 @@ public class ActivityOrderInfo extends Model<ActivityOrderInfo> {
 
 	/** 付款时间 */
 	@Excel(name = "付款时间", width = 30, dateFormat = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 	private Date paymentTime;
 
 	/** 成交时间 */
@@ -88,10 +93,22 @@ public class ActivityOrderInfo extends Model<ActivityOrderInfo> {
 
 	/** 活动日期 */
 	@Excel(name = "活动日期", width = 30, dateFormat = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 	private Date activityDate;
 
 	/** 活动天数 */
 	@Excel(name = "活动天数")
 	private Long activityDays;
+
+	@Excel(name = "订单封面图")
+	private String activityImg;
+
+	@Excel(name = "出行人信息")
+	private String persons;
+
+	private Long activityId;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+	private Date createTime;
 
 }

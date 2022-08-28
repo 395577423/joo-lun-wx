@@ -1,0 +1,58 @@
+<scroll-view scroll-x class="bg-white nav fixed">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{index==tabCur?'text-blue cur':''}}" wx:for="{{orderStatus}}" wx:key="index" bindtap="tabSelect" data-index="{{index}}" data-key="{{item.key}}">
+      {{item.value}}
+    </view>
+  </view>
+</scroll-view>
+
+<view class="margin-top-bar">
+  <view class="cu-card article">
+    <view class="cu-item" wx:for="{{ orderList }}" wx:key="index" wx:for-index="index">
+      <navigator hover-class='none' url='/pages/activity/order/detail/index?id={{item.id}}'>
+        <view class="cu-bar bg-white">
+          <view class="action">
+            <text class="cuIcon-titles text-black"></text> {{ item.createTime }}
+          </view>
+          <view class="action text-red" wx:if="{{item.status==0}}">
+            待支付
+          </view>
+          <view class="action text-red" wx:if="{{item.status==1}}">
+            待完成
+          </view>
+          <view class="action text-red" wx:if="{{item.status==2}}">
+            已完成
+          </view>
+          <view class="action text-red" wx:if="{{item.status==3}}">
+            已取消
+          </view>
+        </view>
+        <view class="cu-item padding-bottom">
+          <view class="content">
+            <image src="{{item.activityImg ? item.activityImg : '/public/img/no_pic.png'}}" mode="aspectFill" class="row-img margin-top-xs"></image>
+            <view class="desc row-info margin-top-sm">
+              <view class="text-black margin-top-sm overflow-2">{{item.name}}</view>
+              <view class="flex justify-between">
+                <view class="text-price text-bold text-xl text-blue margin-top-sm">{{item.paymentPrice}}</view>
+                <view class="text-black text-sm margin-top-sm padding-lr-sm">x{{item.quantity}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </navigator>
+
+      <view class="flex justify-end">
+        <button class="cu-btn radius margin-right shadow-blur delete-order" bindtap="orderDel" loading="{{loading}}" disabled="{{loading}}" type="" wx:if="{{item.status == '3' && item.isPay == '0'}}" data-id="{{item.id}}" data-index="{{index}}">
+          <text class="text-white">删除订单</text>
+        </button>
+        <button class="cu-btn radius margin-right shadow-blur cancel-order" bindtap="orderCancel" loading="{{loading}}" disabled="{{loading}}" type="" wx:if="{{item.isPay == '0' && item.status=='0'}}" data-id="{{item.id}}" data-index="{{index}}">
+          <text class="text-white">取消订单</text>
+        </button>
+        <button class="cu-btn radius margin-right shadow-blur payment" bindtap="unifiedOrder" loading="{{loading}}" disabled="{{loading}}" type="" wx:if="{{item.isPay == '0' && item.status == '0'}}" data-id="{{item.id}}" data-index="{{index}}">
+          <text class="text-white">付款</text>
+        </button>
+      </view>
+    </view>
+  </view>
+  <view class="cu-load bg-gray {{loadmore?'loading':'over'}}"></view>
+</view>

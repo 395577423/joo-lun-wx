@@ -1,0 +1,54 @@
+<view class="margin-sm bg-white radius padding flex">
+  <view class="flex-sub">
+    <image class="radius" src="{{orderInfo.activityImg}}" style="width: 150rpx;height: 150rpx;"></image>
+  </view>
+  <view class="flex-treble padding-left padding-top-sm">
+    <text class="text-black text-xl text-content">{{orderInfo.name}}</text>
+  </view>
+  <view class="flex-sub text-right padding-top ">
+    <view>
+      <text class="text-price text-black text-xxl">{{orderInfo.paymentPrice}}</text>
+    </view>
+    <view class="padding-top-xs">
+      <text class="text-grey text-xs">共{{orderInfo.quantity}}件</text>
+    </view>
+  </view>
+</view>
+
+<view class="margin-sm bg-white radius padding">
+  <view class="padding-bottom padding-top">
+    <text>订单编号：</text>
+    <text class="padding-left text-black">{{orderInfo.orderNo}}</text>
+  </view>
+  <view class="padding-bottom">
+    <text>订单状态：</text>
+    <text class="padding-left text-black" wx:if="{{orderInfo.status==0}}">待支付</text>
+    <text class="padding-left text-black" wx:if="{{orderInfo.status==1}}">待完成</text>
+    <text class="padding-left text-black" wx:if="{{orderInfo.status==2}}">已完成</text>
+    <text class="padding-left text-black" wx:if="{{orderInfo.status==3}}">已取消</text>
+  </view>
+  <view class="padding-bottom">
+    <text>下单时间：</text>
+    <text class="padding-left text-black">{{orderInfo.createTime}}</text>
+  </view>
+  <view class="padding-bottom" wx:if="{{orderInfo.paymentTime}}">
+    <text>支付时间：</text>
+    <text class="padding-left text-black">{{orderInfo.paymentTime}}</text>
+  </view>
+  <view class="padding-bottom">
+    <text>订单金额：</text>
+    <text class="padding-left text-black">{{orderInfo.paymentPrice}}</text>
+  </view>
+  <view class="padding-bottom">
+    <text>活动时间：</text>
+    <text class="padding-left text-black">{{orderInfo.activityDate}}</text>
+  </view>
+  <view class="padding-bottom">
+    <text>出 行 人：</text>
+    <text class="padding-left text-black">{{persons}}</text>
+  </view>
+</view>
+
+<view class="margin-sm bg-white radius padding">
+  <button class="bg-blue" bindtap="">付款</button>
+</view>

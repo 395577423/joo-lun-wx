@@ -1,0 +1,11 @@
+<view class="margin-sm  grid col-{{gridCol}} no-border">
+  <view wx:for="{{activityList}}" wx:key wx:if="{{index<gridCol*2}}" class="text-center">
+    <navigator url="/pages/activity/detail/index?activityId={{item.id}}">
+      <view>
+        <image style="width: 150rpx;height: 150rpx;" src="{{item.imageUrl}}" />
+      </view>
+      <text class="text-center">{{item.name}}</text>
+    </navigator>
+
+  </view>
+</view>

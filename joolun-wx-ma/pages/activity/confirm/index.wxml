@@ -67,8 +67,8 @@
       </view>
     </navigator>
     <view class="grid col-5 text-center margin-bottom-sm">
-      <view class="radius-lightgray padding-sm margin-left-sm margin-top-sm" wx:for="{{persons}}" wx:key="index">{{item.name}}</view>
-    
+      <view class="padding-sm margin-left-sm margin-top-sm {{item.checked?'radius-orange':'radius-lightgray'}}" wx:for="{{persons}}" wx:key="index" bindtap="selectPerson"  data-index="{{index}}">{{item.name}}</view>
+
     </view>
   </view>
   <view class="cu-card bg-white margin-sm radius">
@@ -79,9 +79,9 @@
 
   <view class="bg-white border shop foot">
     <view class="flex justify-between padding">
-      <view class="padding text-price text-red text-xxl">999</view>
+      <view class="padding text-price text-red text-xxl">{{amount}}</view>
       <view>
-        <button class="cu-btn bg-blue round lg">购买</button>
+        <button class="cu-btn bg-blue round lg" bindtap="buy">购买</button>
       </view>
     </view>
   </view>

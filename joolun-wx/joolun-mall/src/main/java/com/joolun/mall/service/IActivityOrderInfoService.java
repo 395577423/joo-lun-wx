@@ -11,5 +11,13 @@ import com.joolun.mall.entity.ActivityOrderInfo;
 public interface IActivityOrderInfoService extends IService<ActivityOrderInfo> {
 
 
+    void addOrder(ActivityOrderInfo activityOrderInfo);
+
+
+    void notifyOrder(ActivityOrderInfo orderInfo);
+
+
     ActivityOrderInfo queryById(Long id);
+
+
 }
