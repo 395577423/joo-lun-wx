@@ -41,12 +41,7 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
     "useStaticServer": true,
-    "packNpmRelationList": [
-      {
-        "packageJsonPath": "./package.json",
-        "miniprogramNpmDistDir": "./miniprogram/"
-      }
-    ]
+    "packNpmRelationList": []
   },
   "compileType": "miniprogram",
   "libVersion": "2.17.0",

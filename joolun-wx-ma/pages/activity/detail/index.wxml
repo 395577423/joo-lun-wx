@@ -44,21 +44,21 @@
 <!-- painter生成海报 -->
 <painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="1000" use2D="true" />
 
-<!-- <view class="cu-modal {{modalName=='Image'?'show':''}}">
+<view class="cu-modal {{show ?'show':''}}">
   <view class="cu-dialog">
-    <view class="bg-img" style="background-image: url({{imageSrc}});height: 480px;">
+    <view class="bg-img" style="background-image: url({{imageSrc}});height: 80vh; background-size: 100% 100%;">
       <view class="cu-bar justify-end text-white">
-        <view class="action" bindtap="hideModal">
+        <view class="action" bindtap="onClose">
           <text class="cuIcon-close"></text>
         </view>
       </view>
     </view>
-    <view class="cu-bar bg-white">
-      <view class="action margin-0 flex-sub  solid-left" bindtap="save">保存到相册</view>
+    <view class="margin" > 
+      <button class="bg-blue" style="margin: 10px 10vw;"> 保存</button>
     </view>
   </view>
-</view> -->
-
+</view>
+<!--
 <van-popup show="{{ show }}" bind:close="onClose" >
   <view>
     <van-image src="{{imageSrc}}" fit="widthFix" width="90vw"/>
@@ -67,3 +67,5 @@
     <van-button round type="info" block>保存</van-button>
   </view>
 </van-popup>
+
+-->

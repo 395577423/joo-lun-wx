@@ -6,3 +6,6 @@
 .van-popup{
   background: none !important; 
 }
+.cu-dialog{
+  background: none !important; 
+}
