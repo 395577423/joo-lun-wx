@@ -38,7 +38,7 @@ export default class LastMayday {
           "css": {
             "color": "#707070",
             "width": "210px",
-            "top": "490px",
+            "top": "485px",
             "left": "20px",
             "fontSize": "40rpx",
             "fontWeight": 500,
@@ -50,8 +50,8 @@ export default class LastMayday {
           "css": {
             "color": "#FF5133",
             "width": "210px",
-            "top": "490px",
-            "left": "400px",
+            "top": "485px",
+            "left": "390px",
             "fontSize": "40rpx",
             "fontWeight": 500,
           }
@@ -87,7 +87,7 @@ export default class LastMayday {
             "width": "60px",
             "height": "60px",
             "top": "570px",
-            "left": "410px",
+            "left": "400px",
             "rotate": "0",
             "borderRadius": "",
             "borderWidth": "",

@@ -91,9 +91,6 @@ Page({
         show: true
       })
     } else {
-      wx.showLoading({
-        title: '加载中',
-      })
       let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/activity/detail/index&param=" + this.data.activityId + "#" + app.globalData.wxUser.id
 
       let nickName = app.globalData.wxUser.nickName
@@ -104,7 +101,7 @@ Page({
         textImage: '/public/img/text.png',
         nickName: nickName,
         activityName: this.data.activityContent.name,
-        price: this.data.activityContent.price
+        price: '￥'+this.data.activityContent.price
       }
       let plate = new Card().palette(params)
       console.log(plate);
