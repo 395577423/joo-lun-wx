@@ -18,7 +18,6 @@ Page({
     imageSrc: '',
     share_show: false,
     params: {},
-    modalName: '',
     show:false
   },
   onLoad: function (options) {
@@ -57,7 +56,6 @@ Page({
         latitude: lat
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
-      that.getDraw();
     })
   },
   confirmOrder(e) {
@@ -72,25 +70,30 @@ Page({
   canvasSuc(e) {
     this.setData({
       imageSrc: e.detail.path,
-      modalName: 'Image'
+      show: true
     })
     wx.hideLoading({
       success: (res) => {},
     })
   },
   canvasFail(e) {
-    debugger
-    console.log(e);
+
+    console.log("生成图片失败"+e.detail);
+    wx.hideLoading({
+      success: (res) => {},
+    })
   },
   getDraw() {
     // 做判断，如果已经生成过，就不用反复生成了
     if (this.data.imageSrc) {
       this.setData({
         imageSrc: this.data.imageSrc,
-        modalName:'Image',
         show: true
       })
     } else {
+      wx.showLoading({
+        title: '生成中',
+      })
       let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/activity/detail/index&param=" + this.data.activityId + "#" + app.globalData.wxUser.id
 
       let nickName = app.globalData.wxUser.nickName
@@ -104,10 +107,11 @@ Page({
         price: '￥'+this.data.activityContent.price
       }
       let plate = new Card().palette(params)
-      console.log(plate);
+    
       this.setData({
         template: plate
       })
+      console.log(plate);
     }
   },
   save() {
@@ -131,7 +135,6 @@ Page({
   },
   onClose() {
     this.setData({
-      modalName:'none',
       show: false,
     })
   }

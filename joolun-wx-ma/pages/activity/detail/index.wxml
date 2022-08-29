@@ -42,20 +42,21 @@
 
 
 <!-- painter生成海报 -->
-<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="1000" use2D="true" />
+<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="800" use2D="false" />
 
 <view class="cu-modal {{show ?'show':''}}">
   <view class="cu-dialog">
-    <view class="bg-img" style="background-image: url({{imageSrc}});height: 80vh; background-size: 100% 100%;">
-      <view class="cu-bar justify-end text-white">
+    <view class="radius" style="height: 72vh; background-size: 100% 100%;">
+      <image src="{{imageSrc}}" mode="aspectFit" style="height: 100%;width: 100%;"/>
+    </view>
+    <view class="margin" > 
+      <button bindtap="save" class="bg-blue" style="margin: 10px 10vw;"> 保存</button>
+    </view>
+    <view class="cu-bar justify-center text-white" style="min-height: 40rpx;">
         <view class="action" bindtap="onClose">
           <text class="cuIcon-close"></text>
         </view>
       </view>
-    </view>
-    <view class="margin" > 
-      <button class="bg-blue" style="margin: 10px 10vw;"> 保存</button>
-    </view>
   </view>
 </view>
 <!--
