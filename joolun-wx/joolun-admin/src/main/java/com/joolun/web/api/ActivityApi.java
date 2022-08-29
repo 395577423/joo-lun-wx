@@ -1,17 +1,30 @@
 package com.joolun.web.api;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
-import com.joolun.common.core.page.TableDataInfo;
+import com.joolun.common.utils.StringUtils;
+import com.joolun.common.utils.http.HttpUtils;
 import com.joolun.mall.entity.Activity;
 import com.joolun.mall.service.IActivityService;
+import com.joolun.weixin.utils.WxMaUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lanjian
@@ -25,6 +38,7 @@ public class ActivityApi extends BaseController {
 
     @Autowired
     private IActivityService activityService;
+
 
     /**
      * 查询社会活动列表
@@ -56,5 +70,33 @@ public class ActivityApi extends BaseController {
     }
 
 
+    @GetMapping("/image/wxm/code")
+    public void getWxACode(String page,String param, HttpServletResponse response) throws UnsupportedEncodingException {
+        System.out.println(param);
+        String token = WxMaUtil.getToken();
+        String requestUrl = WxMaUtil.WXACODEURL +token;
+        JSONObject params = new JSONObject();
+        params.put("page",page);
+        params.put("scene", param);
+        params.put("width", 430);
+        params.put("auto_color", true);
+        params.put("check_path",false);
+        OutputStream stream = null;
+        try {
+            byte[] bytes = HttpUtils.sendPostBackStream(requestUrl, params.toString());
+            response.setContentType("image/png");
+            stream = response.getOutputStream();
+            stream.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stream.flush();
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

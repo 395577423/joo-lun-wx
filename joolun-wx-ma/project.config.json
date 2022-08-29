@@ -34,14 +34,19 @@
     "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
-    "useStaticServer": true
+    "useStaticServer": true,
+    "packNpmRelationList": [
+      {
+        "packageJsonPath": "./package.json",
+        "miniprogramNpmDistDir": "./miniprogram/"
+      }
+    ]
   },
   "compileType": "miniprogram",
   "libVersion": "2.17.0",

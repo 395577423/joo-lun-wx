@@ -30,6 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
 						"/weixin/api/ma/orderinfo/notify-order",
 						"/weixin/api/activity/order/notify-order",
 						"/weixin/api/ma/orderinfo/notify-logisticsr",
-						"/weixin/api/ma/orderrefunds/notify-refunds");//放行接口
+						"/weixin/api/ma/orderrefunds/notify-refunds",
+						"/weixin/api/activity/image/wxm/code");//放行接口
 	}
 }

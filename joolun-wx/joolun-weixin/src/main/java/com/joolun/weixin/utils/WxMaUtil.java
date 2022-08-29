@@ -2,11 +2,22 @@ package com.joolun.weixin.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSON;
+import com.aliyun.oss.OSSClient;
+import com.joolun.common.utils.StringUtils;
 import com.joolun.common.utils.http.HttpUtils;
 import com.joolun.weixin.constant.ConfigConstant;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +29,7 @@ public class WxMaUtil {
 
     private static final String TOKENURL = "https://api.weixin.qq.com/cgi-bin/token";
     private static final String PHONEURL = "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=";
+    public static final String WXACODEURL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=";
 
     private static final String APPID = "wxa8f0475c8754393c";
     private static final String APPSECRET = "c9e74f9a53620b2eb4008979affdcc57";
@@ -60,9 +72,4 @@ public class WxMaUtil {
         return null;
     }
 
-    public static void main(String[] args) throws IOException {
-
-        getPhone("21a44fb233206e33ae23e1fbf5c57fadd525208dc34f8200ee49c00a7179603a");
-
-    }
 }

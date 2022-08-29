@@ -4,6 +4,7 @@
  * 注意：
  * 本软件为www.joolun.com开发研制，项目使用请保留此说明
  */
+import Card from './card.js'
 const app = getApp()
 const WxParse = require('../../../public/wxParse/wxParse.js')
 Page({
@@ -11,23 +12,37 @@ Page({
     activityId: 0,
     activityContent: {},
     address: '',
-    longitude:0,
-    latitude:0,
-    posterConfig:{
-      
-    }
+    longitude: 0,
+    latitude: 0,
+    template: {},
+    imageSrc: '',
+    share_show: false,
+    params: {},
+    modalName: '',
+    show:false
   },
   onLoad: function (options) {
+    let activityId
+    if (options.scene) {
+      //小程序扫码进入的
+      let scene = decodeURIComponent(options.scene);
+      activityId = scene.split("#")[0];
+      let userId = scene.split('#')[1];
+    } else if (options.activityId) {
+      //页面跳转的
+      activityId = options.activityId
+    }
     this.setData({
-      activityId: options.activityId
+      activityId: activityId
     })
-    let activityId = options.activityId
+
     app.initPage()
       .then(() => {
         this.getDetail(activityId)
       })
   },
   getDetail(activityId) {
+    let that = this
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data
       let introduction = activityContent.introduction
@@ -38,16 +53,89 @@ Page({
       this.setData({
         activityContent: activityContent,
         address: address,
-        longitude:lon,
-        latitude:lat
+        longitude: lon,
+        latitude: lat
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
+      that.getDraw();
     })
   },
   confirmOrder(e) {
     let activityId = e.target.dataset.id
     wx.navigateTo({
-      url: '/pages/activity/confirm/index?activityId='+activityId,
+      url: '/pages/activity/confirm/index?activityId=' + activityId,
+    })
+  },
+  share() {
+    this.getDraw();
+  },
+  canvasSuc(e) {
+    this.setData({
+      imageSrc: e.detail.path,
+      modalName: 'Image'
+    })
+    wx.hideLoading({
+      success: (res) => {},
+    })
+  },
+  canvasFail(e) {
+    debugger
+    console.log(e);
+  },
+  getDraw() {
+    // 做判断，如果已经生成过，就不用反复生成了
+    if (this.data.imageSrc) {
+      this.setData({
+        imageSrc: this.data.imageSrc,
+        modalName:'Image',
+        show: true
+      })
+    } else {
+      wx.showLoading({
+        title: '加载中',
+      })
+      let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/activity/detail/index&param=" + this.data.activityId + "#" + app.globalData.wxUser.id
+
+      let nickName = app.globalData.wxUser.nickName
+      let params = {
+        qrCode: wxmaCode,
+        activityImage: this.data.activityContent.imageUrl,
+        logoImagePath: '/public/img/logo.png',
+        textImage: '/public/img/text.png',
+        nickName: nickName,
+        activityName: this.data.activityContent.name,
+        price: this.data.activityContent.price
+      }
+      let plate = new Card().palette(params)
+      console.log(plate);
+      this.setData({
+        template: plate
+      })
+    }
+  },
+  save() {
+    wx.getSetting({
+      success: (set) => {
+        wx.saveImageToPhotosAlbum({
+          filePath: this.data.imageSrc,
+          success: (res) => {
+            if (res.errMsg == "saveImageToPhotosAlbum:ok") {
+              wx.showToast({
+                title: '保存成功',
+              });
+            }
+          },
+        });
+        if (set.authSetting['scope.writePhotosAlbum'] == false) {
+          wx.openSetting()
+        }
+      }
+    })
+  },
+  onClose() {
+    this.setData({
+      modalName:'none',
+      show: false,
     })
   }
 })

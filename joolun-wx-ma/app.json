@@ -67,7 +67,11 @@
       }
     ]
   },
-  "usingComponents": {},
+  "usingComponents": {
+    "van-popup": "@vant/weapp/popup/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-button": "@vant/weapp/button/index"
+  },
   "lazyCodeLoading": "requiredComponents",
   "permission": {
     "scope.userLocation": {

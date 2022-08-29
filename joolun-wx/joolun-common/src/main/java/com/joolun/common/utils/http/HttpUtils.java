@@ -1,21 +1,27 @@
 package com.joolun.common.utils.http;
 
 import com.joolun.common.constant.Constants;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -182,6 +188,38 @@ public class HttpUtils {
             log.error("调用HttpsUtil.sendSSLPost Exception, url=" + url + ",param=" + param, e);
         }
         return result.toString();
+    }
+
+    /**
+     * 向指定 URL 发送POST方法的请求
+     *
+     * @param url   发送请求的 URL
+     * @param params 请求参数
+     * @return 所代表远程资源的响应结果
+     */
+    public static byte[] sendPostBackStream(String url, String params) {
+        byte[] result = null;
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader("Content-Type", "application/json");
+        try {
+            System.out.println(params);
+            httpPost.setEntity(new StringEntity(params, "UTF-8"));
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            result = EntityUtils.toByteArray(entity);
+        } catch (ConnectionPoolTimeoutException e) {
+            e.printStackTrace();
+        } catch (ConnectTimeoutException e) {
+            e.printStackTrace();
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            httpPost.releaseConnection();
+        }
+        return result;
     }
 
     private static class TrustAnyTrustManager implements X509TrustManager {

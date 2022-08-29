@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "活动详情",
   "usingComponents": {
-    "poster": "/components/wxa-canvas/poster/index"
+    "painter": "/components/painter/painter"
   }
 }
