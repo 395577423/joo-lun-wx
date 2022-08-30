@@ -60,6 +60,18 @@
       <text>我的活动</text>
     </navigator>
   </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/user/user-agreement/index">
+      <text class="cuIcon-read text-orange"></text>
+      <text>平台用户注册协议</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/user/user-agreement/index">
+      <text class="cuIcon-read text-orange"></text>
+      <text>隐私协议</text>
+    </navigator>
+  </view>
 </view>
 <view class="padding flex text-center text-grey bg-white shadow-warp">
   <view class="flex-treble" style="text-decoration-line: underline;" bindtap="showPic">联系客服</view>

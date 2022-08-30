@@ -15,7 +15,6 @@ App({
     this.updateManager()
     wx.getSystemInfo({
       success: e => {
-
         this.globalData.StatusBar = e.statusBarHeight;
         let custom = wx.getMenuButtonBoundingClientRect();
         this.globalData.Custom = custom;

@@ -33,7 +33,9 @@
     "pages/activity/person/edit/index",
     "pages/activity/order/list/index",
     "pages/activity/order/detail/index",
-    "pages/activity/relation/index"
+    "pages/activity/relation/index",
+    "pages/user/user-agreement/index",
+    "pages/user/privacy-agreement/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -67,13 +69,11 @@
       }
     ]
   },
-  "usingComponents": {
-
-  },
+  "usingComponents": {},
   "lazyCodeLoading": "requiredComponents",
   "permission": {
     "scope.userLocation": {
-      "desc":"你的位置将用于小程序定位"
+      "desc": "你的位置将用于小程序定位"
     }
   }
 }
