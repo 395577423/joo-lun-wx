@@ -1,15 +1,12 @@
 package com.joolun.mall.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.constant.MallConstants;
-import com.joolun.mall.dto.PriceCase;
-import com.joolun.mall.entity.*;
+import com.joolun.mall.entity.Activity;
+import com.joolun.mall.entity.ActivityOrderInfo;
 import com.joolun.mall.enums.ActivityOrderInfoEnum;
 import com.joolun.mall.enums.OrderInfoEnum;
 import com.joolun.mall.mapper.ActivityOrderInfoMapper;
@@ -19,11 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author lanjian
@@ -81,15 +73,6 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         if (activity == null) {
             throw new RuntimeException("活动不存在");
         }
-        String subInfo = activity.getSubInfo();
-        List<PriceCase> priceCases = JSON.parseArray(subInfo, PriceCase.class);
-        if (CollectionUtil.isNotEmpty(priceCases)) {
-            BigDecimal paymentPrice = priceCases.stream().map(PriceCase::getDiscountPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-            activityOrderInfo.setPaymentPrice(paymentPrice);
-            activityOrderInfo.setSalesPrice(paymentPrice);
-        }
-        activityOrderInfo.setPriceDesc(JSON.toJSONString(priceCases));
-
     }
 
     @Override

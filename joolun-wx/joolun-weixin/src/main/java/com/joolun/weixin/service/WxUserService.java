@@ -2,7 +2,6 @@
 package com.joolun.weixin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.weixin.entity.WxOpenDataDTO;
 import com.joolun.weixin.entity.WxUser;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -56,7 +55,7 @@ public interface WxUserService extends IService<WxUser> {
 	 * @param wxOpenDataDTO
 	 * @return
 	 */
-	WxUser saveOrUptateWxUser(WxOpenDataDTO wxOpenDataDTO);
+	WxUser saveOrUpdateWxUser(WxOpenDataDTO wxOpenDataDTO);
 
 
 	/**

@@ -7,7 +7,7 @@
 <view class="padding-xs flex align-center">
   <view class="flex-sub text-left">
     <view class="solid-bottom text-xxl padding">
-      <text class="text-price text-red">{{activityContent.price}}</text>
+      <text class="text-price text-red">{{salesPrice}} 起</text>
     </view>
     <view class="padding">{{activityContent.name}}</view>
   </view>

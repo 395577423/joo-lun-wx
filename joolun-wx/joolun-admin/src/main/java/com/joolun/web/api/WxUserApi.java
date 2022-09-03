@@ -83,11 +83,11 @@ public class WxUserApi {
      */
     @ApiOperation(value = "保存用户信息")
     @PostMapping
-    public AjaxResult saveOrUptateWxUser(@RequestBody WxOpenDataDTO wxOpenDataDTO) {
+    public AjaxResult saveOrUpdateWxUser(@RequestBody WxOpenDataDTO wxOpenDataDTO) {
         wxOpenDataDTO.setAppId(ThirdSessionHolder.getThirdSession().getAppId());
         wxOpenDataDTO.setUserId(ThirdSessionHolder.getThirdSession().getWxUserId());
         wxOpenDataDTO.setSessionKey(ThirdSessionHolder.getThirdSession().getSessionKey());
-        WxUser wxUser = wxUserService.saveOrUptateWxUser(wxOpenDataDTO);
+        WxUser wxUser = wxUserService.saveOrUpdateWxUser(wxOpenDataDTO);
         return AjaxResult.success(wxUser);
     }
 }

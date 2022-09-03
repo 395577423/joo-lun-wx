@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.MemberConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.joolun.mall.entity.MemberConfig">
+        <id column="id" property="id" />
+        <result column="price" property="price" />
+        <result column="cash_back_amount" property="cashBackAmount" />
+        <result column="super_cash_back_amount" property="superCashBackAmount" />
+        <result column="create_id" property="createId" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, price, cash_back_amount, super_cash_back_amount, create_id, create_time
+    </sql>
+
+</mapper>

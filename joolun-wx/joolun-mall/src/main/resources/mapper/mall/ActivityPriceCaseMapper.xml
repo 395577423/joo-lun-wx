@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joolun.mall.mapper.ActivityPriceCaseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.joolun.mall.entity.ActivityPriceCase">
+        <id column="id" property="id" />
+        <result column="activity_id" property="activityId" />
+        <result column="name" property="name" />
+        <result column="case_option" property="caseOption" typeHandler="com.joolun.framework.config.typehandler.ArrayLongTypeHandler" />
+        <result column="sales_price" property="salesPrice" />
+        <result column="member_price" property="memberPrice" />
+        <result column="super_member_price" property="superMemberPrice" />
+        <result column="cash_back_amount" property="cashBackAmount" />
+        <result column="super_cash_back_amount" property="superCashBackAmount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, activity_id, name, case_option, sales_price, member_price, super_member_price, cash_back_amount, super_cash_back_amount
+    </sql>
+
+</mapper>

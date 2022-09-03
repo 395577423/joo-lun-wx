@@ -2,6 +2,7 @@ package com.joolun.web.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.core.controller.BaseController;
@@ -9,6 +10,8 @@ import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.utils.StringUtils;
 import com.joolun.common.utils.http.HttpUtils;
 import com.joolun.mall.entity.Activity;
+import com.joolun.mall.entity.ActivityPriceCase;
+import com.joolun.mall.service.ActivityPriceCaseService;
 import com.joolun.mall.service.IActivityService;
 import com.joolun.weixin.utils.WxMaUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,12 +42,16 @@ public class ActivityApi extends BaseController {
     @Autowired
     private IActivityService activityService;
 
+    @Autowired
+    private ActivityPriceCaseService activityPriceCaseService;
+
 
     /**
      * 查询社会活动列表
      */
     @PostMapping("/list")
     public AjaxResult list(Page page, Activity activity) {
+        activity.setPublished(true);
         page = activityService.page(page, Wrappers.lambdaQuery(activity));
         return AjaxResult.success(page);
     }
@@ -67,6 +74,18 @@ public class ActivityApi extends BaseController {
     @GetMapping("/{id}")
     public AjaxResult getById(@PathVariable("id") Long id){
         return AjaxResult.success(activityService.getById(id));
+    }
+
+    /**
+     * 根据id查询活动价格信息
+     * @param activityId
+     * @return
+     */
+    @GetMapping("/getPriceCase")
+    public AjaxResult getPriceCase(Long activityId){
+        LambdaQueryWrapper<ActivityPriceCase> queryWrapper = Wrappers.<ActivityPriceCase>lambdaQuery()
+                .eq(ActivityPriceCase::getActivityId, activityId);
+        return AjaxResult.success(activityPriceCaseService.list(queryWrapper));
     }
 
 

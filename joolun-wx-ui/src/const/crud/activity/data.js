@@ -97,37 +97,14 @@ export const tableOption = {
           }]
         },
         {
-          label: '活动价格',
-          prop: 'price',
-          type: 'number',
-          precision: 2,
-          rules: [{
-            required: true,
-            message: '活动名称不能为空',
-            trigger: 'blur'
-          }]
-        },
-        {
-          label: '佣金',
-          prop: 'commission',
-          type: 'number',
-          precision: 2,
-          rules: [{
-            required: true,
-            message: '活动名称不能为空',
-            trigger: 'blur'
-          }]
-        },
-        {
           label: '活动地址',
           prop: 'address',
+          type: 'map',
           span: 20,
-          formslot:true,
-          rules: [{
-            required: true,
-            message: '活动地址不能为空',
-            trigger: 'blur'
-          }]
+          params:{
+            zoom: 10,
+            zoomEnable: true
+          }
         },
         {
           label: '活动图片',
@@ -170,11 +147,10 @@ export const tableOption = {
         },
         {
           label: '套餐',
-          prop: 'subInfo',
+          prop: 'priceCases',
           type: 'dynamic',
           span:24,
           children: {
-            type:'form',
             align: 'center',
             headerAlign: 'center',
             rowAdd:(done)=>{
@@ -184,14 +160,13 @@ export const tableOption = {
               done();
             },
             column: [{
-              width: 380,
+              width: 200,
               label: '套餐名称',
-              prop: "subTitle",
-              formslot: true,
+              prop: "name"
             }, {
               width: 200,
               label: '多选',
-              prop: "subType",
+              prop: "caseOption",
               type: 'checkbox',
               dicData: [{
                 label: '成人',
@@ -201,14 +176,29 @@ export const tableOption = {
                 value: 2
               }]
             }, {
-              width: 200,
+              width: 140,
               label: '原价',
               prop: "salesPrice",
               type: 'number'
             }, {
-              width: 200,
-              label: '折扣价',
-              prop: "discountPrice",
+              width: 140,
+              label: '会员价',
+              prop: "memberPrice",
+              type: 'number'
+            }, {
+              width: 140,
+              label: '超级会员价',
+              prop: "superMemberPrice",
+              type: 'number'
+            }, {
+              width: 140,
+              label: '会员返现金额',
+              prop: "cashBackAmount",
+              type: 'number'
+            }, {
+              width: 140,
+              label: '超级会员返现金额',
+              prop: "superCashBackAmount",
               type: 'number'
             }]
           }

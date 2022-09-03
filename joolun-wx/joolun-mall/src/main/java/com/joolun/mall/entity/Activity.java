@@ -9,9 +9,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.joolun.common.annotation.Excel;
+import com.joolun.framework.config.typehandler.ArrayLongTypeHandler;
+import com.joolun.framework.config.typehandler.ArrayStringTypeHandler;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.ibatis.type.JdbcType;
 
 /**
  * 社会活动对象 activity
@@ -35,14 +38,10 @@ public class Activity extends Model<Activity>
     @Excel(name = "活动名称")
     private String name;
 
-    /** 活动价格 */
-    @Excel(name = "活动价格")
-    private Long price;
-
     /** 活动地点 */
     @Excel(name = "活动地点")
-    @TableField(typeHandler = FastjsonTypeHandler.class)
-    private Object address;
+    @TableField(typeHandler = ArrayStringTypeHandler.class, jdbcType= JdbcType.VARCHAR)
+    private String[] address;
 
     /** $column.columnComment */
     @Excel(name = "活动封面图片")
@@ -62,12 +61,6 @@ public class Activity extends Model<Activity>
     /** 活动说明 */
     @Excel(name = "活动说明")
     private String explanation;
-
-    /** 佣金 */
-    @Excel(name = "佣金")
-    private BigDecimal commission;
-
-    private String subInfo;
 
     /** 创建人id */
     @Excel(name = "创建人id")

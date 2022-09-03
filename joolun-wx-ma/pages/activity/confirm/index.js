@@ -11,7 +11,7 @@ Page({
     selectCaseIndex: 0,
     activityId: 0,
     activityContent: {},
-    subInfo: [],
+    priceCases: [],
     minData: 1,
     maxData: 99,
     number: 1,
@@ -19,28 +19,41 @@ Page({
     persons: [],
     amount: 0,
     quantity: 1,
-    remark: ''
+    remark: '',
+    member: '0',
+    level: 0
   },
   onLoad: function (options) {
+    let wxUser = app.globalData.wxUser;
     var DATE = util.formatDate(new Date());
     this.setData({
       activityId: options.activityId,
-      date: DATE
+      date: DATE,
+      member: wxUser.member,
+      level: wxUser.level
     })
     let activityId = options.activityId
     app.initPage()
       .then(() => {
         this.getDetail(activityId)
         this.getPersons();
+        this.getPriceCases(activityId)
       })
   },
   getDetail(activityId) {
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data
-      let subInfo = JSON.parse(activityContent.subInfo);
       this.setData({
         activityContent: activityContent,
-        subInfo: subInfo
+      })
+
+    })
+  },
+  getPriceCases(activityId) {
+    app.api.getPriceCase(activityId).then(res => {
+      let priceCases = res.data
+      this.setData({
+        priceCases: priceCases,
       })
       this.calAmount(this.data.quantity)
     })
@@ -75,7 +88,12 @@ Page({
     this.calAmount(quantity)
   },
   calAmount(quantity) {
-    let unitPrice = this.data.subInfo[this.data.selectCaseIndex].discountPrice;
+    let unitPrice = this.data.priceCases[this.data.selectCaseIndex].salesPrice;
+    if(this.data.member=='1' && this.data.level==1){
+      unitPrice = this.data.priceCases[this.data.selectCaseIndex].memberPrice;
+    } else if (this.data.member=='1' && this.data.level==2){
+      unitPrice = this.data.priceCases[this.data.selectCaseIndex].superMemberPrice;
+    }
     let amount = quantity * unitPrice;
     this.setData({
       amount: amount,
@@ -107,7 +125,7 @@ Page({
     reqData.activityImg = this.data.activityContent.imageUrl;
     reqData.activityDate = this.data.date;
     reqData.quantity = this.data.quantity;
-    reqData.priceDesc = JSON.stringify(this.data.subInfo[this.data.selectCaseIndex]);
+    reqData.priceCase = JSON.stringify(this.data.priceCases[this.data.selectCaseIndex]);
     reqData.remark = this.data.remark
     reqData.persons = []
     this.data.persons.forEach(function (person) {
@@ -122,13 +140,11 @@ Page({
       this.showModal('缺少出行人,总共只需要' + reqData.quantity + '位出行人，目前已添加' + reqData.persons.length + '位')
       return false;
     }
-    reqData.persons = JSON.stringify(reqData.persons)
     app.api.subActivityOrder(reqData).then(res => {
       if(res.code == 200) {
         let orderId = res.data.id;
         that.unifiedOrder({id:orderId});
       }
-      console.log(res);
     })
   },
   unifiedOrder(orderInfo){

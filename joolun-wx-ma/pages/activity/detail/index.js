@@ -18,7 +18,10 @@ Page({
     imageSrc: '',
     share_show: false,
     params: {},
-    show:false
+    show:false,
+    salesPrice:0,
+    superMemberPrice:0,
+    memberPrice:0
   },
   onLoad: function (options) {
     let activityId
@@ -38,6 +41,7 @@ Page({
     app.initPage()
       .then(() => {
         this.getDetail(activityId)
+        this.getPriceCase(activityId)
       })
   },
   getDetail(activityId) {
@@ -45,7 +49,7 @@ Page({
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data
       let introduction = activityContent.introduction
-      let addressInfo = JSON.parse(activityContent.address);
+      let addressInfo = activityContent.address;
       let address = addressInfo[2];
       let lat = addressInfo[1];
       let lon = addressInfo[0]
@@ -56,6 +60,34 @@ Page({
         latitude: lat
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
+    })
+  },
+  getPriceCase(activityId){
+    let that = this;
+    app.api.getPriceCase(activityId).then(res => {
+      let priceCases = res.data
+      let displaySalesPrice;
+      let displayMemberPrice;
+      let displaySuperMemberPrice;
+      if(priceCases && priceCases.length > 0) {
+        priceCases.forEach(element => {
+          if(!displaySalesPrice){
+            displaySalesPrice = element.salesPrice
+            displayMemberPrice = element.memberPrice
+            displaySuperMemberPrice = element.superMemberPrice
+          }else if(displaySalesPrice>element.salesPrice){
+            displaySalesPrice = element.salesPrice;
+            displayMemberPrice = element.memberPrice
+            displaySuperMemberPrice = element.superMemberPrice
+          }
+        });
+      }
+      this.setData({
+        salesPrice : displaySalesPrice,
+        memberPrice : displayMemberPrice,
+        superMemberPrice : displaySuperMemberPrice,
+      })
+
     })
   },
   confirmOrder(e) {

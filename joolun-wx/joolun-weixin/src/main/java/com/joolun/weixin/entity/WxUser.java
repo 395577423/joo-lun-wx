@@ -166,6 +166,11 @@ private static final long serialVersionUID = 1L;
     private Short level;
 
     /**
+     * 会员国企时间
+     */
+    private String memberExpiryDate;
+
+    /**
      * 赋能积分
      */
     private Integer empowerNum;

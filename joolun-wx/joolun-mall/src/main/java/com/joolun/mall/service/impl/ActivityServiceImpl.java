@@ -6,12 +6,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.common.utils.DateUtils;
+import com.joolun.mall.dto.ActivityDto;
 import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
+import com.joolun.mall.entity.ActivityPriceCase;
 import com.joolun.mall.entity.ActivityRelatedCourse;
+import com.joolun.mall.entity.Course;
 import com.joolun.mall.mapper.ActivityMapper;
 import com.joolun.mall.mapper.ActivityRelatedCourseMapper;
+import com.joolun.mall.service.ActivityPriceCaseService;
 import com.joolun.mall.service.IActivityCategoryService;
 import com.joolun.mall.service.IActivityRelatedCourseService;
 import com.joolun.mall.service.IActivityService;
@@ -35,10 +41,45 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     @Autowired
     private IActivityCategoryService activityCategoryService;
 
+
+    @Autowired
+    private ActivityPriceCaseService activityPriceCaseService;
+
     @Autowired
     private IActivityRelatedCourseService activityRelatedCourseService;
 
 
+    @Override
+    public int add(ActivityDto activityDto, SysUser user) {
+        Activity activity = activityDto.getActivity();
+        activity.setPublished(false);
+        activity.setCreator(user.getUserName());
+        activity.setCreatorId(user.getUserId());
+        boolean save = this.save(activity);
+        List<ActivityPriceCase> activityPriceCases = activityDto.getPriceCases();
+        if (CollectionUtil.isNotEmpty(activityPriceCases)) {
+            for (ActivityPriceCase activityPriceCase : activityPriceCases) {
+                activityPriceCase.setActivityId(activity.getId());
+            }
+        }
+        activityPriceCaseService.saveBatch(activityPriceCases);
+        return save ? 1 : 0;
+    }
+
+    @Override
+    public int edit(ActivityDto activityDto) {
+        Activity activity = activityDto.getActivity();
+        boolean success = this.updateById(activityDto.getActivity());
+        List<ActivityPriceCase> activityPriceCases = activityDto.getPriceCases();
+        if (CollectionUtil.isNotEmpty(activityPriceCases)) {
+            for (ActivityPriceCase activityPriceCase : activityPriceCases) {
+                activityPriceCase.setActivityId(activity.getId());
+            }
+        }
+        activityPriceCaseService.remove(Wrappers.<ActivityPriceCase>lambdaQuery().eq(ActivityPriceCase::getActivityId, activity.getId()));
+        activityPriceCaseService.saveBatch(activityPriceCases);
+        return success?1:0;
+    }
 
     /**
      * 活动关联课程
@@ -49,7 +90,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     public void doRelateCourse(ActivityRelateCourseDto activityRelateCourseDto) {
         Long activityId = activityRelateCourseDto.getActivityId();
         activityRelatedCourseService.remove(Wrappers.lambdaQuery(ActivityRelatedCourse.class)
-                .eq(ActivityRelatedCourse::getActivityId,activityId));
+                .eq(ActivityRelatedCourse::getActivityId, activityId));
         Long[] courseIds = activityRelateCourseDto.getCourseIds();
         List<ActivityRelatedCourse> activityRelatedCourses = new ArrayList<>(courseIds.length);
         for (Long courseId : courseIds) {

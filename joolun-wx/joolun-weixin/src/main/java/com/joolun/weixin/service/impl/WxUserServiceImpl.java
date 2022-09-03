@@ -228,7 +228,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public WxUser saveOrUptateWxUser(WxOpenDataDTO wxOpenDataDTO) {
+    public WxUser saveOrUpdateWxUser(WxOpenDataDTO wxOpenDataDTO) {
         WxMaUserService wxMaUserService = WxMaConfiguration.getMaService(wxOpenDataDTO.getAppId()).getUserService();
         WxMaUserInfo wxMaUserInfo = wxMaUserService.getUserInfo(wxOpenDataDTO.getSessionKey(), wxOpenDataDTO.getEncryptedData(), wxOpenDataDTO.getIv());
         WxUser wxUser = new WxUser();

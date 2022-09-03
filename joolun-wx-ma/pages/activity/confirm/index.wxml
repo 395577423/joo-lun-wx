@@ -4,7 +4,7 @@
       <image class="img" src="{{activityContent.imageUrl}}"></image>
     </view>
     <view class="padding-sm text-xxl">
-      <text class="text-price text-red">{{activityContent.price}}</text>
+      <text class="text-price text-red">{{priceCases[0].salesPrice}}</text>
     </view>
     <view class="padding-left padding-bottom text-xxl">
       <text>{{activityContent.name}}</text>
@@ -28,12 +28,13 @@
     <view class=" margin-left margin-right padding-bottom padding-top solids-bottom  text-xl">
       选择套餐
     </view>
-    <view class="margin-sm padding-sm bg-white {{index==selectCaseIndex?'radius-orange':'radius-lightgray'}} " wx:for="{{subInfo}}" wx:key="index" bindtap="selectCase" data-index="{{index}}">
+    <view class="margin-sm padding-sm bg-white {{index==selectCaseIndex?'radius-orange':'radius-lightgray'}} " wx:for="{{priceCases}}" wx:key="index" bindtap="selectCase" data-index="{{index}}">
       <view class="flex justify-between padding-xs">
-        <view class="text flex-twice">{{item.subTitle}}</view>
+        <view class="text flex-twice">{{item.name}}</view>
         <view class="flex-sub">
-          <text class="text-price text-decorat">{{item.salesPrice}}</text>
-          <text class="text-price text-red text-xxl padding-left">{{item.discountPrice}}</text>
+          <text class="text-price {{member=='0'?'text-red':'text-decorat'}}">{{item.salesPrice}}</text>
+          <text class="text-price text-red text-xxl padding-left" wx:if="{{member=='1' && level==1}}">{{item.memberPrice}}</text>
+          <text class="text-price text-red text-xxl padding-left" wx:if="{{member=='1' && level==2}}">{{item.superMemberPrice}}</text>
         </view>
       </view>
       <view class="flex padding-xs">

@@ -67,3 +67,11 @@ export function getRelateCourse(activityId) {
     method: 'get'
   })
 }
+
+
+export function listPriceCase(activityId) {
+  return request({
+    url: '/price/case/list?activityId=' +activityId,
+    method: 'get'
+  })
+}
