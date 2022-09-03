@@ -95,6 +95,7 @@ public class ActivityController extends BaseController {
     public AjaxResult add(@RequestBody ActivityDto activityDto) {
         SysUser user = SecurityUtils.getLoginUser().getUser();
         int add = activityService.add(activityDto, user);
+
         return toAjax(add);
     }
 

@@ -1,20 +1,13 @@
 package com.joolun.mall.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
-import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.joolun.common.annotation.Excel;
-import com.joolun.framework.config.typehandler.ArrayLongTypeHandler;
 import com.joolun.framework.config.typehandler.ArrayStringTypeHandler;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.Date;
 
 /**
  * 社会活动对象 activity

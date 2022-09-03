@@ -1,22 +1,16 @@
 package com.joolun.mall.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
-import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.common.core.domain.entity.SysUser;
-import com.joolun.common.utils.DateUtils;
 import com.joolun.mall.dto.ActivityDto;
 import com.joolun.mall.dto.ActivityRelateCourseDto;
 import com.joolun.mall.entity.Activity;
 import com.joolun.mall.entity.ActivityPriceCase;
 import com.joolun.mall.entity.ActivityRelatedCourse;
-import com.joolun.mall.entity.Course;
 import com.joolun.mall.mapper.ActivityMapper;
-import com.joolun.mall.mapper.ActivityRelatedCourseMapper;
 import com.joolun.mall.service.ActivityPriceCaseService;
 import com.joolun.mall.service.IActivityCategoryService;
 import com.joolun.mall.service.IActivityRelatedCourseService;
