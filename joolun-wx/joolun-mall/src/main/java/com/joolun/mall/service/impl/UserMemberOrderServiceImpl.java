@@ -11,7 +11,10 @@ import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.entity.UserMemberOrder;
 import com.joolun.mall.mapper.UserMemberOrderMapper;
 import com.joolun.mall.service.IUserMemberOrderService;
+import com.joolun.weixin.entity.WxUser;
+import com.joolun.weixin.service.WxUserService;
 import com.joolun.weixin.utils.LocalDateTimeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,6 +30,9 @@ import java.util.List;
  */
 @Service
 public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMapper, UserMemberOrder> implements IUserMemberOrderService {
+
+    @Autowired
+    WxUserService wxUserService;
 
     /**
      * 创建订单
@@ -45,6 +51,7 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
         userMemberOrder.setIsPay(CommonConstants.NO);
         userMemberOrder.setPaymentWay("2");
         userMemberOrder.setCreateTime(new Date());
+        save(userMemberOrder);
         return userMemberOrder;
     }
 
@@ -64,9 +71,10 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
                 LocalDateTime paymentTime = LocalDateTimeUtils.parse(timeEnd);
                 userMemberOrder.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
                 userMemberOrder.setTransactionId(notifyResult.getTransactionId());
-                userMemberOrder.setIsPay(CommonConstants.YES);
                 if (CommonConstants.NO.equals(userMemberOrder.getIsPay())) {
-                    save(userMemberOrder);
+                    userMemberOrder.setIsPay(CommonConstants.YES);
+                    updateById(userMemberOrder);
+                    setUserMember(userMemberOrder.getUserId());
                 }
                 return WxPayNotifyResponse.success("成功");
             } else {
@@ -78,5 +86,17 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
 
     }
 
+    /**
+     * 设置用户成为会员
+     *
+     * @param wxUserId
+     */
+    private void setUserMember(String wxUserId) {
+        WxUser wxUser = wxUserService.getById(wxUserId);
+        wxUser.setMember("1");
+        wxUser.setLevel((short)1);
+        wxUserService.updateById(wxUser);
+
+    }
 
 }

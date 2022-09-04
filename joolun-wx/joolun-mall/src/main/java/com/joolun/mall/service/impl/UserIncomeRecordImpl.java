@@ -12,6 +12,8 @@ import com.joolun.weixin.service.WxUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author lanjian
  * @Description
@@ -50,14 +52,21 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
      */
     @Override
     public void addUserIncomeRecord(String tradeNo, ProductTypeEnum productType) {
+        UserIncomeRecord userIncomeRecord;
         switch (productType) {
             case GOODS:
             case COURSE:
             case MEMBER:
-            case ACTIVITY:
+                userIncomeRecord = calMemberIncome(tradeNo);
+                break;
+            default:
+                userIncomeRecord = calActivityIncome(tradeNo);
         }
 
-        UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
+        if(userIncomeRecord != null) {
+            save(userIncomeRecord);
+        }
+
 
     }
 
@@ -72,7 +81,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
         UserMemberOrder userMemberOrder = userMemberOrderService.getOne(queryWrapper);
         String sourceUserId = userMemberOrder.getUserId();
         WxUser sourceWxUser = wxUserService.getById(sourceUserId);
-        UserShareRecord userShareRecord = userShareRecordService.getOne(userShareRecordService.lambdaQuery()
+        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, sourceUserId));
         String parentUserId = userShareRecord.getParentUserId();
         WxUser parentWxUser = wxUserService.getById(parentUserId);
@@ -84,13 +93,13 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setSourceUserId(sourceUserId);
             userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
+            userIncomeRecord.setCreateTime(new Date());
             if(parentWxUser.getLevel()==1){
                 userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
             }else if(parentWxUser.getLevel()==2){
                 userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
             }
         }
-
         return userIncomeRecord;
     }
 
@@ -101,11 +110,11 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
      */
     private UserIncomeRecord calActivityIncome(String tradeNo) {
         UserIncomeRecord userIncomeRecord = null;
-        ActivityOrderInfo activityOrderInfo = activityOrderInfoService.getOne(activityOrderInfoService.lambdaQuery()
+        ActivityOrderInfo activityOrderInfo = activityOrderInfoService.getOne(Wrappers.<ActivityOrderInfo>lambdaQuery()
                 .eq(ActivityOrderInfo::getOrderNo, tradeNo));
         String sourceUserId = activityOrderInfo.getUserId();
         WxUser sourceWxUser = wxUserService.getById(sourceUserId);
-        UserShareRecord userShareRecord = userShareRecordService.getOne(userShareRecordService.lambdaQuery()
+        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, sourceUserId));
         String parentUserId = userShareRecord.getParentUserId();
         WxUser parentWxUser = wxUserService.getById(parentUserId);
@@ -118,6 +127,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setSourceUserId(sourceUserId);
             userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
+            userIncomeRecord.setCreateTime(new Date());
             if(parentWxUser.getLevel()==1){
                 userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
             }else if(parentWxUser.getLevel()==2){

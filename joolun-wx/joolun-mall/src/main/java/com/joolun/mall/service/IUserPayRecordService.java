@@ -13,6 +13,6 @@ import com.joolun.mall.enums.ProductTypeEnum;
  */
 public interface IUserPayRecordService extends IService<UserPayRecord> {
 
-    void addPayRecord(String userId, WxPayOrderNotifyResult notifyResult, ProductTypeEnum productType);
+    void addPayRecord(WxPayOrderNotifyResult notifyResult, ProductTypeEnum productType);
 
 }

@@ -16,7 +16,10 @@ import com.joolun.mall.entity.ActivityOrderInfo;
 import com.joolun.mall.entity.OrderInfo;
 import com.joolun.mall.enums.ActivityOrderInfoEnum;
 import com.joolun.mall.enums.OrderInfoEnum;
+import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.service.IActivityOrderInfoService;
+import com.joolun.mall.service.IUserIncomeRecordService;
+import com.joolun.mall.service.IUserPayRecordService;
 import com.joolun.weixin.config.WxPayConfiguration;
 import com.joolun.weixin.constant.MyReturnCode;
 import com.joolun.weixin.entity.WxUser;
@@ -54,6 +57,10 @@ public class ActivityOrderApi {
 
 
     private final IActivityOrderInfoService activityOrderInfoService;
+
+    private final IUserIncomeRecordService userIncomeRecordService;
+
+    private final IUserPayRecordService userPayRecordService;
 
     /**
      * 活动订单分页查询
@@ -159,6 +166,8 @@ public class ActivityOrderApi {
                 orderInfo.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
                 orderInfo.setTransactionId(notifyResult.getTransactionId());
                 activityOrderInfoService.notifyOrder(orderInfo);
+                userPayRecordService.addPayRecord(notifyResult, ProductTypeEnum.ACTIVITY);
+                userIncomeRecordService.addUserIncomeRecord(notifyResult.getOutTradeNo(), ProductTypeEnum.ACTIVITY);
                 return WxPayNotifyResponse.success("成功");
             } else {
                 return WxPayNotifyResponse.fail("付款金额与订单金额不等");

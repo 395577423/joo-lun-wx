@@ -250,5 +250,8 @@ module.exports = {
   },
   addShareRecord:(shareUserId) =>{
     return request('/weixin/api/share/record/add?shareUserId='+shareUserId,'get',false)
+  },
+  buyMember:() =>{
+    return request('/weixin/api/member/buy','get',false)
   }
 }

@@ -13,8 +13,11 @@ import com.joolun.mall.config.MallConfigProperties;
 import com.joolun.mall.entity.ActivityOrderInfo;
 import com.joolun.mall.entity.UserMemberConfig;
 import com.joolun.mall.entity.UserMemberOrder;
+import com.joolun.mall.enums.ProductTypeEnum;
+import com.joolun.mall.service.IUserIncomeRecordService;
 import com.joolun.mall.service.IUserMemberConfigService;
 import com.joolun.mall.service.IUserMemberOrderService;
+import com.joolun.mall.service.IUserPayRecordService;
 import com.joolun.weixin.config.WxPayConfiguration;
 import com.joolun.weixin.utils.LocalDateTimeUtils;
 import com.joolun.weixin.utils.ThirdSessionHolder;
@@ -46,6 +49,10 @@ public class UserMemberApi {
     private final IUserMemberOrderService userMemberOrderService;
 
     private final MallConfigProperties mallConfigProperties;
+
+    private final IUserIncomeRecordService userIncomeRecordService;
+
+    private final IUserPayRecordService userPayRecordService;
 
 
     /**
@@ -87,8 +94,10 @@ public class UserMemberApi {
         log.info("支付回调:" + xmlData);
         WxPayService wxPayService = WxPayConfiguration.getPayService();
         WxPayOrderNotifyResult notifyResult = wxPayService.parseOrderNotifyResult(xmlData);
+        notifyResult.setTotalFee(1);
         String result = userMemberOrderService.updateOrder(notifyResult);
-
+        userPayRecordService.addPayRecord(notifyResult, ProductTypeEnum.MEMBER);
+        userIncomeRecordService.addUserIncomeRecord(notifyResult.getOutTradeNo(), ProductTypeEnum.MEMBER);
         return result;
     }
 

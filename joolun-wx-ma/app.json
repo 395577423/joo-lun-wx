@@ -35,7 +35,8 @@
     "pages/activity/order/detail/index",
     "pages/activity/relation/index",
     "pages/user/user-agreement/index",
-    "pages/user/privacy-agreement/index"
+    "pages/user/privacy-agreement/index",
+    "pages/user/user-member/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

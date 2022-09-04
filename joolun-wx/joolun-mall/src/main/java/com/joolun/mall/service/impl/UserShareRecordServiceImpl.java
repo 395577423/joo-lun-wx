@@ -56,4 +56,13 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
         }
 
     }
+
+    private void setMemberLevel(WxUser shareUser) {
+        List<UserShareRecord> shareRecords = this.list(Wrappers.<UserShareRecord>lambdaQuery()
+                .eq(UserShareRecord::getUserId, shareUser.getId()));
+        if (shareRecords != null && shareRecords.size() >= 20) {
+            shareUser.setLevel((short) 2);
+            wxUserService.updateById(shareUser);
+        }
+    }
 }

@@ -7,16 +7,19 @@ public enum ProductTypeEnum implements IEnum<Integer> {
     MEMBER(1,"会员"),COURSE(2,"课程"),ACTIVITY(3,"活动"),GOODS(4,"商品");
 
     ProductTypeEnum(final Integer value,final String desc) {
-
+        this.value = value;
+        this.desc = desc;
     }
 
-    private String value;
+    private Integer value;
 
     private String desc;
 
+
+
     @Override
     public Integer getValue() {
-        return this.getValue();
+        return this.value;
     }
 
     @JsonValue

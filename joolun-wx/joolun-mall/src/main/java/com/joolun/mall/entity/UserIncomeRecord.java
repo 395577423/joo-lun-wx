@@ -55,6 +55,9 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
     @Excel(name = "来源用户昵称")
     private String sourceUserNickName;
 
+
+    private String orderNo;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -127,5 +130,11 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
         return sourceUserNickName;
     }
 
+    public String getOrderNo() {
+        return orderNo;
+    }
 
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 }

@@ -109,5 +109,10 @@ Page({
     this.setData({
       modalName: null
     })
+  },
+  bugVip(e) {
+    wx.navigateTo({
+      url: '/pages/user/user-member/index',
+    })
   }
 })

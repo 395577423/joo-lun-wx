@@ -4,12 +4,15 @@
       <text class="cuIcon-settingsfill text-black"></text>
     </view>
   </view>
-  <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头' : ''}}</view>
+  <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头' : ''}}
+    <view class="cu-tag badge " wx:if="{{wxUser.member==1}}">vip</view>
+  </view>
   <view class="content text-center margin-top-sm">
     <view class="margin-top-xs text-xxl text-bold text-black" wx:if="{{wxUser.nickName}}">{{wxUser.nickName}}</view>
     <button class="cu-btn round text-lg margin-top-xs line-blue" bindtap="getUserProfile">
       {{!wxUser.nickName ? '登录' : '更新昵称'}}
     </button>
+    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{wxUser.member=='0'}}">成为会员</button>
   </view>
   <view class="grid col-4 margin-top text-center">
     <view></view>
