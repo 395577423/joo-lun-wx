@@ -11,7 +11,7 @@ Page({
       .then(res => {
         app.api.getActivityOrder(orderId).then(res => {
           let orderInfo = res.data
-          let persons = JSON.parse(orderInfo.persons)
+          let persons = orderInfo.persons
           let personNames = '';
           persons.forEach(function (person) {
             personNames = personNames + person.name + '  '

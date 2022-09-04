@@ -92,5 +92,11 @@ public class UserShareRecord extends Model<UserShareRecord>
         return userName;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

@@ -91,7 +91,6 @@ public class ActivityApi extends BaseController {
 
     @GetMapping("/image/wxm/code")
     public void getWxACode(String page,String param, HttpServletResponse response) throws UnsupportedEncodingException {
-        System.out.println(param);
         String token = WxMaUtil.getToken();
         String requestUrl = WxMaUtil.WXACODEURL +token;
         JSONObject params = new JSONObject();
@@ -101,6 +100,7 @@ public class ActivityApi extends BaseController {
         params.put("auto_color", true);
         params.put("check_path",false);
         OutputStream stream = null;
+        System.out.println(params.toString());
         try {
             byte[] bytes = HttpUtils.sendPostBackStream(requestUrl, params.toString());
             response.setContentType("image/png");

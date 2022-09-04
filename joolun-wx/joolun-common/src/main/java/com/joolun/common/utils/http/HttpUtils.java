@@ -202,7 +202,6 @@ public class HttpUtils {
         HttpPost httpPost = new HttpPost(url);
         httpPost.addHeader("Content-Type", "application/json");
         try {
-            System.out.println(params);
             httpPost.setEntity(new StringEntity(params, "UTF-8"));
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpResponse response = httpClient.execute(httpPost);

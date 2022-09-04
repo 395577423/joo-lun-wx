@@ -50,17 +50,6 @@ public class UserShareRecordController extends BaseController {
         return AjaxResult.success(userShareRecordService.getById(id));
     }
 
-    /**
-     * 新增【请填写功能名称】
-     */
-    @PreAuthorize("@ss.hasPermi('mall:record:add')")
-    @Log(title = "【请填写功能名称】" , businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(UserShareRecord userShareRecord) {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-        userShareRecordService.addShareRecord(user, userShareRecord.getParentUserId());
-        return AjaxResult.success();
-    }
 
     /**
      * 修改【请填写功能名称】

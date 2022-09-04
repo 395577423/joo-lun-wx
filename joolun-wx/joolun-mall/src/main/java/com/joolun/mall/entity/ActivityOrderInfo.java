@@ -1,6 +1,7 @@
 
 package com.joolun.mall.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -16,6 +17,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商城订单
@@ -118,7 +120,7 @@ public class ActivityOrderInfo extends Model<ActivityOrderInfo> {
      * 套餐类型描述
      */
     @Excel(name = "套餐类型描述")
-    private String priceCase;
+    private Long priceCaseId;
 
     /**
      * 购买数量
@@ -142,13 +144,16 @@ public class ActivityOrderInfo extends Model<ActivityOrderInfo> {
     @Excel(name = "订单封面图")
     private String activityImg;
 
-    @Excel(name = "出行人信息")
-    @TableField(typeHandler = ArrayStringTypeHandler.class, jdbcType = JdbcType.VARCHAR)
-    private String[] persons;
-
     private Long activityId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+
+    @TableField(exist = false)
+    private List<Long> personIds;
+
+    @TableField(exist = false)
+    private List<ActivityPerson> persons;
 
 }

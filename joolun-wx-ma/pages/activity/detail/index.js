@@ -28,8 +28,9 @@ Page({
     if (options.scene) {
       //小程序扫码进入的
       let scene = decodeURIComponent(options.scene);
-      activityId = scene.split("#")[0];
-      let userId = scene.split('#')[1];
+      activityId = scene.split("#")[0]
+      let userId = scene.split('#')[1]
+      this.addShareRecord(userId)
     } else if (options.activityId) {
       //页面跳转的
       activityId = options.activityId
@@ -96,6 +97,11 @@ Page({
       url: '/pages/activity/confirm/index?activityId=' + activityId,
     })
   },
+  addShareRecord(shareUserId) {
+    app.api.addShareRecord(shareUserId).then(res=>{
+      console.log('添加分享记录完成')
+    })
+  },
   share() {
     this.getDraw();
   },
@@ -126,7 +132,7 @@ Page({
       wx.showLoading({
         title: '生成中',
       })
-      let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/activity/detail/index&param=" + this.data.activityId + "#" + app.globalData.wxUser.id
+      let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/activity/detail/index&param=" + encodeURIComponent(this.data.activityId + "#" + app.globalData.wxUser.id)
 
       let nickName = app.globalData.wxUser.nickName
       let params = {
@@ -136,7 +142,7 @@ Page({
         textImage: '/public/img/text.png',
         nickName: nickName,
         activityName: this.data.activityContent.name,
-        price: '￥'+this.data.activityContent.price
+        price: '￥'+this.data.salesPrice
       }
       let plate = new Card().palette(params)
     

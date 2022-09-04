@@ -125,19 +125,19 @@ Page({
     reqData.activityImg = this.data.activityContent.imageUrl;
     reqData.activityDate = this.data.date;
     reqData.quantity = this.data.quantity;
-    reqData.priceCase = JSON.stringify(this.data.priceCases[this.data.selectCaseIndex]);
+    reqData.priceCaseId = this.data.priceCases[this.data.selectCaseIndex].id;
     reqData.remark = this.data.remark
-    reqData.persons = []
+    reqData.personIds = []
     this.data.persons.forEach(function (person) {
       if (person.checked) {
-        reqData.persons.push(person);
+        reqData.personIds.push(person.id);
       }
     })
-    if (reqData.quantity < reqData.persons.length) {
+    if (reqData.quantity < reqData.personIds.length) {
       this.showModal('超出所需出行人总数,总共只需要' + reqData.quantity + '位出行人，目前已添加' + reqData.persons.length + '位')
       return false;
-    } else if(reqData.quantity > reqData.persons.length) {
-      this.showModal('缺少出行人,总共只需要' + reqData.quantity + '位出行人，目前已添加' + reqData.persons.length + '位')
+    } else if(reqData.quantity > reqData.personIds.length) {
+      this.showModal('缺少出行人,总共只需要' + reqData.quantity + '位出行人，目前已添加' + reqData.personIds.length + '位')
       return false;
     }
     app.api.subActivityOrder(reqData).then(res => {

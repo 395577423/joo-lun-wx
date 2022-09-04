@@ -40,7 +40,7 @@ public class UserPayRecord extends Model<UserPayRecord>
 
     /** 支付业务类型 1购买会员 、2购买课程、3参与活动、4、购买商品 */
     @Excel(name = "支付业务类型 1购买会员 、2购买课程、3参与活动、4、购买商品")
-    private Long paymentType;
+    private Integer paymentType;
 
 
     /** 备注 */
@@ -83,12 +83,12 @@ public class UserPayRecord extends Model<UserPayRecord>
     {
         return userId;
     }
-    public void setPaymentType(Long paymentType) 
+    public void setPaymentType(Integer paymentType)
     {
         this.paymentType = paymentType;
     }
 
-    public Long getPaymentType() 
+    public Integer getPaymentType()
     {
         return paymentType;
     }

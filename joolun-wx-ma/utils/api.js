@@ -247,5 +247,8 @@ module.exports = {
   },
   getRelationActivity: (courseId) => {
     return request('/weixin/api/activity/listByCourseId?courseId='+courseId, 'get', false)
+  },
+  addShareRecord:(shareUserId) =>{
+    return request('/weixin/api/share/record/add?shareUserId='+shareUserId,'get',false)
   }
 }

@@ -2,6 +2,7 @@ package com.joolun.mall.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.common.annotation.Excel;
+import io.swagger.models.auth.In;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
 
     /** 收入来源类型 */
     @Excel(name = "收入来源类型")
-    private Long sourceType;
+    private Integer sourceType;
 
 
     /** 创建时间 */
@@ -42,7 +43,7 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
 
     /** 用户名称 */
     @Excel(name = "用户名称")
-    private String uesrNickName;
+    private String userNickName;
 
 
     /** 来源用户id */
@@ -72,12 +73,12 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
     {
         return amount;
     }
-    public void setSourceType(Long sourceType) 
+    public void setSourceType(Integer sourceType)
     {
         this.sourceType = sourceType;
     }
 
-    public Long getSourceType() 
+    public Integer getSourceType()
     {
         return sourceType;
     }
@@ -90,25 +91,33 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
     {
         return userId;
     }
-    public void setUesrNickName(String uesrNickName) 
-    {
-        this.uesrNickName = uesrNickName;
+
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public String getUesrNickName() 
-    {
-        return uesrNickName;
-    }
-    public void setSourceUserId(String sourceUserId) 
-    {
-        this.sourceUserId = sourceUserId;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getSourceUserId() 
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
+    public String getSourceUserId()
     {
         return sourceUserId;
     }
-    public void setSourceUserNickName(String sourceUserNickName) 
+
+    public void setSourceUserId(String sourceUserId) {
+        this.sourceUserId = sourceUserId;
+    }
+
+    public void setSourceUserNickName(String sourceUserNickName)
     {
         this.sourceUserNickName = sourceUserNickName;
     }

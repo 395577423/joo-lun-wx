@@ -2,20 +2,25 @@ package com.joolun.mall.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.constant.MallConstants;
-import com.joolun.mall.entity.Activity;
-import com.joolun.mall.entity.ActivityOrderInfo;
+import com.joolun.mall.entity.*;
 import com.joolun.mall.enums.ActivityOrderInfoEnum;
 import com.joolun.mall.enums.OrderInfoEnum;
 import com.joolun.mall.mapper.ActivityOrderInfoMapper;
-import com.joolun.mall.service.IActivityOrderInfoService;
-import com.joolun.mall.service.IActivityService;
+import com.joolun.mall.service.*;
+import com.joolun.weixin.entity.WxUser;
+import com.joolun.weixin.service.WxUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author lanjian
@@ -31,6 +36,15 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
 
     private final IActivityService activityService;
 
+    private final IActivityOrderPersonService activityOrderPersonService;
+
+
+    private final ActivityPriceCaseService activityPriceCaseService;
+
+    private final IActivityPersonService activityPersonService;
+
+    private final WxUserService wxUserService;
+
 
     /**
      * 下单
@@ -40,12 +54,14 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrder(ActivityOrderInfo activityOrderInfo) {
+        List<Long> personIds = activityOrderInfo.getPersonIds();
         activityOrderInfo.setIsPay(CommonConstants.NO);
         activityOrderInfo.setPaymentWay("2");
         activityOrderInfo.setOrderNo(IdUtil.getSnowflake(0, 0).nextIdStr());
         activityOrderInfo.setStatus(ActivityOrderInfoEnum.STATUS_0.getValue());
         calPrice(activityOrderInfo);
         save(activityOrderInfo);
+        activityOrderPersonService.batchInsert(activityOrderInfo.getId(), personIds);
     }
 
     /**
@@ -73,6 +89,22 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         if (activity == null) {
             throw new RuntimeException("活动不存在");
         }
+        String userId = activityOrderInfo.getUserId();
+        WxUser wxUser = wxUserService.getById(userId);
+
+        Long priceCaseId = activityOrderInfo.getPriceCaseId();
+        ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
+        if("1".equals(wxUser.getMember())){
+            if(wxUser.getLevel() == 1) {
+                activityOrderInfo.setPaymentPrice(activityPriceCase.getMemberPrice());
+            }else if(wxUser.getLevel() == 2) {
+                activityOrderInfo.setPaymentPrice(activityPriceCase.getSuperMemberPrice());
+            }
+        }else{
+            activityOrderInfo.setPaymentPrice(activityPriceCase.getSalesPrice());
+        }
+
+        activityOrderInfo.setSalesPrice(activityPriceCase.getSalesPrice());
     }
 
     @Override
@@ -91,6 +123,12 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
                         MallConstants.REDIS_ACTIVITY_ORDER_KEY_STATUS_2, activityOrderInfo.getId()));
             }
         }
+        LambdaQueryWrapper<ActivityOrderPerson> queryWrapper = Wrappers.<ActivityOrderPerson>lambdaQuery()
+                .eq(ActivityOrderPerson::getOrderId, id);
+        List<ActivityOrderPerson> orderPersons = activityOrderPersonService.list(queryWrapper);
+        List<Long> personIds = orderPersons.stream().map(ActivityOrderPerson::getPersonId).collect(Collectors.toList());
+        List<ActivityPerson> activityPeoples = activityPersonService.listByIds(personIds);
+        activityOrderInfo.setPersons(activityPeoples);
         return activityOrderInfo;
     }
 }

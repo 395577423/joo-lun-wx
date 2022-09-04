@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -56,15 +57,16 @@ public class ActivityOrderApi {
 
     /**
      * 活动订单分页查询
+     *
      * @param page
      * @param status
      * @return
      */
     @GetMapping("/page")
-    public AjaxResult page(Page page,String status){
+    public AjaxResult page(Page page, String status) {
         LambdaQueryWrapper<ActivityOrderInfo> query = Wrappers.<ActivityOrderInfo>lambdaQuery()
-                .eq(StringUtils.isNotBlank(status),ActivityOrderInfo::getStatus, status)
-                .eq(ActivityOrderInfo::getDelFlag,"0")
+                .eq(StringUtils.isNotBlank(status), ActivityOrderInfo::getStatus, status)
+                .eq(ActivityOrderInfo::getDelFlag, "0")
                 .orderByDesc(ActivityOrderInfo::getCreateTime);
         page = activityOrderInfoService.page(page, query);
         return AjaxResult.success(page);
@@ -77,7 +79,7 @@ public class ActivityOrderApi {
     @ApiOperation(value = "查询")
     @GetMapping("/{id}")
     public AjaxResult findById(@PathVariable Long id) {
-        ActivityOrderInfo model = activityOrderInfoService.getById(id);
+        ActivityOrderInfo model = activityOrderInfoService.queryById(id);
         return AjaxResult.success(model);
     }
 
@@ -173,7 +175,7 @@ public class ActivityOrderApi {
     @ApiOperation(value = "保存")
     @PostMapping
     public AjaxResult save(@RequestBody ActivityOrderInfo activityOrderInfo) {
-            activityOrderInfoService.saveOrUpdate(activityOrderInfo);
+        activityOrderInfoService.saveOrUpdate(activityOrderInfo);
         return AjaxResult.success("保存成功");
     }
 

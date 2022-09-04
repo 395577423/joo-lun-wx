@@ -1,5 +1,7 @@
 package com.joolun.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joolun.common.annotation.Excel;
@@ -19,8 +21,11 @@ public class UserMemberOrder extends Model<UserMemberOrder>
 
 
     /** $column.columnComment */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
+
+    private String orderName;
 
     /** 订单号 */
     @Excel(name = "订单号")
@@ -46,6 +51,13 @@ public class UserMemberOrder extends Model<UserMemberOrder>
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "付款时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date paymentTime;
+
+
+    /**
+     * 支付交易ID
+     */
+    @Excel(name = "支付交易ID")
+    private String transactionId;
 
 
     /** 备注 */
@@ -79,7 +91,16 @@ public class UserMemberOrder extends Model<UserMemberOrder>
     {
         return orderNo;
     }
-    public void setPaymentWay(String paymentWay) 
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
+    }
+
+    public void setPaymentWay(String paymentWay)
     {
         this.paymentWay = paymentWay;
     }
@@ -125,4 +146,27 @@ public class UserMemberOrder extends Model<UserMemberOrder>
         return userId;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
 }

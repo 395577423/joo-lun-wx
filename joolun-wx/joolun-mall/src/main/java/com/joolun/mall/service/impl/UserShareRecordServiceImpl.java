@@ -8,10 +8,13 @@ import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.mapper.UserShareRecordMapper;
 import com.joolun.mall.service.IUserShareRecordService;
 import com.joolun.system.service.ISysUserService;
+import com.joolun.weixin.entity.WxUser;
+import com.joolun.weixin.service.WxUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,29 +29,30 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
         implements IUserShareRecordService {
 
     @Autowired
-    ISysUserService sysUserService;
+    WxUserService wxUserService;
 
     /**
      * 新增用户分享记录信息
      *
-     * @param currUser
+     * @param userId
      * @param shareUserId
      */
     @Override
-    public void addShareRecord(SysUser currUser, String shareUserId) {
-
+    public void addShareRecord(String userId, String shareUserId) {
         //判断当前用户是否已经存在分享记录
         List<UserShareRecord> shareRecords = this.list(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, currUser.getUserId()));
+                .eq(UserShareRecord::getUserId, userId));
         if (CollectionUtil.isEmpty(shareRecords)) {
-            SysUser shareUser = sysUserService.selectUserById(Long.valueOf(shareUserId));
+            WxUser wxUser = wxUserService.getById(userId);
+            WxUser shareUser = wxUserService.getById(shareUserId);
             UserShareRecord userShareRecord = new UserShareRecord();
-            userShareRecord.setUserId(String.valueOf(currUser.getUserId()));
-            userShareRecord.setUserName(currUser.getUserName());
-            userShareRecord.setUserId(shareUserId);
-            userShareRecord.setUserName(shareUser.getUserName());
+            userShareRecord.setUserId(String.valueOf(wxUser.getId()));
+            userShareRecord.setUserName(wxUser.getNickName());
+            userShareRecord.setParentUserId(shareUserId);
+            userShareRecord.setParentUserName(shareUser.getNickName());
+            userShareRecord.setCreateTime(new Date());
             boolean result = save(userShareRecord);
-            log.info("新增分享记录结果:{}" , result);
+            log.info("新增分享记录结果:{}", result);
         }
 
     }
