@@ -94,6 +94,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
             userIncomeRecord.setCreateTime(new Date());
+            userIncomeRecord.setOrderNo(tradeNo);
             if(parentWxUser.getLevel()==1){
                 userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
             }else if(parentWxUser.getLevel()==2){
@@ -128,6 +129,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
             userIncomeRecord.setCreateTime(new Date());
+            userIncomeRecord.setOrderNo(tradeNo);
             if(parentWxUser.getLevel()==1){
                 userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
             }else if(parentWxUser.getLevel()==2){

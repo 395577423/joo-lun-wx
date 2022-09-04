@@ -1,0 +1,27 @@
+<view class="padding-sm text-center">返佣</view>
+<view class="bg-blue light">
+  <view class="padding-left-xl padding-top-xl text-gray">可提现余额</view>
+  <view class="padding-left-xl padding-top padding-bottom text-price text-xxl text-bold text-orange light">100</view>
+</view>
+<view class="flex margin-sm bg-white radius">
+  <view class="flex-twice padding-xs solid-right">
+    <view class="text-gray padding padding-bottom-lg">总返佣</view>
+    <view class="text-price padding-left padding-bottom text-xxl text-bold">1000 </view>
+  </view>
+  <view class="flex-treble padding-xs solid-right">
+    <view class="solid-bottom padding-sm padding-bottom padding-top">
+      <text class="text-gray">已返佣</text>
+      <text class="text-price padding-left-sm text-bold text-black">100</text>
+    </view>
+    <view class="padding-sm padding-top">
+      <text class="text-gray">已提现</text>
+      <text class="text-price padding-left-sm text-bold text-black">100</text>
+    </view>
+  </view>
+</view>
+<view class="margin-sm bg-white radius">
+  <view class="padding-sm solid-bottom text-lg text-black">提现记录</view>
+  <view class="padding-sm text-sm text-gray">
+    最近3次提现记录
+  </view>
+</view>

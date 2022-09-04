@@ -1,0 +1,7 @@
+page{
+  background-color:#f3f4f7 !important;
+}
+
+.radius {
+	border-radius: 12rpx;
+}

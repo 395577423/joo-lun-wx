@@ -64,6 +64,12 @@
     </navigator>
   </view>
   <view class="cu-item arrow">
+    <navigator class="content" url="/pages/user/user-commission/index">
+      <text class="cuIcon-activity text-orange"></text>
+      <text>佣  金</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
     <navigator class="content" url="/pages/user/user-agreement/index">
       <text class="cuIcon-read text-orange"></text>
       <text>平台用户注册协议</text>
