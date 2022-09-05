@@ -13,6 +13,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 微信用户
@@ -168,7 +169,7 @@ private static final long serialVersionUID = 1L;
     /**
      * 会员国企时间
      */
-    private String memberExpiryDate;
+    private Date memberExpiryDate;
 
     /**
      * 赋能积分

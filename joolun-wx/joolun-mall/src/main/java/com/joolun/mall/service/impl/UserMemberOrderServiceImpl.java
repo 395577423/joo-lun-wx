@@ -1,6 +1,7 @@
 package com.joolun.mall.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -93,9 +94,11 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      * @param wxUserId
      */
     private void setUserMember(String wxUserId) {
+        Date expiryDate = DateUtil.offsetMonth(new Date(),12);
         WxUser wxUser = wxUserService.getById(wxUserId);
         wxUser.setMember(MemberStatusEnum.YES.getValue());
         wxUser.setLevel((short)1);
+        wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
     }
 
