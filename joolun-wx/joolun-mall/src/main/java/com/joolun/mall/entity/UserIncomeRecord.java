@@ -56,7 +56,15 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
     private String sourceUserNickName;
 
 
+    /**
+     * 订单号
+     */
     private String orderNo;
+
+    /**
+     * 状态 0 返佣中 1 已返佣
+     */
+    private String status;
 
     public void setId(Long id) 
     {
@@ -136,5 +144,13 @@ public class UserIncomeRecord extends Model<UserIncomeRecord>
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

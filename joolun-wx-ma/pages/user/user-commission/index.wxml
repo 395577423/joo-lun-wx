@@ -1,21 +1,25 @@
 <view class="padding-sm text-center">返佣</view>
 <view class="bg-blue light">
   <view class="padding-left-xl padding-top-xl text-gray">可提现余额</view>
-  <view class="padding-left-xl padding-top padding-bottom text-price text-xxl text-bold text-orange light">100</view>
+  <view class="padding-left-xl padding-top padding-bottom text-price text-xxl text-bold text-orange light">{{completedAmount-withdrawAmount}}</view>
 </view>
 <view class="flex margin-sm bg-white radius">
   <view class="flex-twice padding-xs solid-right">
     <view class="text-gray padding padding-bottom-lg">总返佣</view>
-    <view class="text-price padding-left padding-bottom text-xxl text-bold">1000 </view>
+    <view class="text-price padding-left padding-bottom text-xxl text-bold">{{total}} </view>
   </view>
   <view class="flex-treble padding-xs solid-right">
     <view class="solid-bottom padding-sm padding-bottom padding-top">
       <text class="text-gray">已返佣</text>
-      <text class="text-price padding-left-sm text-bold text-black">100</text>
+      <text class="text-price padding-left-sm text-bold text-black">{{completedAmount}}</text>
+    </view>
+    <view class="solid-bottom padding-sm padding-bottom padding-top">
+      <text class="text-gray">返佣中</text>
+      <text class="text-price padding-left-sm text-bold text-black">{{total-completedAmount}}</text>
     </view>
     <view class="padding-sm padding-top">
       <text class="text-gray">已提现</text>
-      <text class="text-price padding-left-sm text-bold text-black">100</text>
+      <text class="text-price padding-left-sm text-bold text-black">{{withdrawAmount}}</text>
     </view>
   </view>
 </view>

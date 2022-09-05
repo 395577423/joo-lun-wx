@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.mall.entity.*;
+import com.joolun.mall.enums.IncomeStatusEnum;
+import com.joolun.mall.enums.MemberStatusEnum;
 import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.mapper.UserIncomeRecordMapper;
 import com.joolun.mall.service.*;
@@ -27,7 +29,8 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
     private IUserMemberConfigService userMemberConfigService;
 
     @Autowired
-    private IActivityService activityService;
+    private IUserCommissionService userCommissionService;
+
 
     @Autowired
     private ActivityPriceCaseService activityPriceCaseService;
@@ -58,12 +61,13 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             case COURSE:
             case MEMBER:
                 userIncomeRecord = calMemberIncome(tradeNo);
+                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
                 break;
             default:
                 userIncomeRecord = calActivityIncome(tradeNo);
+                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
         }
-
-        if(userIncomeRecord != null) {
+        if (userIncomeRecord != null) {
             save(userIncomeRecord);
         }
 
@@ -85,7 +89,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 .eq(UserShareRecord::getUserId, sourceUserId));
         String parentUserId = userShareRecord.getParentUserId();
         WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if("1".equals(parentWxUser.getMember())){
+        if ("1".equals(parentWxUser.getMember())) {
             UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
             userIncomeRecord = new UserIncomeRecord();
             userIncomeRecord.setUserId(parentUserId);
@@ -95,9 +99,10 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(tradeNo);
-            if(parentWxUser.getLevel()==1){
+            userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
+            if (parentWxUser.getLevel() == 1) {
                 userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
-            }else if(parentWxUser.getLevel()==2){
+            } else if (parentWxUser.getLevel() == 2) {
                 userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
             }
         }
@@ -119,7 +124,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 .eq(UserShareRecord::getUserId, sourceUserId));
         String parentUserId = userShareRecord.getParentUserId();
         WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if("1".equals(parentWxUser.getMember())){
+        if (MemberStatusEnum.YES.getValue().equals(parentWxUser.getMember())) {
             Long priceCaseId = activityOrderInfo.getPriceCaseId();
             ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
             userIncomeRecord = new UserIncomeRecord();
@@ -130,9 +135,10 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(tradeNo);
-            if(parentWxUser.getLevel()==1){
+            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
+            if (parentWxUser.getLevel() == 1) {
                 userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-            }else if(parentWxUser.getLevel()==2){
+            } else if (parentWxUser.getLevel() == 2) {
                 userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
             }
         }

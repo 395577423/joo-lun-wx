@@ -1,0 +1,47 @@
+package com.joolun.web.api;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.mall.entity.UserCommission;
+import com.joolun.mall.service.IUserCommissionService;
+import com.joolun.weixin.utils.ThirdSessionHolder;
+import io.swagger.annotations.Api;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+
+/**
+ * @author lanjian
+ * @Description
+ * @create 2022-09-05
+ */
+@Api(tags = "会员")
+@Slf4j
+@RestController
+@AllArgsConstructor
+@RequestMapping("/weixin/api/commission")
+public class UserCommissionApi {
+
+    private final IUserCommissionService userCommissionService;
+
+    @GetMapping("/get")
+    public AjaxResult get(){
+        String userId = ThirdSessionHolder.getWxUserId();
+        LambdaQueryWrapper<UserCommission> queryWrapper = Wrappers.<UserCommission>lambdaQuery()
+                .eq(UserCommission::getUserId, userId);
+        UserCommission userCommission = userCommissionService.getOne(queryWrapper);
+        if(userCommission == null) {
+            userCommission = new UserCommission();
+            userCommission.setUserId(userId);
+            userCommission.setWithdrawAmount(BigDecimal.ZERO);
+            userCommission.setTotalAmount(BigDecimal.ZERO);
+            userCommission.setCompletedAmount(BigDecimal.ZERO);
+        }
+        return AjaxResult.success(userCommission);
+    }
+}

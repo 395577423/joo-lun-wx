@@ -9,6 +9,7 @@ import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.entity.UserMemberOrder;
+import com.joolun.mall.enums.MemberStatusEnum;
 import com.joolun.mall.mapper.UserMemberOrderMapper;
 import com.joolun.mall.service.IUserMemberOrderService;
 import com.joolun.weixin.entity.WxUser;
@@ -93,10 +94,9 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      */
     private void setUserMember(String wxUserId) {
         WxUser wxUser = wxUserService.getById(wxUserId);
-        wxUser.setMember("1");
+        wxUser.setMember(MemberStatusEnum.YES.getValue());
         wxUser.setLevel((short)1);
         wxUserService.updateById(wxUser);
-
     }
 
 }

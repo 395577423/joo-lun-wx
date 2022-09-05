@@ -1,16 +1,12 @@
 package com.joolun.web.api;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.joolun.common.core.domain.AjaxResult;
-import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.mall.config.MallConfigProperties;
-import com.joolun.mall.entity.ActivityOrderInfo;
 import com.joolun.mall.entity.UserMemberConfig;
 import com.joolun.mall.entity.UserMemberOrder;
 import com.joolun.mall.enums.ProductTypeEnum;
@@ -19,7 +15,6 @@ import com.joolun.mall.service.IUserMemberConfigService;
 import com.joolun.mall.service.IUserMemberOrderService;
 import com.joolun.mall.service.IUserPayRecordService;
 import com.joolun.weixin.config.WxPayConfiguration;
-import com.joolun.weixin.utils.LocalDateTimeUtils;
 import com.joolun.weixin.utils.ThirdSessionHolder;
 import com.joolun.weixin.utils.WxMaUtil;
 import io.swagger.annotations.Api;
@@ -29,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

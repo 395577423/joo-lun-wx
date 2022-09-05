@@ -253,5 +253,8 @@ module.exports = {
   },
   buyMember:() =>{
     return request('/weixin/api/member/buy','get',false)
+  },
+  getCommission:() => {
+    return request('/weixin/api/commission/get','get',false)
   }
 }

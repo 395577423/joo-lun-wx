@@ -1,15 +1,15 @@
 package com.joolun.mall.entity;
 
-import java.math.BigDecimal;
-
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.common.annotation.Excel;
+
+import java.math.BigDecimal;
 
 /**
  * 【请填写功能名称】对象 user_commission
  * 
  * @author Lanjian
- * @date 2022-09-03
+ * @date 2022-09-05
  */
 public class UserCommission extends Model<UserCommission>
 {
@@ -22,17 +22,23 @@ public class UserCommission extends Model<UserCommission>
 
     /** 佣金总金额 */
     @Excel(name = "佣金总金额")
-    private BigDecimal amountTotal;
+    private BigDecimal totalAmount;
 
-
-    /** 佣金已提取金额 */
-    @Excel(name = "佣金已提取金额")
-    private BigDecimal amountWithdraw;
 
 
     /** 用户id */
     @Excel(name = "用户id")
     private String userId;
+
+
+    /** 已完成返佣金额 */
+    @Excel(name = "已完成返佣金额")
+    private BigDecimal completedAmount;
+
+
+    /** 佣金已提取金额 */
+    @Excel(name = "佣金已提取金额")
+    private BigDecimal withdrawAmount;
 
     public void setId(Long id) 
     {
@@ -43,24 +49,16 @@ public class UserCommission extends Model<UserCommission>
     {
         return id;
     }
-    public void setAmountTotal(BigDecimal amountTotal) 
+    public void setTotalAmount(BigDecimal totalAmount) 
     {
-        this.amountTotal = amountTotal;
+        this.totalAmount = totalAmount;
     }
 
-    public BigDecimal getAmountTotal() 
+    public BigDecimal getTotalAmount()
     {
-        return amountTotal;
-    }
-    public void setAmountWithdraw(BigDecimal amountWithdraw) 
-    {
-        this.amountWithdraw = amountWithdraw;
+        return totalAmount;
     }
 
-    public BigDecimal getAmountWithdraw() 
-    {
-        return amountWithdraw;
-    }
     public void setUserId(String userId) 
     {
         this.userId = userId;
@@ -70,5 +68,24 @@ public class UserCommission extends Model<UserCommission>
     {
         return userId;
     }
+    public void setCompletedAmount(BigDecimal completedAmount) 
+    {
+        this.completedAmount = completedAmount;
+    }
+
+    public BigDecimal getCompletedAmount() 
+    {
+        return completedAmount;
+    }
+    public void setWithdrawAmount(BigDecimal withdrawAmount) 
+    {
+        this.withdrawAmount = withdrawAmount;
+    }
+
+    public BigDecimal getWithdrawAmount() 
+    {
+        return withdrawAmount;
+    }
+
 
 }
