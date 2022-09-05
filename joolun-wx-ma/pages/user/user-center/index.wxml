@@ -66,7 +66,7 @@
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/user/user-commission/index">
       <text class="cuIcon-activity text-orange"></text>
-      <text>佣  金</text>
+      <text>佣金平台</text>
     </navigator>
   </view>
   <view class="cu-item arrow">

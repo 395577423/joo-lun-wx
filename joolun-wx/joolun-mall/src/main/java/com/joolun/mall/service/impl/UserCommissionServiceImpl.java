@@ -31,6 +31,7 @@ public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper,
      */
     @Override
     public void updateCommissionIncomeData(UserIncomeRecord incomeRecord, IncomeStatusEnum status) {
+        if (incomeRecord == null) return;
         String userId = incomeRecord.getUserId();
         BigDecimal amount = incomeRecord.getAmount();
         LambdaQueryWrapper<UserCommission> queryWrapper = Wrappers.<UserCommission>lambdaQuery()
@@ -42,7 +43,7 @@ public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper,
             userCommission.setTotalAmount(amount);
             userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ? amount : BigDecimal.ZERO);
             userCommission.setWithdrawAmount(BigDecimal.ZERO);
-        }else {
+        } else {
             userCommission.setTotalAmount(amount.add(userCommission.getTotalAmount()));
             userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ?
                     amount.add(userCommission.getCompletedAmount()) : userCommission.getCompletedAmount());

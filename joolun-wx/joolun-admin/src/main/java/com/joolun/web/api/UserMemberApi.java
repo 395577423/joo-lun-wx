@@ -1,6 +1,7 @@
 package com.joolun.web.api;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -10,10 +11,7 @@ import com.joolun.mall.config.MallConfigProperties;
 import com.joolun.mall.entity.UserMemberConfig;
 import com.joolun.mall.entity.UserMemberOrder;
 import com.joolun.mall.enums.ProductTypeEnum;
-import com.joolun.mall.service.IUserIncomeRecordService;
-import com.joolun.mall.service.IUserMemberConfigService;
-import com.joolun.mall.service.IUserMemberOrderService;
-import com.joolun.mall.service.IUserPayRecordService;
+import com.joolun.mall.service.*;
 import com.joolun.weixin.config.WxPayConfiguration;
 import com.joolun.weixin.utils.ThirdSessionHolder;
 import com.joolun.weixin.utils.WxMaUtil;
@@ -44,9 +42,7 @@ public class UserMemberApi {
 
     private final MallConfigProperties mallConfigProperties;
 
-    private final IUserIncomeRecordService userIncomeRecordService;
-
-    private final IUserPayRecordService userPayRecordService;
+    private final INotifyService notifyService;
 
 
     /**
@@ -88,11 +84,16 @@ public class UserMemberApi {
         log.info("支付回调:" + xmlData);
         WxPayService wxPayService = WxPayConfiguration.getPayService();
         WxPayOrderNotifyResult notifyResult = wxPayService.parseOrderNotifyResult(xmlData);
-        notifyResult.setTotalFee(1);
-        String result = userMemberOrderService.updateOrder(notifyResult);
-        userPayRecordService.addPayRecord(notifyResult, ProductTypeEnum.MEMBER);
-        userIncomeRecordService.addUserIncomeRecord(notifyResult.getOutTradeNo(), ProductTypeEnum.MEMBER);
-        return result;
+        String respXml;
+        try {
+            notifyService.notify(notifyResult, ProductTypeEnum.MEMBER);
+            respXml = WxPayNotifyResponse.success("成功");
+        } catch (Exception e) {
+            log.error("位置支付回调失败{}", e.getMessage());
+            respXml = WxPayNotifyResponse.fail(e.getMessage());
+        }
+        log.info("支付回调resp:{}", respXml);
+        return respXml;
     }
 
 }

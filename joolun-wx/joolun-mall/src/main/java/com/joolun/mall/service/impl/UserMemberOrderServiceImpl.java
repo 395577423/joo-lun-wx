@@ -9,10 +9,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.config.CommonConstants;
+import com.joolun.mall.entity.UserIncomeRecord;
+import com.joolun.mall.entity.UserMemberConfig;
 import com.joolun.mall.entity.UserMemberOrder;
+import com.joolun.mall.entity.UserShareRecord;
+import com.joolun.mall.enums.IncomeStatusEnum;
 import com.joolun.mall.enums.MemberStatusEnum;
+import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.mapper.UserMemberOrderMapper;
+import com.joolun.mall.service.IUserMemberConfigService;
 import com.joolun.mall.service.IUserMemberOrderService;
+import com.joolun.mall.service.IUserShareRecordService;
 import com.joolun.weixin.entity.WxUser;
 import com.joolun.weixin.service.WxUserService;
 import com.joolun.weixin.utils.LocalDateTimeUtils;
@@ -35,6 +42,12 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
 
     @Autowired
     WxUserService wxUserService;
+
+    @Autowired
+    private IUserShareRecordService userShareRecordService;
+
+    @Autowired
+    private IUserMemberConfigService userMemberConfigService;
 
     /**
      * 创建订单
@@ -63,7 +76,7 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      * @param notifyResult
      */
     @Override
-    public String updateOrder(WxPayOrderNotifyResult notifyResult) {
+    public UserIncomeRecord updateOrder(WxPayOrderNotifyResult notifyResult) {
         String tradeNo = notifyResult.getOutTradeNo();
         LambdaQueryWrapper<UserMemberOrder> queryWrapper = Wrappers.<UserMemberOrder>lambdaQuery().eq(UserMemberOrder::getOrderNo, tradeNo);
         UserMemberOrder userMemberOrder = getOne(queryWrapper);
@@ -77,15 +90,17 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
                     userMemberOrder.setIsPay(CommonConstants.YES);
                     updateById(userMemberOrder);
                     setUserMember(userMemberOrder.getUserId());
+                    return calMemberIncome(userMemberOrder);
+                } else {
+                    throw new RuntimeException("订单已支付");
                 }
-                return WxPayNotifyResponse.success("成功");
+
             } else {
-                return WxPayNotifyResponse.fail("付款金额与订单金额不等");
+                throw new RuntimeException("付款金额与订单金额不等");
             }
         } else {
-            return WxPayNotifyResponse.fail("无此订单");
+            throw new RuntimeException("无此订单");
         }
-
     }
 
     /**
@@ -94,12 +109,45 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      * @param wxUserId
      */
     private void setUserMember(String wxUserId) {
-        Date expiryDate = DateUtil.offsetMonth(new Date(),12);
+        Date expiryDate = DateUtil.offsetMonth(new Date(), 12);
         WxUser wxUser = wxUserService.getById(wxUserId);
         wxUser.setMember(MemberStatusEnum.YES.getValue());
-        wxUser.setLevel((short)1);
+        wxUser.setLevel((short) 1);
         wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
+    }
+
+
+    /**
+     * 计算会员分享的收入
+     *
+     * @param userMemberOrder
+     */
+    private UserIncomeRecord calMemberIncome(UserMemberOrder userMemberOrder) {
+        UserIncomeRecord userIncomeRecord = null;
+        WxUser sourceWxUser = wxUserService.getById(userMemberOrder.getUserId());
+        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
+                .eq(UserShareRecord::getUserId, userMemberOrder.getUserId()));
+        String parentUserId = userShareRecord.getParentUserId();
+        WxUser parentWxUser = wxUserService.getById(parentUserId);
+        if ("1".equals(parentWxUser.getMember())) {
+            UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
+            userIncomeRecord = new UserIncomeRecord();
+            userIncomeRecord.setUserId(parentUserId);
+            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
+            userIncomeRecord.setSourceUserId(userMemberOrder.getUserId());
+            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
+            userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
+            userIncomeRecord.setCreateTime(new Date());
+            userIncomeRecord.setOrderNo(userMemberOrder.getOrderNo());
+            userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
+            if (parentWxUser.getLevel() == 1) {
+                userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
+            } else if (parentWxUser.getLevel() == 2) {
+                userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
+            }
+        }
+        return userIncomeRecord;
     }
 
 }

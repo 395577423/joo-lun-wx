@@ -14,10 +14,12 @@ import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.config.MallConfigProperties;
 import com.joolun.mall.entity.ActivityOrderInfo;
 import com.joolun.mall.entity.OrderInfo;
+import com.joolun.mall.entity.UserIncomeRecord;
 import com.joolun.mall.enums.ActivityOrderInfoEnum;
 import com.joolun.mall.enums.OrderInfoEnum;
 import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.service.IActivityOrderInfoService;
+import com.joolun.mall.service.INotifyService;
 import com.joolun.mall.service.IUserIncomeRecordService;
 import com.joolun.mall.service.IUserPayRecordService;
 import com.joolun.weixin.config.WxPayConfiguration;
@@ -58,9 +60,8 @@ public class ActivityOrderApi {
 
     private final IActivityOrderInfoService activityOrderInfoService;
 
-    private final IUserIncomeRecordService userIncomeRecordService;
 
-    private final IUserPayRecordService userPayRecordService;
+    private final INotifyService notifyService;
 
     /**
      * 活动订单分页查询
@@ -125,7 +126,8 @@ public class ActivityOrderApi {
         }
         if (orderInfo.getPaymentPrice().compareTo(BigDecimal.ZERO) == 0) {//0元购买不调支付
             orderInfo.setPaymentTime(new Date());
-            activityOrderInfoService.notifyOrder(orderInfo);
+            orderInfo.setIsPay(CommonConstants.YES);
+            activityOrderInfoService.updateById(orderInfo);
             return AjaxResult.success();
         }
         String appId = WxMaUtil.getAppId(request);
@@ -157,24 +159,16 @@ public class ActivityOrderApi {
         log.info("支付回调:" + xmlData);
         WxPayService wxPayService = WxPayConfiguration.getPayService();
         WxPayOrderNotifyResult notifyResult = wxPayService.parseOrderNotifyResult(xmlData);
-        ActivityOrderInfo orderInfo = activityOrderInfoService.getOne(Wrappers.<ActivityOrderInfo>lambdaQuery()
-                .eq(ActivityOrderInfo::getOrderNo, notifyResult.getOutTradeNo()));
-        if (orderInfo != null) {
-            if (orderInfo.getPaymentPrice().multiply(new BigDecimal(100)).intValue() == notifyResult.getTotalFee()) {
-                String timeEnd = notifyResult.getTimeEnd();
-                LocalDateTime paymentTime = LocalDateTimeUtils.parse(timeEnd);
-                orderInfo.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
-                orderInfo.setTransactionId(notifyResult.getTransactionId());
-                activityOrderInfoService.notifyOrder(orderInfo);
-                userPayRecordService.addPayRecord(notifyResult, ProductTypeEnum.ACTIVITY);
-                userIncomeRecordService.addUserIncomeRecord(notifyResult.getOutTradeNo(), ProductTypeEnum.ACTIVITY);
-                return WxPayNotifyResponse.success("成功");
-            } else {
-                return WxPayNotifyResponse.fail("付款金额与订单金额不等");
-            }
-        } else {
-            return WxPayNotifyResponse.fail("无此订单");
+        String respXml;
+        try {
+            notifyService.notify(notifyResult, ProductTypeEnum.ACTIVITY);
+            respXml = WxPayNotifyResponse.success("成功");
+        } catch (Exception e) {
+            log.error("位置支付回调失败{}", e.getMessage());
+            respXml = WxPayNotifyResponse.fail(e.getMessage());
         }
+        log.info("支付回调resp:{}", respXml);
+        return respXml;
     }
 
 

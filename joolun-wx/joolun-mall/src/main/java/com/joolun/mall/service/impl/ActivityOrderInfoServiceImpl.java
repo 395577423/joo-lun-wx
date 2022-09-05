@@ -5,20 +5,25 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.constant.MallConstants;
 import com.joolun.mall.entity.*;
-import com.joolun.mall.enums.ActivityOrderInfoEnum;
-import com.joolun.mall.enums.OrderInfoEnum;
+import com.joolun.mall.enums.*;
 import com.joolun.mall.mapper.ActivityOrderInfoMapper;
 import com.joolun.mall.service.*;
 import com.joolun.weixin.entity.WxUser;
 import com.joolun.weixin.service.WxUserService;
+import com.joolun.weixin.utils.LocalDateTimeUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +50,8 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
 
     private final WxUserService wxUserService;
 
+    @Autowired
+    private IUserShareRecordService userShareRecordService;
 
     /**
      * 下单
@@ -67,15 +74,32 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
     /**
      * 支付后更新订单状态
      *
-     * @param orderInfo
+     * @param notifyResult
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void notifyOrder(ActivityOrderInfo orderInfo) {
-        if (CommonConstants.NO.equals(orderInfo.getIsPay())) {//只有未支付订单能操作
-            orderInfo.setIsPay(CommonConstants.YES);
-            orderInfo.setStatus(ActivityOrderInfoEnum.STATUS_1.getValue());
-            updateById(orderInfo);//更新订单
+    public UserIncomeRecord notifyOrder(WxPayOrderNotifyResult notifyResult) {
+        ActivityOrderInfo orderInfo = getOne(Wrappers.<ActivityOrderInfo>lambdaQuery()
+                .eq(ActivityOrderInfo::getOrderNo, notifyResult.getOutTradeNo()));
+        if (orderInfo != null) {
+            if (orderInfo.getPaymentPrice().multiply(new BigDecimal(100)).intValue() == notifyResult.getTotalFee()) {
+                String timeEnd = notifyResult.getTimeEnd();
+                LocalDateTime paymentTime = LocalDateTimeUtils.parse(timeEnd);
+                orderInfo.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
+                orderInfo.setTransactionId(notifyResult.getTransactionId());
+                if (CommonConstants.NO.equals(orderInfo.getIsPay())) {//只有未支付订单能操作
+                    orderInfo.setIsPay(CommonConstants.YES);
+                    orderInfo.setStatus(ActivityOrderInfoEnum.STATUS_1.getValue());
+                    updateById(orderInfo);//更新订单
+                    return calActivityIncome(orderInfo);
+                } else {
+                    throw new RuntimeException("订单已支付");
+                }
+            } else {
+                throw new RuntimeException("付款金额与订单金额不等");
+            }
+        } else {
+            throw new RuntimeException("无此订单");
         }
     }
 
@@ -94,13 +118,13 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
 
         Long priceCaseId = activityOrderInfo.getPriceCaseId();
         ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
-        if("1".equals(wxUser.getMember())){
-            if(wxUser.getLevel() == 1) {
+        if ("1".equals(wxUser.getMember())) {
+            if (wxUser.getLevel() == 1) {
                 activityOrderInfo.setPaymentPrice(activityPriceCase.getMemberPrice());
-            }else if(wxUser.getLevel() == 2) {
+            } else if (wxUser.getLevel() == 2) {
                 activityOrderInfo.setPaymentPrice(activityPriceCase.getSuperMemberPrice());
             }
-        }else{
+        } else {
             activityOrderInfo.setPaymentPrice(activityPriceCase.getSalesPrice());
         }
 
@@ -130,5 +154,39 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         List<ActivityPerson> activityPeoples = activityPersonService.listByIds(personIds);
         activityOrderInfo.setPersons(activityPeoples);
         return activityOrderInfo;
+    }
+
+
+    /**
+     * 计算购买活动时的分享收入
+     *
+     * @param activityOrderInfo
+     */
+    private UserIncomeRecord calActivityIncome(ActivityOrderInfo activityOrderInfo) {
+        UserIncomeRecord userIncomeRecord = null;
+        WxUser sourceWxUser = wxUserService.getById(activityOrderInfo.getUserId());
+        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
+                .eq(UserShareRecord::getUserId, activityOrderInfo.getUserId()));
+        String parentUserId = userShareRecord.getParentUserId();
+        WxUser parentWxUser = wxUserService.getById(parentUserId);
+        if (MemberStatusEnum.YES.getValue().equals(parentWxUser.getMember())) {
+            Long priceCaseId = activityOrderInfo.getPriceCaseId();
+            ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
+            userIncomeRecord = new UserIncomeRecord();
+            userIncomeRecord.setUserId(parentUserId);
+            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
+            userIncomeRecord.setSourceUserId(activityOrderInfo.getUserId());
+            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
+            userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
+            userIncomeRecord.setCreateTime(new Date());
+            userIncomeRecord.setOrderNo(activityOrderInfo.getOrderNo());
+            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
+            if (parentWxUser.getLevel() == 1) {
+                userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
+            } else if (parentWxUser.getLevel() == 2) {
+                userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
+            }
+        }
+        return userIncomeRecord;
     }
 }

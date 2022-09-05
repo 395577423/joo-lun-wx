@@ -28,51 +28,25 @@ import java.time.LocalDateTime;
 @Service
 public class UserPayRecordServiceImpl extends ServiceImpl<UserPayRecordMapper, UserPayRecord> implements IUserPayRecordService {
 
-    @Autowired
-    private IActivityOrderInfoService activityOrderInfoService;
-
-    @Autowired
-    private IUserMemberOrderService userMemberOrderService;
 
     /**
      * 增加用户支付记录
+     *
      * @param notifyResult
      * @param productType
      */
     @Override
-    public void addPayRecord(WxPayOrderNotifyResult notifyResult, ProductTypeEnum productType) {
+    public void addPayRecord(WxPayOrderNotifyResult notifyResult, String userId, ProductTypeEnum productType) {
         String timeEnd = notifyResult.getTimeEnd();
         LocalDateTime paymentTime = LocalDateTimeUtils.parse(timeEnd);
         UserPayRecord userPayRecord = new UserPayRecord();
-        userPayRecord.setUserId(getUserId(notifyResult.getOutTradeNo(),productType));
+        userPayRecord.setUserId(userId);
         userPayRecord.setPaymentAmount(BigDecimal.valueOf(notifyResult.getTotalFee()).divide(BigDecimal.valueOf(100L)));
         userPayRecord.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
         userPayRecord.setPaymentType(productType.getValue());
+        userPayRecord.setTradeNo(notifyResult.getOutTradeNo());
         save(userPayRecord);
     }
 
-    /**
-     * 获取用户id
-     * @param tradeNo
-     * @param productType
-     * @return
-     */
-   private String getUserId(String tradeNo,ProductTypeEnum productType){
-
-       String userId;
-       if(ProductTypeEnum.ACTIVITY == productType) {
-           ActivityOrderInfo activityOrderInfo = activityOrderInfoService.getOne(Wrappers.<ActivityOrderInfo>lambdaQuery()
-                   .eq(ActivityOrderInfo::getOrderNo, tradeNo));
-           userId = activityOrderInfo.getUserId();
-       }else if(ProductTypeEnum.MEMBER == productType) {
-           LambdaQueryWrapper<UserMemberOrder> queryWrapper = Wrappers.<UserMemberOrder>lambdaQuery().eq(UserMemberOrder::getOrderNo, tradeNo);
-           UserMemberOrder userMemberOrder = userMemberOrderService.getOne(queryWrapper);
-           userId = userMemberOrder.getUserId();
-       }else{
-           userId = null;
-       }
-
-       return userId;
-    }
 
 }

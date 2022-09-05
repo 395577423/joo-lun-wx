@@ -1,7 +1,9 @@
 package com.joolun.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.entity.ActivityOrderInfo;
+import com.joolun.mall.entity.UserIncomeRecord;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public interface IActivityOrderInfoService extends IService<ActivityOrderInfo> {
     void addOrder(ActivityOrderInfo activityOrderInfo);
 
 
-    void notifyOrder(ActivityOrderInfo orderInfo);
+    UserIncomeRecord notifyOrder(WxPayOrderNotifyResult notifyResult);
 
 
     ActivityOrderInfo queryById(Long id);

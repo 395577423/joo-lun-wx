@@ -43,6 +43,9 @@ public class UserPayRecord extends Model<UserPayRecord>
     private Integer paymentType;
 
 
+    private String tradeNo;
+
+
     /** 备注 */
     @Excel(name = "备注")
     private String remark;
@@ -93,4 +96,20 @@ public class UserPayRecord extends Model<UserPayRecord>
         return paymentType;
     }
 
+
+    public String getTradeNo() {
+        return tradeNo;
+    }
+
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

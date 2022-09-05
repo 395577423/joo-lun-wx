@@ -25,48 +25,16 @@ import java.util.Date;
 public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, UserIncomeRecord>
         implements IUserIncomeRecordService {
 
-    @Autowired
-    private IUserMemberConfigService userMemberConfigService;
 
-    @Autowired
-    private IUserCommissionService userCommissionService;
-
-
-    @Autowired
-    private ActivityPriceCaseService activityPriceCaseService;
-
-    @Autowired
-    private IActivityOrderInfoService activityOrderInfoService;
-
-    @Autowired
-    private IUserMemberOrderService userMemberOrderService;
-
-    @Autowired
-    private IUserShareRecordService userShareRecordService;
-
-    @Autowired
-    private WxUserService wxUserService;
 
     /**
      * 增加用户收入记录
      *
-     * @param tradeNo
-     * @param productType
+     * @param userIncomeRecord
      */
     @Override
-    public void addUserIncomeRecord(String tradeNo, ProductTypeEnum productType) {
-        UserIncomeRecord userIncomeRecord;
-        switch (productType) {
-            case GOODS:
-            case COURSE:
-            case MEMBER:
-                userIncomeRecord = calMemberIncome(tradeNo);
-                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
-                break;
-            default:
-                userIncomeRecord = calActivityIncome(tradeNo);
-                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
-        }
+    public void addUserIncomeRecord(UserIncomeRecord userIncomeRecord) {
+
         if (userIncomeRecord != null) {
             save(userIncomeRecord);
         }
@@ -74,76 +42,8 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
 
     }
 
-    /**
-     * 计算会员分享的收入
-     *
-     * @param tradeNo
-     */
-    private UserIncomeRecord calMemberIncome(String tradeNo) {
-        UserIncomeRecord userIncomeRecord = null;
-        LambdaQueryWrapper<UserMemberOrder> queryWrapper = Wrappers.<UserMemberOrder>lambdaQuery().eq(UserMemberOrder::getOrderNo, tradeNo);
-        UserMemberOrder userMemberOrder = userMemberOrderService.getOne(queryWrapper);
-        String sourceUserId = userMemberOrder.getUserId();
-        WxUser sourceWxUser = wxUserService.getById(sourceUserId);
-        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, sourceUserId));
-        String parentUserId = userShareRecord.getParentUserId();
-        WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if ("1".equals(parentWxUser.getMember())) {
-            UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
-            userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentUserId);
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(sourceUserId);
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(tradeNo);
-            userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-            if (parentWxUser.getLevel() == 1) {
-                userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
-            } else if (parentWxUser.getLevel() == 2) {
-                userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
-            }
-        }
-        return userIncomeRecord;
-    }
 
-    /**
-     * 计算购买活动时的分享收入
-     *
-     * @param tradeNo
-     */
-    private UserIncomeRecord calActivityIncome(String tradeNo) {
-        UserIncomeRecord userIncomeRecord = null;
-        ActivityOrderInfo activityOrderInfo = activityOrderInfoService.getOne(Wrappers.<ActivityOrderInfo>lambdaQuery()
-                .eq(ActivityOrderInfo::getOrderNo, tradeNo));
-        String sourceUserId = activityOrderInfo.getUserId();
-        WxUser sourceWxUser = wxUserService.getById(sourceUserId);
-        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, sourceUserId));
-        String parentUserId = userShareRecord.getParentUserId();
-        WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if (MemberStatusEnum.YES.getValue().equals(parentWxUser.getMember())) {
-            Long priceCaseId = activityOrderInfo.getPriceCaseId();
-            ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
-            userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentUserId);
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(sourceUserId);
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(tradeNo);
-            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if (parentWxUser.getLevel() == 1) {
-                userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-            } else if (parentWxUser.getLevel() == 2) {
-                userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
-            }
-        }
-        return userIncomeRecord;
 
-    }
+
 
 }

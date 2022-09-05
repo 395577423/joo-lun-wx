@@ -16,9 +16,9 @@ public interface IUserIncomeRecordService extends IService<UserIncomeRecord> {
 
     /**
      * 增加用户收入记录
-     * @param tradeNo
-     * @param productType
+     *
+     * @param userIncomeRecord
      */
-    void addUserIncomeRecord( String tradeNo, ProductTypeEnum productType);
+    void addUserIncomeRecord(UserIncomeRecord userIncomeRecord);
 
 }
