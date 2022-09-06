@@ -1,31 +1,53 @@
-<view class="padding-sm text-center">返佣</view>
-<view class="bg-blue light">
-  <view class="padding-left-xl padding-top-xl text-gray">可提现余额</view>
-  <view class="padding-left-xl padding-top padding-bottom text-price text-xxl text-bold text-orange light">{{completedAmount-withdrawAmount}}</view>
-</view>
-<view class="flex margin-sm bg-white radius">
-  <view class="flex-twice padding-xs solid-right">
-    <view class="text-gray padding padding-bottom-lg">总返佣</view>
-    <view class="text-price padding-left padding-bottom text-xxl text-bold">{{total}} </view>
-  </view>
-  <view class="flex-treble padding-xs solid-right">
-    <view class="solid-bottom padding-sm padding-bottom padding-top">
-      <text class="text-gray">已返佣</text>
-      <text class="text-price padding-left-sm text-bold text-black">{{completedAmount}}</text>
-    </view>
-    <view class="solid-bottom padding-sm padding-bottom padding-top">
-      <text class="text-gray">返佣中</text>
-      <text class="text-price padding-left-sm text-bold text-black">{{total-completedAmount}}</text>
-    </view>
-    <view class="padding-sm padding-top">
-      <text class="text-gray">已提现</text>
-      <text class="text-price padding-left-sm text-bold text-black">{{withdrawAmount}}</text>
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabs}}" wx:key="index" bindtap="tabSelect" data-id="{{index}}">
+      {{item}}
     </view>
   </view>
+</scroll-view>
+<view wx:if="{{TabCur==0}}">
+  <view class="cu-list menu-avatar" wx:for="{{partners}}" wx:key="index">
+    <view class="cu-item">
+      <view class="cu-avatar round lg" style="background-image:url({{item.userHeadImg}});"></view>
+      <view class="content">
+        <view class="text-grey">{{item.userName}}</view>
+      </view>
+      <view>
+        <view class="text-grey text-sm margin-right">{{item.createTime}}</view>
+      </view>
+    </view>
+
+  </view>
 </view>
-<view class="margin-sm bg-white radius">
-  <view class="padding-sm solid-bottom text-lg text-black">提现记录</view>
-  <view class="padding-sm text-sm text-gray">
-    最近3次提现记录
+<view wx:if="{{TabCur==1}}">
+  <view class="bg-blue light margin-top-sm">
+    <view class="padding-left-xl padding-top-xl text-gray">可提现余额</view>
+    <view class="padding-left-xl padding-top padding-bottom text-price text-xxl text-bold text-orange light">{{completedAmount-withdrawAmount}}</view>
+  </view>
+  <view class="flex margin-sm bg-white radius">
+    <view class="flex-twice padding-xs solid-right">
+      <view class="text-gray padding padding-bottom-lg">总返佣</view>
+      <view class="text-price padding-left padding-bottom text-xxl text-bold">{{total}} </view>
+    </view>
+    <view class="flex-treble padding-xs solid-right">
+      <view class="solid-bottom padding-sm padding-bottom padding-top">
+        <text class="text-gray">已返佣</text>
+        <text class="text-price padding-left-sm text-bold text-black">{{completedAmount}}</text>
+      </view>
+      <view class="solid-bottom padding-sm padding-bottom padding-top">
+        <text class="text-gray">返佣中</text>
+        <text class="text-price padding-left-sm text-bold text-black">{{total-completedAmount}}</text>
+      </view>
+      <view class="padding-sm padding-top">
+        <text class="text-gray">已提现</text>
+        <text class="text-price padding-left-sm text-bold text-black">{{withdrawAmount}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="margin-sm bg-white radius">
+    <view class="padding-sm solid-bottom text-lg text-black">提现记录</view>
+    <view class="padding-sm text-sm text-gray">
+      最近3次提现记录
+    </view>
   </view>
 </view>

@@ -39,7 +39,7 @@ Page({
           'paySign': payData.paySign,
           'success': function (res) {
             let wxUser = app.globalData.wxUser 
-            wxUser.member = 1
+            wxUser.vip = true
             app.globalData.wxUser = wxUser;
             wx.redirectTo({
               url: '/pages/user/user-center/index',

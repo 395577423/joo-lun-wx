@@ -1,8 +1,10 @@
 package com.joolun.mall.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joolun.common.annotation.Excel;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
@@ -42,8 +44,13 @@ public class UserShareRecord extends Model<UserShareRecord>
     @Excel(name = "扫码用户名称")
     private String userName;
 
+    /**
+     * 扫码用户头像
+     */
+    private String userHeadImg;
 
     /** 分享时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
 
     public void setId(Long id) 
@@ -90,6 +97,14 @@ public class UserShareRecord extends Model<UserShareRecord>
     public String getUserName() 
     {
         return userName;
+    }
+
+    public String getUserHeadImg() {
+        return userHeadImg;
+    }
+
+    public void setUserHeadImg(String userHeadImg) {
+        this.userHeadImg = userHeadImg;
     }
 
     public Date getCreateTime() {

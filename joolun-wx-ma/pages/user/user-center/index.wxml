@@ -5,14 +5,14 @@
     </view>
   </view>
   <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头' : ''}}
-    <view class="cu-tag badge " wx:if="{{wxUser.member==1}}">vip</view>
+    <view class="cu-tag badge " wx:if="{{wxUser.vip}}">vip</view>
   </view>
   <view class="content text-center margin-top-sm">
     <view class="margin-top-xs text-xxl text-bold text-black" wx:if="{{wxUser.nickName}}">{{wxUser.nickName}}</view>
     <button class="cu-btn round text-lg margin-top-xs line-blue" bindtap="getUserProfile">
       {{!wxUser.nickName ? '登录' : '更新昵称'}}
     </button>
-    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{wxUser.member=='0'}}">成为会员</button>
+    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{!wxUser.vip}}">成为会员</button>
   </view>
   <view class="grid col-4 margin-top text-center">
     <view></view>
@@ -65,8 +65,8 @@
   </view>
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/user/user-commission/index">
-      <text class="cuIcon-activity text-orange"></text>
-      <text>佣金平台</text>
+      <text class="cuIcon-moneybag text-orange"></text>
+      <text>我的店铺</text>
     </navigator>
   </view>
   <view class="cu-item arrow">

@@ -75,6 +75,7 @@ public class ActivityOrderApi {
         LambdaQueryWrapper<ActivityOrderInfo> query = Wrappers.<ActivityOrderInfo>lambdaQuery()
                 .eq(StringUtils.isNotBlank(status), ActivityOrderInfo::getStatus, status)
                 .eq(ActivityOrderInfo::getDelFlag, "0")
+                .eq(ActivityOrderInfo::getUserId,ThirdSessionHolder.getWxUserId())
                 .orderByDesc(ActivityOrderInfo::getCreateTime);
         page = activityOrderInfoService.page(page, query);
         return AjaxResult.success(page);

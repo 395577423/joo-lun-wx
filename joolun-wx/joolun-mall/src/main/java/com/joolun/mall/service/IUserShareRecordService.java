@@ -5,6 +5,8 @@ import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.weixin.entity.WxUser;
 
+import java.util.List;
+
 /**
  * 【请填写功能名称】Service接口
  * 
@@ -20,4 +22,12 @@ public interface IUserShareRecordService extends IService<UserShareRecord>
      * @param shareUserId
      */
     void addShareRecord(String userId, String shareUserId);
+
+
+    /**
+     * 列表显示或作伙伴
+     * @param userId
+     * @return
+     */
+    List<UserShareRecord> listPartner(String userId);
 }

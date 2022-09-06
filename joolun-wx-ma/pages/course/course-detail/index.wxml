@@ -57,12 +57,14 @@
     <text>
       温馨提示:报名后记得添加客服微信进群共读书籍。
     </text>
-    <navigator url='/pages/map/index' class="margin-top">
-      <button class="cu-btn round bg-blue">去借书</button>
-    </navigator>
-    <navigator url='/pages/activity/relation/index?courseId={{courseId}}' class="margin-top">
-      <button class="cu-btn round bg-blue">去实践</button>
-    </navigator>
+    <view class="flex justify-center">
+      <navigator url='/pages/map/index' class="margin-top">
+        <button class="cu-btn round bg-blue">去借书</button>
+      </navigator>
+      <navigator url='/pages/activity/relation/index?courseId={{courseId}}' class="margin-top">
+        <button class="cu-btn round bg-blue margin-left">去实践</button>
+      </navigator>
+    </view>
   </view>
   <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}" style="position: relative;">
     <view class="btn-group">

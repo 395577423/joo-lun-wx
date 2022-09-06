@@ -8,7 +8,10 @@ Page({
   data: {
     total:0,
     completedAmount:0,
-    withdrawAmount:0
+    withdrawAmount:0,
+    tabs:['合作伙伴','返佣'],
+    TabCur: 0,
+    partners: []
   },
 
   /**
@@ -16,6 +19,7 @@ Page({
    */
   onLoad(options) {
     this.getCommission();
+    this.getPartners();
   },
   getCommission() {
     app.api.getCommission().then(resp =>{
@@ -26,6 +30,18 @@ Page({
           withdrawAmount:resp.data.withdrawAmount
         })
       }
+    })
+  },
+  getPartners() {
+    app.api.getPartners().then(resp => {
+      this.setData({
+        partners : resp.data
+      })
+    })
+  },
+  tabSelect(e) {
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
     })
   }
 })

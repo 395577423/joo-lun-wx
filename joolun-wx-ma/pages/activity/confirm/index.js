@@ -21,7 +21,8 @@ Page({
     quantity: 1,
     remark: '',
     member: '0',
-    level: 0
+    level: 0,
+    preCaseIndex:0
   },
   onLoad: function (options) {
     let wxUser = app.globalData.wxUser;
@@ -29,8 +30,8 @@ Page({
     this.setData({
       activityId: options.activityId,
       date: DATE,
-      member: wxUser.member,
-      level: wxUser.level
+      vip: wxUser.vip,
+      svip: wxUser.svip
     })
     let activityId = options.activityId
     app.initPage()
@@ -74,6 +75,13 @@ Page({
     this.setData({
       selectCaseIndex: index
     })
+    if(index != this.data.preCaseIndex){
+      this.setData({
+        preCaseIndex : index,
+        quantity : 1
+      })
+    }
+    this.calAmount(this.data.quantity)
   },
   selectPerson(e) {
     let index = e.currentTarget.dataset.index
@@ -89,10 +97,10 @@ Page({
   },
   calAmount(quantity) {
     let unitPrice = this.data.priceCases[this.data.selectCaseIndex].salesPrice;
-    if(this.data.member=='1' && this.data.level==1){
-      unitPrice = this.data.priceCases[this.data.selectCaseIndex].memberPrice;
-    } else if (this.data.member=='1' && this.data.level==2){
+      if (this.data.svip){
       unitPrice = this.data.priceCases[this.data.selectCaseIndex].superMemberPrice;
+    }else if(this.data.vip){
+      unitPrice = this.data.priceCases[this.data.selectCaseIndex].memberPrice;
     }
     let amount = quantity * unitPrice;
     this.setData({

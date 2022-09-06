@@ -1,6 +1,7 @@
 package com.joolun.mall.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.common.core.domain.entity.SysUser;
@@ -50,19 +51,40 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
             userShareRecord.setUserName(wxUser.getNickName());
             userShareRecord.setParentUserId(shareUserId);
             userShareRecord.setParentUserName(shareUser.getNickName());
+            userShareRecord.setUserHeadImg(shareUser.getHeadimgUrl());
             userShareRecord.setCreateTime(new Date());
             boolean result = save(userShareRecord);
             log.info("新增分享记录结果:{}", result);
+            setMemberLevel(shareUser);
         }
 
     }
+
 
     private void setMemberLevel(WxUser shareUser) {
         List<UserShareRecord> shareRecords = this.list(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, shareUser.getId()));
         if (shareRecords != null && shareRecords.size() >= 20) {
-            shareUser.setLevel((short) 2);
+            shareUser.setSVip(true);
             wxUserService.updateById(shareUser);
         }
     }
+
+
+
+    /**
+     * 列表显示或作伙伴
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<UserShareRecord> listPartner(String userId) {
+        LambdaQueryWrapper<UserShareRecord> queryWrapper = Wrappers.<UserShareRecord>lambdaQuery()
+                .eq(UserShareRecord::getParentUserId, userId)
+                .orderByDesc(UserShareRecord::getCreateTime);
+        List<UserShareRecord> userShareRecords = list(queryWrapper);
+        return userShareRecords;
+    }
+
 }

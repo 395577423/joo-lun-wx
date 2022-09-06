@@ -176,4 +176,14 @@ private static final long serialVersionUID = 1L;
      */
     private Integer empowerNum;
 
+    /**
+     * 是否是vip
+     */
+    private boolean vip;
+
+    /**
+     * 是否是超级vip
+     */
+    private boolean sVip;
+
 }

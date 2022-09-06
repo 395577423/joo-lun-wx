@@ -111,8 +111,8 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
     private void setUserMember(String wxUserId) {
         Date expiryDate = DateUtil.offsetMonth(new Date(), 12);
         WxUser wxUser = wxUserService.getById(wxUserId);
-        wxUser.setMember(MemberStatusEnum.YES.getValue());
-        wxUser.setLevel((short) 1);
+        wxUser.setVip(true);
+        wxUser.setSVip(false);
         wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
     }
@@ -130,7 +130,7 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
                 .eq(UserShareRecord::getUserId, userMemberOrder.getUserId()));
         String parentUserId = userShareRecord.getParentUserId();
         WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if ("1".equals(parentWxUser.getMember())) {
+        if (parentWxUser.isVip()) {
             UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
             userIncomeRecord = new UserIncomeRecord();
             userIncomeRecord.setUserId(parentUserId);
@@ -141,12 +141,12 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(userMemberOrder.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-            if (parentWxUser.getLevel() == 1) {
-                userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
-            } else if (parentWxUser.getLevel() == 2) {
+            userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
+            if (parentWxUser.isSVip()) {
                 userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
             }
         }
+
         return userIncomeRecord;
     }
 

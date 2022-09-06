@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.mall.entity.UserCommission;
+import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.service.IUserCommissionService;
+import com.joolun.mall.service.IUserShareRecordService;
 import com.joolun.weixin.utils.ThirdSessionHolder;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author lanjian
@@ -29,6 +32,8 @@ public class UserCommissionApi {
 
     private final IUserCommissionService userCommissionService;
 
+    private final IUserShareRecordService userShareRecordService;
+
     @GetMapping("/get")
     public AjaxResult get(){
         String userId = ThirdSessionHolder.getWxUserId();
@@ -43,5 +48,11 @@ public class UserCommissionApi {
             userCommission.setCompletedAmount(BigDecimal.ZERO);
         }
         return AjaxResult.success(userCommission);
+    }
+
+    @GetMapping("/partners")
+    public AjaxResult getPartners(){
+        List<UserShareRecord> shareRecords = userShareRecordService.listPartner(ThirdSessionHolder.getWxUserId());
+        return AjaxResult.success(shareRecords);
     }
 }

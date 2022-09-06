@@ -32,14 +32,14 @@
       <view class="flex justify-between padding-xs">
         <view class="text flex-twice">{{item.name}}</view>
         <view class="flex-sub">
-          <text class="text-price {{member=='0'?'text-red':'text-decorat'}}">{{item.salesPrice}}</text>
-          <text class="text-price text-red text-xxl padding-left" wx:if="{{member=='1' && level==1}}">{{item.memberPrice}}</text>
-          <text class="text-price text-red text-xxl padding-left" wx:if="{{member=='1' && level==2}}">{{item.superMemberPrice}}</text>
+          <text class="text-price {{!vip?'text-red':'text-decorat'}}">{{item.salesPrice}}</text>
+          <text class="text-price text-red text-xxl padding-left" wx:if="{{vip}}">{{item.memberPrice}}</text>
+          <text class="text-price text-red text-xxl padding-left" wx:if="{{svip}}">{{item.superMemberPrice}}</text>
         </view>
       </view>
       <view class="flex padding-xs">
         <view class="flex-twice flex">
-          <view class="padding-xs" wx:for="{{item.subType}}" wx:for-item="item2" wx:key="index">
+          <view class="padding-xs" wx:for="{{item.caseOption}}" wx:for-item="item2" wx:key="index">
             <view wx:if="{{item2==1}}" class="cu-tag line-yellow">
               <image src="/public/img/child_care.png" style="width: 30rpx;height: 30rpx;"></image>
               儿童

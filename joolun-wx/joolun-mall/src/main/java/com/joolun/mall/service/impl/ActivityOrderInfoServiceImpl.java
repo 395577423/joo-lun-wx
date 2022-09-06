@@ -118,16 +118,13 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
 
         Long priceCaseId = activityOrderInfo.getPriceCaseId();
         ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
-        if ("1".equals(wxUser.getMember())) {
-            if (wxUser.getLevel() == 1) {
-                activityOrderInfo.setPaymentPrice(activityPriceCase.getMemberPrice());
-            } else if (wxUser.getLevel() == 2) {
-                activityOrderInfo.setPaymentPrice(activityPriceCase.getSuperMemberPrice());
-            }
+        if (wxUser.isSVip()) {
+            activityOrderInfo.setPaymentPrice(activityPriceCase.getSuperMemberPrice());
+        } else if (wxUser.isVip()) {
+            activityOrderInfo.setPaymentPrice(activityPriceCase.getMemberPrice());
         } else {
             activityOrderInfo.setPaymentPrice(activityPriceCase.getSalesPrice());
         }
-
         activityOrderInfo.setSalesPrice(activityPriceCase.getSalesPrice());
     }
 
@@ -138,12 +135,12 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
             String keyRedis = null;
             //获取自动取消倒计时
             if (CommonConstants.NO.equals(activityOrderInfo.getIsPay())) {
-                keyRedis = String.valueOf(StrUtil.format("{}:{}",
+                keyRedis = String.valueOf(StrUtil.format("{}:{}" ,
                         MallConstants.REDIS_ACTIVITY_ORDER_KEY_IS_PAY_0, activityOrderInfo.getId()));
             }
             //获取自动收货倒计时
             if (OrderInfoEnum.STATUS_2.getValue().equals(activityOrderInfo.getStatus())) {
-                keyRedis = String.valueOf(StrUtil.format("{}:{}",
+                keyRedis = String.valueOf(StrUtil.format("{}:{}" ,
                         MallConstants.REDIS_ACTIVITY_ORDER_KEY_STATUS_2, activityOrderInfo.getId()));
             }
         }
@@ -169,7 +166,8 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
                 .eq(UserShareRecord::getUserId, activityOrderInfo.getUserId()));
         String parentUserId = userShareRecord.getParentUserId();
         WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if (MemberStatusEnum.YES.getValue().equals(parentWxUser.getMember())) {
+
+        if (parentWxUser.isVip()) {
             Long priceCaseId = activityOrderInfo.getPriceCaseId();
             ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
             userIncomeRecord = new UserIncomeRecord();
@@ -181,9 +179,8 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(activityOrderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if (parentWxUser.getLevel() == 1) {
-                userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-            } else if (parentWxUser.getLevel() == 2) {
+            userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
+            if (parentWxUser.isSVip()) {
                 userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
             }
         }
