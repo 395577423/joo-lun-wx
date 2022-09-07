@@ -43,12 +43,12 @@
     <text>活动时间：</text>
     <text class="padding-left text-black">{{orderInfo.activityDate}}</text>
   </view>
-  <view class="padding-bottom">
+  <view class="padding-bottom" >
     <text>出 行 人：</text>
     <text class="padding-left text-black">{{persons}}</text>
   </view>
 </view>
 
-<view class="margin-sm bg-white radius padding">
-  <button class="bg-blue" bindtap="">付款</button>
+<view class="margin-sm bg-white radius padding" wx:if="{{orderInfo.status == 0 && orderInfo.isPay == 0}}">
+  <button class="bg-blue" bindtap="unifiedOrder">付款</button>
 </view>

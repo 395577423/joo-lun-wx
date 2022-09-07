@@ -3,6 +3,7 @@ package com.joolun.web.api;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.mall.dto.PartnerVo;
 import com.joolun.mall.entity.UserCommission;
 import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.service.IUserCommissionService;
@@ -52,7 +53,7 @@ public class UserCommissionApi {
 
     @GetMapping("/partners")
     public AjaxResult getPartners(){
-        List<UserShareRecord> shareRecords = userShareRecordService.listPartner(ThirdSessionHolder.getWxUserId());
+        List<PartnerVo> shareRecords = userShareRecordService.listPartner(ThirdSessionHolder.getWxUserId());
         return AjaxResult.success(shareRecords);
     }
 }

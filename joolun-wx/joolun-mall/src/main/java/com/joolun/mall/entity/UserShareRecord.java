@@ -50,7 +50,6 @@ public class UserShareRecord extends Model<UserShareRecord>
     private String userHeadImg;
 
     /** 分享时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
 
     public void setId(Long id) 

@@ -2,6 +2,7 @@ package com.joolun.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.joolun.common.core.domain.entity.SysUser;
+import com.joolun.mall.dto.PartnerVo;
 import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.weixin.entity.WxUser;
 
@@ -29,5 +30,5 @@ public interface IUserShareRecordService extends IService<UserShareRecord>
      * @param userId
      * @return
      */
-    List<UserShareRecord> listPartner(String userId);
+    List<PartnerVo> listPartner(String userId);
 }

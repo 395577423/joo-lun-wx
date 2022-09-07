@@ -10,7 +10,13 @@
     <view class="cu-item">
       <view class="cu-avatar round lg" style="background-image:url({{item.userHeadImg}});"></view>
       <view class="content">
-        <view class="text-grey">{{item.userName}}</view>
+        <view class="{{item.vipLevel == 1 ?'cuIcon-vip':''}} text-red"></view>
+        <view wx:if="{{item.vipLevel == 2}}" class="flex">
+          <view class="cuIcon-vip text-red margin-right-xs"></view>
+          <view class="cuIcon-vip text-red"></view>
+        </view>
+
+        <view class="text-grey ">{{item.userName}}</view>
       </view>
       <view>
         <view class="text-grey text-sm margin-right">{{item.createTime}}</view>
