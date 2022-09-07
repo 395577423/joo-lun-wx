@@ -2,10 +2,8 @@
 const app = getApp()
 const myaudio = wx.createInnerAudioContext()
 const WxParse = require('../../../public/wxParse/wxParse.js')
-let {
-  wxml,
-  style
-} = require('./report.js')
+import Report from './report.js'
+
 
 Page({
   /**
@@ -62,19 +60,7 @@ Page({
       })
   },
   onReady() {
-    let that = this
-    //获取用户报告图片
-    setTimeout(function () {
-      let nickName = that.data.wxUser.nickName
-      let title = that.data.bookName
-      let totalStar = that.data.totalStar
 
-      wxml = wxml.replace('userNameText', nickName)
-        .replace('challengeText', '5')
-        .replace('bookText', title)
-        .replace('starText', '')
-        .replace('durationText', '5分钟')
-    }, 500)
   },
   getAuth() {
     wx.authorize({
@@ -154,57 +140,7 @@ Page({
     myaudio.src = url
     myaudio.play()
   },
-  share() {
 
-    const p1 = this.widget.renderToCanvas({
-      wxml,
-      style
-    })
-    p1.then((res) => {
-
-      this.container = res
-    })
-    wx.showLoading({
-      title: '使劲生成ing.....',
-    })
-
-    setTimeout(this.extraImage, 2500)
-  },
-  extraImage() {
-    const p2 = this.widget.canvasToTempFilePath()
-    p2.then(res => {
-      this.setData({
-        modalName: 'share'
-      })
-      wx.hideLoading()
-      this.setData({
-        src: res.tempFilePath,
-        width: this.container.layoutBox.width,
-        height: this.container.layoutBox.height
-      })
-    })
-  },
-  saveImage() {
-    let that = this
-    wx.saveImageToPhotosAlbum({
-      filePath: this.data.src,
-      'success': function (res) {
-        if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
-          that.getUserMoney()
-        }
-      },
-      'fail': function (res) {
-
-        if (res.errMsg === 'saveImageToPhotosAlbum:fail cancel') {
-          that.setData({
-            modalName: 'saveImage',
-            msg: '保存图片并且分享的话,才能拿到奖励哦~'
-          })
-        }
-      }
-    })
-
-  },
   getUserMoney() {
     let id = this.data.courseId
     let userId = this.data.wxUser.id
@@ -226,5 +162,57 @@ Page({
     this.setData({
       modalName: null
     })
+  },
+    canvasSuc(e) {
+    this.setData({
+      imageSrc: e.detail.path,
+      show: true
+    })
+    wx.hideLoading({
+      success: (res) => {},
+    })
+  },
+  canvasFail(e) {
+    console.log("生成图片失败"+e.detail);
+    wx.hideLoading({
+      success: (res) => {},
+    })
+  },
+  share() {
+    this.getDraw();
+  },
+  onClose() {
+    this.setData({
+      show: false,
+    })
+  },
+  getDraw() {
+    // 做判断，如果已经生成过，就不用反复生成了
+    if (this.data.imageSrc) {
+      this.setData({
+        imageSrc: this.data.imageSrc,
+        show: true
+      })
+    } else {
+      wx.showLoading({
+        title: '生成中',
+      })
+      let that = this
+      let nickName = that.data.wxUser.nickName
+      let title = that.data.bookName
+      let totalStar = that.data.totalStar
+      let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/home/index&param=" + encodeURIComponent(app.globalData.wxUser.id)
+      let params = {
+        qrcode: wxmaCode,
+        nickName: nickName,
+        title:title
+      }
+      let plate = new Report().palette(params)
+  
+      this.setData({
+        template: plate
+      })
+      console.log(plate);
+    }
   }
 })

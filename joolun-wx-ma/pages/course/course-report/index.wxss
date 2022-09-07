@@ -12,3 +12,7 @@ canvas {
   position: fixed;
   left: 9999px
 }
+
+.cu-dialog{
+  background: none !important; 
+}

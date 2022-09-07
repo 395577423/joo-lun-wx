@@ -8,86 +8,119 @@ import com.joolun.common.annotation.Excel;
 
 /**
  * 会员价格设置对象 user_member_config
- * 
+ *
  * @author Lanjian
  * @date 2022-09-03
  */
-public class UserMemberConfig extends Model<UserMemberConfig>
-{
+public class UserMemberConfig extends Model<UserMemberConfig> {
     private static final long serialVersionUID = 1L;
 
 
-    /** 主键 */
+    /**
+     * 主键
+     */
     private Long id;
 
 
-    /** 会员价格 */
+    /**
+     * 会员价格
+     */
     @Excel(name = "会员价格")
     private BigDecimal price;
 
 
-    /** 普通会员返现价格 */
+    /**
+     * 普通会员返现价格
+     */
     @Excel(name = "普通会员返现价格")
     private BigDecimal cashBackAmount;
 
 
-    /** 普通会员返现价格 */
+    /**
+     * 普通会员返现价格
+     */
     @Excel(name = "普通会员返现价格")
     private BigDecimal superCashBackAmount;
 
 
-    /** 创建人id */
+    private String imgUrl;
+
+    private boolean deleted;
+
+
+    /**
+     * 创建人id
+     */
     @Excel(name = "创建人id")
     private String createId;
 
 
-    /** 创建时间 */
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-    public void setId(Long id) 
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() 
-    {
+    public Long getId() {
         return id;
     }
-    public void setPrice(BigDecimal price) 
-    {
+
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public BigDecimal getPrice() 
-    {
+    public BigDecimal getPrice() {
         return price;
     }
-    public void setCashBackAmount(BigDecimal cashBackAmount) 
-    {
+
+    public void setCashBackAmount(BigDecimal cashBackAmount) {
         this.cashBackAmount = cashBackAmount;
     }
 
-    public BigDecimal getCashBackAmount() 
-    {
+    public BigDecimal getCashBackAmount() {
         return cashBackAmount;
     }
-    public void setSuperCashBackAmount(BigDecimal superCashBackAmount) 
-    {
+
+    public void setSuperCashBackAmount(BigDecimal superCashBackAmount) {
         this.superCashBackAmount = superCashBackAmount;
     }
 
-    public BigDecimal getSuperCashBackAmount() 
-    {
+    public BigDecimal getSuperCashBackAmount() {
         return superCashBackAmount;
     }
-    public void setCreateId(String createId) 
-    {
+
+    public void setCreateId(String createId) {
         this.createId = createId;
     }
 
-    public String getCreateId() 
-    {
+    public String getCreateId() {
         return createId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

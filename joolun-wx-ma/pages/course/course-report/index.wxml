@@ -123,29 +123,22 @@
     </button>
   </view>
 </scroll-view>
-<view class="cu-modal {{modalName=='share'?'show':''}}">
+
+<!-- painter生成海报 -->
+<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="800" use2D="false" />
+
+<view class="cu-modal {{show ?'show':''}}">
   <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content text-blue text-bold text-shadow">长按图片保存</view>
-      <view class="action" bindtap="hideModal">
-        <text class="cuIcon-close text-red"></text>
+    <view class="radius" style="height: 72vh; background-size: 100% 100%;">
+      <image src="{{imageSrc}}" mode="aspectFit" style="height: 100%;width: 100%;"/>
+    </view>
+    <view class="margin" > 
+      <button bindtap="save" class="bg-blue" style="margin: 10px 10vw;"> 保存</button>
+    </view>
+    <view class="cu-bar justify-center text-white" style="min-height: 40rpx;">
+        <view class="action" bindtap="onClose">
+          <text class="cuIcon-close"></text>
+        </view>
       </view>
-    </view>
-    <view class="padding-xl" bindlongpress="saveImage">
-      <image src="{{src}}" style="width: {{width}}px; height: {{height}}px"></image>
-    </view>
-  </view>
-</view>
-<view class="cu-modal {{modalName=='saveImage'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content text-blue text-bold text-shadow">提示</view>
-      <view class="action" bindtap="hideModal">
-        <text class="cuIcon-close text-red"></text>
-      </view>
-    </view>
-    <view class="padding-xl">
-      <text>{{msg}}</text>
-    </view>
   </view>
 </view>

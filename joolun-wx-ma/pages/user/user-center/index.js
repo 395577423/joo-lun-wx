@@ -16,15 +16,11 @@ Page({
 
   onShow() {
     let wxUser = app.globalData.wxUser
-    let level = wxUser.level
-
     let str = '书迷'
-    if(level ==1 ){
-       str = '阅读推广大使'
-    }else if(level == 2){
-      str = '大Boss'
-    }else if(level == 3){
-      str ='城市合伙人'
+    if(wxUser.vip){
+      str = "会员"
+    }else if(wxUser.sVip){
+      str = '超级会员'
     }
 
     this.setData({

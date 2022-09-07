@@ -25,7 +25,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {
+  onLoad(options) {
+    if (options.scene) {
+      let scene = decodeURIComponent(options.scene);
+      this.addShareRecord(scene)
+    }
     app.initPage()
       .then(res => {
         this.getPlanCourse()
@@ -122,6 +126,11 @@ Page({
           userInfo: res.data
         })
       })
+  },
+  addShareRecord(shareUserId) {
+    app.api.addShareRecord(shareUserId).then(res=>{
+      console.log('添加分享记录完成')
+    })
   },
   
 })

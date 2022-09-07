@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "wxml-to-canvas": "wxml-to-canvas"
+    "painter": "/components/painter/painter"
   },
   "navigationBarTitleText": "读书报告"
 }

@@ -30,24 +30,10 @@ public class UserShareRecord extends Model<UserShareRecord>
     private String parentUserId;
 
 
-    /** 分享用户名称 */
-    @Excel(name = "分享用户名称")
-    private String parentUserName;
-
 
     /** 扫码用户id */
     @Excel(name = "扫码用户id")
     private String userId;
-
-
-    /** 扫码用户名称 */
-    @Excel(name = "扫码用户名称")
-    private String userName;
-
-    /**
-     * 扫码用户头像
-     */
-    private String userHeadImg;
 
     /** 分享时间 */
     private Date createTime;
@@ -70,15 +56,7 @@ public class UserShareRecord extends Model<UserShareRecord>
     {
         return parentUserId;
     }
-    public void setParentUserName(String parentUserName) 
-    {
-        this.parentUserName = parentUserName;
-    }
 
-    public String getParentUserName() 
-    {
-        return parentUserName;
-    }
     public void setUserId(String userId) 
     {
         this.userId = userId;
@@ -88,23 +66,7 @@ public class UserShareRecord extends Model<UserShareRecord>
     {
         return userId;
     }
-    public void setUserName(String userName) 
-    {
-        this.userName = userName;
-    }
 
-    public String getUserName() 
-    {
-        return userName;
-    }
-
-    public String getUserHeadImg() {
-        return userHeadImg;
-    }
-
-    public void setUserHeadImg(String userHeadImg) {
-        this.userHeadImg = userHeadImg;
-    }
 
     public Date getCreateTime() {
         return createTime;

@@ -1,72 +1,90 @@
-let wxml = `
-<view class="container">
-  <view class="bg">
-    <image class="img" src="https://mall-owen.oss-cn-beijing.aliyuncs.com/report3.png"></image>
-  </view>
-  <text class="useName">userNameText</text>
-  <text class="challenge">challengeText</text>
-  <text class="book">《bookText》</text>
-  <text class="star">starText</text>
-  <text class="duration">durationText</text>
-</view>
-`
+export default class LastMayday {
+  palette(params) {
+    return ({
+      "width": "480px",
+      "height": "860px",
+      "background": "#f8f8f8",
+      "views": [{
+          "type": "image",
+          "url": "https://mall-owen.oss-cn-beijing.aliyuncs.com/report3.png",
+          "css": {
+            "width": "480px",
+            "height": "860px",
+            "top": "0px",
+            "left": "0px",
+            "rotate": "0",
+            "borderColor": "#000000",
+            "mode": "scaleToFill"
+          }
+        },
+        {
+          "type": "text",
+          "text": params.nickName,
+          "css": {
+            "color": "#000000",
+            "width": "200px",
+            "height": "42px",
+            "top": "237px",
+            "left": "147px",
+            "fontSize": "40rpx",
+            "fontWeight": 500,
+            "textAlign": "left"
+          }
+        },
+        {
+          "type": "text",
+          "text": 5,
+          "css": {
+            "width": "30px",
+            "height": "42px",
+            "top": "270px",
+            "left": "208px",
+            "fontSize": "40rpx",
+            "fontWeight": 500,
+            "textAlign": "center"
+          }
+        },
+        {
+          "type": "text",
+          "text": params.title,
+          "css": {
+            "color": "#000000",
+            "width": "200px",
+            "height": "42px",
+            "top": "453px",
+            "left": "183px",
+            "fontSize": "40rpx",
+            "fontWeight": 500,
+            "textAlign": "left"
+          }
+        },
+        {
+          "type": "text",
+          "text": "5分钟",
+          "css": {
+            "color": "#000000",
 
-const style = {
-  container: {
-    width: 300,
-    height: 533,
-  },
-  duration:{
-    width:50,
-    height:20,
-    position: 'absolute',
-    top:178,
-    left:120,
-    fontSize:7,
-    color:'red'
-  },
-  book:{
-    width:80,
-    height:20,
-    position: 'absolute',
-    top:159,
-    left:125,
-    fontSize:8,
-    color:'red'
-  },
-  star:{
-    width:30,
-    height:20,
-    position: 'absolute',
-    top:104,
-    left:142,
-    fontSize:7
-  },
-  challenge:{
-    width:30,
-    height:20,
-    position: 'absolute',
-    top:95,
-    left:140,
-    fontSize:7
-  },
-  useName:{
-    width:30,
-    height:20,
-    position: 'absolute',
-    top:84,
-    left:102,
-    fontSize:7
-  },
-  img: {
-    width: 300,
-    height: 300,
-    borderRadius: 10,
-    position: 'absolute'
+            "width": "90px",
+            "height": "42px",
+            "top": "510px",
+            "left": "174px",
+            "fontSize": "40rpx",
+            "fontWeight": 500,
+            "textAlign": "left"
+          }
+        },
+        {
+          "type": "image",
+          "url": params.qrcode,
+          "css": {
+            "width": "100px",
+            "height": "100px",
+            "top": "620px",
+            "left": "287px",
+            "mode": "scaleToFill"
+          }
+        }
+      ]
+    });
   }
-}
-
-module.exports = {
-  wxml,
-  style
 }

@@ -139,6 +139,7 @@ export default {
     beforeOpen(done, type) {
       if (type == 'add') {
         this.imgTextOption.data = [];
+        this.form = {};
         this.$set(this.form, 'address', [112.93888200000004, 28.228304, "湖南省长沙市"])
         done()
       } else if (type == 'edit') {
