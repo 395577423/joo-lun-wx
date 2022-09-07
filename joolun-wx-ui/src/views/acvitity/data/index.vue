@@ -328,7 +328,9 @@ export default {
     },
     handlePublish(scope) {
       let row = scope.row;
-      updateActivity(row).then(data => {
+      let reqParams = {};
+      reqParams.activity = row;
+      updateActivity(reqParams).then(data => {
         this.$message({
           showClose: true,
           message: '发布成功',

@@ -150,4 +150,6 @@ public interface MallConstants {
 	 */
 	String DELIVERY_WAY_1 = "1";
 	String DELIVERY_WAY_2 = "2";
+
+	int SVIP_PARTNERS_SIZE = 20;
 }

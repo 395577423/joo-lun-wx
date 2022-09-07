@@ -31,24 +31,26 @@ public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper,
      */
     @Override
     public void updateCommissionIncomeData(UserIncomeRecord incomeRecord, IncomeStatusEnum status) {
-        if (incomeRecord == null) return;
-        String userId = incomeRecord.getUserId();
-        BigDecimal amount = incomeRecord.getAmount();
-        LambdaQueryWrapper<UserCommission> queryWrapper = Wrappers.<UserCommission>lambdaQuery()
-                .eq(UserCommission::getUserId, userId);
-        UserCommission userCommission = getOne(queryWrapper);
-        if (userCommission == null) {
-            userCommission = new UserCommission();
-            userCommission.setUserId(userId);
-            userCommission.setTotalAmount(amount);
-            userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ? amount : BigDecimal.ZERO);
-            userCommission.setWithdrawAmount(BigDecimal.ZERO);
-        } else {
-            userCommission.setTotalAmount(amount.add(userCommission.getTotalAmount()));
-            userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ?
-                    amount.add(userCommission.getCompletedAmount()) : userCommission.getCompletedAmount());
+        if (incomeRecord != null && incomeRecord.getAmount() != null) {
+            String userId = incomeRecord.getUserId();
+            BigDecimal amount = incomeRecord.getAmount();
+            LambdaQueryWrapper<UserCommission> queryWrapper = Wrappers.<UserCommission>lambdaQuery()
+                    .eq(UserCommission::getUserId, userId);
+            UserCommission userCommission = getOne(queryWrapper);
+            if (userCommission == null) {
+                userCommission = new UserCommission();
+                userCommission.setUserId(userId);
+                userCommission.setTotalAmount(amount);
+                userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ? amount : BigDecimal.ZERO);
+                userCommission.setWithdrawAmount(BigDecimal.ZERO);
+            } else {
+                userCommission.setTotalAmount(amount.add(userCommission.getTotalAmount()));
+                userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ?
+                        amount.add(userCommission.getCompletedAmount()) : userCommission.getCompletedAmount());
+            }
+            saveOrUpdate(userCommission);
         }
-        saveOrUpdate(userCommission);
+
     }
 
 }

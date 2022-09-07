@@ -1,6 +1,7 @@
 package com.joolun.mall.service.impl;
 
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
+import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.UserIncomeRecord;
 import com.joolun.mall.enums.IncomeStatusEnum;
 import com.joolun.mall.enums.ProductTypeEnum;
@@ -35,15 +36,18 @@ public class NotifyServiceImpl implements INotifyService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void notify(WxPayOrderNotifyResult notifyResult, ProductTypeEnum productType) {
-        UserIncomeRecord userIncomeRecord = null;
+        UserOrderBaseInfo userOrderBaseInfo = null;
         if (productType == ProductTypeEnum.MEMBER) {
-            userIncomeRecord = userMemberOrderService.updateOrder(notifyResult);
+            userOrderBaseInfo = userMemberOrderService.updateOrder(notifyResult);
         } else if (productType == ProductTypeEnum.ACTIVITY) {
-            userIncomeRecord = activityOrderInfoService.notifyOrder(notifyResult);
+            userOrderBaseInfo = activityOrderInfoService.notifyOrder(notifyResult);
         }
-        userPayRecordService.addPayRecord(notifyResult, userIncomeRecord.getUserId(), productType);
-        userIncomeRecordService.addUserIncomeRecord(userIncomeRecord);
-        userCommissionService.updateCommissionIncomeData(userIncomeRecord, productType == ProductTypeEnum.MEMBER ?
-                IncomeStatusEnum.COMPLETED : IncomeStatusEnum.IN_PROCESS);
+        if (userOrderBaseInfo != null) {
+            userPayRecordService.addPayRecord(notifyResult, userOrderBaseInfo.getUserId(), productType);
+            UserIncomeRecord userIncomeRecord = userIncomeRecordService.addUserIncomeRecord(userOrderBaseInfo);
+            userCommissionService.updateCommissionIncomeData(userIncomeRecord, productType == ProductTypeEnum.MEMBER ?
+                    IncomeStatusEnum.COMPLETED : IncomeStatusEnum.IN_PROCESS);
+        }
+
     }
 }

@@ -2,6 +2,7 @@ package com.joolun.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
+import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.UserIncomeRecord;
 import com.joolun.mall.entity.UserMemberOrder;
 
@@ -30,5 +31,5 @@ public interface IUserMemberOrderService extends IService<UserMemberOrder> {
      *
      * @param notifyResult
      */
-    UserIncomeRecord updateOrder(WxPayOrderNotifyResult notifyResult);
+    UserOrderBaseInfo updateOrder(WxPayOrderNotifyResult notifyResult);
 }

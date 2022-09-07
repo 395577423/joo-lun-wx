@@ -1,5 +1,6 @@
 package com.joolun.mall.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -7,12 +8,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.config.CommonConstants;
+import com.joolun.mall.constant.MallConstants;
+import com.joolun.mall.dto.PartnerVo;
+import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.UserIncomeRecord;
 import com.joolun.mall.entity.UserMemberConfig;
 import com.joolun.mall.entity.UserMemberOrder;
 import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.enums.IncomeStatusEnum;
-import com.joolun.mall.enums.MemberStatusEnum;
 import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.mapper.UserMemberOrderMapper;
 import com.joolun.mall.service.IUserMemberConfigService;
@@ -27,6 +30,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -43,8 +47,6 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
     @Autowired
     private IUserShareRecordService userShareRecordService;
 
-    @Autowired
-    private IUserMemberConfigService userMemberConfigService;
 
     /**
      * 创建订单
@@ -73,7 +75,7 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      * @param notifyResult
      */
     @Override
-    public UserIncomeRecord updateOrder(WxPayOrderNotifyResult notifyResult) {
+    public UserOrderBaseInfo updateOrder(WxPayOrderNotifyResult notifyResult) {
         String tradeNo = notifyResult.getOutTradeNo();
         LambdaQueryWrapper<UserMemberOrder> queryWrapper = Wrappers.<UserMemberOrder>lambdaQuery().eq(UserMemberOrder::getOrderNo, tradeNo);
         UserMemberOrder userMemberOrder = getOne(queryWrapper);
@@ -87,7 +89,8 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
                     userMemberOrder.setIsPay(CommonConstants.YES);
                     updateById(userMemberOrder);
                     setUserMember(userMemberOrder.getUserId());
-                    return calMemberIncome(userMemberOrder);
+                    UserOrderBaseInfo userOrderBaseInfo = BeanUtil.toBean(userMemberOrder, UserOrderBaseInfo.class);
+                    return userOrderBaseInfo;
                 } else {
                     throw new RuntimeException("订单已支付");
                 }
@@ -106,45 +109,17 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      * @param wxUserId
      */
     private void setUserMember(String wxUserId) {
+        List<PartnerVo> partnerVos = userShareRecordService.listPartner(wxUserId);
+
         Date expiryDate = DateUtil.offsetMonth(new Date(), 12);
         WxUser wxUser = wxUserService.getById(wxUserId);
         wxUser.setVip(true);
         wxUser.setSVip(false);
+        if (partnerVos.size() >= MallConstants.SVIP_PARTNERS_SIZE) {
+            wxUser.setSVip(true);
+        }
         wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
-    }
-
-
-    /**
-     * 计算会员分享的收入
-     *
-     * @param userMemberOrder
-     */
-    private UserIncomeRecord calMemberIncome(UserMemberOrder userMemberOrder) {
-        UserIncomeRecord userIncomeRecord = null;
-        WxUser sourceWxUser = wxUserService.getById(userMemberOrder.getUserId());
-        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, userMemberOrder.getUserId()));
-        String parentUserId = userShareRecord.getParentUserId();
-        WxUser parentWxUser = wxUserService.getById(parentUserId);
-        if (parentWxUser.isVip()) {
-            UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
-            userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentUserId);
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(userMemberOrder.getUserId());
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(userMemberOrder.getOrderNo());
-            userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-            userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
-            if (parentWxUser.isSVip()) {
-                userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
-            }
-        }
-
-        return userIncomeRecord;
     }
 
 }

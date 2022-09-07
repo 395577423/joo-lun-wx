@@ -1,5 +1,6 @@
 package com.joolun.mall.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.constant.MallConstants;
+import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.*;
 import com.joolun.mall.enums.*;
 import com.joolun.mall.mapper.ActivityOrderInfoMapper;
@@ -43,15 +45,12 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
 
     private final IActivityOrderPersonService activityOrderPersonService;
 
-
-    private final ActivityPriceCaseService activityPriceCaseService;
-
     private final IActivityPersonService activityPersonService;
 
     private final WxUserService wxUserService;
 
     @Autowired
-    private IUserShareRecordService userShareRecordService;
+    private ActivityPriceCaseService activityPriceCaseService;
 
     /**
      * 下单
@@ -78,7 +77,7 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserIncomeRecord notifyOrder(WxPayOrderNotifyResult notifyResult) {
+    public UserOrderBaseInfo notifyOrder(WxPayOrderNotifyResult notifyResult) {
         ActivityOrderInfo orderInfo = getOne(Wrappers.<ActivityOrderInfo>lambdaQuery()
                 .eq(ActivityOrderInfo::getOrderNo, notifyResult.getOutTradeNo()));
         if (orderInfo != null) {
@@ -91,7 +90,8 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
                     orderInfo.setIsPay(CommonConstants.YES);
                     orderInfo.setStatus(ActivityOrderInfoEnum.STATUS_1.getValue());
                     updateById(orderInfo);//更新订单
-                    return calActivityIncome(orderInfo);
+                    UserOrderBaseInfo userOrderBaseInfo = BeanUtil.toBean(orderInfo, UserOrderBaseInfo.class);
+                    return userOrderBaseInfo;
                 } else {
                     throw new RuntimeException("订单已支付");
                 }
@@ -153,37 +153,4 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         return activityOrderInfo;
     }
 
-
-    /**
-     * 计算购买活动时的分享收入
-     *
-     * @param activityOrderInfo
-     */
-    private UserIncomeRecord calActivityIncome(ActivityOrderInfo activityOrderInfo) {
-        UserIncomeRecord userIncomeRecord = null;
-        WxUser sourceWxUser = wxUserService.getById(activityOrderInfo.getUserId());
-        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, activityOrderInfo.getUserId()));
-        String parentUserId = userShareRecord.getParentUserId();
-        WxUser parentWxUser = wxUserService.getById(parentUserId);
-
-        if (parentWxUser.isVip()) {
-            Long priceCaseId = activityOrderInfo.getPriceCaseId();
-            ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
-            userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentUserId);
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(activityOrderInfo.getUserId());
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(activityOrderInfo.getOrderNo());
-            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-            if (parentWxUser.isSVip()) {
-                userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
-            }
-        }
-        return userIncomeRecord;
-    }
 }

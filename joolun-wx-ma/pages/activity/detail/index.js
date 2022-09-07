@@ -24,6 +24,7 @@ Page({
     memberPrice:0
   },
   onLoad: function (options) {
+
     let activityId
     if (options.scene) {
       //小程序扫码进入的

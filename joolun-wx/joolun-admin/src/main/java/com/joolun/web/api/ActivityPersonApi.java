@@ -38,7 +38,7 @@ public class ActivityPersonApi {
         String wxUserId = ThirdSessionHolder.getWxUserId();
         LambdaQueryWrapper<ActivityPerson> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(ActivityPerson::getUserId, wxUserId);
-        List<ActivityPerson> persons = activityPersonService.list();
+        List<ActivityPerson> persons = activityPersonService.list(queryWrapper);
         return AjaxResult.success(persons);
     }
 
