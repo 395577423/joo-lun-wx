@@ -77,5 +77,8 @@
     "scope.userLocation": {
       "desc": "你的位置将用于小程序定位"
     }
-  }
+  },
+  "requiredPrivateInfos":[
+    "chooseAddress"
+  ]
 }

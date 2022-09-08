@@ -2,8 +2,15 @@ package com.joolun.mall.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
+
+/**
+ * @author lanjian
+ */
+
 @Data
-public class PartnerVo {
+public class PartnerVo implements Serializable {
 
     private String userHeadImg;
 
@@ -13,4 +20,18 @@ public class PartnerVo {
 
     private int vipLevel;
 
+    private boolean vip;
+
+    private boolean sVip;
+
+    public int getVipLevel() {
+        if (sVip) {
+            vipLevel = 2;
+        } else if (vip) {
+            vipLevel = 1;
+        } else {
+            vipLevel = 0;
+        }
+        return vipLevel;
+    }
 }

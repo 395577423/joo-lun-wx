@@ -86,30 +86,8 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
      */
     @Override
     public List<PartnerVo> listPartner(String userId) {
-        LambdaQueryWrapper<UserShareRecord> queryWrapper = Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getParentUserId, userId)
-                .orderByDesc(UserShareRecord::getCreateTime);
-        List<UserShareRecord> userShareRecords = list(queryWrapper);
-        if (CollectionUtil.isNotEmpty(userShareRecords)) {
-            List<String> userIds = userShareRecords.stream()
-                    .map(UserShareRecord::getUserId).collect(Collectors.toList());
-            List<WxUser> wxUsers = wxUserService.listByIds(userIds);
-            Map<String, WxUser> wxUserMap = wxUsers.stream().collect(Collectors.toMap(WxUser::getId, Function.identity()));
-
-            List<PartnerVo> partners = userShareRecords.stream().map(userShareRecord -> {
-                WxUser wxUser = wxUserMap.get(userShareRecord.getUserId());
-                PartnerVo partnerVo = new PartnerVo();
-                partnerVo.setUserHeadImg(wxUser.getHeadimgUrl());
-                partnerVo.setUserName(wxUser.getNickName());
-                partnerVo.setCreateTime(DateUtil.formatTime(userShareRecord.getCreateTime()));
-                if (wxUser != null) {
-                    partnerVo.setVipLevel(wxUser.isSVip() ? 2 : wxUser.isVip() ? 1 : 0);
-                }
-                return partnerVo;
-            }).collect(Collectors.toList());
-            return partners;
-        }
-        return Lists.newArrayList();
+        List<PartnerVo> partnerVos = this.getBaseMapper().selectJoinWxUser(userId);
+        return partnerVos;
     }
 
 }

@@ -125,7 +125,7 @@
 </scroll-view>
 
 <!-- painter生成海报 -->
-<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="800" use2D="false" />
+<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="600" use2D="false" />
 
 <view class="cu-modal {{show ?'show':''}}">
   <view class="cu-dialog">

@@ -16,7 +16,7 @@ Page({
 
   onShow() {
     let wxUser = app.globalData.wxUser
-    let str = '书迷'
+    let str = '普通用户'
     if(wxUser.vip){
       str = "会员"
     }else if(wxUser.sVip){

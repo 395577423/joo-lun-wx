@@ -29,7 +29,8 @@ Page({
     loadImagePath: '',
     msg: '',
     title: '',
-    bookName: ''
+    bookName: '',
+    show:false
   },
 
   userInfoGet() {
@@ -214,5 +215,24 @@ Page({
       })
       console.log(plate);
     }
+  },
+  save() {
+    wx.getSetting({
+      success: (set) => {
+        wx.saveImageToPhotosAlbum({
+          filePath: this.data.imageSrc,
+          success: (res) => {
+            if (res.errMsg == "saveImageToPhotosAlbum:ok") {
+              wx.showToast({
+                title: '保存成功',
+              });
+            }
+          },
+        });
+        if (set.authSetting['scope.writePhotosAlbum'] == false) {
+          wx.openSetting()
+        }
+      }
+    })
   }
 })

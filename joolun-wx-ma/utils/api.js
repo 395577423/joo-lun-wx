@@ -227,6 +227,9 @@ module.exports = {
   getActivityPerson: (data) => {
     return request('/weixin/api/activity/person/' + data, 'get')
   },
+  deleteActivityPerson: (data) => {
+    return request('/weixin/api/activity/person/' + data, 'delete')
+  },
   subActivityOrder: (data) => {
     return request('/weixin/api/activity/order/add','post',data)
   },

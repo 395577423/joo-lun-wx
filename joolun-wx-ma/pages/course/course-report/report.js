@@ -46,9 +46,9 @@ export default class LastMayday {
         },
         {
           "type": "text",
-          "text": params.title,
+          "text": "《"+params.title+"》",
           "css": {
-            "color": "#000000",
+            "color": "#FF5133",
             "width": "200px",
             "height": "42px",
             "top": "453px",
@@ -62,8 +62,7 @@ export default class LastMayday {
           "type": "text",
           "text": "5分钟",
           "css": {
-            "color": "#000000",
-
+            "color": "#FF5133",
             "width": "90px",
             "height": "42px",
             "top": "510px",

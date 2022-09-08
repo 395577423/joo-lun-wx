@@ -1,10 +1,8 @@
 package com.joolun.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.mall.dto.PartnerVo;
 import com.joolun.mall.entity.UserShareRecord;
-import com.joolun.weixin.entity.WxUser;
 
 import java.util.List;
 

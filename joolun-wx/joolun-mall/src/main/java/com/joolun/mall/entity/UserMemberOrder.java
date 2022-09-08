@@ -73,6 +73,8 @@ public class UserMemberOrder extends Model<UserMemberOrder>
     /** 创建时间 */
     private Date createTime;
 
+    private Date updateTime;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -168,5 +170,13 @@ public class UserMemberOrder extends Model<UserMemberOrder>
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

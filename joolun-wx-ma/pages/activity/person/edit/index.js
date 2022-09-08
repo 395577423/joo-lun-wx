@@ -23,9 +23,10 @@ Page({
   },
   onLoad: function (options) {
     let id = options.id
+
     app.initPage()
       .then(() => {
-        if (options.id) {
+        if (id) {
           this.getPerson(id);
         }
       })

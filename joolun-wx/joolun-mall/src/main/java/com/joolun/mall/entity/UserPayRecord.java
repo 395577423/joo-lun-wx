@@ -50,6 +50,8 @@ public class UserPayRecord extends Model<UserPayRecord>
     @Excel(name = "备注")
     private String remark;
 
+    private Date createTime;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -111,5 +113,13 @@ public class UserPayRecord extends Model<UserPayRecord>
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
