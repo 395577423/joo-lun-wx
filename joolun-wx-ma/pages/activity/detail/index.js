@@ -139,7 +139,6 @@ Page({
       let params = {
         qrCode: wxmaCode,
         activityImage: this.data.activityContent.imageUrl,
-        logoImagePath: '/public/img/logo.png',
         textImage: '/public/img/text.png',
         nickName: nickName,
         activityName: this.data.activityContent.name,

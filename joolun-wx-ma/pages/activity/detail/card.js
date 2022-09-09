@@ -11,7 +11,7 @@ export default class LastMayday {
             "width": "115px",
             "height": "115px",
             "top": "540px",
-            "left": "10px",
+            "left": "20px",
             "rotate": "0",
             "borderRadius": "5.78125px",
             "mode": "scaleToFill"
@@ -63,7 +63,7 @@ export default class LastMayday {
             "color": "#848484",
             "width": "210px",
             "top": "570px",
-            "left": "150px",
+            "left": "160px",
             "fontSize": "30rpx",
             "fontWeight": 500,
           }
@@ -75,25 +75,9 @@ export default class LastMayday {
             "color": "#848484",
             "width": "210px",
             "top": "590px",
-            "left": "150px",
+            "left": "160px",
             "fontSize": "30rpx",
             "fontWeight": 500,
-          }
-        },
-        {
-          "type": "image",
-          "url": params.logoImagePath,
-          "css": {
-            "width": "60px",
-            "height": "60px",
-            "top": "570px",
-            "left": "400px",
-            "rotate": "0",
-            "borderRadius": "",
-            "borderWidth": "",
-            "borderColor": "#000000",
-            "shadow": "",
-            "mode": "scaleToFill"
           }
         },
         {
@@ -103,7 +87,7 @@ export default class LastMayday {
             "color": "#BEBEBE",
             "width": "140px",
             "top": "660px",
-            "left": "14px",
+            "left": "24px",
             "fontSize": "22px",
             "fontWeight": "normal",
           }
