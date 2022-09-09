@@ -65,4 +65,14 @@ public class Activity extends Model<Activity>
 
     private Date createTime;
 
+    /**
+     * 人数限制
+     */
+    private int limit;
+
+    /**
+     * 活动截止日期
+     */
+    private Date expiryDate;
+
 }

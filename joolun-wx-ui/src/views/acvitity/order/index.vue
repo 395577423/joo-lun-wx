@@ -1,176 +1,304 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="订单号" prop="orderNo">
-        <el-input
-          v-model="queryParams.orderNo"
-          placeholder="请输入订单号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-
-      <el-form-item label="是否支付" prop="isPay">
-        <el-input
-          v-model="queryParams.isPay"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['mall:order:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
-    <el-table v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="昵称" align="center" prop="id" />
-      <el-table-column label="订单号" align="center" prop="orderNo" />
-      <el-table-column label="支付方式" align="center" prop="paymentWay" />
-      <el-table-column label="是否支付" align="center" prop="isPay" />
-      <el-table-column label="支付价格" align="center" prop="paymentPrice" />
-      <el-table-column label="付款时间" align="center" prop="paymentTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.paymentTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-    </el-table>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <div class="app-container">
+      <avue-crud ref="crud"
+                 :page="page"
+                 :data="tableData"
+                 :table-loading="tableLoading"
+                 :option="tableOption"
+                 :before-open="beforeOpen"
+                 v-model="form"
+                 @on-load="getPage"
+                 @refresh-change="refreshChange"
+                 @row-update="handleUpdate"
+                 @row-save="handleSave"
+                 @row-del="handleDel"
+                 @search-change="searchChange"
+                 @selection-change="selectionChange"
+      >
+      </avue-crud>
+    </div>
   </div>
 </template>
 
 <script>
-import { listOrder, getOrder, exportOrder } from "@/api/vip/order";
+    import {
+        listOrder,
+        getOrder,
+        delOrder,
+        addOrder,
+        updateOrder
+    } from "@/api/activity/order";
 
-export default {
-  name: "Order",
-  components: {
-  },
-  data() {
-    return {
-      // 遮罩层
-      loading: true,
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      // 【请填写功能名称】表格数据
-      orderList: [],
-      // 弹出层标题
-      title: "",
-      // 是否显示弹出层
-      open: false,
-      // 查询参数
-      queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        orderNo: null,
-        paymentWay: null,
-        isPay: null,
-        paymentPrice: null,
-        paymentTime: null,
-        userId: null,
-      },
-      // 表单参数
-      form: {},
-      // 表单校验
+    export default {
+        name: "Order",
+        data() {
+            return {
+                form: {},
+                tableData: [],
+                page: {
+                    total: 0, // 总页数
+                    currentPage: 1, // 当前页数
+                    pageSize: 10, // 每页显示多少条
+                    ascs: [],//升序字段
+                    descs: 'create_time',//降序字段
+                },
+                paramsSearch: {},
+                tableLoading: false,
+                dialogAppraises: false,
+                selectionData: '',
+                pointsConfig: null,
+                tableOption: {
+                    dialogType: 'drawer',
+                    border: true,
+                    stripe: true,
+                    menuAlign: 'center',
+                    align: 'center',
+                    menuType: 'text',
+                    searchShow: true,
+                    printBtn: false,
+                    addBtn:false,
+                    editBtn:false,
+                    delBtn:false,
+                    dialogWidth: '88%',
+                    selection: false,
+                    searchMenuSpan: 6,
+                    rowKey: 'id',
+                    menuWidth:80,
+                    column: [
+                        {
+                            label: '订单名',
+                            prop: 'name',
+                            addDisplay: false,
+                            editDisplay: false,
+                            width:200
+
+                        },
+                        {
+                            label: '订单单号',
+                            prop: 'orderNo',
+                            addDisplay: false,
+                            editDisplay: false,
+                            width:200
+
+                        },
+
+                        {
+                            label: '订单封面图',
+                            prop: 'activityImg',
+                            type: 'img',
+                            addDisplay: false,
+                            editDisplay: false,
+                            width:100
+                        },
+
+                        {
+                            label: '支付方式',
+                            prop: 'paymentWay',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '是否支付',
+                            prop: 'isPay',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+                        {
+                            label: '订单状态',
+                            prop: 'status',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '销售金额',
+                            prop: 'salesPrice',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '优惠金额',
+                            prop: 'couponPrice',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '支付金额',
+                            prop: 'paymentPrice',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '付款时间',
+                            prop: 'paymentTime',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '备注',
+                            prop: 'remark',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '购买数量',
+                            prop: 'quantity',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '活动日期',
+                            prop: 'activityDate',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        },
+
+                        {
+                            label: '活动天数',
+                            prop: 'activityDays',
+                            addDisplay: false,
+                            editDisplay: false,
+
+                        }
+
+                    ]
+                },
+
+
+            };
+        },
+        watch: {},
+        created() {
+        },
+        mounted: function () {
+        },
+        computed: {},
+        methods: {
+            selectionChange(list) {
+                this.selectionData = list
+            },
+            beforeOpen(done, type) {
+                if (type == 'add') {
+                    done()
+                } else if (type == 'edit') {
+                    this.tableLoading = true
+                    getOrder(this.form.id).then(response => {
+
+                    })
+                    done()
+                }
+            },
+            searchChange(params, done) {
+                params = this.filterForm(params)
+                this.paramsSearch = params
+                this.page.currentPage = 1
+                this.getPage(this.page, params)
+                done()
+            },
+            /**
+             * 刷新回调
+             */
+            refreshChange(page) {
+                this.getPage(this.page)
+            },
+            getPage(page, params) {
+                this.tableLoading = true
+                listOrder(Object.assign({
+                    pageNum: page.currentPage,
+                    pageSize: page.pageSize,
+                    descs: this.page.descs,
+                    ascs: this.page.ascs
+                }, params, this.paramsSearch)).then(response => {
+                    let tableData = response.rows
+                    this.tableData = tableData
+                    this.page.total = response.total
+                    this.page.currentPage = page.currentPage
+                    this.page.pageSize = page.pageSize
+                    this.tableLoading = false
+                }).catch(() => {
+                    this.tableLoading = false
+                })
+            },
+            /**
+             * @title 数据删除
+             * @param row 为当前的数据
+             * @param index 为当前删除数据的行数
+             *
+             **/
+            handleDel: function (row, index) {
+                var _this = this
+                this.$confirm('是否确认删除此数据', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(function () {
+                    return delOrder(row.id)
+                }).then(data => {
+                    _this.$message({
+                        showClose: true,
+                        message: '删除成功',
+                        type: 'success'
+                    })
+                    this.getPage(this.page)
+                }).catch(function (err) {
+                })
+            },
+            /**
+             * @title 数据更新
+             * @param row 为当前的数据
+             * @param index 为当前更新数据的行数
+             * @param done 为表单关闭函数
+             *
+             **/
+            handleUpdate: function (row, index, done, loading) {
+                updateOrder(row).then(data => {
+                    this.$message({
+                        showClose: true,
+                        message: '修改成功',
+                        type: 'success'
+                    })
+                    done()
+                    this.getPage(this.page)
+                }).catch(() => {
+                })
+            },
+            /**
+             * @title 数据添加
+             * @param row 为当前的数据
+             * @param done 为表单关闭函数
+             *
+             **/
+            handleSave: function (row, done, loading) {
+                addOrder(row).then(data => {
+                    this.$message({
+                        showClose: true,
+                        message: '添加成功',
+                        type: 'success'
+                    })
+                    done()
+                    this.getPage(this.page)
+                }).catch(() => {
+                    loading()
+                })
+            },
+        }
     };
-  },
-  created() {
-    this.getList();
-  },
-  methods: {
-    /** 查询【请填写功能名称】列表 */
-    getList() {
-      this.loading = true;
-      listOrder(this.queryParams).then(response => {
-        this.orderList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        orderNo: null,
-        paymentWay: null,
-        isPay: null,
-        paymentPrice: null,
-        paymentTime: null,
-        remark: null,
-        userId: null,
-        createTime: null
-      };
-      this.resetForm("form");
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
-    },
-
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportOrder(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
-    }
-  }
-};
 </script>

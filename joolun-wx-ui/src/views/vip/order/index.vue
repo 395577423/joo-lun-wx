@@ -16,7 +16,6 @@
 
 
     </avue-crud>
-
   </div>
 </template>
 <script>

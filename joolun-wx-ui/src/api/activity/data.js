@@ -52,6 +52,15 @@ export function exportActivity(query) {
   })
 }
 
+// 发布社会活动
+export function publishActivity(data) {
+  return request({
+    url: '/activity/publish',
+    method: 'post',
+    data: data
+  })
+}
+
 export function relateCourse(data) {
   return request({
     url: '/activity/relate/course',

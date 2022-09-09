@@ -2,6 +2,8 @@ package com.joolun.web.controller.activity;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.joolun.common.annotation.Log;
@@ -163,5 +165,27 @@ public class ActivityController extends BaseController {
                 .eq(ActivityPriceCase::getActivityId, activityId);
         List<ActivityPriceCase> activityPriceCases = activityPriceCaseService.list(queryWrapper);
         return AjaxResult.success(activityPriceCases);
+    }
+
+
+    /**
+     * 修改社会活动
+     */
+    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
+    @Log(title = "社会活动", businessType = BusinessType.UPDATE)
+    @PostMapping(value = "/publish")
+    public AjaxResult publish(@RequestBody Activity activity) {
+        //发布是校验是否已关联课程
+        if (activity.getPublished()) {
+            List<Course> relateCourse = activityRelatedCourseService.getRelateCourse(activity.getId());
+            if (CollectionUtil.isEmpty(relateCourse)) {
+                return AjaxResult.error("发布前请先关联课程！");
+            }
+        }
+        LambdaUpdateWrapper<Activity> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(Activity::getPublished, activity.getPublished());
+        updateWrapper.eq(Activity::getId, activity.getId());
+        boolean update = activityService.update(updateWrapper);
+        return toAjax(update ? 1 : 0);
     }
 }
