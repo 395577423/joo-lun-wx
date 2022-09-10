@@ -97,6 +97,26 @@ export const tableOption = {
           }]
         },
         {
+          label: '限制人数',
+          prop: 'personLimit',
+          type: 'number',
+          rules: [{
+            required: true,
+            message: '请输入限制人数',
+            trigger: 'blur'
+          }],
+        },
+        {
+          label: '过期时间',
+          prop: 'expiryDate',
+          type: 'date',
+          rules: [{
+            required: true,
+            message: '请输入过期时间',
+            trigger: 'blur'
+          }],
+        },
+        {
           label: '活动地址',
           prop: 'address',
           type: 'map',
@@ -132,12 +152,6 @@ export const tableOption = {
             message: '活动介绍不能为空',
             trigger: 'blur'
           }]
-        },
-        {
-          label: '活动详情',
-          prop: 'explanation',
-          span: 20,
-          formslot: true
         },
         {
           label: '关联课程',

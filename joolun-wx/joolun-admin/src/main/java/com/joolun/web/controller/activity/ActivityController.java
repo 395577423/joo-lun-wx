@@ -3,7 +3,6 @@ package com.joolun.web.controller.activity;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.joolun.common.annotation.Log;
@@ -20,6 +19,7 @@ import com.joolun.mall.entity.Activity;
 import com.joolun.mall.entity.ActivityPriceCase;
 import com.joolun.mall.entity.Course;
 import com.joolun.mall.service.ActivityPriceCaseService;
+import com.joolun.mall.service.IActivityOrderInfoService;
 import com.joolun.mall.service.IActivityRelatedCourseService;
 import com.joolun.mall.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,8 @@ public class ActivityController extends BaseController {
 
     @Autowired
     private IActivityRelatedCourseService activityRelatedCourseService;
+
+
 
     /**
      * 查询社会活动列表
@@ -188,4 +190,6 @@ public class ActivityController extends BaseController {
         boolean update = activityService.update(updateWrapper);
         return toAjax(update ? 1 : 0);
     }
+
+
 }

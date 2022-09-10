@@ -1,6 +1,7 @@
 package com.joolun.mall.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -135,12 +136,12 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
             String keyRedis = null;
             //获取自动取消倒计时
             if (CommonConstants.NO.equals(activityOrderInfo.getIsPay())) {
-                keyRedis = String.valueOf(StrUtil.format("{}:{}" ,
+                keyRedis = String.valueOf(StrUtil.format("{}:{}",
                         MallConstants.REDIS_ACTIVITY_ORDER_KEY_IS_PAY_0, activityOrderInfo.getId()));
             }
             //获取自动收货倒计时
             if (OrderInfoEnum.STATUS_2.getValue().equals(activityOrderInfo.getStatus())) {
-                keyRedis = String.valueOf(StrUtil.format("{}:{}" ,
+                keyRedis = String.valueOf(StrUtil.format("{}:{}",
                         MallConstants.REDIS_ACTIVITY_ORDER_KEY_STATUS_2, activityOrderInfo.getId()));
             }
         }
@@ -153,4 +154,21 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         return activityOrderInfo;
     }
 
+    /**
+     * 计算已购买活动的人数
+     *
+     * @param activityId
+     * @return
+     */
+    @Override
+    public int getActivityClosed(Long activityId) {
+        Activity activity = activityService.getById(activityId);
+        int purchasedNum = this.getBaseMapper().countPeoples(activityId);
+        if (activity.getPersonLimit() != null && activity.getPersonLimit() <= purchasedNum) {
+            return 1;
+        } else if (activity.getExpiryDate() != null && DateUtil.compare(activity.getExpiryDate(), new Date()) < 0) {
+            return 1;
+        }
+        return 0;
+    }
 }

@@ -68,7 +68,7 @@ public class Activity extends Model<Activity>
     /**
      * 人数限制
      */
-    private int limit;
+    private Integer personLimit;
 
     /**
      * 活动截止日期

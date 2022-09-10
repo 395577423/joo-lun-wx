@@ -1,21 +1,19 @@
 package com.joolun.web.api;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
-import com.joolun.common.utils.StringUtils;
 import com.joolun.common.utils.http.HttpUtils;
 import com.joolun.mall.entity.Activity;
 import com.joolun.mall.entity.ActivityPriceCase;
 import com.joolun.mall.service.ActivityPriceCaseService;
+import com.joolun.mall.service.IActivityOrderInfoService;
 import com.joolun.mall.service.IActivityService;
 import com.joolun.weixin.utils.WxMaUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lanjian
@@ -45,6 +39,8 @@ public class ActivityApi extends BaseController {
     @Autowired
     private ActivityPriceCaseService activityPriceCaseService;
 
+    @Autowired
+    private IActivityOrderInfoService activityOrderInfoService;
 
     /**
      * 查询社会活动列表
@@ -68,37 +64,46 @@ public class ActivityApi extends BaseController {
 
     /**
      * 根据id查询活动详情
+     *
      * @param id
      * @return
      */
     @GetMapping("/{id}")
-    public AjaxResult getById(@PathVariable("id") Long id){
+    public AjaxResult getById(@PathVariable("id") Long id) {
         return AjaxResult.success(activityService.getById(id));
     }
 
     /**
      * 根据id查询活动价格信息
+     *
      * @param activityId
      * @return
      */
     @GetMapping("/getPriceCase")
-    public AjaxResult getPriceCase(Long activityId){
+    public AjaxResult getPriceCase(Long activityId) {
         LambdaQueryWrapper<ActivityPriceCase> queryWrapper = Wrappers.<ActivityPriceCase>lambdaQuery()
                 .eq(ActivityPriceCase::getActivityId, activityId);
         return AjaxResult.success(activityPriceCaseService.list(queryWrapper));
     }
 
+    /**
+     * 获取活动已购买人数
+     */
+    @GetMapping("/getStatus")
+    public AjaxResult getStatus(Long activityId) {
+        return AjaxResult.success(activityOrderInfoService.getActivityClosed(activityId) == 1 ? true : false);
+    }
 
     @GetMapping("/image/wxm/code")
-    public void getWxACode(String page,String param, HttpServletResponse response) throws UnsupportedEncodingException {
+    public void getWxACode(String page, String param, HttpServletResponse response) throws UnsupportedEncodingException {
         String token = WxMaUtil.getToken();
-        String requestUrl = WxMaUtil.WXACODEURL +token;
+        String requestUrl = WxMaUtil.WXACODEURL + token;
         JSONObject params = new JSONObject();
-        params.put("page",page);
+        params.put("page", page);
         params.put("scene", param);
         params.put("width", 430);
         params.put("auto_color", true);
-        params.put("check_path",false);
+        params.put("check_path", false);
         OutputStream stream = null;
         System.out.println(params.toString());
         try {

@@ -4,9 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.ActivityOrderInfo;
-import com.joolun.mall.entity.UserIncomeRecord;
-
-import java.util.List;
 
 /**
  * @author lanjian
@@ -25,4 +22,10 @@ public interface IActivityOrderInfoService extends IService<ActivityOrderInfo> {
     ActivityOrderInfo queryById(Long id);
 
 
+    /**
+     * 计算已购买活动的人数
+     * @param activityId
+     * @return
+     */
+    int getActivityClosed(Long activityId);
 }

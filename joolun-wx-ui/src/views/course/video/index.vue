@@ -6,6 +6,7 @@
                :table-loading="tableLoading"
                :option="option"
                :before-open="beforeOpen"
+               :upload-before="uploadBefore"
                v-model="form"
                @on-load="getPage"
                @refresh-change="refreshChange"
@@ -190,6 +191,15 @@ export default {
      */
     refreshChange(page) {
       this.getPage(this.page)
+    },
+    uploadBefore(file, done, loading, column) {
+      //如果你想修改file文件,由于上传的file是只读文件，必须复制新的file才可以修改名字，完后赋值到done函数里,如果不修改的话直接写done()即可
+      let timeStamp = Date.now().toString();
+      let fileName = file.name.substring(0, file.name.lastIndexOf("."))
+      let ext = file.name.substring(file.name.lastIndexOf("."), file.name.length)
+      fileName = fileName + timeStamp + ext;
+      let newFile = new File([file], fileName, {type: file.type});
+      done(newFile)
     }
   }
 }

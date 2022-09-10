@@ -26,16 +26,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    if (options.scene) {
-      let scene = decodeURIComponent(options.scene);
-      this.addShareRecord(scene)
-    }
+    let scene = options.scene;
     app.initPage()
       .then(res => {
         this.getPlanCourse()
         this.getRecommend()
         this.wxUserGet()
+      if (scene) {
+        scene = decodeURIComponent(options.scene);
+        this.addShareRecord(scene)
+      }
       })
+
   },
   /**
    * 滑到底部事件

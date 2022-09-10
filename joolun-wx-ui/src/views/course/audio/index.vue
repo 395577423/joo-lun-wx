@@ -4,8 +4,9 @@
                :page="page"
                :data="tableData"
                :table-loading="tableLoading"
-               :option= "option"
+               :option="option"
                :before-open="beforeOpen"
+               :upload-before="uploadBefore"
                v-model="form"
                @on-load="getPage"
                @refresh-change="refreshChange"
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { addObj, delObj, getPage, putObj } from '@/api/course/audio'
+import {addObj, delObj, getPage, putObj} from '@/api/course/audio'
 import option from '@/const/crud/course/audio'
 
 export default {
@@ -49,7 +50,7 @@ export default {
   watch: {},
   created() {
   },
-  mounted: function() {
+  mounted: function () {
   },
   computed: {},
   methods: {
@@ -111,13 +112,13 @@ export default {
      * @param index 为当前删除数据的行数
      *
      **/
-    handleDel: function(row, index) {
+    handleDel: function (row, index) {
       var _this = this
       this.$confirm('是否确认删除此数据', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delObj(row.id)
       }).then(data => {
         _this.$message({
@@ -126,7 +127,7 @@ export default {
           type: 'success'
         })
         this.getPage(this.page)
-      }).catch(function(err) {
+      }).catch(function (err) {
       })
     },
     /**
@@ -136,7 +137,7 @@ export default {
      * @param done 为表单关闭函数
      *
      **/
-    handleUpdate: function(row, index, done, loading) {
+    handleUpdate: function (row, index, done, loading) {
       row.audio = row.audio[0].value
       putObj(row).then(data => {
         this.$message({
@@ -156,7 +157,7 @@ export default {
      * @param done 为表单关闭函数
      *
      **/
-    handleSave: function(row, done, loading) {
+    handleSave: function (row, done, loading) {
       row.audio = row.audio[0].value
       addObj(row).then(data => {
         this.$message({
@@ -175,6 +176,15 @@ export default {
      */
     refreshChange(page) {
       this.getPage(this.page)
+    },
+    uploadBefore(file, done, loading, column) {
+      //如果你想修改file文件,由于上传的file是只读文件，必须复制新的file才可以修改名字，完后赋值到done函数里,如果不修改的话直接写done()即可
+      let timeStamp = Date.now().toString();
+      let fileName = file.name.substring(0, file.name.lastIndexOf("."))
+      let ext = file.name.substring(file.name.lastIndexOf("."), file.name.length)
+      fileName = fileName + timeStamp + ext;
+      let newFile = new File([file], fileName, {type: file.type});
+      done(newFile)
     }
   }
 }

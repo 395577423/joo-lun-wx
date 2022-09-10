@@ -33,4 +33,5 @@ public interface IActivityService extends IService<Activity>
      * @return
      */
     List<Activity> listByCourseId(Long courseId);
+
 }

@@ -215,6 +215,9 @@ module.exports = {
   getActivityDetail: (activityId) => {
     return request('/weixin/api/activity/' + activityId, 'get')
   },
+  getActivityIsClosed: (activityId) => {
+    return request('/weixin/api/activity/getStatus?activityId=' + activityId, 'get')
+  },
   getPriceCase: (activityId) => {
     return request('/weixin/api/activity/getPriceCase?activityId=' + activityId, 'get')
   },

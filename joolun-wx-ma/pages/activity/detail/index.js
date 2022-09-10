@@ -21,17 +21,19 @@ Page({
     show:false,
     salesPrice:0,
     superMemberPrice:0,
-    memberPrice:0
+    memberPrice:0,
+    closed:false
   },
   onLoad: function (options) {
 
     let activityId
+    let userId
     if (options.scene) {
       //小程序扫码进入的
       let scene = decodeURIComponent(options.scene);
       activityId = scene.split("#")[0]
-      let userId = scene.split('#')[1]
-      this.addShareRecord(userId)
+      userId = scene.split('#')[1]
+
     } else if (options.activityId) {
       //页面跳转的
       activityId = options.activityId
@@ -44,6 +46,10 @@ Page({
       .then(() => {
         this.getDetail(activityId)
         this.getPriceCase(activityId)
+        this.getStatus(activityId)
+        if(userId) {
+          this.addShareRecord(userId)
+        }
       })
   },
   getDetail(activityId) {
@@ -92,7 +98,22 @@ Page({
 
     })
   },
+  getStatus(activityId) {
+    app.api.getActivityIsClosed(activityId).then(res =>{
+      this.setData({
+        closed : res.data
+      })
+    })
+  },
   confirmOrder(e) {
+    if(this.data.closed){
+      wx.showToast({
+        title: '活动已结束',
+        icon: 'success',
+        duration: 2000
+      })
+      return false;
+    }
     let activityId = e.target.dataset.id
     wx.navigateTo({
       url: '/pages/activity/confirm/index?activityId=' + activityId,

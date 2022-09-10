@@ -6,17 +6,16 @@
                :table-loading="tableLoading"
                :option="tableOption"
                :before-open="beforeOpen"
+               :upload-before="uploadBefore"
                v-model="form"
                @on-load="getPage"
-               @refresh-change="refreshChange"
                @row-update="handleUpdate"
                @row-save="handleSave"
                @row-del="handleDel"
                @search-change="searchChange"
                @selection-change="selectionChange"
+
     >
-
-
     </avue-crud>
 
   </div>
@@ -83,6 +82,9 @@ export default {
               trigger: 'change'
             }],
             oss: 'ali',
+            propsHttp: {
+              fileName: '39329329239239.png'
+            },
             loadText: '附件上传中，请稍等',
             tip: '只能上传jpg/png文件，且不超过50kb'
           },
@@ -201,7 +203,20 @@ export default {
         loading()
       })
     },
+
+    uploadBefore(file, done, loading, column) {
+      console.log(file, column)
+      //如果你想修改file文件,由于上传的file是只读文件，必须复制新的file才可以修改名字，完后赋值到done函数里,如果不修改的话直接写done()即可
+      let timeStamp = Date.now().toString();
+      let fileName = file.name.substring(0, file.name.lastIndexOf("."))
+      let ext = file.name.substring(file.name.lastIndexOf("."), file.name.length)
+      fileName = fileName + timeStamp + ext;
+      let newFile = new File([file], fileName, {type: file.type});
+      done(newFile)
+    }
   }
 
 }
+
+
 </script>
