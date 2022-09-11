@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
+import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.constant.MallConstants;
 import com.joolun.mall.dto.UserOrderBaseInfo;
@@ -161,14 +162,14 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
      * @return
      */
     @Override
-    public int getActivityClosed(Long activityId) {
+    public AjaxResult getActivityClosed(Long activityId) {
         Activity activity = activityService.getById(activityId);
         int purchasedNum = this.getBaseMapper().countPeoples(activityId);
         if (activity.getPersonLimit() != null && activity.getPersonLimit() <= purchasedNum) {
-            return 1;
+            return AjaxResult.success("报名人数已满");
         } else if (activity.getExpiryDate() != null && DateUtil.compare(activity.getExpiryDate(), new Date()) < 0) {
-            return 1;
+            return AjaxResult.success("活动已结束");
         }
-        return 0;
+        return AjaxResult.success();
     }
 }

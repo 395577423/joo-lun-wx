@@ -30,7 +30,7 @@ Page({
     msg: '',
     title: '',
     bookName: '',
-    show:false
+    show: false
   },
 
   userInfoGet() {
@@ -112,7 +112,7 @@ Page({
         courseQuestion: res.data.courseQuestion,
         story: res.data.story,
         userAudio: res.data.userAudio,
-        userCourseReport: res.data.userCourse == null?'':res.data.userCourse.report,
+        userCourseReport: res.data.userCourse == null ? '' : res.data.userCourse.report,
         title: res.data.course.title,
         bookName: res.data.books[0].title
       })
@@ -164,7 +164,7 @@ Page({
       modalName: null
     })
   },
-    canvasSuc(e) {
+  canvasSuc(e) {
     this.setData({
       imageSrc: e.detail.path,
       show: true
@@ -174,7 +174,7 @@ Page({
     })
   },
   canvasFail(e) {
-    console.log("生成图片失败"+e.detail);
+    console.log("生成图片失败" + e.detail);
     wx.hideLoading({
       success: (res) => {},
     })
@@ -206,10 +206,10 @@ Page({
       let params = {
         qrcode: wxmaCode,
         nickName: nickName,
-        title:title
+        title: title
       }
       let plate = new Report().palette(params)
-  
+
       this.setData({
         template: plate
       })

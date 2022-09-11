@@ -18,11 +18,12 @@ Page({
     imageSrc: '',
     share_show: false,
     params: {},
-    show:false,
-    salesPrice:0,
-    superMemberPrice:0,
-    memberPrice:0,
-    closed:false
+    show: false,
+    salesPrice: 0,
+    superMemberPrice: 0,
+    memberPrice: 0,
+    closed: false,
+    tips: '',
   },
   onLoad: function (options) {
 
@@ -47,7 +48,7 @@ Page({
         this.getDetail(activityId)
         this.getPriceCase(activityId)
         this.getStatus(activityId)
-        if(userId) {
+        if (userId) {
           this.addShareRecord(userId)
         }
       })
@@ -70,20 +71,20 @@ Page({
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
     })
   },
-  getPriceCase(activityId){
+  getPriceCase(activityId) {
     let that = this;
     app.api.getPriceCase(activityId).then(res => {
       let priceCases = res.data
       let displaySalesPrice;
       let displayMemberPrice;
       let displaySuperMemberPrice;
-      if(priceCases && priceCases.length > 0) {
+      if (priceCases && priceCases.length > 0) {
         priceCases.forEach(element => {
-          if(!displaySalesPrice){
+          if (!displaySalesPrice) {
             displaySalesPrice = element.salesPrice
             displayMemberPrice = element.memberPrice
             displaySuperMemberPrice = element.superMemberPrice
-          }else if(displaySalesPrice>element.salesPrice){
+          } else if (displaySalesPrice > element.salesPrice) {
             displaySalesPrice = element.salesPrice;
             displayMemberPrice = element.memberPrice
             displaySuperMemberPrice = element.superMemberPrice
@@ -91,25 +92,27 @@ Page({
         });
       }
       this.setData({
-        salesPrice : displaySalesPrice,
-        memberPrice : displayMemberPrice,
-        superMemberPrice : displaySuperMemberPrice,
+        salesPrice: displaySalesPrice,
+        memberPrice: displayMemberPrice,
+        superMemberPrice: displaySuperMemberPrice,
       })
 
     })
   },
   getStatus(activityId) {
-    app.api.getActivityIsClosed(activityId).then(res =>{
+    app.api.getActivityIsClosed(activityId).then(res => {
       this.setData({
-        closed : res.data
+        closed: res.msg == null ? false : true,
+        tips: res.msg
       })
     })
   },
   confirmOrder(e) {
-    if(this.data.closed){
+    let tips = this.data.tips
+    if (this.data.closed) {
       wx.showToast({
-        title: '活动已结束',
-        icon: 'success',
+        title: tips,
+        icon: 'error',
         duration: 2000
       })
       return false;
@@ -120,7 +123,7 @@ Page({
     })
   },
   addShareRecord(shareUserId) {
-    app.api.addShareRecord(shareUserId).then(res=>{
+    app.api.addShareRecord(shareUserId).then(res => {
       console.log('添加分享记录完成')
     })
   },
@@ -137,8 +140,7 @@ Page({
     })
   },
   canvasFail(e) {
-
-    console.log("生成图片失败"+e.detail);
+    console.log("生成图片失败" + e.detail);
     wx.hideLoading({
       success: (res) => {},
     })
@@ -155,7 +157,6 @@ Page({
         title: '生成中',
       })
       let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/activity/detail/index&param=" + encodeURIComponent(this.data.activityId + "#" + app.globalData.wxUser.id)
-
       let nickName = app.globalData.wxUser.nickName
       let params = {
         qrCode: wxmaCode,
@@ -163,10 +164,9 @@ Page({
         textImage: '/public/img/text.png',
         nickName: nickName,
         activityName: this.data.activityContent.name,
-        price: '￥'+this.data.salesPrice
+        price: '￥' + this.data.salesPrice
       }
       let plate = new Card().palette(params)
-    
       this.setData({
         template: plate
       })

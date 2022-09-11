@@ -9,7 +9,7 @@ Page({
     total:0,
     completedAmount:0,
     withdrawAmount:0,
-    tabs:['合作伙伴','返佣'],
+    tabs:['我的团队','返佣'],
     TabCur: 0,
     partners: []
   },
@@ -18,8 +18,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.getCommission();
-    this.getPartners();
+    app.initPage().then(res => {
+      this.getCommission();
+      this.getPartners();
+    })
+
   },
   getCommission() {
     app.api.getCommission().then(resp =>{

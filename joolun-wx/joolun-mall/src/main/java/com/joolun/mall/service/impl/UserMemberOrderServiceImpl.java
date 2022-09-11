@@ -12,6 +12,7 @@ import com.joolun.mall.constant.MallConstants;
 import com.joolun.mall.dto.PartnerVo;
 import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.UserMemberOrder;
+import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.mapper.UserMemberOrderMapper;
 import com.joolun.mall.service.IUserMemberOrderService;
 import com.joolun.mall.service.IUserShareRecordService;
@@ -103,15 +104,12 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
      * @param wxUserId
      */
     private void setUserMember(String wxUserId) {
-        List<PartnerVo> partnerVos = userShareRecordService.listPartner(wxUserId);
-
         Date expiryDate = DateUtil.offsetMonth(new Date(), 12);
         WxUser wxUser = wxUserService.getById(wxUserId);
         wxUser.setVip(true);
         wxUser.setSVip(false);
-        if (partnerVos.size() >= MallConstants.SVIP_PARTNERS_SIZE) {
-            wxUser.setSVip(true);
-        }
+        wxUser.setMember(CommonConstants.YES);
+        wxUser.setLevel((short) 1);
         wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
     }

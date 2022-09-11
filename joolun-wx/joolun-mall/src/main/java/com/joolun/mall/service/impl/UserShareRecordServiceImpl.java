@@ -70,9 +70,10 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
      */
     private void setMemberLevel(WxUser shareUser) {
         List<UserShareRecord> shareRecords = this.list(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, shareUser.getId()));
+                .eq(UserShareRecord::getParentUserId, shareUser.getId()));
         if (shareRecords != null && shareRecords.size() >= MallConstants.SVIP_PARTNERS_SIZE && shareUser.isVip()) {
             shareUser.setSVip(true);
+            shareUser.setLevel((short) 2);
             wxUserService.updateById(shareUser);
         }
     }

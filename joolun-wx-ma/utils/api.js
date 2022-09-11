@@ -265,5 +265,8 @@ module.exports = {
   },
   getPartners: () => {
     return request('/weixin/api/commission/partners','get',false)
+  },
+  getMemberConfig: () =>{
+    return request('/weixin/api/member/config','get',false)
   }
 }

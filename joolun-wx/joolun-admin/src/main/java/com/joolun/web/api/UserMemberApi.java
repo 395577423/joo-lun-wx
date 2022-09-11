@@ -44,6 +44,18 @@ public class UserMemberApi {
 
     private final INotifyService notifyService;
 
+    /**
+     * 获取会员配置信息
+     */
+    @GetMapping("/config")
+    public AjaxResult getConfig() {
+        List<UserMemberConfig> userMemberConfigs = userMemberConfigService.list();
+        if (CollectionUtil.isNotEmpty(userMemberConfigs)) {
+            UserMemberConfig userMemberConfig = userMemberConfigs.get(0);
+            return AjaxResult.success(userMemberConfig);
+        }
+        return AjaxResult.success();
+    }
 
     /**
      * 购买会员

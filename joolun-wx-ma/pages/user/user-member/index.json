@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "painter": "/components/painter/painter"
+  },
+  "navigationBarTitleText": "会员"
 }

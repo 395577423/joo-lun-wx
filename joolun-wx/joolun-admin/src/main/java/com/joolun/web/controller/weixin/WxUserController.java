@@ -1,5 +1,6 @@
 package com.joolun.web.controller.weixin;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -16,6 +17,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * 微信用户
@@ -97,6 +100,9 @@ public class WxUserController extends BaseController {
     @PutMapping
     @PreAuthorize("@ss.hasPermi('wxmp:wxuser:edit')")
     public AjaxResult updateById(@RequestBody WxUser wxUser) {
+        if(wxUser.isSVip()){
+            wxUser.setMemberExpiryDate(DateUtil.offsetMonth(new Date(),12));
+        }
         return AjaxResult.success(wxUserService.updateById(wxUser));
     }
 

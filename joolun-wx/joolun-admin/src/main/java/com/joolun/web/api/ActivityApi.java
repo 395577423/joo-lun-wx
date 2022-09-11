@@ -91,7 +91,7 @@ public class ActivityApi extends BaseController {
      */
     @GetMapping("/getStatus")
     public AjaxResult getStatus(Long activityId) {
-        return AjaxResult.success(activityOrderInfoService.getActivityClosed(activityId) == 1 ? true : false);
+        return activityOrderInfoService.getActivityClosed(activityId);
     }
 
     @GetMapping("/image/wxm/code")
@@ -105,7 +105,6 @@ public class ActivityApi extends BaseController {
         params.put("auto_color", true);
         params.put("check_path", false);
         OutputStream stream = null;
-        System.out.println(params.toString());
         try {
             byte[] bytes = HttpUtils.sendPostBackStream(requestUrl, params.toString());
             response.setContentType("image/png");

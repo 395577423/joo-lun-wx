@@ -9,7 +9,7 @@
 <view class="cu-bar bg-white solid-bottom margin-top" style="margin-top: 120rpx;">
   <view class="action">
     <text class="cuIcon-titles text-blue"></text>
-    <text class=" text-shadow text-black text-bold">奖学金计划</text>
+    <text class=" text-shadow text-black text-bold">限时免费</text>
   </view>
 </view>
 <view class="padding text-center" wx:for="{{courses}}" wx:key="index">

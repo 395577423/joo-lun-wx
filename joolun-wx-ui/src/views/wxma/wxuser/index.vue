@@ -90,7 +90,8 @@
           changeMember(row) {
             putObj({
               id: row.id,
-              member: row.member
+              member: row.member,
+              vip:true
             }).then(data => {
 
             })

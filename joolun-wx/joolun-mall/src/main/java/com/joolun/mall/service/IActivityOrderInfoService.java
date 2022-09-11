@@ -2,6 +2,7 @@ package com.joolun.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
+import com.joolun.common.core.domain.AjaxResult;
 import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.ActivityOrderInfo;
 
@@ -27,5 +28,5 @@ public interface IActivityOrderInfoService extends IService<ActivityOrderInfo> {
      * @param activityId
      * @return
      */
-    int getActivityClosed(Long activityId);
+    AjaxResult getActivityClosed(Long activityId);
 }

@@ -29,14 +29,20 @@
   </view>
 </view>
 <view class="cu-bar bg-white tabbar border shop foot">
-  <button class="action" bindtap="share">
+  <view class="action" bindtap="share">
     <view class="cuIcon-share text-green">
-      <view class="cu-tag"></view>
+      <view class="cu-tag badge"></view>
     </view>
     分享
-  </button>
-  <view class="bg-red submit" bindtap="confirmOrder" data-id="{{activityContent.id}}">
-    立即参与
+  </view>
+  <view wx:if="{{closed==false}}"  class="bg-red submit" bindtap="confirmOrder" data-id="{{activityContent.id}}">
+     立即参与
+  </view>
+  <view wx:if="{{tips=='报名人数已满'}}"  class="bg-gray light submit"  >
+     报名已满
+  </view>
+  <view wx:if="{{tips=='活动已结束'}}"  class="bg-gray light submit">
+    活动结束
   </view>
 </view>
 
@@ -47,15 +53,15 @@
 <view class="cu-modal {{show ?'show':''}}">
   <view class="cu-dialog">
     <view class="radius" style="height: 72vh; background-size: 100% 100%;">
-      <image src="{{imageSrc}}" mode="aspectFit" style="height: 100%;width: 100%;"/>
+      <image src="{{imageSrc}}" mode="aspectFit" style="height: 100%;width: 100%;" />
     </view>
-    <view class="margin" > 
+    <view class="margin">
       <button bindtap="save" class="bg-blue" style="margin: 10px 10vw;"> 保存</button>
     </view>
     <view class="cu-bar justify-center text-white" style="min-height: 40rpx;">
-        <view class="action" bindtap="onClose">
-          <text class="cuIcon-close"></text>
-        </view>
+      <view class="action" bindtap="onClose">
+        <text class="cuIcon-close"></text>
       </view>
+    </view>
   </view>
 </view>
