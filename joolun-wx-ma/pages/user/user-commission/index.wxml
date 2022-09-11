@@ -16,7 +16,7 @@
           <view class="cuIcon-vip text-red"></view>
         </view>
 
-        <view class="text-grey ">{{item.userName}}</view>
+        <view class="text-grey ">{{item.userName==null?'':item.userName}}</view>
       </view>
       <view>
         <view class="text-grey text-sm margin-right">{{item.createTime}}</view>
