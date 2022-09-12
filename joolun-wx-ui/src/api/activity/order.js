@@ -51,3 +51,12 @@ export function exportOrder(query) {
     params: query
   })
 }
+
+// 出行人信息
+export function getPerson(activityId) {
+  return request({
+    url: '/activity/order/getPersons',
+    method: 'get',
+    params: {activityOrderId:activityId}
+  })
+}

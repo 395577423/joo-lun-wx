@@ -6,7 +6,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Lists;
 import com.joolun.mall.entity.ActivityOrderInfo;
+import com.joolun.mall.entity.ActivityPerson;
 import com.joolun.mall.service.IActivityOrderInfoService;
+import com.joolun.mall.service.IActivityOrderPersonService;
+import com.joolun.mall.service.IActivityPersonService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +40,9 @@ public class ActivityOrderInfoController extends BaseController {
     @Autowired
     private IActivityOrderInfoService activityOrderInfoService;
 
+    @Autowired
+    private IActivityPersonService activityPersonService;
+
     /**
      * 查询订单列表
      */
@@ -44,7 +50,8 @@ public class ActivityOrderInfoController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(ActivityOrderInfo activityOrderInfo) {
         startPage();
-        List<ActivityOrderInfo> list = activityOrderInfoService.list(Wrappers.lambdaQuery(activityOrderInfo));
+        List<ActivityOrderInfo> list = activityOrderInfoService.list(Wrappers.lambdaQuery(activityOrderInfo)
+                .orderByDesc(ActivityOrderInfo::getCreateTime));
         return getDataTable(list);
     }
 
@@ -101,4 +108,18 @@ public class ActivityOrderInfoController extends BaseController {
         boolean result = activityOrderInfoService.removeByIds(Lists.newArrayList(ids));
         return toAjax(result ? 1 : 0);
     }
+
+
+    /**
+     * 获取订单出行人信息
+     * @param activityOrderId
+     * @return
+     */
+    @GetMapping("/getPersons")
+    public AjaxResult getOrderPersons(String activityOrderId){
+        List<ActivityPerson> activityOrderPersons = activityPersonService.getActivityOrderPersons(activityOrderId);
+        return AjaxResult.success(activityOrderPersons);
+    }
+
+
 }

@@ -15,7 +15,7 @@ export const tableOption = {
       label: '活动名称',
       prop: 'name',
       search: true,
-      display: false
+      display: false,
     },
     {
       label: '活动分类',

@@ -7,6 +7,7 @@
 import WxValidate from '../../../../utils/wxValidate'
 const app = getApp()
 const uploadImage = require('../../../../js/uploadImg/uploadImg.js');
+const logger = wx.getRealtimeLogManager()
 Page({
   data: {
     person: {
@@ -16,6 +17,7 @@ Page({
       tel: ''
     },
     images: [],
+    avatar:'',
     tips: '',
     maleChecked: false,
     femaleChecked: false,
@@ -67,20 +69,26 @@ Page({
     wx.chooseMedia({
       count: 1, //默认9
       mediaType: ['image'],
-      sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+      sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], //从相册选择
       success: (res) => {
         let that = this;
         let imageList = [];
-        uploadImage(res.tempFiles[0].tempFilePath, 'mall-owen/',
+        wx.showLoading({
+          title: '上传中',
+        })
+        uploadImage(res.tempFiles[0].tempFilePath, '',
           function (result) {
-            imageList.push(result);
+            imageList.push(res.tempFiles[0].tempFilePath);
             that.setData({
-              images: imageList
+              images: imageList,
+              avatar: result
             })
             wx.hideLoading();
           },
           function (result) {
+            log.error('upload faild')
+            logger.error(result)
             wx.hideLoading()
           }
         )
@@ -89,24 +97,22 @@ Page({
   },
   save(e) {
     const params = e.detail.value
-    console.log(params)
     // 传入表单数据，调用验证方法
     if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0]
       this.showModal(error)
       return false
     }
-    params.image = this.data.images[0]
+    params.image = this.data.avatar
     if(this.data.id){
       params.id = this.data.id
     }
     app.api.saveActivityPerson(params).then(res => {
       if(res.code == 200) {
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/pages/activity/person/index',
         })
       }
-      console.log(res);
     })
   },
   initValidate() {

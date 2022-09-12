@@ -15,6 +15,8 @@ Page({
       this.getPersons()
     })
   },
+  onUnload: function(){
+  },
   getPersons() {
     app.api.getActitityPersons().then(res => {
       let persons = res.data;
@@ -29,7 +31,7 @@ Page({
     if(id){
       url = url.concat('?id=')+id
     }
-    wx.navigateTo({
+    wx.redirectTo({
       url: url,
     })
   },

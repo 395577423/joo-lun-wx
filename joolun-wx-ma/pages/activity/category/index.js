@@ -49,11 +49,15 @@ Page({
       })
   },
   getActivityList(categoryId,pageNo,pageSize) {
+    wx.showLoading({
+      title: '加载中',
+    })
     app.api.getActivityList(categoryId,pageNo,pageSize).then(res => {
       const activityList = [...this.data.activityList, ...res.data.records]
       this.setData({
         activityList: activityList
       })
+      wx.hideLoading()
     })
   },
   tabSelect(e) {

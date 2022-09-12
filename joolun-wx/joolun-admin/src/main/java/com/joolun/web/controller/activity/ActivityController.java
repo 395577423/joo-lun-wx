@@ -12,6 +12,7 @@ import com.joolun.common.core.domain.entity.SysUser;
 import com.joolun.common.core.page.TableDataInfo;
 import com.joolun.common.enums.BusinessType;
 import com.joolun.common.utils.SecurityUtils;
+import com.joolun.common.utils.StringUtils;
 import com.joolun.common.utils.poi.ExcelUtil;
 import com.joolun.mall.dto.ActivityDto;
 import com.joolun.mall.dto.ActivityRelateCourseDto;
@@ -56,7 +57,9 @@ public class ActivityController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Activity activity) {
         startPage();
-        List<Activity> list = activityService.list(Wrappers.lambdaQuery(activity).orderByDesc(Activity::getCreateTime));
+        LambdaQueryWrapper<Activity> queryWrapper = Wrappers.lambdaQuery(activity).orderByDesc(Activity::getCreateTime);
+        queryWrapper.like(StringUtils.isNotEmpty(activity.getName()),Activity::getName,activity.getName());
+        List<Activity> list = activityService.list();
         return getDataTable(list);
     }
 

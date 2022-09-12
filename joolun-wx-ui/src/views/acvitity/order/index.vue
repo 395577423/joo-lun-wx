@@ -11,8 +11,6 @@
                  @on-load="getPage"
                  @refresh-change="refreshChange"
                  @row-update="handleUpdate"
-                 @row-save="handleSave"
-                 @row-del="handleDel"
                  @search-change="searchChange"
                  @selection-change="selectionChange"
       >
@@ -24,9 +22,7 @@
 <script>
 import {
   listOrder,
-  getOrder,
-  delOrder,
-  addOrder,
+  getPerson,
   updateOrder
 } from "@/api/activity/order";
 
@@ -60,6 +56,7 @@ export default {
         addBtn: false,
         editBtn: false,
         delBtn: false,
+        viewBtn: true,
         dialogWidth: '88%',
         selection: false,
         searchMenuSpan: 6,
@@ -71,7 +68,8 @@ export default {
             prop: 'name',
             addDisplay: false,
             editDisplay: false,
-            width: 200
+            width: 200,
+            viewDisplay: false
 
           },
           {
@@ -79,7 +77,9 @@ export default {
             prop: 'orderNo',
             addDisplay: false,
             editDisplay: false,
-            width: 200
+            search: true,
+            width: 200,
+            viewDisplay: false
 
           },
 
@@ -89,7 +89,8 @@ export default {
             type: 'img',
             addDisplay: false,
             editDisplay: false,
-            width: 100
+            width: 100,
+            viewDisplay: false
           },
 
           {
@@ -108,7 +109,8 @@ export default {
                 value: '1',
                 label: '已支付'
               }
-            ]
+            ],
+            viewDisplay: false
 
           },
           {
@@ -135,7 +137,8 @@ export default {
                 value: '3',
                 label: '已取消'
               }
-            ]
+            ],
+            viewDisplay: false
           },
 
           {
@@ -143,23 +146,15 @@ export default {
             prop: 'salesPrice',
             addDisplay: false,
             editDisplay: false,
+            viewDisplay: false
 
           },
-
-          {
-            label: '优惠金额',
-            prop: 'couponPrice',
-            addDisplay: false,
-            editDisplay: false,
-
-          },
-
           {
             label: '支付金额',
             prop: 'paymentPrice',
             addDisplay: false,
             editDisplay: false,
-
+            viewDisplay: false
           },
 
           {
@@ -167,22 +162,15 @@ export default {
             prop: 'paymentTime',
             addDisplay: false,
             editDisplay: false,
-            width: 100
+            width: 100,
+            viewDisplay: false
           },
-
-          {
-            label: '备注',
-            prop: 'remark',
-            addDisplay: false,
-            editDisplay: false,
-
-          },
-
           {
             label: '购买数量',
             prop: 'quantity',
             addDisplay: false,
             editDisplay: false,
+            viewDisplay: false
 
           },
 
@@ -191,22 +179,138 @@ export default {
             prop: 'activityDate',
             addDisplay: false,
             editDisplay: false,
-            width: 100
-
-          },
-
-          {
-            label: '活动天数',
-            prop: 'activityDays',
-            addDisplay: false,
-            editDisplay: false,
+            width: 100,
+            viewDisplay: false
 
           }
 
+        ],
+        group: [
+          {
+            label: '基本信息',
+            prop: 'base',
+            column: [
+              {
+                label: '订单单号',
+                prop: 'orderNo',
+
+              },
+              {
+                label: '订单名',
+                prop: 'name',
+                addDisplay: false,
+                editDisplay: false
+              },
+              {
+                label: '订单状态',
+                prop: 'status',
+                type: 'select',
+                dicData: [
+                  {
+                    value: '0',
+                    label: '待支付'
+                  },
+                  {
+                    value: '1',
+                    label: '待完成'
+                  },
+                  {
+                    value: '2',
+                    label: '已完成'
+                  },
+                  {
+                    value: '3',
+                    label: '已取消'
+                  }
+                ],
+              },
+              {
+                label: '购买数量',
+                prop: 'quantity',
+              },
+
+              {
+                label: '活动日期',
+                prop: 'activityDate',
+              }
+            ]
+          },
+          {
+            label: '支付信息',
+            prop: 'base',
+            column: [
+              {
+                label: '支付金额',
+                prop: 'paymentPrice'
+              },
+              {
+                label: '商品原价',
+                prop: 'salesPrice'
+              },
+              {
+                label: '是否支付',
+                prop: 'isPay',
+                type: 'select',
+                dicData: [
+                  {
+                    value: '0',
+                    label: '未支付'
+                  },
+                  {
+                    value: '1',
+                    label: '已支付'
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            label: '出行人信息',
+            prop: 'base',
+            column: [
+              {
+                prop: 'persons',
+                type: 'dynamic',
+                span: 24,
+                children: {
+                  align: 'center',
+                  headerAlign: 'center',
+                  column: [{
+                    width: 200,
+                    label: '姓名',
+                    prop: "name"
+                  },
+                    {
+                      width: 200,
+                      label: '身份证号码',
+                      prop: "identityNo"
+                    }, {
+                      width: 200,
+                      label: '联系电话',
+                      prop: "tel"
+                    },
+                    {
+                      width: 200,
+                      label: '性别',
+                      prop: "gender",
+                      type: 'checkbox',
+                      dicData: [
+                        {
+                          value: '0',
+                          label: '女'
+                        },
+                        {
+                          value: '1',
+                          label: '男'
+                        }
+                      ]
+                    }]
+                }
+              }
+            ]
+          }
         ]
       },
-
-
     };
   },
   watch: {},
@@ -220,12 +324,11 @@ export default {
       this.selectionData = list
     },
     beforeOpen(done, type) {
-      if (type == 'add') {
-        done()
-      } else if (type == 'edit') {
-        this.tableLoading = true
-        getOrder(this.form.id).then(response => {
+      if (type == 'view') {
+        getPerson(this.form.id).then(response => {
+          let result = response.data;
 
+          this.$set(this.form, 'persons', result)
         })
         done()
       }
@@ -262,30 +365,6 @@ export default {
       })
     },
     /**
-     * @title 数据删除
-     * @param row 为当前的数据
-     * @param index 为当前删除数据的行数
-     *
-     **/
-    handleDel: function (row, index) {
-      var _this = this
-      this.$confirm('是否确认删除此数据', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        return delOrder(row.id)
-      }).then(data => {
-        _this.$message({
-          showClose: true,
-          message: '删除成功',
-          type: 'success'
-        })
-        this.getPage(this.page)
-      }).catch(function (err) {
-      })
-    },
-    /**
      * @title 数据更新
      * @param row 为当前的数据
      * @param index 为当前更新数据的行数
@@ -304,25 +383,7 @@ export default {
       }).catch(() => {
       })
     },
-    /**
-     * @title 数据添加
-     * @param row 为当前的数据
-     * @param done 为表单关闭函数
-     *
-     **/
-    handleSave: function (row, done, loading) {
-      addOrder(row).then(data => {
-        this.$message({
-          showClose: true,
-          message: '添加成功',
-          type: 'success'
-        })
-        done()
-        this.getPage(this.page)
-      }).catch(() => {
-        loading()
-      })
-    },
+
   }
 };
 </script>

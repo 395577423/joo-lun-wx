@@ -102,7 +102,7 @@ Page({
   getStatus(activityId) {
     app.api.getActivityIsClosed(activityId).then(res => {
       this.setData({
-        closed: res.msg == null ? false : true,
+        closed: res.msg == '操作成功' ? false : true,
         tips: res.msg
       })
     })

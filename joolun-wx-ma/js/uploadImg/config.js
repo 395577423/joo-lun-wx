@@ -1,4 +1,4 @@
-var fileHost = "http://mall-owen.oss-cn-beijing.aliyuncs.com/";
+var fileHost = "https://mall-owen.oss-cn-beijing.aliyuncs.com/";
 var config = {
   //aliyun OSS config
   uploadImageUrl: `${fileHost}`,

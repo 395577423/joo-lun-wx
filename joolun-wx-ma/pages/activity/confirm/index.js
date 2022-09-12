@@ -41,6 +41,9 @@ Page({
         this.getPriceCases(activityId)
       })
   },
+  onShow() {
+    this.getPersons();
+  },
   getDetail(activityId) {
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data

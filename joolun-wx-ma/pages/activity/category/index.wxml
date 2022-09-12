@@ -15,7 +15,7 @@
       <view class="cu-item" wx:for="{{activityList}}" wx:for-item="item2" wx:key="index">
         <navigator hover-class='none' url='/pages/activity/detail/index?activityId={{item2.id}}'>
           <image class="cate-img" src="{{item2.imageUrl ? item2.imageUrl : '/public/img/no_pic.png'}}"></image>
-          <view class='text-sm'>{{item2.name}}</view>
+          <view class='text-sm padding-xs'>{{item2.name}}</view>
         </navigator>
       </view>
     </view>
