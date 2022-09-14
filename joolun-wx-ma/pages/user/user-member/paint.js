@@ -26,7 +26,7 @@ export default class LastMayday {
           "css": {
             "width": "100px",
             "height": "100px",
-            "top": "859px",
+            "top": "839px",
             "left": "282px",
             "rotate": "0",
             "borderRadius": "",
@@ -34,6 +34,18 @@ export default class LastMayday {
             "borderColor": "#000000",
             "shadow": "",
             "mode": "scaleToFill"
+          }
+        },
+        {
+          "type": "text",
+          "text": params.nickName,
+          "css": {
+            "color": "#ffffff",
+            "width": "140px",
+            "top": "960px",
+            "left": "262px",
+            "fontSize": "22px",
+            "fontWeight": "normal",
           }
         }
       ]

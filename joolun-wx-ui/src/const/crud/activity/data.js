@@ -1,3 +1,5 @@
+import {ossAli} from "@/config/env";
+
 export const tableOption = {
   dialogType: 'drawer',
   border: true,
@@ -146,7 +148,11 @@ export const tableOption = {
           label: '活动介绍',
           prop: 'introduction',
           span: 20,
-          formslot: true,
+          component: "avueUeditor",
+          options:{
+            oss:"ali",
+            ali:ossAli,
+          },
           rules: [{
             required: true,
             message: '活动介绍不能为空',

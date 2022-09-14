@@ -13,6 +13,7 @@
       {{!wxUser.nickName ? '登录' : '更新昵称'}}
     </button>
     <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{!wxUser.vip}}">成为会员</button>
+    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{wxUser.vip}}">邀请会员</button>
   </view>
   <view class="grid col-4 margin-top text-center">
     <view></view>

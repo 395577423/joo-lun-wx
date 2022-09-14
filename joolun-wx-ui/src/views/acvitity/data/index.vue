@@ -85,11 +85,11 @@ import {
 } from "@/api/activity/data";
 import {getCoursePage} from '@/api/course/course'
 import {courseTableOption, tableOption, imgTextOption} from "@/const/crud/activity/data";
-import BaseEditor from '@/components/Editor/index'
+import AvueUeditor from 'avue-plugin-ueditor'
 
 export default {
   name: "Data",
-  components: {BaseEditor},
+  components: {AvueUeditor},
   data() {
     return {
       form: {},

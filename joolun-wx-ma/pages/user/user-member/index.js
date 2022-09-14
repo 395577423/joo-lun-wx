@@ -16,7 +16,8 @@ Page({
     qrCode: '',
     template: {},
     imageSrc:'',
-    show: false
+    show: false,
+    wxUser : app.globalData.wxUser
   },
 
   /**
@@ -43,6 +44,8 @@ Page({
           this.addShareRecord(scene)
         }
       }
+
+  
     })
   },
 
@@ -102,7 +105,8 @@ Page({
       })
       let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/user/user-member/index&param=" + encodeURIComponent(app.globalData.wxUser.id)
       let params = {
-        qrcode: wxmaCode
+        qrcode: wxmaCode,
+        nickName: this.data.wxUser.nickName
       }
       let plate = new Paint().palette(params)
       this.setData({
