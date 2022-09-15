@@ -104,9 +104,10 @@ Page({
         title: '生成中',
       })
       let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/user/user-member/index&param=" + encodeURIComponent(app.globalData.wxUser.id)
+      let nickName = app.globalData.wxUser.nickName
       let params = {
         qrcode: wxmaCode,
-        nickName: this.data.wxUser.nickName
+        nickName: nickName
       }
       let plate = new Paint().palette(params)
       this.setData({

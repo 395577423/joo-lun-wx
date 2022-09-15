@@ -61,7 +61,11 @@ public class WxUserController extends BaseController {
             queryWrapper = Wrappers.lambdaQuery(wxUser)
                     .like(WxUser::getNickName, nickName);
         } else {
-            queryWrapper = Wrappers.lambdaQuery(wxUser);
+            queryWrapper = Wrappers.<WxUser>lambdaQuery()
+                    .like(StringUtils.isNotBlank(wxUser.getNickName()), WxUser::getNickName,wxUser.getNickName())
+                    .eq(StringUtils.isNotBlank(wxUser.getSex()),WxUser::getSex,wxUser.getSex())
+                    .eq(StringUtils.isNotBlank(wxUser.getCountry()),WxUser::getCountry,wxUser.getCountry())
+                    .eq(StringUtils.isNotBlank(wxUser.getCity()),WxUser::getCity,wxUser.getCity());
         }
         return AjaxResult.success(wxUserService.page(page, queryWrapper));
     }

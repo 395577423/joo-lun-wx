@@ -18,7 +18,7 @@
   <image src="{{qrCode}}" class="maCode"> </image>
 </view>
 <!-- painter生成海报 -->
-<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="600" use2D="false" />
+<painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="canvasSuc" bind:imgErr="canvasFail" widthPixels="560" use2D="false" />
 <view class="cu-modal {{show ?'show':''}}">
   <view class="cu-dialog">
     <view class="radius" style="height: 72vh; background-size: 100% 100%;">
