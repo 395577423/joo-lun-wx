@@ -238,7 +238,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 			if (Objects.nonNull(orderInfo.getCouponPrice())) {
 				log.info("使用奖学金抵扣");
 				WxUser user = wxUserService.getById(orderInfo.getUserId());
-				user.setMoney(user.getMoney().subtract(orderInfo.getCouponPrice()));
+				BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice());
+				user.setMoney(subtract);
 				wxUserService.updateById(user);
 			}
 

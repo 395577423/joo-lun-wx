@@ -225,7 +225,8 @@ public class OrderInfoApi {
                 orderInfoService.notifyOrder(orderInfo);
                 if (Objects.nonNull(orderInfo.getCouponPrice())) {
                     WxUser user = wxUserService.getById(orderInfo.getUserId());
-                    user.setMoney(user.getMoney().subtract(orderInfo.getCouponPrice()));
+                    BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice());
+                    user.setMoney(subtract);
                     wxUserService.updateById(user);
                 }
                 return WxPayNotifyResponse.success("成功");
