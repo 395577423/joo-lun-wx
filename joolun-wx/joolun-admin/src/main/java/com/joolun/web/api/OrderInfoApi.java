@@ -20,6 +20,7 @@ import com.joolun.mall.service.OrderInfoService;
 import com.joolun.weixin.config.WxPayConfiguration;
 import com.joolun.weixin.constant.MyReturnCode;
 import com.joolun.weixin.entity.WxUser;
+import com.joolun.weixin.service.WxUserService;
 import com.joolun.weixin.utils.LocalDateTimeUtils;
 import com.joolun.weixin.utils.ThirdSessionHolder;
 import com.joolun.weixin.utils.WxMaUtil;
@@ -36,6 +37,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 商城订单
@@ -53,6 +55,7 @@ public class OrderInfoApi {
     private final OrderInfoService orderInfoService;
     private final MallConfigProperties mallConfigProperties;
 
+    private final WxUserService wxUserService;
     /**
      * 分页查询
      *
@@ -220,6 +223,11 @@ public class OrderInfoApi {
                 orderInfo.setPaymentTime(LocalDateTimeUtils.asDate(paymentTime));
                 orderInfo.setTransactionId(notifyResult.getTransactionId());
                 orderInfoService.notifyOrder(orderInfo);
+                if (Objects.nonNull(orderInfo.getCouponPrice())) {
+                    WxUser user = wxUserService.getById(orderInfo.getUserId());
+                    user.setMoney(user.getMoney().subtract(orderInfo.getCouponPrice()));
+                    wxUserService.updateById(user);
+                }
                 return WxPayNotifyResponse.success("成功");
             } else {
                 return WxPayNotifyResponse.fail("付款金额与订单金额不等");
