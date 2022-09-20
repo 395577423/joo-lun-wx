@@ -12,6 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.Objects;
+
 /**
  * 用户收货地址
  *
@@ -51,6 +54,11 @@ public class UserAddressApi {
     @PostMapping
     public AjaxResult save(@RequestBody UserAddress userAddress) {
         userAddress.setUserId(ThirdSessionHolder.getWxUserId());
+        if(Objects.nonNull(userAddress.getId())) {
+            UserAddress oldAddress = userAddressService.getById(userAddress.getId());
+            userAddress.setCreateTime(oldAddress.getCreateTime());
+            userAddress.setUpdateTime(new Date());
+        }
         return AjaxResult.success(userAddressService.saveOrUpdate(userAddress));
     }
 

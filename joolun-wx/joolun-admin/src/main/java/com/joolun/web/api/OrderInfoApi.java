@@ -226,6 +226,9 @@ public class OrderInfoApi {
                 if (Objects.nonNull(orderInfo.getCouponPrice())) {
                     WxUser user = wxUserService.getById(orderInfo.getUserId());
                     BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice());
+                    if (subtract.compareTo(BigDecimal.ZERO) < 0) {
+                        subtract = BigDecimal.ZERO;
+                    }
                     user.setMoney(subtract);
                     wxUserService.updateById(user);
                 }
