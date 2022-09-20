@@ -10,11 +10,11 @@
 </view>
 <view class="cu-card article no-card">
   <view class="cu-item shadow borderBottom" >
-    <view class="content solids-top margin-bottom" wx:for="{{videoList}}" >
+    <view class="content solids-top margin-bottom" wx:for="{{videoList}}" wx:key="index">
       <image src='{{item.coverUrl}}' mode="aspectFit"></image>
       <navigator class="desc" url="/pages/course/empower/index?empowerid={{item.id}}">
         <view class="text-content">
-          <view class="text-bold text-xl margin-top">{{item.title}}</view>
+          <view class="text-bold text margin-top">{{item.title}}</view>
           <template is="wxParse" data="{{wxParseData:item['introduction'].nodes}}" style="color: black;" />
           <view></view>
         </view>
