@@ -16,6 +16,8 @@ import com.joolun.mall.enums.OrderInfoEnum;
 import com.joolun.mall.enums.OrderLogisticsEnum;
 import com.joolun.mall.mapper.OrderInfoMapper;
 import com.joolun.mall.service.*;
+import com.joolun.weixin.entity.WxUser;
+import com.joolun.weixin.service.WxUserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -46,6 +48,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
 	private final OrderItemService orderItemService;
 	private final OrderLogisticsService orderLogisticsService;
+
+	private final WxUserService wxUserService;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -230,6 +234,18 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 				goodsSpuService.updateById(goodsSpu);
 				baseMapper.updateById(orderInfo);//更新订单
 			});
+
+			if (Objects.nonNull(orderInfo.getCouponPrice())) {
+				log.info("使用奖学金抵扣");
+				WxUser user = wxUserService.getById(orderInfo.getUserId());
+				BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice());
+				if (subtract.compareTo(BigDecimal.ZERO) < 0) {
+					subtract = BigDecimal.ZERO;
+				}
+				user.setMoney(subtract);
+				wxUserService.updateById(user);
+			}
+
 		}
 	}
 

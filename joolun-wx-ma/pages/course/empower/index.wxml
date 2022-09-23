@@ -3,25 +3,26 @@
   <view class="cu-item shadow" style="height: 450rpx;">
     <view class="image" style="display: {{ playing ? 'none' : 'block' }}; " bindtap="videoPlay">
       <image src="{{video.coverUrl}}" mode="widthFix"></image>
-      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-290rpx;left: 280rpx;" />
+      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-100rpx;left: 280rpx;" />
     </view>
     <!-- 视频 -->
     <video src="{{video.url}}" id="{{index}}" class='video' wx:if="{{playing}}" autoplay="false"></video>
   </view>
 </view>
-<view class="cu-card case ">
-  <view class="cu-item">
-    <view class="text-xxl text-blue">
-      <view>{{video.title}}</view>
+<view class="cu-card case">
+
+  <view class="text-lg text-black text-bold margin-left">
+    <view>{{video.title}}</view>
+  </view>
+
+  <view class="cu-bar bg-white solid-bottom">
+    <view class="action">
+      <text class="cuIcon-titles text-blue"></text>
+      <text class="text-shadow text-black text-bold">简介</text>
     </view>
   </view>
 </view>
-<view class="cu-bar bg-white solid-bottom margin-top">
-  <view class="action">
-    <text class="cuIcon-titles text-blue"></text>
-    <text class="text-shadow text-black text-bold">简介</text>
-  </view>
-</view>
+
 <template is="wxParse" data="{{wxParseData:introduction.nodes}}"></template>
 
 <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!canPlay}}">
