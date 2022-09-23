@@ -43,6 +43,7 @@ public class NotifyServiceImpl implements INotifyService {
             userOrderBaseInfo = activityOrderInfoService.notifyOrder(notifyResult);
         }
         if (userOrderBaseInfo != null) {
+            userOrderBaseInfo.setProductType(productType);
             userPayRecordService.addPayRecord(notifyResult, userOrderBaseInfo.getUserId(), productType);
             UserIncomeRecord userIncomeRecord = userIncomeRecordService.addUserIncomeRecord(userOrderBaseInfo);
             userCommissionService.updateCommissionIncomeData(userIncomeRecord, productType == ProductTypeEnum.MEMBER ?

@@ -53,7 +53,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord = calActivityIncome(orderBaseInfo);
         }
 
-        if (userIncomeRecord != null) {
+        if (userIncomeRecord != null && userIncomeRecord.getAmount()!=null) {
             save(userIncomeRecord);
         }
         return userIncomeRecord;
