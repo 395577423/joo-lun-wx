@@ -1,7 +1,7 @@
 /* pages/user/user-member/index.wxss */
 .buy {
   margin: 10rpx 0rpx 0rpx 100rpx;
-  bottom: 25rpx;
+  bottom: -380rpx;
   position: absolute;
   border-radius: 8rpx;
 }
@@ -9,7 +9,7 @@
 .maCode {
   z-index: 1;
   position: absolute;
-  bottom: 80rpx;
+  bottom: -400rpx;
   right: 60rpx;
   width: 160rpx;
   height: 160rpx;

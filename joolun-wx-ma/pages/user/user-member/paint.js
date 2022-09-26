@@ -6,7 +6,7 @@ export default class LastMayday {
       "background": "#f8f8f8",
       "views": [{
           "type": "image",
-          "url": "https://mall-owen.oss-cn-beijing.aliyuncs.com/vip1662865918661.jpg",
+          "url": params.bgImage,
           "css": {
             "width": "400px",
             "height": "1000px",
@@ -24,9 +24,9 @@ export default class LastMayday {
           "type": "image",
           "url": params.qrcode,
           "css": {
-            "width": "100px",
-            "height": "100px",
-            "top": "839px",
+            "width": "80px",
+            "height": "80px",
+            "top": "900px",
             "left": "282px",
             "rotate": "0",
             "borderRadius": "",
@@ -43,7 +43,7 @@ export default class LastMayday {
             "color": "#ffffff",
             "width": "140px",
             "top": "960px",
-            "left": "262px",
+            "left": "222px",
             "fontSize": "22px",
             "fontWeight": "normal",
           }

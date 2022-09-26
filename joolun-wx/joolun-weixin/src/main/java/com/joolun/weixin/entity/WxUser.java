@@ -179,11 +179,11 @@ private static final long serialVersionUID = 1L;
     /**
      * 是否是vip
      */
-    private boolean vip;
+    private Boolean vip;
 
     /**
      * 是否是超级vip
      */
-    private boolean sVip;
+    private Boolean sVip;
 
 }
