@@ -57,25 +57,8 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
             userShareRecord.setCreateTime(new Date());
             boolean result = save(userShareRecord);
             log.info("新增分享记录结果:{}", result);
-            setMemberLevel(shareUser);
         }
 
-    }
-
-
-    /**
-     * 设置vip登记
-     *
-     * @param shareUser
-     */
-    private void setMemberLevel(WxUser shareUser) {
-        List<UserShareRecord> shareRecords = this.list(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getParentUserId, shareUser.getId()));
-        if (shareRecords != null && shareRecords.size() >= MallConstants.SVIP_PARTNERS_SIZE && shareUser.isVip()) {
-            shareUser.setSVip(true);
-            shareUser.setLevel((short) 2);
-            wxUserService.updateById(shareUser);
-        }
     }
 
 

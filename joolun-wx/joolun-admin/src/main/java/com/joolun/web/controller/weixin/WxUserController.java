@@ -104,7 +104,7 @@ public class WxUserController extends BaseController {
     @PutMapping
     @PreAuthorize("@ss.hasPermi('wxmp:wxuser:edit')")
     public AjaxResult updateById(@RequestBody WxUser wxUser) {
-        if(wxUser.isSVip()){
+        if(wxUser.getVip()){
             wxUser.setMemberExpiryDate(DateUtil.offsetMonth(new Date(),12));
         }
         return AjaxResult.success(wxUserService.updateById(wxUser));

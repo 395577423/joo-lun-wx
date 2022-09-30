@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -84,6 +85,7 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
                     userMemberOrder.setIsPay(CommonConstants.YES);
                     updateById(userMemberOrder);
                     setUserMember(userMemberOrder.getUserId());
+                    updateParentShareUserSVip(userMemberOrder.getUserId());
                     UserOrderBaseInfo userOrderBaseInfo = BeanUtil.toBean(userMemberOrder, UserOrderBaseInfo.class);
                     return userOrderBaseInfo;
                 } else {
@@ -112,6 +114,29 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
         wxUser.setLevel((short) 1);
         wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
+    }
+
+    /**
+     * 更新分享用户的vip状态
+     *
+     * @param wxUserId
+     */
+    private void updateParentShareUserSVip(String wxUserId) {
+        UserShareRecord userShareRecord = userShareRecordService
+                .getOne(Wrappers.<UserShareRecord>lambdaQuery().eq(UserShareRecord::getUserId, wxUserId));
+        if (userShareRecord != null) {
+            String parentUserId = userShareRecord.getParentUserId();
+            List<UserShareRecord> list = userShareRecordService.list(Wrappers.<UserShareRecord>lambdaQuery()
+                    .eq(UserShareRecord::getParentUserId, parentUserId));
+            List<String> userIds = list.stream().map(UserShareRecord::getUserId).collect(Collectors.toList());
+            List<WxUser> wxUsers = wxUserService.list(Wrappers.<WxUser>lambdaQuery().in(WxUser::getId, userIds).eq(WxUser::getVip, true));
+            if (wxUsers.size() >= 20) {
+                WxUser parentWxUser = wxUserService.getById(parentUserId);
+                parentWxUser.setSVip(true);
+                wxUserService.updateById(parentWxUser);
+            }
+        }
+
     }
 
 }
