@@ -1,0 +1,18 @@
+<!--
+  - Copyright (C) 2018-2019
+  - All rights reserved, Designed By www.joolun.com
+  - 注意：
+  - 本软件为www.joolun.com开发研制，项目使用请保留此说明
+-->
+<view class="VerticalBox margin-top-xs margin-left-xs">
+  <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)"  bindscrolltolower="getMoreActivity">
+    <view class="cu-list grid col-3 no-border">
+      <view class="cu-item" wx:for="{{activityList}}" wx:for-item="item2" wx:key="id">
+        <navigator hover-class='none' url='/pages/activity/detail/index?activityId={{item2.id}}'>
+          <image class="cate-img" src="{{item2.imageUrl ? item2.imageUrl : '/public/img/no_pic.png'}}"></image>
+          <view class='text-sm padding-xs'>{{item2.name}}</view>
+        </navigator>
+      </view>
+    </view>
+  </scroll-view>
+</view>

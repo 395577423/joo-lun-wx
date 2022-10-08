@@ -1,36 +1,71 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- * 注意：
- * 本软件为www.joolun.com开发研制，项目使用请保留此说明
- */
 const app = getApp()
-
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    config: app.globalData.config,
-    TabCur: 0,
-    MainCur: 0,
-    VerticalNavTop: 0,
     activityCategory: [],
-    activityList:[],
-    load: true,
-    pageNo:1,
-    pageSize:18,
-    categoryId:0,
+    gridCol:4,
   },
-  onLoad() { 
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
     app.initPage()
       .then(res => {
         this.getActivityCategory()
       })
   },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
   onShow() {
-    //更新tabbar购物车数量
-    wx.setTabBarBadge({
-      index: 2,
-      text: app.globalData.shoppingCartCount + ''
-    })
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
   },
   getActivityCategory() {
     app.api.getActivityCategory()
@@ -39,42 +74,11 @@ Page({
         this.setData({
           activityCategory: activityCategory
         })
-        if(activityCategory.length>0){
-          let categoryId = activityCategory[0].id;
-          this.setData({
-            categoryId: categoryId
-          })
-          this.getActivityList(categoryId,this.data.pageNo,this.data.pageSize)
-        }
       })
   },
-  getActivityList(categoryId,pageNo,pageSize) {
-    wx.showLoading({
-      title: '加载中',
+  searchActivity(e) {
+    wx.navigateTo({
+      url: '/pages/activity/list/index?activityName='+e.detail,
     })
-    app.api.getActivityList(categoryId,pageNo,pageSize).then(res => {
-      const activityList = [...this.data.activityList, ...res.data.records]
-      this.setData({
-        activityList: activityList
-      })
-      wx.hideLoading()
-    })
-  },
-  tabSelect(e) {
-    this.setData({
-      TabCur: e.currentTarget.dataset.index,
-      MainCur: e.currentTarget.dataset.index,
-      categoryId: e.currentTarget.dataset.id,
-      VerticalNavTop: (e.currentTarget.dataset.id - 1) * 50,
-      pageNo: 1,
-      activityList: []
-    })
-    this.getActivityList(e.currentTarget.dataset.id,this.data.pageNo,this.data.pageSize);
-  },
-  getMoreActivity(e){
-    this.setData({
-      pageNo: this.data.pageNo+1
-    })
-    this.getActivityList(this.data.categoryId,this.data.pageNo,this.data.pageSize);
   }
 })

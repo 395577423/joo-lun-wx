@@ -14,6 +14,7 @@ import com.joolun.mall.service.IActivityOrderInfoService;
 import com.joolun.mall.service.IActivityService;
 import com.joolun.weixin.utils.WxMaUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,8 +48,11 @@ public class ActivityApi extends BaseController {
      */
     @PostMapping("/list")
     public AjaxResult list(Page page, Activity activity) {
-        activity.setPublished(true);
-        page = activityService.page(page, Wrappers.lambdaQuery(activity));
+        LambdaQueryWrapper<Activity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Activity::getPublished, true);
+        queryWrapper.eq(activity.getCategoryId() != null, Activity::getCategoryId, activity.getCategoryId());
+        queryWrapper.like(StringUtils.isNotBlank(activity.getName()), Activity::getName, activity.getName());
+        page = activityService.page(page, queryWrapper);
         return AjaxResult.success(page);
     }
 

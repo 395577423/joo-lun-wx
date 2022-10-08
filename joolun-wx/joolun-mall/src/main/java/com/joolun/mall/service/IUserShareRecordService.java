@@ -2,6 +2,7 @@ package com.joolun.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.joolun.mall.dto.PartnerVo;
+import com.joolun.mall.dto.StoreDataVo;
 import com.joolun.mall.entity.UserShareRecord;
 
 import java.util.List;
@@ -29,4 +30,13 @@ public interface IUserShareRecordService extends IService<UserShareRecord>
      * @return
      */
     List<PartnerVo> listPartner(String userId);
+
+    /**
+     * 店铺数据
+     * @param nickName
+     * @return
+     */
+    List<StoreDataVo> queryStoreData(String nickName);
+
+
 }

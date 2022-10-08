@@ -1,17 +1,17 @@
 // pages/user/user-commission/index.js
 const app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    total:0,
-    completedAmount:0,
-    withdrawAmount:0,
-    tabs:['我的团队','返佣'],
+    total: 0,
+    completedAmount: 0,
+    withdrawAmount: 0,
+    tabs: ['我的团队', '返佣'],
     TabCur: 0,
-    partners: []
+    partners: [],
+    vipCount: 0,
   },
 
   /**
@@ -25,20 +25,29 @@ Page({
 
   },
   getCommission() {
-    app.api.getCommission().then(resp =>{
-      if(resp.data){
+    app.api.getCommission().then(resp => {
+      if (resp.data) {
         this.setData({
-          total:resp.data.totalAmount,
-          completedAmount:resp.data.completedAmount,
-          withdrawAmount:resp.data.withdrawAmount
+          total: resp.data.totalAmount,
+          completedAmount: resp.data.completedAmount,
+          withdrawAmount: resp.data.withdrawAmount
         })
       }
     })
   },
   getPartners() {
     app.api.getPartners().then(resp => {
+      let vipCount = 0;
+      if (resp.data.length > 0) {
+        resp.data.forEach(function (item) {
+          if (item.vip) {
+            vipCount++;
+          }
+        });
+      }
       this.setData({
-        partners : resp.data
+        partners: resp.data,
+        vipCount: vipCount
       })
     })
   },

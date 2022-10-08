@@ -7,13 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="com.joolun.mall.entity.ActivityCategory" id="ActivityCategoryResult">
         <result property="id"    column="id"    />
         <result property="categoryName"    column="category_name"    />
+        <result property="icon"    column="icon"    />
+        <result property="iconColor"    column="icon_color"    />
         <result property="creatorId"    column="creator_id"    />
         <result property="creator"    column="creator"    />
         <result property="createTime"    column="create_time"    />
     </resultMap>
 
     <sql id="selectActivityCategoryVo">
-        select id, category_name, creator_id, creator, create_time from activity_category
+        select id, category_name,icon,icon_color, creator_id, creator, create_time from activity_category
     </sql>
 
     <select id="selectActivityCategoryList" parameterType="com.joolun.mall.entity.ActivityCategory" resultMap="ActivityCategoryResult">
@@ -35,6 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="categoryName != null and categoryName != ''">category_name,</if>
+            <if test="icon != null and icon != ''">icon,</if>
+            <if test="iconColor != null and iconColor != ''">icon_color,</if>
             <if test="creatorId != null">creator_id,</if>
             <if test="creator != null and creator != ''">creator,</if>
             <if test="createTime != null">create_time,</if>
@@ -42,6 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+            <if test="icon != null and icon != ''">#{icon},</if>
+            <if test="iconColor != null and iconColor != ''">#{iconColor},</if>
             <if test="creatorId != null">#{creatorId},</if>
             <if test="creator != null and creator != ''">#{creator},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -52,6 +58,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update activity_category
         <trim prefix="SET" suffixOverrides=",">
             <if test="categoryName != null and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="icon != null and icon != ''">icon = #{icon},</if>
+            <if test="iconColor != null and iconColor != ''">icon_color=#{iconColor},</if>
             <if test="creatorId != null">creator_id = #{creatorId},</if>
             <if test="creator != null and creator != ''">creator = #{creator},</if>
             <if test="createTime != null">create_time = #{createTime},</if>

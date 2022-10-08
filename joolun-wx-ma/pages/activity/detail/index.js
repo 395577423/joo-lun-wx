@@ -24,9 +24,10 @@ Page({
     memberPrice: 0,
     closed: false,
     tips: '',
+    buyCount:0,
+    cashBackAmount:0
   },
   onLoad: function (options) {
-
     let activityId
     let userId
     if (options.scene) {
@@ -48,6 +49,7 @@ Page({
         this.getDetail(activityId)
         this.getPriceCase(activityId)
         this.getStatus(activityId)
+        this.getBuyActivityCount(activityId)
         if (userId) {
           this.addShareRecord(userId)
         }
@@ -78,8 +80,10 @@ Page({
       let displaySalesPrice;
       let displayMemberPrice;
       let displaySuperMemberPrice;
+      let cashBackAmount;
       if (priceCases && priceCases.length > 0) {
         priceCases.forEach(element => {
+          cashBackAmount = element.cashBackAmount
           if (!displaySalesPrice) {
             displaySalesPrice = element.salesPrice
             displayMemberPrice = element.memberPrice
@@ -95,6 +99,7 @@ Page({
         salesPrice: displaySalesPrice,
         memberPrice: displayMemberPrice,
         superMemberPrice: displaySuperMemberPrice,
+        cashBackAmount:cashBackAmount
       })
 
     })
@@ -104,6 +109,13 @@ Page({
       this.setData({
         closed: res.msg == '操作成功' ? false : true,
         tips: res.msg
+      })
+    })
+  },
+  getBuyActivityCount(activityId) {
+    app.api.getBuyActivityCount(activityId).then(res => {
+      this.setData({
+        buyCount: res.data
       })
     })
   },

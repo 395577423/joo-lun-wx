@@ -1,21 +1,22 @@
 <scroll-view scroll-x class="bg-white nav">
   <view class="flex text-center">
     <view class="cu-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabs}}" wx:key="index" bindtap="tabSelect" data-id="{{index}}">
-      {{item}}
+      <view> {{item}}</view>
     </view>
   </view>
 </scroll-view>
 <view wx:if="{{TabCur==0}}">
+  <view class="flex align-center padding-xs">
+    <view class="flex-sub text-center text-lg">
+      共 {{partners.length}} 人,会员 {{vipCount}} 人
+    </view>
+  </view>
   <view class="cu-list menu-avatar" wx:for="{{partners}}" wx:key="index">
     <view class="cu-item">
       <view class="cu-avatar round lg" style="background-image:url({{item.userHeadImg}});"></view>
       <view class="content">
-        <view class="{{item.vipLevel == 1 ?'cuIcon-vip':''}} text-red"></view>
-        <view wx:if="{{item.vipLevel == 2}}" class="flex">
-          <view class="cuIcon-vip text-red margin-right-xs"></view>
-          <view class="cuIcon-vip text-red"></view>
-        </view>
-
+        <view class="{{item.vip ?'iconfont icon-vip-fill':''}} text-red"></view>
+        <view class="{{item.svip  ?'iconfont icon-SVIP-fill':''}} text-red"></view>
         <view class="text-grey ">{{item.userName==null?'':item.userName}}</view>
       </view>
       <view>

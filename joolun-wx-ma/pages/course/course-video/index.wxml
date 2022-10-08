@@ -13,7 +13,7 @@
         <text style="top:-520rpx;left:-80rpx;width:40%;position: relative;">{{item.title}}</text>
       </view>
       <!-- 视频 -->
-      <video src="{{item.videoUrl}}" id="{{index}}" class='video' wx:if="{{_index == index}}" autoplay="true">
+      <video src="{{item.videoUrl}}" id="{{index}}" class='video' wx:if="{{_index == index}}" autoplay="true" custom-cache="{{false}}">
         <!-- log -->
       </video>
     </view>

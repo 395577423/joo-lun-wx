@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.joolun.mall.constant.MallConstants;
 import com.joolun.mall.dto.PartnerVo;
+import com.joolun.mall.dto.StoreDataVo;
 import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.mapper.UserShareRecordMapper;
 import com.joolun.mall.service.IUserShareRecordService;
@@ -72,6 +73,17 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
     public List<PartnerVo> listPartner(String userId) {
         List<PartnerVo> partnerVos = this.getBaseMapper().selectJoinWxUser(userId);
         return partnerVos;
+    }
+
+    /**
+     * 店铺数据
+     *
+     * @param nickName
+     * @return
+     */
+    @Override
+    public List<StoreDataVo> queryStoreData(String nickName) {
+        return getBaseMapper().listStore(nickName);
     }
 
 }

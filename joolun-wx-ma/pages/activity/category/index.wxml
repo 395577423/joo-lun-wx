@@ -1,23 +1,14 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
-  - 注意：
-  - 本软件为www.joolun.com开发研制，项目使用请保留此说明
--->
-<view class="VerticalBox margin-top-xs margin-left-xs">
-  <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 100rpx)">
-    <view class="cu-item {{index==TabCur?'text-red cur':''}}" wx:for="{{activityCategory}}" wx:key="index" bindtap='tabSelect' data-id="{{item.id}}" data-index="{{index}}">
-      {{item.categoryName}}
-    </view>
-  </scroll-view>
-  <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)" scroll-into-view="main-{{MainCur}}" bindscrolltolower="getMoreActivity">
-    <view class="cu-list grid col-3 no-border">
-      <view class="cu-item" wx:for="{{activityList}}" wx:for-item="item2" wx:key="index">
-        <navigator hover-class='none' url='/pages/activity/detail/index?activityId={{item2.id}}'>
-          <image class="cate-img" src="{{item2.imageUrl ? item2.imageUrl : '/public/img/no_pic.png'}}"></image>
-          <view class='text-sm padding-xs'>{{item2.name}}</view>
-        </navigator>
-      </view>
-    </view>
-  </scroll-view>
+<!--pages/activity/list/index.wxml-->
+<view class="cu-bar search bg-white fixed padding">
+  <view class="search-form">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="请输入活动名称" confirm-type="search" bindconfirm="searchActivity"></input>
+  </view>
 </view>
+
+<view class="cu-list grid col-{{gridCol}} no-border" style="margin-top: 120rpx;">
+    <view class="cu-item" wx:key="id" wx:for="{{activityCategory}}" wx:if="{{index<gridCol*2}}">
+      <view class="iconfont {{item.icon}} text-{{item.iconColor}} text-lg"> </view>
+      <text>{{item.categoryName}}</text>
+    </view>
+  </view>

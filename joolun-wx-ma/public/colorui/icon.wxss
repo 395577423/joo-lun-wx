@@ -477,7 +477,7 @@
 	content: "\e6ed";
 }
 
-.cuIcon-vipcard:before {
+.vipcuIcon-card:before {
 	content: "\e6ee";
 }
 

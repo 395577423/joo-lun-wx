@@ -1,8 +1,10 @@
 package com.joolun.mall.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -16,7 +18,8 @@ public class PartnerVo implements Serializable {
 
     private String userName;
 
-    private String createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     private int vipLevel;
 

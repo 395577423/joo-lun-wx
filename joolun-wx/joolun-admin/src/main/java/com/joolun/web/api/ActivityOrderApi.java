@@ -2,6 +2,7 @@ package com.joolun.web.api;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
@@ -75,7 +76,7 @@ public class ActivityOrderApi {
         LambdaQueryWrapper<ActivityOrderInfo> query = Wrappers.<ActivityOrderInfo>lambdaQuery()
                 .eq(StringUtils.isNotBlank(status), ActivityOrderInfo::getStatus, status)
                 .eq(ActivityOrderInfo::getDelFlag, "0")
-                .eq(ActivityOrderInfo::getUserId,ThirdSessionHolder.getWxUserId())
+                .eq(ActivityOrderInfo::getUserId, ThirdSessionHolder.getWxUserId())
                 .orderByDesc(ActivityOrderInfo::getCreateTime);
         page = activityOrderInfoService.page(page, query);
         return AjaxResult.success(page);
@@ -217,11 +218,26 @@ public class ActivityOrderApi {
         if (orderInfo == null) {
             return AjaxResult.error(MyReturnCode.ERR_70005.getCode(), MyReturnCode.ERR_70005.getMsg());
         }
-        if (!CommonConstants.NO.equals(orderInfo.getIsPay())) {//只有未支付订单能取消
+        //只有未支付订单能取消
+        if (!CommonConstants.NO.equals(orderInfo.getIsPay())) {
             return AjaxResult.error(MyReturnCode.ERR_70001.getCode(), MyReturnCode.ERR_70001.getMsg());
         }
         orderInfo.setStatus(ActivityOrderInfoEnum.STATUS_3.getValue());
         activityOrderInfoService.updateById(orderInfo);
         return AjaxResult.success(orderInfo);
+    }
+
+    /**
+     * 获取活动购买人数
+     *
+     * @param activityId
+     * @return
+     */
+    @GetMapping("/getBuyActivityCount")
+    public AjaxResult getBuyActivityCount(Long activityId) {
+        LambdaQueryWrapper<ActivityOrderInfo> queryWrapper = Wrappers.<ActivityOrderInfo>lambdaQuery()
+                .eq(ActivityOrderInfo::getActivityId, activityId);
+        int count = activityOrderInfoService.count(queryWrapper);
+        return AjaxResult.success(count);
     }
 }

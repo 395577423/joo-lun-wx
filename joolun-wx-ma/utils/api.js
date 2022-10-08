@@ -209,8 +209,8 @@ module.exports = {
   getActivityCategory: (data) => {
     return request('/weixin/api/activity/category/list', 'get', data)
   },
-  getActivityList: (categoryId, pageNo, pageSize) => {
-    return request('/weixin/api/activity/list?categoryId=' + categoryId + '&current=' + pageNo + '&size=' + pageSize, 'post')
+  getActivityList: (categoryId,name, pageNo, pageSize) => {
+    return request('/weixin/api/activity/list?categoryId=' + categoryId +'&name=' + name + '&current=' + pageNo + '&size=' + pageSize, 'post')
   },
   getActivityDetail: (activityId) => {
     return request('/weixin/api/activity/' + activityId, 'get')
@@ -253,6 +253,9 @@ module.exports = {
   },
   getRelationActivity: (courseId) => {
     return request('/weixin/api/activity/listByCourseId?courseId='+courseId, 'get', false)
+  },
+  getBuyActivityCount: (activityId) => {
+    return request('/weixin/api/activity/order/getBuyActivityCount?activityId='+activityId,'get',false)
   },
   addShareRecord:(shareUserId) =>{
     return request('/weixin/api/share/record/add?shareUserId='+shareUserId,'get',false)

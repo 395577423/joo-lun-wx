@@ -24,6 +24,13 @@ public class ActivityCategory extends Model<ActivityCategory>
     @Excel(name = "活动分类名称")
     private String categoryName;
 
+    /** 图标 */
+    @Excel(name = "活动分类名称")
+    private String icon;
+
+    /** 图标颜色 */
+    private String iconColor;
+
 
     @Excel(name = "图标")
     private String coverImage;
