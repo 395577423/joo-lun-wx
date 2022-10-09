@@ -50,6 +50,7 @@ public class ActivityApi extends BaseController {
     public AjaxResult list(Page page, Activity activity) {
         LambdaQueryWrapper<Activity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(Activity::getPublished, true);
+        queryWrapper.eq(activity.getHot()!=null,Activity::getHot,activity.getHot());
         queryWrapper.eq(activity.getCategoryId() != null, Activity::getCategoryId, activity.getCategoryId());
         queryWrapper.like(StringUtils.isNotBlank(activity.getName()), Activity::getName, activity.getName());
         page = activityService.page(page, queryWrapper);

@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.joolun.common.annotation.Excel;
+import com.joolun.framework.config.typehandler.ArrayStringTypeHandler;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.apache.ibatis.type.JdbcType;
 
 import java.math.BigDecimal;
 
@@ -40,6 +42,13 @@ public class Library extends Model<Library> {
     /** Geohash值 */
     @Excel(name = "Geohash值")
     private String geoHash;
+
+    @Excel(name = "书馆图片")
+    @TableField(typeHandler = ArrayStringTypeHandler.class, jdbcType= JdbcType.VARCHAR)
+    private String image;
+
+    @Excel(name = "书馆介绍")
+    private String introduction;
 
     /** 创建时间 */
     @Excel(name = "创建时间")

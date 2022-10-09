@@ -49,16 +49,16 @@ public class ActivityController extends BaseController {
     private IActivityRelatedCourseService activityRelatedCourseService;
 
 
-
     /**
      * 查询社会活动列表
      */
     @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Activity activity) {
+    public TableDataInfo list(@RequestBody Activity activity) {
         startPage();
-        LambdaQueryWrapper<Activity> queryWrapper = Wrappers.lambdaQuery(activity).orderByDesc(Activity::getCreateTime);
-        queryWrapper.like(StringUtils.isNotEmpty(activity.getName()),Activity::getName,activity.getName());
+        LambdaQueryWrapper<Activity> queryWrapper = Wrappers.<Activity>lambdaQuery().orderByDesc(Activity::getCreateTime);
+        queryWrapper.like(StringUtils.isNotEmpty(activity.getName()), Activity::getName, activity.getName());
+        queryWrapper.eq(activity.getCategoryId() != null, Activity::getCategoryId, activity.getCategoryId());
         List<Activity> list = activityService.list();
         return getDataTable(list);
     }

@@ -209,8 +209,8 @@ module.exports = {
   getActivityCategory: (data) => {
     return request('/weixin/api/activity/category/list', 'get', data)
   },
-  getActivityList: (categoryId,name, pageNo, pageSize) => {
-    return request('/weixin/api/activity/list?categoryId=' + categoryId +'&name=' + name + '&current=' + pageNo + '&size=' + pageSize, 'post')
+  getActivityList: (data, pageNo, pageSize) => {
+    return request('/weixin/api/activity/list?current=' + pageNo + '&size=' + pageSize, 'post',data,true)
   },
   getActivityDetail: (activityId) => {
     return request('/weixin/api/activity/' + activityId, 'get')

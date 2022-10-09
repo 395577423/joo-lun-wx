@@ -43,6 +43,9 @@ public class Activity extends Model<Activity>
     @Excel(name = "是否发布")
     private Boolean published;
 
+    @Excel(name = "是否热门")
+    private Boolean hot;
+
     /** 活动位置信息 */
     @Excel(name = "活动位置信息")
     private String location;

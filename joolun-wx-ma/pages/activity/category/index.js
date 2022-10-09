@@ -7,6 +7,7 @@ Page({
   data: {
     activityCategory: [],
     gridCol:4,
+    hotActivity:[]
   },
 
   /**
@@ -16,6 +17,7 @@ Page({
     app.initPage()
       .then(res => {
         this.getActivityCategory()
+        this.getHotActivity()
       })
   },
 
@@ -79,6 +81,16 @@ Page({
   searchActivity(e) {
     wx.navigateTo({
       url: '/pages/activity/list/index?activityName='+e.detail,
+    })
+  },
+  getHotActivity() {
+    let reqParams = {};
+    reqParams.hot = 1;
+    app.api.getActivityList(reqParams,1,20).then(res => {
+      const activityList = res.data.records;
+      this.setData({
+        hotActivity: activityList
+      })
     })
   }
 })

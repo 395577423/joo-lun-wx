@@ -36,7 +36,8 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    app.api.getActivityList(categoryId,name,pageNo,pageSize).then(res => {
+    let reqParams = {categoryId:categoryId,name:name}
+    app.api.getActivityList(reqParams,pageNo,pageSize).then(res => {
       const activityList = [...this.data.activityList, ...res.data.records]
       this.setData({
         activityList: activityList
