@@ -54,7 +54,7 @@ public class ActivityController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @GetMapping("/list")
-    public TableDataInfo list(@RequestBody Activity activity) {
+    public TableDataInfo list(Activity activity) {
         startPage();
         LambdaQueryWrapper<Activity> queryWrapper = Wrappers.<Activity>lambdaQuery().orderByDesc(Activity::getCreateTime);
         queryWrapper.like(StringUtils.isNotEmpty(activity.getName()), Activity::getName, activity.getName());

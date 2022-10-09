@@ -173,7 +173,6 @@ export default {
       }
     },
     uploadFile (file) {
-      debugger;
       return new Promise((resolve, reject) => {
 
         const headers = Object.assign(this.headers, {

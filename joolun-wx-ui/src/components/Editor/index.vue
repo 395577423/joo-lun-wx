@@ -7,6 +7,7 @@ import Quill from "quill";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import {ossAli} from '@/config/env'
 
 export default {
   name: "Editor",
@@ -122,12 +123,12 @@ export default {
               console.log(fileInput.files)
             if (fileInput.files != null && fileInput.files[0] != null) {
               let client = new OSS({
-                region: 'oss-cn-beijing',
-                endpoint: 'oss-cn-beijing.aliyuncs.com',
+                region: ossAli.region,
+                endpoint: ossAli.endpoint,
                 stsToken: '',
-                accessKeyId: 'LTAI5tAZrUD3jqveb1iB5oeJ',
-                accessKeySecret: '6bKjdqMCnHbWXB8RJVXdtNSyB8qfHu',
-                bucket: 'mall-owen',
+                accessKeyId: ossAli.accessKeyId,
+                accessKeySecret: ossAli.accessKeySecret,
+                bucket: ossAli.bucket,
                 secure: true
               });
               (() => {

@@ -138,8 +138,8 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="上传" prop="image" required>
-              <el-upload ref="image" :file-list="imageFileList" :action="imageAction"
-                         :before-upload="imageBeforeUpload" list-type="picture-card" :headers="headers">
+              <el-upload ref="image" :file-list="imageFileList" :http-request="uploadImageOss" :limit="5"
+                         :before-upload="imageBeforeUpload" list-type="picture-card" action="##">
                 <i class="el-icon-plus"></i>
               </el-upload>
             </el-form-item>
@@ -160,10 +160,9 @@
         getLibrary,
         delLibrary,
         addLibrary,
-        updateLibrary,
-        exportLibrary
+        updateLibrary
     } from "@/api/bookstore/library";
-    import { getToken } from "@/utils/auth";
+    import {ossAli} from '@/config/env'
 
     export default {
         name: "Library",
@@ -208,10 +207,6 @@
                     latitude: [
                         {required: true, message: "纬度不能为空", trigger: "blur"}
                     ]
-                },
-                imageAction: process.env.VUE_APP_BASE_API + "/common/upload",
-                headers: {
-                    Authorization: "Bearer " + getToken(),
                 },
                 imageFileList: [],
             };
@@ -315,9 +310,43 @@
                 let isRightSize = file.size / 1024 / 1024 < 2
                 if (!isRightSize) {
                     this.$message.error('文件大小超过 2MB')
+                }else{
+                  this.loading = this.$loading({
+                    lock: true,
+                    text: "上传中",
+                    background: "rgba(0, 0, 0, 0.7)",
+                  });
                 }
+
                 return isRightSize
             },
+          uploadImageOss(file) {
+            let client = new OSS({
+              region: ossAli.region,
+              endpoint: ossAli.endpoint,
+              stsToken: '',
+              accessKeyId: ossAli.accessKeyId,
+              accessKeySecret: ossAli.accessKeySecret,
+              bucket: ossAli.bucket,
+              secure: true
+            });
+
+            (() => {
+              return client.put(file.file.name, file.file)
+            })()
+              .then((res) => {
+                debugger
+                console.log(this)
+                let result = res.url
+                this.$emit("input", result);
+                this.loading.close();
+              })
+              .catch((err) => {
+                console.log(err);
+                this.loading.close();
+              })
+          }
+
         }
     };
 </script>
