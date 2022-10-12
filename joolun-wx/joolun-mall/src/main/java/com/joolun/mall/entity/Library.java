@@ -45,7 +45,7 @@ public class Library extends Model<Library> {
 
     @Excel(name = "书馆图片")
     @TableField(typeHandler = ArrayStringTypeHandler.class, jdbcType= JdbcType.VARCHAR)
-    private String image;
+    private String[] image;
 
     @Excel(name = "书馆介绍")
     private String introduction;

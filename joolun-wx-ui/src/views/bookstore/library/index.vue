@@ -137,9 +137,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="上传" prop="image" required>
+            <el-form-item label="上传" prop="image">
               <el-upload ref="image" :file-list="imageFileList" :http-request="uploadImageOss" :limit="5"
-                         :before-upload="imageBeforeUpload" list-type="picture-card" action="##">
+                         :before-upload="imageBeforeUpload" list-type="picture-card" action="##"
+                         :on-remove="imageOnRemove">
                 <i class="el-icon-plus"></i>
               </el-upload>
             </el-form-item>
@@ -209,6 +210,7 @@
                     ]
                 },
                 imageFileList: [],
+                imageUrlList: [],
             };
         },
         created() {
@@ -265,9 +267,21 @@
             /** 修改按钮操作 */
             handleUpdate(row) {
                 this.reset();
+                let that = this;
                 const id = row.id || this.ids
                 getLibrary(id).then(response => {
                     this.form = response.data;
+                    if (response.data.image) {
+                        this.imageUrlList = response.data.image;
+                        response.data.image.forEach(function (item) {
+                            let fileName = item.substring(item.lastIndexOf('/')+1)
+                            let f = {};
+                            f.uid = fileName;
+                            f.url = item;
+                            f.name = fileName;
+                            that.imageFileList.push(f);
+                        })
+                    }
                     this.open = true;
                     this.title = "修改书店";
                 });
@@ -276,6 +290,7 @@
             submitForm() {
                 this.$refs["form"].validate(valid => {
                     if (valid) {
+                        this.form.image = this.imageUrlList;
                         if (this.form.id != null) {
                             updateLibrary(this.form).then(response => {
                                 this.msgSuccess("修改成功");
@@ -310,42 +325,54 @@
                 let isRightSize = file.size / 1024 / 1024 < 2
                 if (!isRightSize) {
                     this.$message.error('文件大小超过 2MB')
-                }else{
-                  this.loading = this.$loading({
-                    lock: true,
-                    text: "上传中",
-                    background: "rgba(0, 0, 0, 0.7)",
-                  });
+                } else {
+                    this.loading = this.$loading({
+                        lock: true,
+                        text: "上传中",
+                        background: "rgba(0, 0, 0, 0.7)",
+                    });
                 }
 
                 return isRightSize
             },
-          uploadImageOss(file) {
-            let client = new OSS({
-              region: ossAli.region,
-              endpoint: ossAli.endpoint,
-              stsToken: '',
-              accessKeyId: ossAli.accessKeyId,
-              accessKeySecret: ossAli.accessKeySecret,
-              bucket: ossAli.bucket,
-              secure: true
-            });
+            imageOnRemove(file, imageFileList) {
+                let removeIndex;
+                this.imageUrlList.forEach(function (item, index) {
+                    if (item.indexOf(file.name) > 0) {
+                        removeIndex = index;
+                    }
+                })
+                if (removeIndex) {
+                    this.imageUrlList.splice(removeIndex, 1);
+                }
+                console.log(this.imageUrlList);
+            },
+            uploadImageOss(file) {
+                let client = new OSS({
+                    region: ossAli.region,
+                    endpoint: ossAli.endpoint,
+                    stsToken: '',
+                    accessKeyId: ossAli.accessKeyId,
+                    accessKeySecret: ossAli.accessKeySecret,
+                    bucket: ossAli.bucket,
+                    secure: true
+                });
 
-            (() => {
-              return client.put(file.file.name, file.file)
-            })()
-              .then((res) => {
-                debugger
-                console.log(this)
-                let result = res.url
-                this.$emit("input", result);
-                this.loading.close();
-              })
-              .catch((err) => {
-                console.log(err);
-                this.loading.close();
-              })
-          }
+                (() => {
+                    return client.put(file.file.name, file.file)
+                })()
+                    .then((res) => {
+                        console.log(this)
+                        let result = res.url;
+                        this.imageUrlList.push(result)
+                        console.log(this.imageUrlList);
+                        this.loading.close();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        this.loading.close();
+                    })
+            }
 
         }
     };
