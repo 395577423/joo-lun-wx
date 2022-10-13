@@ -20,7 +20,10 @@ Page({
     userInfo: null,
     modalName: '',
     detail: null,
-    courseId: null
+    courseId: null,
+    swiperList:[],
+    videoPlayed:false,
+    panda:null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -32,6 +35,8 @@ Page({
         this.getPlanCourse()
         this.getRecommend()
         this.wxUserGet()
+        this.getAd()
+        this.getPanda()
       if (scene) {
         scene = decodeURIComponent(options.scene);
         this.addShareRecord(scene)
@@ -39,6 +44,17 @@ Page({
       })
 
   },
+
+  getPanda(){
+    app.api.getPanda()
+    .then(res=>{
+      let result = res.data
+      this.setData({
+        panda:result
+      })
+    })
+  },
+
   /**
    * 滑到底部事件
    */
@@ -56,6 +72,31 @@ Page({
           courses: result
         })
       })
+  },
+  
+  getAd(){
+    app.api.getAdList()
+    .then(res=>{
+      let result = res.data
+      this.setData({
+        swiperList:result
+      })
+    })
+  },
+
+  swipclick(e){
+    let index = e.target.dataset.adid;
+    let ad = this.data.swiperList[index];
+    console.log(ad.id)
+    wx.navigateTo({
+      url: '/pages/ad/index?id=' + ad.id,
+    })
+  },
+
+  videoPlay(){
+    this.setData({
+      videoPlayed:true
+    })
   },
   /**
    * 获取推荐课程
@@ -93,6 +134,7 @@ Page({
     }  else {
       wx.navigateTo({
         url: '/pages/course/course-detail/index?courseId=' + courseId,
+        // url:'/pages/course/tttt/index'
       })
     }
   },
