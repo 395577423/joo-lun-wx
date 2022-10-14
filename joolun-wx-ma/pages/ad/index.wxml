@@ -1,0 +1,5 @@
+<!--pages/ad/index.wxml-->
+<import src="/public/wxParse/wxParse.wxml" />
+<scroll-view>
+  <template is="wxParse" data="{{wxParseData:ad.content.nodes}}" style="color: black;" />
+</scroll-view>

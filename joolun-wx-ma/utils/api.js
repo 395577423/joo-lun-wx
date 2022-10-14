@@ -271,5 +271,14 @@ module.exports = {
   },
   getMemberConfig: () =>{
     return request('/weixin/api/member/config','get',false)
+  },
+  getAdList:() =>{
+    return request('/weixin/api/ad/list','post',false)
+  },
+  getAd:(id) =>{
+    return request('/weixin/api/ad/'+id,'get',false)
+  },
+  getPanda:() =>{
+    return request('/weixin/api/propaganda','post',false)
   }
 }

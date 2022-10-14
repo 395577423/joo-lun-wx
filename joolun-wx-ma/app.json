@@ -24,6 +24,7 @@
     "pages/course/course-report/index",
     "pages/course/empower-video/index",
     "pages/course/empower/index",
+    "pages/course/tttt/index",
     "pages/map/index",
     "pages/activity/category/index",
     "pages/activity/detail/index",
@@ -38,7 +39,8 @@
     "pages/user/privacy-agreement/index",
     "pages/user/user-member/index",
     "pages/user/user-commission/index",
-    "pages/activity/list/index"
+    "pages/activity/list/index",
+    "pages/ad/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

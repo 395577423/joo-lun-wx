@@ -1,3 +1,8 @@
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-active-color="0081FF">
+  <swiper-item wx:for="{{swiperList}}" wx:key="index" bindtap="swipclick" data-adId="{{index}}">
+    <image src="{{item.cover}}" mode="aspectFill" ></image>
+  </swiper-item>
+</swiper>
 <view class="cu-bar search bg-white fixed padding">
   <view class="search-form">
     <text class="cuIcon-search"></text>
@@ -6,7 +11,28 @@
     </navigator>
   </view>
 </view>
-<view class="cu-bar bg-white solid-bottom margin-top" style="margin-top: 120rpx;">
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text class="cuIcon-titles text-blue"></text>
+    <text class=" text-shadow text-black text-bold">阅读理念</text>
+  </view>
+</view>
+
+<view class="cu-card case ">
+    <view class="cu-item shadow" style="height: 450rpx;">
+      <view class="image" bindtap="videoPlay" id="{{index}}" wx:if="{{!videoPlayed}}">
+        <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/videobg.png" mode="widthFix"></image>
+        <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-280rpx;left: 280rpx;" />
+      </view>
+      <!-- 视频 -->
+      <video src="{{panda.url}}" id="{{index}}" class='video' wx:if="{{videoPlayed}}" autoplay="true" custom-cache="{{false}}">
+        <!-- log -->
+      </video>
+    </view>
+  </view>
+
+<view class="cu-bar bg-white solid-bottom margin-top" >
   <view class="action">
     <text class="cuIcon-titles text-blue"></text>
     <text class=" text-shadow text-black text-bold">限时免费</text>
@@ -50,21 +76,11 @@
     <view wx:for="{{recommends}}" wx:key="index">
       <view class="cu-card article no-card shadow margin-top-xl" style="height:250rpx;" bindtap="toDetail" data-courseId="{{item.id}}">
         <view class="cu-item shadow">
-          <!-- <view class="title">
-            <view class="text-cut">{{item.title}}</view>
-          </view> -->
           <view class="content" style="height:250rpx;" >
             <image src="{{item.coverUrl}}" mode="aspectFill" style="height:250rpx;" ></image>
             <view class="desc margin-left">
               <view class="text-content" style="line-height: 3.9;" style="height:300rpx;">
                 <view class="margin-top"><text class="text-lg text-black">{{item.title}}</text></view>
-                <!-- <view wx:if="{{item.rates > 0}}" >
-                  <text class="text-price text-blue text-bold">{{item.rates}}</text>
-                  <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{item.price}}</text>
-                </view>
-                <view wx:else >
-                  <text class="text-price text-blue text-bold">{{item.price}}</text>
-                </view> -->
                 <view></view>
                 <view>
                   <view>{{item.participant}}人参与过学习</view>

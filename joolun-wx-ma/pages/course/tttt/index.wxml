@@ -1,0 +1,13 @@
+<!--pages/course/tttt/index.wxml-->
+<!-- <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/WechatIMG497.jpeg"></image> -->
+<view class="cu-bar bg-white margin-top solid-bottom">
+  <view class="action">
+    <text class="cuIcon-title text-orange"></text> 八十天环游地球
+  </view>
+</view>
+<scroll-view scroll-x class="bg-blue nav text-center">
+  <view bindtap="tabSelect" class="cu-item {{0==TabCur?'text-white cur':''}}" data-id="0"> 导读</view>  
+  <view bindtap="tabSelect" class="cu-item {{1==TabCur?'text-white cur':''}}" data-id="1"> 伴读</view>  
+  <view bindtap="tabSelect" class="cu-item {{2==TabCur?'text-white cur':''}}" data-id="2">  悟读</view>  
+  <view bindtap="tabSelect" class="cu-item {{3==TabCur?'text-white cur':''}}" data-id="3">  研读</view>  
+</scroll-view>
