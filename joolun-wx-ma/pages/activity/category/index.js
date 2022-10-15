@@ -80,7 +80,7 @@ Page({
   },
   searchActivity(e) {
     wx.navigateTo({
-      url: '/pages/activity/list/index?activityName='+e.detail,
+      url: '/pages/activity/list/index?activityName='+e.detail.value,
     })
   },
   getHotActivity() {

@@ -22,7 +22,7 @@ Page({
     let activityName = options.activityName
     app.initPage()
       .then(res => {
-        this.getActivityList(categoryId,activityName,1,18);
+        this.getActivityList(1,18,categoryId,activityName);
       })
   },
   onShow() {
@@ -32,11 +32,20 @@ Page({
       text: app.globalData.shoppingCartCount + ''
     })
   },
-  getActivityList(categoryId,name,pageNo,pageSize) {
+  getActivityList(pageNo,pageSize,categoryId,name) {
     wx.showLoading({
       title: '加载中',
     })
-    let reqParams = {categoryId:categoryId,name:name}
+    let reqParams = {}
+    if(categoryId){
+      reqParams.categoryId=categoryId
+      this.setData({
+
+      })
+    }
+    if(name){
+      reqParams.name = name;
+    }
     app.api.getActivityList(reqParams,pageNo,pageSize).then(res => {
       const activityList = [...this.data.activityList, ...res.data.records]
       this.setData({
@@ -49,6 +58,6 @@ Page({
     this.setData({
       pageNo: this.data.pageNo+1
     })
-    this.getActivityList(this.data.categoryId,this.data.pageNo,this.data.pageSize);
+    this.getActivityList(this.data.pageNo,this.data.pageSize,this.data.categoryId,null);
   }
 })

@@ -47,7 +47,7 @@ public class ActivityApi extends BaseController {
      * 查询社会活动列表
      */
     @PostMapping("/list")
-    public AjaxResult list(Page page, Activity activity) {
+    public AjaxResult list(Page page,@RequestBody Activity activity) {
         LambdaQueryWrapper<Activity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(Activity::getPublished, true);
         queryWrapper.eq(activity.getHot()!=null,Activity::getHot,activity.getHot());
