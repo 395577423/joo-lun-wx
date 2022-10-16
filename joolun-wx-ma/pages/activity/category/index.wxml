@@ -8,7 +8,39 @@
 
 <view class="cu-list grid col-{{gridCol}} no-border" style="margin-top: 120rpx;">
   <view class="cu-item" wx:key="id" wx:for="{{activityCategory}}" wx:if="{{index<gridCol*2}}">
-    <view class="iconfont {{item.icon}} text-{{item.iconColor}} text-lg"> </view>
-    <text>{{item.categoryName}}</text>
+    <navigator url="/pages/activity/list/index?categoryId={{item.id}}">
+      <view class="iconfont {{item.icon}} text-{{item.iconColor}} text-lg"> </view>
+      <text>{{item.categoryName}}</text>
+    </navigator>
+  </view>
+</view>
+
+<view>
+  <view class="cu-bar bg-white solid-bottom margin-top-xs">
+    <view class='action'>
+      <text class='cuIcon-titles text-orange '></text> 热门活动
+    </view>
+  </view>
+  <view class="cu-card case ">
+    <view class="cu-item shadow" wx:for="{{hotActivity}}" wx:key="id">
+      <navigator url="/pages/activity/detail/index?activityId={{item.id}}">
+        <view class="image">
+          <image src="{{item.imageUrl}}" mode="widthFix"></image>
+        </view>
+        <view class="cu-list">
+          <view class="cu-item">
+            <view class="content flex-sub">
+              <view class="text-grey padding-top-sm padding-left">{{item.name}}</view>
+              <view class="text-gray text-sm flex justify-between padding-sm padding-left">
+                {{item.address[2]}}
+                <view class="text-gray text-sm">
+                  <text class="margin-lr-sm text-price text-red text-xl">{{item.salePrice}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </navigator>
+    </view>
   </view>
 </view>

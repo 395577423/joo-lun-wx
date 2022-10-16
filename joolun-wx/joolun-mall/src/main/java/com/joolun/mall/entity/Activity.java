@@ -7,6 +7,7 @@ import com.joolun.framework.config.typehandler.ArrayStringTypeHandler;
 import lombok.Data;
 import org.apache.ibatis.type.JdbcType;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -57,6 +58,8 @@ public class Activity extends Model<Activity>
     /** 活动说明 */
     @Excel(name = "活动说明")
     private String explanation;
+
+    private BigDecimal salePrice;
 
     /** 创建人id */
     @Excel(name = "创建人id")

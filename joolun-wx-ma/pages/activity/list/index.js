@@ -10,12 +10,13 @@ Page({
   data: {
     config: app.globalData.config,
     VerticalNavTop: 0,
-    activityList:[],
+    activityList: [],
     load: true,
     pageNo:1,
     pageSize:18,
-    categoryId:0,
-    activityName:''
+    categoryId: null,
+    activityName:'',
+    noData:false
   },
   onLoad(options) { 
     let categoryId = options.categoryId
@@ -40,24 +41,32 @@ Page({
     if(categoryId){
       reqParams.categoryId=categoryId
       this.setData({
-
+        categoryId:categoryId
       })
     }
     if(name){
       reqParams.name = name;
+      this.setData({
+        activityName:name
+      })
     }
     app.api.getActivityList(reqParams,pageNo,pageSize).then(res => {
       const activityList = [...this.data.activityList, ...res.data.records]
+      let noData = false
+      if(res.data.records==0) {
+        noData = true;
+      }
       this.setData({
-        activityList: activityList
+        activityList: activityList,
+        noData : noData
       })
       wx.hideLoading()
     })
   },
   getMoreActivity(e){
     this.setData({
-      pageNo: this.data.pageNo+1
+      pageNo: this.data.pageNo + 1
     })
-    this.getActivityList(this.data.pageNo,this.data.pageSize,this.data.categoryId,null);
+    this.getActivityList(this.data.pageNo,this.data.pageSize,this.data.categoryId,this.data.activityName);
   }
 })

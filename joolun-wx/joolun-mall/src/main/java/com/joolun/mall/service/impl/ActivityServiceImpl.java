@@ -49,6 +49,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
         activity.setPublished(false);
         activity.setCreator(user.getUserName());
         activity.setCreatorId(user.getUserId());
+        activity.setSalePrice(CollectionUtil.isNotEmpty(activityDto.getPriceCases())?
+                activityDto.getPriceCases().get(0).getSalesPrice() : null);
         boolean save = this.save(activity);
         List<ActivityPriceCase> activityPriceCases = activityDto.getPriceCases();
         if (CollectionUtil.isNotEmpty(activityPriceCases)) {

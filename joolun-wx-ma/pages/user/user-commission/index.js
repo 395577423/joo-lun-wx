@@ -12,6 +12,9 @@ Page({
     TabCur: 0,
     partners: [],
     vipCount: 0,
+    showModal:false,
+    bankAccount: '',
+    bankName: ''
   },
 
   /**
@@ -51,9 +54,47 @@ Page({
       })
     })
   },
+  getBankInfo() {
+    app.api.getBankInfo().then(resp =>{
+      if(resp.data){
+        let bankAccountNo = resp.data.bankAccountNo
+        let bankName = resp.data.bankName
+        this.setData({
+          bankName: bankName,
+          bankAccount: bankAccountNo
+        })
+      }
+    })
+  },
+  saveRecord(){
+  
+  },
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,
+    })
+  },
+  showModal(e) {
+    this.getBankInfo()
+    this.setData({
+      showModal:true
+    })
+
+  },
+  hideModal() {
+    this.setData({
+      showModal:false
+    })
+  },
+  save() {
+    let data = {}
+    data.amount = this.data.completedAmount-this.data.withdrawAmount
+    data.bankAccountNo = this.data.bankAccount
+    data.bankName = this.data.bankName
+    app.api.save(data).then(resp => {
+      if(resp.code == 200){
+        this.hideModal()
+      }
     })
   }
 })

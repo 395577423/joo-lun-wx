@@ -280,5 +280,11 @@ module.exports = {
   },
   getPanda:() =>{
     return request('/weixin/api/propaganda','post',false)
+  },
+  getUserBankInfo:() => {
+    return request('/weixin/api/commission/getUserBankInfo','get')
+  },
+  saveWithdrawApplyRecord:(data) => {
+    return request('/weixin/api/commission/withdraw/apply/save','post',data,true);
   }
 }

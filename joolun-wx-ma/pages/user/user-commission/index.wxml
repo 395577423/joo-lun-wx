@@ -52,9 +52,45 @@
     </view>
   </view>
   <view class="margin-sm bg-white radius">
-    <view class="padding-sm solid-bottom text-lg text-black">提现记录</view>
+    <view class="flex solid-bottom justify-between">
+      <view class="padding-sm text-lg text-black">提现记录</view>
+      <view class="padding-sm text-black">
+        <button class="cu-btn round sm bg-blue" bindtap="showModal">
+          我要提现
+        </button>
+      </view>
+    </view>
     <view class="padding-sm text-sm text-gray">
       最近3次提现记录
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{showModal?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">提现申请</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+    <form>
+      <view class="cu-form-group margin-top">
+        <view class="title">银行账号</view>
+        <input placeholder="请输入银行账号" value="{{bankAccount}}"></input>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">开户行</view>
+        <input placeholder="请输入开户行名称" value="{{bankName}}"></input>
+      </view>
+    </form>
+    </view>
+    <view class="cu-bar bg-white justify-center">
+      <view class="action">
+        <button class="cu-btn" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-blue margin-left" bindtap="save">确定</button>
+      </view>
     </view>
   </view>
 </view>
