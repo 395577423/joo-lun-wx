@@ -63,6 +63,11 @@
     <view class="padding-sm text-sm text-gray">
       最近3次提现记录
     </view>
+    <view wx:for="{{records}}" wx:key="id" class="flex justify-between solid-bottom padding">
+      <view>{{item.amount}}</view>
+      <view>{{item.applyTime}}</view>
+      <view>{{item.completed ? '已完成':'未完成'}}</view>
+    </view>
   </view>
 </view>
 
@@ -74,23 +79,23 @@
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-    <view class="padding-xl">
-    <form>
-      <view class="cu-form-group margin-top">
-        <view class="title">银行账号</view>
-        <input placeholder="请输入银行账号" value="{{bankAccount}}"></input>
+    <form bindsubmit="save">
+      <view class="padding-xl">
+        <view class="cu-form-group margin-top">
+          <view class="title">银行账号</view>
+          <input placeholder="请输入银行账号" name="bankAccountNo"></input>
+        </view>
+        <view class="cu-form-group">
+          <view class="title">开户行</view>
+          <input placeholder="请输入开户行名称" name="bankName"></input>
+        </view>
       </view>
-      <view class="cu-form-group">
-        <view class="title">开户行</view>
-        <input placeholder="请输入开户行名称" value="{{bankName}}"></input>
+      <view class="cu-bar bg-white justify-center">
+        <view class="action">
+          <button class="cu-btn" bindtap="hideModal">取消</button>
+          <button class="cu-btn bg-blue margin-left" form-type="submit">确定</button>
+        </view>
       </view>
     </form>
-    </view>
-    <view class="cu-bar bg-white justify-center">
-      <view class="action">
-        <button class="cu-btn" bindtap="hideModal">取消</button>
-        <button class="cu-btn bg-blue margin-left" bindtap="save">确定</button>
-      </view>
-    </view>
   </view>
 </view>

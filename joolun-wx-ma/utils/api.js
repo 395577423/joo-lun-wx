@@ -286,5 +286,8 @@ module.exports = {
   },
   saveWithdrawApplyRecord:(data) => {
     return request('/weixin/api/commission/withdraw/apply/save','post',data,true);
+  },
+  listWithdrawApplyRecord:() => {
+    return request('/weixin/api/commission/withdraw/apply/list','get');
   }
 }

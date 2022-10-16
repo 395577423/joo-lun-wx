@@ -40,12 +40,12 @@ public class UserCommissionApi {
     private final IUserWithdrawRecordService userWithdrawRecordService;
 
     @GetMapping("/get")
-    public AjaxResult get(){
+    public AjaxResult get() {
         String userId = ThirdSessionHolder.getWxUserId();
         LambdaQueryWrapper<UserCommission> queryWrapper = Wrappers.<UserCommission>lambdaQuery()
                 .eq(UserCommission::getUserId, userId);
         UserCommission userCommission = userCommissionService.getOne(queryWrapper);
-        if(userCommission == null) {
+        if (userCommission == null) {
             userCommission = new UserCommission();
             userCommission.setUserId(userId);
             userCommission.setWithdrawAmount(BigDecimal.ZERO);
@@ -56,7 +56,7 @@ public class UserCommissionApi {
     }
 
     @GetMapping("/partners")
-    public AjaxResult getPartners(){
+    public AjaxResult getPartners() {
         List<PartnerVo> shareRecords = userShareRecordService.listPartner(ThirdSessionHolder.getWxUserId());
         return AjaxResult.success(shareRecords);
     }
@@ -67,18 +67,27 @@ public class UserCommissionApi {
         List<UserWithdrawRecord> records = userWithdrawRecordService.list(Wrappers.<UserWithdrawRecord>lambdaQuery()
                 .eq(UserWithdrawRecord::getWxUserId, userId).orderByDesc(UserWithdrawRecord::getApplyTime));
         UserWithdrawRecord userWithdrawRecord = null;
-        if(CollectionUtil.isNotEmpty(records)) {
+        if (CollectionUtil.isNotEmpty(records)) {
             userWithdrawRecord = records.get(0);
         }
         return AjaxResult.success(userWithdrawRecord);
     }
 
     @PostMapping("/withdraw/apply/save")
-    public AjaxResult saveWithdrawApplyRecord(@RequestBody UserWithdrawRecord userWithdrawRecord){
+    public AjaxResult saveWithdrawApplyRecord(@RequestBody UserWithdrawRecord userWithdrawRecord) {
         String userId = ThirdSessionHolder.getWxUserId();
         userWithdrawRecord.setWxUserId(userId);
         userWithdrawRecord.setApplyTime(new Date());
         userWithdrawRecord.setCompleted(0);
+        userWithdrawRecordService.save(userWithdrawRecord);
         return AjaxResult.success();
+    }
+
+    @GetMapping("/withdraw/apply/list")
+    public AjaxResult listWithdrawApplyRecord() {
+        String userId = ThirdSessionHolder.getWxUserId();
+        List<UserWithdrawRecord> userWithdrawRecords = userWithdrawRecordService.list(Wrappers.<UserWithdrawRecord>lambdaQuery()
+                .eq(UserWithdrawRecord::getWxUserId, userId).orderByDesc(UserWithdrawRecord::getApplyTime).last("limit 3"));
+        return AjaxResult.success(userWithdrawRecords);
     }
 }

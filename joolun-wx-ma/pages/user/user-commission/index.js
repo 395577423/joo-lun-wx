@@ -12,9 +12,8 @@ Page({
     TabCur: 0,
     partners: [],
     vipCount: 0,
-    showModal:false,
-    bankAccount: '',
-    bankName: ''
+    showModal: false,
+    records: []
   },
 
   /**
@@ -24,6 +23,7 @@ Page({
     app.initPage().then(res => {
       this.getCommission();
       this.getPartners();
+      this.listRecord();
     })
 
   },
@@ -55,8 +55,8 @@ Page({
     })
   },
   getBankInfo() {
-    app.api.getBankInfo().then(resp =>{
-      if(resp.data){
+    app.api.getUserBankInfo().then(resp => {
+      if (resp.data) {
         let bankAccountNo = resp.data.bankAccountNo
         let bankName = resp.data.bankName
         this.setData({
@@ -66,8 +66,14 @@ Page({
       }
     })
   },
-  saveRecord(){
-  
+  listRecord() {
+    app.api.listWithdrawApplyRecord().then(resp => {
+      if (resp.data) {
+        this.setData({
+          records: resp.data
+        })
+      }
+    })
   },
   tabSelect(e) {
     this.setData({
@@ -77,22 +83,26 @@ Page({
   showModal(e) {
     this.getBankInfo()
     this.setData({
-      showModal:true
+      showModal: true
     })
 
   },
   hideModal() {
     this.setData({
-      showModal:false
+      showModal: false
     })
   },
-  save() {
-    let data = {}
-    data.amount = this.data.completedAmount-this.data.withdrawAmount
-    data.bankAccountNo = this.data.bankAccount
-    data.bankName = this.data.bankName
-    app.api.save(data).then(resp => {
-      if(resp.code == 200){
+  save(e) {
+    let data = e.detail.value;
+    if (data.bankAccountNo == null || data.bankAccountNo == '') {
+      return false
+    }
+    if (data.bankName == null || data.bankName == '') {
+      return false
+    }
+    data.amount = this.data.completedAmount - this.data.withdrawAmount
+    app.api.saveWithdrawApplyRecord(data).then(resp => {
+      if (resp.code == 200) {
         this.hideModal()
       }
     })
