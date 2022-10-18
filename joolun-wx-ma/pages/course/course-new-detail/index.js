@@ -7,19 +7,23 @@ Page({
    */
   data: {
     TabCur: 0,
-    scrollLeft:0,
-    courseId:null,
-    activityList:[],
-    modalName:'',
+    scrollLeft: 0,
+    courseId: null,
+    activityList: [],
+    modalName: '',
     //是否拥有课程
     isOwned: false,
     isMember: false,
     //奖学金计划范围内
     inTime: false,
     wxUser: null,
-    audioUrl:null,
-    question:null,
-    guide:null
+    audioUrl: null,
+    question: null,
+    guide: null,
+    realPrice: null,
+    coverUrl: '',
+    audioUrl: '',
+    tip: ''
   },
 
   /**
@@ -28,7 +32,7 @@ Page({
   onLoad(options) {
     let courseId = options.courseId;
     this.setData({
-      courseId:courseId
+      courseId: courseId
     })
     this.getActivityList(courseId)
     this.userInfoGet()
@@ -37,7 +41,7 @@ Page({
       .then(() => {
         this.getDetail(courseId)
       })
-      this.innerAudio = wx.createInnerAudioContext()  
+    this.innerAudio = wx.createInnerAudioContext()
   },
   userInfoGet() {
     app.api.wxUserGet()
@@ -83,7 +87,7 @@ Page({
           })
         }
         let realPrice
-        if (null !== course.rates &&  course.rates > 0) {
+        if (null !== course.rates && course.rates > 0) {
           realPrice = course.rates
         } else {
           realPrice = course.price
@@ -98,7 +102,7 @@ Page({
           realPrice: realPrice,
           audioUrl: course.questionAudio,
           question: course.question,
-          guide:guide
+          guide: guide
         })
         wx.setNavigationBarTitle({
           title: this.data.title,
@@ -138,7 +142,7 @@ Page({
     return [year, month, day].join('-')
   },
 
-   /**
+  /**
    * 去音频页面
    * @param {*} e
    */
@@ -164,16 +168,16 @@ Page({
     this.innerAudio.play()
   },
 
-  toVideoPage(e){
+  toVideoPage(e) {
     let index = e.currentTarget.dataset.id
     let video = this.data.videoList[index]
     let url = video.videoUrl
     wx.navigateTo({
-      url:'/pages/course/def-video/index?url=' + url,
+      url: '/pages/course/def-video/index?url=' + url,
     })
   },
 
-   /**
+  /**
    * 去答案页面
    * @param {*} e 课程ID 标题
    */
@@ -186,85 +190,110 @@ Page({
       this.showModal('NeedBuy')
     }
   },
-  /**
-   * 导读数据
-   */
 
+  getActivityList(courseId) {
+    app.api.getRelationActivity(courseId).then(res => {
+      let activityList = res.data
+      activityList.map((item) => {
+        if (item.createTime) item.createTime = this.dateFormat(new Date(item.createTime), 'yyyy-MM-dd')
+      })
+      this.setData({
+        activityList: activityList
+      })
+    })
+  },
 
-   /**
-    * 伴读数据
-    */
+  toActivity(e) {
+    let activityId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/activity/detail/index?activityId=' + activityId
+    })
+  },
 
-    /**
-     * 悟读数据
-     */
+  toBuy() {
+    let wxUser = this.data.wxUser
+    if (null == wxUser.phone) {
+      this.showModal('getPhone')
+      return
+    }
+    this.buy()
+  },
+  buy() {
+    let plan = this.data.course.plan
+    if (plan == 1) {
+      let startTime = this.data.course.startTime
+      let endTime = this.data.course.endTime
 
-     /**
-      * 研读数据
-      */
-     getActivityList(courseId){
-      app.api.getRelationActivity(courseId).then(res => {
-        let activityList = res.data
-        activityList.map((item) => {
-          if (item.createTime) item.createTime = this.dateFormat(new Date(item.createTime), 'yyyy-MM-dd')
-        })
+      if (this.compareDate(new Date(), new Date(endTime))) {
         this.setData({
-          activityList : activityList
+          tip: '已经过了报名时间'
         })
-      })
-     },
-
-     toActivity(e){
-       let activityId = e.currentTarget.dataset.id;
-       wx.navigateTo({
-        url:'/pages/activity/detail/index?activityId=' +activityId
-      })
-     },
-
-     toBuy() {
-      let wxUser = this.data.wxUser
-      if (null == wxUser.phone) {
-        this.showModal('getPhone')
+        this.showModal('tip')
         return
       }
-      this.buy()
-    },
-    buy() {
-      let plan = this.data.course.plan
-      if (plan == 1) {
-        let startTime = this.data.course.startTime
-        let endTime = this.data.course.endTime
-  
-        if (this.compareDate(new Date(), new Date(endTime))) {
-          this.setData({
-            tip: '已经过了报名时间'
-          })
-          this.showModal('tip')
-          return
-        }
-        if (this.compareDate(new Date(startTime), new Date())) {
-          this.setData({
-            tip: '还没到报名时间'
-          })
-          this.showModal('tip')
-          return
-        }
-      }
-      this.showModal('Buy')
-    },
-
-    toReportPage(e) {
-      console.log(e)
-      if (this.data.isOwned || this.data.isMember || this.data.inTime) {
-        wx.navigateTo({
-          url: '/pages/course/course-report/index?courseId=' + this.data.courseId
+      if (this.compareDate(new Date(startTime), new Date())) {
+        this.setData({
+          tip: '还没到报名时间'
         })
-      } else {
-        this.showModal('NeedBuy')
+        this.showModal('tip')
+        return
       }
-    },
+    }
+    this.showModal('Buy')
+  },
+  //添加课程归属,并且修改用户余额信息
+  updateUserCourse() {
+    this.setData({
+      loading: true
+    })
+    var that = this
+    let courseId = that.data.courseId
+    let userId = that.data.wxUser.id
+    app.api.courseUnifiedOrder({
+        id: courseId,
+        userId: userId
+      })
+      .then(res => {
+        this.setData({
+          loading: false
+        })
+        let payData = res.data
+        wx.requestPayment({
+          'timeStamp': payData.timeStamp,
+          'nonceStr': payData.nonceStr,
+          'package': payData.packageValue,
+          'signType': payData.signType,
+          'paySign': payData.paySign,
+          'success': function (res) {
+            that.updateUserPayCourse()
+          },
+          'fail': function (res) {
 
-    
+          },
+          'complete': function (res) {
+
+          }
+        })
+        that.getUserCourse()
+        that.userInfoGet()
+      }).catch(() => {
+        this.setData({
+          loading: false
+        })
+      })
+  },
+  toReportPage(e) {
+    console.log(e)
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
+      wx.navigateTo({
+        url: '/pages/course/course-report/index?courseId=' + this.data.courseId
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
+  },
+
+
   showModal(name) {
     this.setData({
       modalName: name
@@ -332,7 +361,7 @@ Page({
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,
-      scrollLeft: (e.currentTarget.dataset.id-1)*60
+      scrollLeft: (e.currentTarget.dataset.id - 1) * 60
     })
   },
   dateFormat(date, fmt) { // author: meizz
@@ -346,7 +375,9 @@ Page({
       S: date.getMilliseconds() // 毫秒
     }
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
-    for (var k in o) { if (new RegExp('(' + k + ')').test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))) }
+    for (var k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+    }
     return fmt
   },
 })

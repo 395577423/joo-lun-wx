@@ -124,7 +124,7 @@
         </view>
       </view>
     </view>
-    <view class="margin-bottom-bar " style="width: 40%;margin-left:30%">
+    <view class="margin-bottom-bar " style="width: 40%;margin-left:30%;margin-bottom: 20%;">
       <navigator url='/pages/map/index'>
         <button class="block bg-blue lg">
           去搜索
@@ -208,5 +208,53 @@
       <text class="text-price text-blue text-bold">{{course.price}}</text>
     </view>
     <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">购买</button>
+  </view>
+</view>
+
+
+<view class="cu-modal bottom-modal {{modalName=='getPhone'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">绑定手机号</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <text>
+      为了方便你更好地学习，请先绑定手机号
+    </text>
+    <button class="cu-btn block bg-blue margin-tb-sm lg button-hover" open-type="getPhoneNumber" bindgetphonenumber='getPhoneNumber'>微信用户一键绑定</button>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='Buy'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">购买</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <view class="padding margin-bottom">
+        <text>课程金额:</text>
+        <text class="text-price text-red margin-left text-lg">{{realPrice}}</text>
+      </view>
+      <button bindtap="updateUserCourse">支付</button>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='tip'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      {{tip}}
+    </view>
   </view>
 </view>
