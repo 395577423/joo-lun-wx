@@ -23,7 +23,7 @@
   </view>
   <view class="cu-list menu card-menu sm-border margin-top-sm">
     <view class="cu-item" wx:for="{{courseList}}" wx:key="index">
-      <navigator hover-class='none' url='/pages/course/course-detail/index?courseId={{item.id}}' class="content overflow-1" data-name="{{item.title}}">
+      <navigator hover-class='none' url='/pages/course/course-new-detail/index?courseId={{item.id}}' class="content overflow-1" data-name="{{item.title}}">
         <text class="margin-right-sm text-bold text-orange">{{index+1}}</text>{{item.title}}
       </navigator>
     </view>

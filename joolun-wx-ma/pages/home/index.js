@@ -158,7 +158,7 @@ Page({
       },
       fail: (e) => {
         wx.navigateTo({
-          url: '/pages/course/course-detail/index?courseId=' + courseId,
+          url: '/pages/course/course-new-detail/index?courseId=' + courseId,
         })
       }
     })

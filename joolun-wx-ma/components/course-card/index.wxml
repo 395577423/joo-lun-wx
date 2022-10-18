@@ -1,6 +1,6 @@
 <view class="course-container">
   <view class="course-box" wx:for="{{courseList}}" wx:key="index">
-    <navigator hover-class='none' url='/pages/course/course-detail/index?courseId={{item.id}}'>
+    <navigator hover-class='none' url='/pages/course/course-new-detail/index?courseId={{item.id}}'>
       <view class="text-black margin-top text-bold padding-lr overflow-1 text-center">{{item.title}}</view>
       <view class="img-box">
         <image src="{{item.coverUrl}}" class="margin-top-xs" />
