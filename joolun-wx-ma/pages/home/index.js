@@ -133,8 +133,8 @@ Page({
       this.getUserProfile(e)
     }  else {
       wx.navigateTo({
-        url: '/pages/course/course-detail/index?courseId=' + courseId,
-        // url:'/pages/course/tttt/index'
+        // url: '/pages/course/course-detail/index?courseId=' + courseId,
+        url:'/pages/course/course-new-detail/index?courseId=' + courseId,
       })
     }
   },

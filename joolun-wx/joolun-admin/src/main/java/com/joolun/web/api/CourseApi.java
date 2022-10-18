@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.aliyun.oss.OSSClient;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -119,6 +120,9 @@ public class CourseApi {
 
     private final IUserEmpowerService iUserEmpowerService;
 
+
+    private final ICourseGuideService iCourseGuideService;
+
     /**
      * 查询奖学金计划课程
      *
@@ -182,10 +186,14 @@ public class CourseApi {
         clazzQueryWrapper.eq("course_id", id).orderByAsc("sort");
         List<CourseClazz> clazzList = iCourseClazzService.list(clazzQueryWrapper);
 
+
+        List<CourseGuide> guide = iCourseGuideService.list(Wrappers.<CourseGuide>lambdaQuery().eq(CourseGuide::getCourseId, id));
+
         Map<String, Object> result = new HashMap<>();
         result.put("course", course);
         result.put("video", courseVideoList);
         result.put("clazz", clazzList);
+        result.put("guide", guide);
         return AjaxResult.success(result);
     }
 
@@ -580,7 +588,7 @@ public class CourseApi {
 //            String msg = "恭喜您获得奖学金" + course.getCashReturn() + "元";
 //            return AjaxResult.success(msg);
 //        } else {
-            return AjaxResult.success();
+        return AjaxResult.success();
 //        }
     }
 
@@ -600,9 +608,9 @@ public class CourseApi {
     }
 
     @GetMapping("/empower/{id}/{userId}")
-    public AjaxResult getEmpowerVideoById(@PathVariable Long id,@PathVariable String userId){
+    public AjaxResult getEmpowerVideoById(@PathVariable Long id, @PathVariable String userId) {
 
-        EmpowerVideo result =  iUserEmpowerService.getOneById(userId,id);
+        EmpowerVideo result = iUserEmpowerService.getOneById(userId, id);
         return AjaxResult.success(result);
     }
 }

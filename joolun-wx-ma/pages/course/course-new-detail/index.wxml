@@ -1,0 +1,212 @@
+<!--pages/course/tttt/index.wxml-->
+<!-- <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/WechatIMG497.jpeg"></image> -->
+<scroll-view>
+  <view class="cu-card case">
+    <view class="cu-item shadow">
+      <view class="image">
+        <image src="{{course.coverUrl}}" mode="widthFix"></image>
+        <view class="cu-bar bg-shadeBottom">
+          <text class="text-cut">{{course.title}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view scroll-x class="bg-white nav text-center">
+    <view bindtap="tabSelect" class="cu-item {{0==TabCur?'text-white cur bg-blue':''}}" data-id="0"> 导读</view>
+    <view bindtap="tabSelect" class="cu-item {{1==TabCur?'text-white cur bg-blue':''}}" data-id="1"> 伴读</view>
+    <view bindtap="tabSelect" class="cu-item {{2==TabCur?'text-white cur bg-blue' :''}}" data-id="2"> 悟读</view>
+    <view bindtap="tabSelect" class="cu-item {{3==TabCur?'text-white cur bg-blue':''}}" data-id="3"> 研读</view>
+  </scroll-view>
+
+  <!-- 导读 -->
+  <view wx:if="{{TabCur == 0}}">
+    <view class="cu-list menu" bindtap="playAudio" data-id='0'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">第一步｜了解本书价值</view>
+        </view>
+        <view class="action">
+          <view class="cuIcon-playfill xl text-gray"></view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="playAudio" data-id='1'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">第二步｜熟悉作者背景</view>
+        </view>
+        <view class="action">
+          <view class="cuIcon-playfill lg text-gray"></view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="playAudio" data-id='2'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">第三步｜激发阅读兴趣</view>
+        </view>
+        <view class="action">
+          <view class="cuIcon-playfill lg text-gray"></view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="playAudio" data-id='3'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">第四步｜做好阅读计划</view>
+        </view>
+        <view class="action">
+          <view class="cuIcon-playfill lg text-gray"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 伴读 -->
+  <view wx:if="{{TabCur == 1}}">
+    <view class="cu-list menu">
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-blue">温馨提示：可选择在家自主阅读本书，或选择离您最近的伴读空间由老师通过这四步培养孩子自主阅读习惯</view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="toVideoPage" data-id='0'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">拓展知识一｜{{videoList[0].title}}</view>
+        </view>
+        <view class="action">
+          <view>
+            <text class=" margin-right">已完成</text>
+            <text>></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="toVideoPage" data-id='1'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">拓展知识二｜{{videoList[1].title}}</view>
+        </view>
+        <view class="action">
+          <view>
+            <text class=" margin-right">已完成</text>
+            <text>></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="toVideoPage" data-id='2'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">拓展知识三｜{{videoList[2].title}}</view>
+        </view>
+        <view class="action">
+          <view>
+            <text class=" margin-right">已完成</text>
+            <text>></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu" bindtap="toVideoPage" data-id='3'>
+      <view class="cu-item">
+        <view class="content">
+          <view class="text-black">拓展知识四｜{{videoList[3].title}}</view>
+        </view>
+        <view class="action">
+          <view>
+            <text class=" margin-right">已完成</text>
+            <text>></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="margin-bottom-bar " style="width: 40%;margin-left:30%">
+      <navigator url='/pages/map/index'>
+        <button class="block bg-blue lg">
+          去搜索
+        </button>
+      </navigator>
+    </view>
+  </view>
+
+  <!-- 悟读 -->
+  <view wx:if="{{TabCur == 2}}">
+    <view class="cu-list menu">
+      <view class="cu-item" bindtap="toQuestionPage">
+        <view class="content">
+          <view class="text-black">任务一｜积累常识考点</view>
+        </view>
+        <view class="action">
+          <view>
+            <text class=" margin-right">已完成</text>
+            <text>></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu">
+      <view class="cu-item" bindtap="toAudioPage">
+        <view class="content">
+          <view class="text-black">任务二｜启发自主思考</view>
+        </view>
+        <view>
+          <text class=" margin-right">已完成</text>
+          <text>></text>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu">
+      <view class="cu-item" bindtap="toReportPage">
+        <view class="content">
+          <view class="text-black">任务三｜生成读书报告</view>
+        </view>
+        <view>
+          <text class=" margin-right">已完成</text>
+          <text>></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 研读 -->
+  <view wx:if="{{TabCur == 3}}">
+    <view class="cu-list menu ">
+      <view class="cu-item board">
+        <view class="content">
+          <view class="text-blue">温馨提示：以下是与本书相关的社会实践活动，可根据实际情况选择参加</view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-list menu-avatar">
+      <view class="cu-item" wx:for="{{activityList}}" wx:key="index" bindtap="toActivity" data-id="{{item.id}}">
+        <view class="cu-avatar lg" style="background-image:url({{item.imageUrl}});"></view>
+        <view class="content">
+          <view class="text-black">{{item.name}}</view>
+        </view>
+        <view>
+          <view class="text-black ">
+            <text class=" margin-right">{{item.createTime}}</text>
+            <text>></text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}">
+  <view class="btn-group">
+    <view wx:if="{{course.rates > 0 && course.price>course.rates}}">
+      <text class="text-price text-blue text-bold">{{course.rates}}</text>
+      <text class="text-price text-red text-bold margin-left-xs" style="text-decoration:line-through;">{{course.price}}</text>
+    </view>
+    <view wx:else>
+      <text class="text-price text-blue text-bold">{{course.price}}</text>
+    </view>
+    <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">购买</button>
+  </view>
+</view>

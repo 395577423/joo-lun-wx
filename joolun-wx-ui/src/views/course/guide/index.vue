@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import {addObj, delObj, getPage, putObj} from '@/api/course/audio'
-import option from '@/const/crud/course/audio'
+import {addObj, delObj, getPage, putObj} from '@/api/course/guide'
+import option from '@/const/crud/course/guide'
 
 export default {
-  name: 'audio',
+  name: 'guide',
   components: {},
   data() {
     return {
