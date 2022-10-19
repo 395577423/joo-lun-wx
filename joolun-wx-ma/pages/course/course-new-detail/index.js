@@ -160,21 +160,29 @@ Page({
    * 播放课程音频
    */
   playAudio(e) {
-    let index = e.currentTarget.dataset.id
-    let guide = this.data.guide[index]
-    let url = guide.audio
-    this.innerAudio.stop()
-    this.innerAudio.src = url
-    this.innerAudio.play()
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
+      let index = e.currentTarget.dataset.id
+      let guide = this.data.guide[index]
+      let url = guide.audio
+      this.innerAudio.stop()
+      this.innerAudio.src = url
+      this.innerAudio.play()
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
 
   toVideoPage(e) {
-    let index = e.currentTarget.dataset.id
-    let video = this.data.videoList[index]
-    let url = video.videoUrl
-    wx.navigateTo({
-      url: '/pages/course/def-video/index?url=' + url,
-    })
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
+      let index = e.currentTarget.dataset.id
+      let video = this.data.videoList2[index]
+      let url = video.videoUrl
+      wx.navigateTo({
+        url: '/pages/course/def-video/index?url=' + url,
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
 
   /**
@@ -283,7 +291,6 @@ Page({
       })
   },
   toReportPage(e) {
-    console.log(e)
     if (this.data.isOwned || this.data.isMember || this.data.inTime) {
       wx.navigateTo({
         url: '/pages/course/course-report/index?courseId=' + this.data.courseId
@@ -292,7 +299,11 @@ Page({
       this.showModal('NeedBuy')
     }
   },
-
+  showPic() {
+    this.setData({
+      modalName: 'showpic'
+    })
+  },
 
   showModal(name) {
     this.setData({

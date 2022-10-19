@@ -489,7 +489,7 @@ public class CourseApi {
         }
 
         BigDecimal realPrice;
-        if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0) {
+        if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0 && course.getRates().compareTo(BigDecimal.ZERO)>0) {
             realPrice = course.getRates();
         } else {
             realPrice = course.getPrice();

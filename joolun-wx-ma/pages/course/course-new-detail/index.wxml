@@ -75,7 +75,7 @@
     <view class="cu-list menu" bindtap="toVideoPage" data-id='0'>
       <view class="cu-item">
         <view class="content">
-          <view class="text-black">拓展知识一｜{{videoList[0].title}}</view>
+          <view class="text-black">拓展知识一｜{{videoList2[0].title}}</view>
         </view>
         <view class="action">
           <view>
@@ -88,7 +88,7 @@
     <view class="cu-list menu" bindtap="toVideoPage" data-id='1'>
       <view class="cu-item">
         <view class="content">
-          <view class="text-black">拓展知识二｜{{videoList[1].title}}</view>
+          <view class="text-black">拓展知识二｜{{videoList2[1].title}}</view>
         </view>
         <view class="action">
           <view>
@@ -101,7 +101,7 @@
     <view class="cu-list menu" bindtap="toVideoPage" data-id='2'>
       <view class="cu-item">
         <view class="content">
-          <view class="text-black">拓展知识三｜{{videoList[2].title}}</view>
+          <view class="text-black">拓展知识三｜{{videoList2[2].title}}</view>
         </view>
         <view class="action">
           <view>
@@ -114,7 +114,7 @@
     <view class="cu-list menu" bindtap="toVideoPage" data-id='3'>
       <view class="cu-item">
         <view class="content">
-          <view class="text-black">拓展知识四｜{{videoList[3].title}}</view>
+          <view class="text-black">拓展知识四｜{{videoList2[3].title}}</view>
         </view>
         <view class="action">
           <view>
@@ -255,6 +255,37 @@
     </view>
     <view class="padding-xl">
       {{tip}}
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='NeedBuy'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">友情提示</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <view>请先点击下方购买才能做任务哦。</view>
+      <view>如有疑问请添加客服微信。</view>
+      <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='showpic'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">客服联系方式</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl flex-direction text-center">
+      <text class="content flex" style="width: 68%;margin: 0 auto;">温馨提示：截图保存后可扫码哦</text>
+      <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode.jpeg" style="width: 280rpx;height:280rpx;margin:0 auto;" class="flex"></image>
     </view>
   </view>
 </view>
