@@ -68,9 +68,15 @@
     <view class="cu-list menu">
       <view class="cu-item">
         <view class="content">
-          <view class="text-blue">温馨提示：可选择在家自主阅读本书，或选择离您最近的伴读空间由老师通过这四步培养孩子自主阅读习惯</view>
+          <view class="text-blue">温馨提示：可选择在家自主阅读本书，或选择离您最近的伴读空间由老师通过这四步培养孩子自主阅读习惯
+
+          </view>
+          <navigator url='/pages/map/index' class="flex solid-bottom padding justify-center">
+            <text class="text-center text-blue">去搜索</text>
+          </navigator>
         </view>
       </view>
+
     </view>
     <view class="cu-list menu" bindtap="toVideoPage" data-id='0'>
       <view class="cu-item">
@@ -124,13 +130,7 @@
         </view>
       </view>
     </view>
-    <view class="margin-bottom-bar " style="width: 40%;margin-left:30%;margin-bottom: 20%;">
-      <navigator url='/pages/map/index'>
-        <button class="block bg-blue lg">
-          去搜索
-        </button>
-      </navigator>
-    </view>
+
   </view>
 
   <!-- 悟读 -->
