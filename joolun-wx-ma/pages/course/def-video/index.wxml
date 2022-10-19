@@ -1,1 +1,3 @@
-<video src="{{videoUrl}}" autoplay="true"></video>
+<view class="page">
+  <video id="myVideo" src="{{videoUrl}}" autoplay="true" bindended="endAction"></video>
+</view>

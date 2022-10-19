@@ -1,5 +1,3 @@
-// pages/course/course-video/index.js
-const util = require('../../../utils/util.js')
 Page({
 
   /**
