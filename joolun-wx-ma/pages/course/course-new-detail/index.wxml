@@ -71,9 +71,13 @@
           <view class="text-blue">温馨提示：可选择在家自主阅读本书，或选择离您最近的伴读空间由老师通过这四步培养孩子自主阅读习惯
 
           </view>
-          <navigator url='/pages/map/index' class="flex solid-bottom padding justify-center">
-            <text class="text-center text-blue">去搜索</text>
-          </navigator>
+       
+            <button class="cu-btn round line-blue " style="margin-left:33%;margin-top:-6% ;">
+              <navigator url='/pages/map/index' class="flex solid-bottom padding" >
+              去搜索
+            </navigator>
+            </button>
+          
         </view>
       </view>
 
