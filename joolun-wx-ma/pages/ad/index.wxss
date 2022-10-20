@@ -1,1 +1,4 @@
 /* pages/ad/index.wxss */
+.wxParse-p image{
+  width:100%;
+}

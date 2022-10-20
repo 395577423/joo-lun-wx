@@ -27,7 +27,7 @@
           <view class="text-black">第一步｜了解本书价值</view>
         </view>
         <view class="action">
-          <view class="cuIcon-playfill xl text-gray"></view>
+          <view class="{{v0play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}} "></view>
         </view>
       </view>
     </view>
@@ -37,7 +37,7 @@
           <view class="text-black">第二步｜熟悉作者背景</view>
         </view>
         <view class="action">
-          <view class="cuIcon-playfill lg text-gray"></view>
+          <view class="{{v1play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}"></view>
         </view>
       </view>
     </view>
@@ -47,7 +47,7 @@
           <view class="text-black">第三步｜激发阅读兴趣</view>
         </view>
         <view class="action">
-          <view class="cuIcon-playfill lg text-gray"></view>
+          <view class="{{v2play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}"></view>
         </view>
       </view>
     </view>
@@ -57,7 +57,7 @@
           <view class="text-black">第四步｜做好阅读计划</view>
         </view>
         <view class="action">
-          <view class="cuIcon-playfill lg text-gray"></view>
+          <view class="{{v3play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}"></view>
         </view>
       </view>
     </view>
