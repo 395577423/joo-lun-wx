@@ -253,7 +253,7 @@ Page({
       let video = this.data.videoList2[index]
       let url = video.videoUrl
       wx.navigateTo({
-        url: '/pages/course/def-video/index?url=' + url,
+        // url: '/pages/course/def-video/index?url=' + url,
       })
     } else {
       this.showModal('NeedBuy')

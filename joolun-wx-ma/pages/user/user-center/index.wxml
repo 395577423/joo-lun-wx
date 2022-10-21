@@ -31,7 +31,7 @@
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/course/empower-video/index?userId={{wxUser.id}}">
         <text class="cuIcon-vip text-orange"></text>
-        <text>1UP赋能中心</text>
+        <text>父母赋能中心</text>
     </navigator>
   </view>
   <view class="cu-item arrow">
