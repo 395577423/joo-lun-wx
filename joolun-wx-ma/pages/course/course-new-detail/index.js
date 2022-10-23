@@ -24,10 +24,11 @@ Page({
     coverUrl: '',
     audioUrl: '',
     tip: '',
-    v0play:false,
-    v1play:false,
-    v2play:false,
-    v3play:false
+    v0play: false,
+    v1play: false,
+    v2play: false,
+    v3play: false,
+    videoSwitch: 0
   },
 
   /**
@@ -41,20 +42,29 @@ Page({
     this.getActivityList(courseId)
     this.userInfoGet()
     this.getUserCourse()
+    this.getSwitch()
     app.initPage()
       .then(() => {
         this.getDetail(courseId)
       })
     this.innerAudio = wx.createInnerAudioContext()
     let that = this
-    this.innerAudio.onEnded(function(){
+    this.innerAudio.onEnded(function () {
       that.setData({
-        v0play:false,
-        v1play:false,
-        v2play:false,
-        v3play:false
+        v0play: false,
+        v1play: false,
+        v2play: false,
+        v3play: false
       })
     })
+  },
+  getSwitch() {
+    app.api.getSwitch()
+      .then(res => {
+        this.setData({
+          videoSwitch: res.data.status
+        })
+      })
   },
   userInfoGet() {
     app.api.wxUserGet()
@@ -180,63 +190,63 @@ Page({
       let v3play = this.data.v3play
       let index = e.currentTarget.dataset.id
       this.innerAudio.stop()
-      if(v0play && index == 0){
+      if (v0play && index == 0) {
         this.setData({
-          v0play:false
+          v0play: false
         })
         return
       }
-      if(v1play && index == 0){
+      if (v1play && index == 0) {
         this.setData({
-          v1play:false
+          v1play: false
         })
         return
       }
-      if(v2play && index == 0){
+      if (v2play && index == 0) {
         this.setData({
-          v2play:false
+          v2play: false
         })
         return
       }
-      if(v3play && index == 0){
+      if (v3play && index == 0) {
         this.setData({
-          v3play:false
+          v3play: false
         })
         return
       }
 
 
-      if(index == 0){
+      if (index == 0) {
         this.setData({
-          v0play:true,
-          v1play:false,
-          v2play:false,
-          v3play:false
+          v0play: true,
+          v1play: false,
+          v2play: false,
+          v3play: false
         })
-      }else if(index ==1){
+      } else if (index == 1) {
         this.setData({
-          v1play:true,
-          v0play:false,
-          v2play:false,
-          v3play:false
+          v1play: true,
+          v0play: false,
+          v2play: false,
+          v3play: false
         })
-      }else if(index ==2){
+      } else if (index == 2) {
         this.setData({
-          v2play:true,
-          v0play:false,
-          v2play:false,
-          v3play:false
+          v2play: true,
+          v0play: false,
+          v2play: false,
+          v3play: false
         })
-      }else if(index ==3 ){
+      } else if (index == 3) {
         this.setData({
-          v3play:true,
-          v0play:false,
-          v2play:false,
-          v1play:false
+          v3play: true,
+          v0play: false,
+          v2play: false,
+          v1play: false
         })
       }
       let guide = this.data.guide[index]
-      if(guide === undefined){
+      if (guide === undefined) {
         return
       }
       let url = guide.audio
@@ -251,10 +261,15 @@ Page({
     if (this.data.isOwned || this.data.isMember || this.data.inTime) {
       let index = e.currentTarget.dataset.id
       let video = this.data.videoList2[index]
+
+      let videoSwitch = this.data.videoSwitch
+
       let url = video.videoUrl
-      wx.navigateTo({
-        url: '/pages/course/def-video/index?url=' + url,
-      })
+      if (videoSwitch === 1) {
+        wx.navigateTo({
+          url: '/pages/course/def-video/index?url=' + url,
+        })
+      }
     } else {
       this.showModal('NeedBuy')
     }
