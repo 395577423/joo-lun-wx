@@ -1,11 +1,13 @@
 // pages/course/def-video/index.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    videoUrl:null
+    videoUrl: null,
+    videoSwitch: 0
   },
 
   /**
@@ -14,10 +16,18 @@ Page({
   onLoad(options) {
     let url = options.url
     this.setData({
-      videoUrl:url
+      videoUrl: url
     })
+    this.getSwitch()
   },
-
+  getSwitch() {
+    app.api.getSwitch()
+      .then(res => {
+        this.setData({
+          videoSwitch: res.data.status
+        })
+      })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -29,15 +39,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.videoContext = wx.createVideoContext('myVideo', this);// 	创建 video 上下文 VideoContext 对象。
-		this.videoContext.requestFullScreen({	// 设置全屏时视频的方向，不指定则根据宽高比自动判断。
-			direction: 90						// 屏幕逆时针90度
-		});
+    this.videoContext = wx.createVideoContext('myVideo', this); // 	创建 video 上下文 VideoContext 对象。
+    this.videoContext.requestFullScreen({ // 设置全屏时视频的方向，不指定则根据宽高比自动判断。
+      direction: 90 // 屏幕逆时针90度
+    });
   },
 
-  endAction(){
+  endAction() {
     // this.videoContext = wx.createVideoContext('myVideo', this);
-		// this.videoContext.exitFullScreen(); //退出全屏
+    // this.videoContext.exitFullScreen(); //退出全屏
   },
 
   /**
