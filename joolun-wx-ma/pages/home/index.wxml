@@ -1,4 +1,4 @@
-<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-active-color="0081FF" style="height:500rpx;">
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-active-color="0081FF" >
   <swiper-item wx:for="{{swiperList}}" wx:key="index" bindtap="swipclick" data-adId="{{index}}">
     <image src="{{item.cover}}"></image>
   </swiper-item>

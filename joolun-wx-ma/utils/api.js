@@ -289,5 +289,9 @@ module.exports = {
   },
   listWithdrawApplyRecord:() => {
     return request('/weixin/api/commission/withdraw/apply/list','get');
+  },
+  getSwitch:()=>{
+    return request('/weixin/api/videoswitch','get')
   }
+
 }
