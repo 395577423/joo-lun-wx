@@ -17,17 +17,21 @@
                @search-change="searchChange"
                @selection-change="selectionChange"
     >
+      <template slot="questionForm" slot-scope="scope">
+        <BaseEditor v-model="scope.row.question"/>
+      </template>
     </avue-crud>
   </div>
 </template>
 
 <script>
-import {addObj, delObj, getPage, putObj} from '@/api/course/guide'
+import {addObj, delObj, getPage, putObj,getObj} from '@/api/course/guide'
 import option from '@/const/crud/course/guide'
+import BaseEditor from '@/components/Editor/index.vue'
 
 export default {
   name: 'guide',
-  components: {},
+  components: {BaseEditor},
   data() {
     return {
       form: {},
@@ -66,7 +70,16 @@ export default {
       })
     },
     beforeOpen(done, type) {
-      done()
+      if(type == 'add'){
+        done()
+      }else if(type == 'edit'){
+        this.tableLoading = true
+        getObj(this.form.id).then(response => {
+          this.$set(this.form,'question', response.data.question)
+          this.tableLoading = false
+          done()
+        })
+      }
     },
     searchChange(params, done) {
       params = this.filterForm(params)

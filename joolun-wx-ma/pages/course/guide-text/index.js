@@ -1,33 +1,25 @@
-// pages/course/def-video/index.js
-const app = getApp()
+// pages/course/guide-text/index.js
+const WxParse = require('../../../public/wxParse/html2json')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    videoUrl: null,
-    videoSwitch: '0'
+    txt:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    let url = options.url
+    let question = options.question
+    let txt = WxParse.html2json(question, 'question');
     this.setData({
-      videoUrl: url
+      txt:txt
     })
-    this.getSwitch()
   },
-  getSwitch() {
-    app.api.getSwitch()
-      .then(res => {
-        this.setData({
-          videoSwitch: res.data.status
-        })
-      })
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -39,15 +31,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.videoContext = wx.createVideoContext('myVideo', this); // 	创建 video 上下文 VideoContext 对象。
-    this.videoContext.requestFullScreen({ // 设置全屏时视频的方向，不指定则根据宽高比自动判断。
-      direction: 90 // 屏幕逆时针90度
-    });
-  },
 
-  endAction() {
-    // this.videoContext = wx.createVideoContext('myVideo', this);
-    // this.videoContext.exitFullScreen(); //退出全屏
   },
 
   /**

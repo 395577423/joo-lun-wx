@@ -29,6 +29,8 @@ export default () => {
         message: '请输入课程音频问题',
         trigger: 'blur'
       }]
+      ,
+      formslot: true
     }, {
       label: '课程音频文件',
       prop: 'audio',

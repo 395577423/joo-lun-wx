@@ -21,43 +21,47 @@
 
   <!-- 导读 -->
   <view wx:if="{{TabCur == 0}}">
-    <view class="cu-list menu" bindtap="playAudio" data-id='0'>
+    <view class="cu-list menu" >
       <view class="cu-item">
-        <view class="content">
+        <view class="content" bindtap="toDetail" data-id='0'>
           <view class="text-black">第一步｜了解本书价值</view>
         </view>
-        <view class="action">
-          <view class="{{v0play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}} "></view>
+        <view class="action" bindtap="playAudio" data-id='0' style="width:200rpx;">
+          <view wx:if="{{!ispause || !v0play}}" class="{{v0play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}" style="margin-left: 170rpx;"></view>
+          <view wx:if="{{ispause && v0play}}" class="cuIcon-stop text-orange" style="margin-left: 170rpx;"></view>
         </view>
       </view>
     </view>
-    <view class="cu-list menu" bindtap="playAudio" data-id='1'>
+    <view class="cu-list menu">
       <view class="cu-item">
-        <view class="content">
+        <view class="content" bindtap="toDetail" data-id='1'>
           <view class="text-black">第二步｜熟悉作者背景</view>
         </view>
-        <view class="action">
-          <view class="{{v1play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}"></view>
+        <view class="action"  bindtap="playAudio" data-id='1' style="width:200rpx;">
+          <view wx:if="{{!ispause || !v1play}}" class="{{v1play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}" style="margin-left: 170rpx;"></view>
+          <view wx:if="{{ispause && v1play}}" class="cuIcon-stop text-orange" style="margin-left: 170rpx;"></view>
         </view>
       </view>
     </view>
-    <view class="cu-list menu" bindtap="playAudio" data-id='2'>
+    <view class="cu-list menu" >
       <view class="cu-item">
-        <view class="content">
+        <view class="content" bindtap="toDetail" data-id='2'>
           <view class="text-black">第三步｜激发阅读兴趣</view>
         </view>
-        <view class="action">
-          <view class="{{v2play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}"></view>
+        <view class="action" bindtap="playAudio" data-id='2' style="width:200rpx;">
+          <view wx:if="{{!ispause || !v2play}}" class="{{v2play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}" style="margin-left: 170rpx;"></view>
+          <view wx:if="{{ispause && v2play}}" class="cuIcon-stop text-orange" style="margin-left: 170rpx;"></view>
         </view>
       </view>
     </view>
-    <view class="cu-list menu" bindtap="playAudio" data-id='3'>
+    <view class="cu-list menu" >
       <view class="cu-item">
-        <view class="content">
+        <view class="content" bindtap="toDetail" data-id='3'>
           <view class="text-black">第四步｜做好阅读计划</view>
         </view>
-        <view class="action">
-          <view class="{{v3play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}"></view>
+        <view class="action" bindtap="playAudio" data-id='3' style="width:200rpx;">
+          <view wx:if="{{!ispause || !v3play}}" class="{{v3play?'cuIcon-sound text-orange':'cuIcon-playfill text-gray'}}" style="margin-left: 170rpx;"></view>
+          <view wx:if="{{ispause && v3play}}" class="cuIcon-stop text-orange" style="margin-left: 170rpx;"></view>
         </view>
       </view>
     </view>

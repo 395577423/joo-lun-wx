@@ -6,7 +6,7 @@
       <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/play.png" style="width: 100rpx;height:100rpx;position: relative;top:-100rpx;left: 280rpx;" />
     </view>
     <!-- 视频 -->
-    <video src="{{video.url}}" id="{{index}}" class='video' wx:if="{{playing}}" autoplay="false" custom-cache="{{false}}"></video>
+    <video src="{{video.url}}" id="{{index}}" class='video' wx:if="{{playing && videoSwitch == '1'}}" autoplay="false" custom-cache="{{false}}"></video>
   </view>
 </view>
 <view class="cu-card case">

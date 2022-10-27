@@ -84,6 +84,7 @@
             <if test="query.userId !=null and query.userId !=''">
                 and i.id in(select course_id from user_course where user_id = #{query.userId})
             </if>
+            order by i.create_time desc
         </where>
     </select>
 

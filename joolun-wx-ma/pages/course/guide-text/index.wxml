@@ -1,0 +1,6 @@
+<import src="/public/wxParse/wxParse.wxml" />
+<view class="cu-card case">
+  <view class="cu-item shadow">
+    <template is="wxParse" data="{{wxParseData:txt.nodes}}" style="color: black;" />
+  </view>
+</view>
