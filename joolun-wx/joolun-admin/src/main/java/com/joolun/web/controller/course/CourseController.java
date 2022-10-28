@@ -123,7 +123,7 @@ public class CourseController extends BaseController {
         if (StringUtils.isNotEmpty(title)) {
             queryWrapper.like("title", title);
         }
-        List<Course> list = courseService.list(queryWrapper.lambda().select(Course::getId, Course::getTitle));
+        List<Course> list = courseService.list(queryWrapper.lambda().select(Course::getId, Course::getTitle).orderByDesc(Course::getCreateTime));
         return AjaxResult.success(list);
     }
 

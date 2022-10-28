@@ -28,7 +28,8 @@ Page({
     v1play: false,
     v2play: false,
     v3play: false,
-    videoSwitch: 0
+    videoSwitch: '0',
+    ispause: false
   },
 
   /**
@@ -54,7 +55,8 @@ Page({
         v0play: false,
         v1play: false,
         v2play: false,
-        v3play: false
+        v3play: false,
+        ispause:false
       })
     })
   },
@@ -102,8 +104,6 @@ Page({
         let result2 = that.compareDate(new Date(), course.endTime)
 
         //如果大于等于开始日期，并且小于结束日期，则为有效
-        console.log('开始日期大于等于当前日期？' + result)
-        console.log('当前日期大于等于结束日期？' + result2)
         if ((result == 1 || result == 2) && (result2 == 2 || result2 == 3)) {
           this.setData({
             inTime: true
@@ -123,8 +123,6 @@ Page({
           videoList2: clazz,
           coverUrl: course.coverUrl,
           realPrice: realPrice,
-          audioUrl: course.questionAudio,
-          question: course.question,
           guide: guide
         })
         wx.setNavigationBarTitle({
@@ -132,6 +130,22 @@ Page({
         })
         WxParse.wxParse('introduction', 'html', introduction, this, 0)
       })
+  },
+
+  /**
+   * 去导读页面
+   * @param {id} e 
+   */
+  toDetail(e){
+    if (this.data.isOwned || this.data.isMember || this.data.inTime) {
+      let index = e.currentTarget.dataset.id
+      let guide = this.data.guide[index]
+      wx.navigateTo({
+        url: '/pages/course/guide-text/index?question=' + guide.question
+      })
+    } else {
+      this.showModal('NeedBuy')
+    }
   },
   /**
    * 判断日期1是否大于日期2，只到年月日
@@ -184,38 +198,19 @@ Page({
    */
   playAudio(e) {
     if (this.data.isOwned || this.data.isMember || this.data.inTime) {
+      // debugger;
       let v0play = this.data.v0play
       let v1play = this.data.v1play
       let v2play = this.data.v2play
       let v3play = this.data.v3play
       let index = e.currentTarget.dataset.id
-      this.innerAudio.stop()
-      if (v0play && index == 0) {
-        this.setData({
-          v0play: false
-        })
+      let ispause = this.data.ispause
+      let guide = this.data.guide[index]
+      if (guide === undefined) {
         return
       }
-      if (v1play && index == 0) {
-        this.setData({
-          v1play: false
-        })
-        return
-      }
-      if (v2play && index == 0) {
-        this.setData({
-          v2play: false
-        })
-        return
-      }
-      if (v3play && index == 0) {
-        this.setData({
-          v3play: false
-        })
-        return
-      }
-
-
+      let url = guide.audio
+      this.innerAudio.src = url
       if (index == 0) {
         this.setData({
           v0play: true,
@@ -223,35 +218,97 @@ Page({
           v2play: false,
           v3play: false
         })
+        if(v0play){
+          if(ispause){
+            this.innerAudio.play()
+            this.setData({
+              ispause:false
+            })
+          }else{
+            this.innerAudio.pause()
+            this.setData({
+              ispause:true
+            })
+          }
+          return
+        }else{
+          this.innerAudio.stop()
+          this.innerAudio.play()
+        }
       } else if (index == 1) {
         this.setData({
-          v1play: true,
           v0play: false,
+          v1play: true,
           v2play: false,
           v3play: false
         })
+        if(v1play){
+          if(ispause){
+            this.innerAudio.play()
+            this.setData({
+              ispause:false
+            })
+          }else{
+            this.innerAudio.pause()
+            this.setData({
+              ispause:true
+            })
+          }
+          return
+        }else{
+          this.innerAudio.stop()
+          this.innerAudio.play()
+        }
       } else if (index == 2) {
         this.setData({
-          v2play: true,
           v0play: false,
-          v2play: false,
+          v1play: false,
+          v2play: true,
           v3play: false
         })
+        if(v2play){
+          if(ispause){
+            this.innerAudio.play()
+            this.setData({
+              ispause:false
+            })
+          }else{
+            this.innerAudio.pause()
+            this.setData({
+              ispause:true
+            })
+          }
+          return
+        }else{
+          this.innerAudio.stop()
+          this.innerAudio.play()
+        }
       } else if (index == 3) {
         this.setData({
-          v3play: true,
           v0play: false,
+          v1play: false,
           v2play: false,
-          v1play: false
+          v3play: true
         })
+        if(v3play){
+          if(ispause){
+            this.innerAudio.play()
+            this.setData({
+              ispause:false
+            })
+          }else{
+            this.innerAudio.pause()
+            this.setData({
+              ispause:true
+            })
+          }
+          return
+        }else{
+          this.innerAudio.stop()
+          this.innerAudio.play()
+        }
       }
-      let guide = this.data.guide[index]
-      if (guide === undefined) {
-        return
-      }
-      let url = guide.audio
-      this.innerAudio.src = url
-      this.innerAudio.play()
+
     } else {
       this.showModal('NeedBuy')
     }
@@ -265,7 +322,7 @@ Page({
       let videoSwitch = this.data.videoSwitch
 
       let url = video.videoUrl
-      if (videoSwitch === 1) {
+      if (videoSwitch === '1') {
         wx.navigateTo({
           url: '/pages/course/def-video/index?url=' + url,
         })
@@ -402,7 +459,6 @@ Page({
   },
   hideModal(e) {
     let modelName = this.data.modalName
-    console.log(modelName)
     if ('getPhone' === modelName) {
       this.buy()
     } else {

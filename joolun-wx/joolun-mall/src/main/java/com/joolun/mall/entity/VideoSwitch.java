@@ -25,5 +25,5 @@ public class VideoSwitch extends Model<VideoSwitch> {
     /**
      * 1:打开 0:关闭
      */
-    private Integer status;
+    private String status;
 }

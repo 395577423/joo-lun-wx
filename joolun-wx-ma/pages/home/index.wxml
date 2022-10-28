@@ -1,9 +1,11 @@
-<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-active-color="0081FF" >
-  <swiper-item wx:for="{{swiperList}}" wx:key="index" bindtap="swipclick" data-adId="{{index}}">
-    <image src="{{item.cover}}"></image>
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-active-color="0081FF" style="height:{{hei}}">
+  <block wx:for="{{swiperList}}" wx:key="index" >
+    <swiper-item  bindtap="swipclick" data-adId="{{index}}">
+    <image src="{{item.cover}}" style="height: 100%;width: 100%;" bindload="getHei"></image>
   </swiper-item>
+  </block>
 </swiper>
-<view class="cu-bar search bg-white fixed padding">
+<view class="cu-bar search bg-white padding">
   <view class="search-form">
     <text class="cuIcon-search"></text>
     <navigator class="response" hover-class='none' url='/pages/base/search2/index'>

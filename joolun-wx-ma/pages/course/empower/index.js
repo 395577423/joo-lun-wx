@@ -13,7 +13,8 @@ Page({
     id: null,
     realPrice: null,
     canPlay: false,
-    playing:false
+    playing: false,
+    videoSwitch: '0'
   },
 
   /**
@@ -24,12 +25,20 @@ Page({
     this.setData({
       id: id
     })
+    this.getSwitch()
     app.initPage()
       .then(res => {
         this.wxUserGet()
       })
   },
-
+  getSwitch() {
+    app.api.getSwitch()
+      .then(res => {
+        this.setData({
+          videoSwitch: res.data.status
+        })
+      })
+  },
   getEmpowerVideoDetail() {
     let userId = this.data.userId
     let id = this.data.id
@@ -51,7 +60,7 @@ Page({
         if (level >= video.videoLevel || buyer === this.data.userId) {
           this.setData({
             canPlay: true,
-            id:id
+            id: id
           })
         }
         this.setData({
@@ -75,13 +84,13 @@ Page({
     let canPlay = this.data.canPlay
     if (!canPlay) {
       this.showModal('toBuy')
-    }else{
+    } else {
       this.setData({
-        playing:true
+        playing: true
       })
     }
   },
-  toBuy(){
+  toBuy() {
     this.showModal('toBuy')
   },
   showModal(name) {
@@ -101,7 +110,7 @@ Page({
     var that = this
     let id = that.data.id
     let userId = that.data.userId
-  app.api.empowerUnifiedOrder({
+    app.api.empowerUnifiedOrder({
         id: id,
         userId: userId
       })

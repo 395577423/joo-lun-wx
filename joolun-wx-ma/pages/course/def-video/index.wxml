@@ -1,3 +1,3 @@
 <view class="page" >
-  <video id="myVideo" src="{{videoUrl}}" autoplay="true" bindended="endAction" wx:if="{{videoSwitch == 1}}"></video>
+  <video id="myVideo" src="{{videoUrl}}" autoplay="true" bindended="endAction" wx:if="{{videoSwitch == '1'}}"></video>
 </view>
