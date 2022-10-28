@@ -46,6 +46,14 @@ export const tableOption = {
       editDisplay: false
     },
     {
+      label: '是否热门',
+      prop: 'hot',
+      type: 'radio',
+      slot:true,
+      display: false,
+      editDisplay: false
+    },
+    {
       label: '活动地址',
       prop: 'address',
       display: false
@@ -99,6 +107,11 @@ export const tableOption = {
           }]
         },
         {
+          label: '感兴趣人数',
+          prop: 'interestedNum',
+          type: 'number'
+        },
+        {
           label: '限制人数',
           prop: 'personLimit',
           type: 'number',
@@ -148,7 +161,7 @@ export const tableOption = {
           label: '活动介绍',
           prop: 'introduction',
           span: 20,
-          component: "avueUeditor",
+          formslot: true,
           options:{
             oss:"ali",
             ali:ossAli,

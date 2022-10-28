@@ -65,6 +65,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     @Override
     public int edit(ActivityDto activityDto) {
         Activity activity = activityDto.getActivity();
+        activity.setSalePrice(CollectionUtil.isNotEmpty(activityDto.getPriceCases())?
+                activityDto.getPriceCases().get(0).getSalesPrice() : null);
         boolean success = this.updateById(activityDto.getActivity());
         List<ActivityPriceCase> activityPriceCases = activityDto.getPriceCases();
         if (CollectionUtil.isNotEmpty(activityPriceCases)) {

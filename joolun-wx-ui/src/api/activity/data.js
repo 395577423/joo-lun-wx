@@ -61,6 +61,14 @@ export function publishActivity(data) {
   })
 }
 
+export function setHot(data) {
+  return request({
+    url: '/activity/hot',
+    method: 'post',
+    data: data
+  })
+}
+
 export function relateCourse(data) {
   return request({
     url: '/activity/relate/course',

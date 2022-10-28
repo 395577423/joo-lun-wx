@@ -11,7 +11,7 @@
         <text class="text-price text-red">{{salesPrice}} 起</text>
       </view>
       <view class="padding-top">
-        <view class="text-grey text-sm flex justify-end padding-right-sm">{{buyCount}} 人感兴趣</view> 
+        <view class="text-grey text-sm flex justify-end padding-right-sm">{{interestedNum}} 人感兴趣</view> 
         <view class="text-grey text-sm justify-end padding-right-sm">会员返佣{{cashBackAmount}}元</view>
       </view>
     </view>

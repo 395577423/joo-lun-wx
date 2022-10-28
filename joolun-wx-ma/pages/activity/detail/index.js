@@ -24,7 +24,7 @@ Page({
     memberPrice: 0,
     closed: false,
     tips: '',
-    buyCount:0,
+    interestedNum:1000,
     cashBackAmount:0
   },
   onLoad: function (options) {
@@ -49,7 +49,6 @@ Page({
         this.getDetail(activityId)
         this.getPriceCase(activityId)
         this.getStatus(activityId)
-        this.getBuyActivityCount(activityId)
         if (userId) {
           this.addShareRecord(userId)
         }
@@ -68,7 +67,8 @@ Page({
         activityContent: activityContent,
         address: address,
         longitude: lon,
-        latitude: lat
+        latitude: lat,
+        interestedNum:
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
     })

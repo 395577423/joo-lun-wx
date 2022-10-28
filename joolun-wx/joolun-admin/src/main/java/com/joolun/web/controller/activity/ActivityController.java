@@ -194,5 +194,18 @@ public class ActivityController extends BaseController {
         return toAjax(update ? 1 : 0);
     }
 
+    /**
+     * 设置热门社会活动
+     */
+    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
+    @Log(title = "社会活动", businessType = BusinessType.UPDATE)
+    @PostMapping(value = "/hot")
+    public AjaxResult setHot(@RequestBody Activity activity) {
+        LambdaUpdateWrapper<Activity> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(Activity::getHot, activity.getHot());
+        updateWrapper.eq(Activity::getId, activity.getId());
+        boolean update = activityService.update(updateWrapper);
+        return toAjax(update ? 1 : 0);
+    }
 
 }
