@@ -6,7 +6,7 @@ export default class LastMayday {
       "background": "#f8f8f8",
       "views": [{
           "type": "image",
-          "url": "https://mall-owen.oss-cn-beijing.aliyuncs.com/report3.png",
+          "url": "https://mall-owen.oss-cn-beijing.aliyuncs.com/report4.jpg",
           "css": {
             "width": "480px",
             "height": "860px",

@@ -18,7 +18,7 @@
   <view class="grid col-4 margin-top text-center">
     <view></view>
     <view><text class="margin-right-sm text-right">我的奖学金:</text> </view>
-    <view><text class="text-price text-red text-left">{{userInfo.money == null?0:userInfo.money}}</text></view>
+    <view><text class="text-red text-left">{{userInfo.money == null?0:userInfo.money}}币</text></view>
     <view></view>
     <view></view>
     <view class="margin-left-xs padding-top-sm"><text class="margin-right-sm text-right">我的身份:</text> </view>
@@ -28,7 +28,7 @@
 </view>
 
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-  <view class="cu-item arrow">
+  <!-- <view class="cu-item arrow">
     <navigator class="content" url="/pages/course/empower-video/index?userId={{wxUser.id}}">
         <text class="cuIcon-vip text-orange"></text>
         <text>父母赋能中心</text>
@@ -39,7 +39,7 @@
       <text class="cuIcon-list text-orange "></text>
       <text>我的书屋</text>
     </navigator>
-  </view>
+  </view> -->
   <!-- <view class="cu-item arrow">
     <view class="content">
       <text class="cuIcon-cascades text-orange "></text>

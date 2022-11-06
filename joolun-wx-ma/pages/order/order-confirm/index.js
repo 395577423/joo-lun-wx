@@ -165,7 +165,7 @@ Page({
   useBalance(){
     let totalPrice = 0
     if(!this.data.useBalance){
-      totalPrice = Number(this.data.salesPrice) -  Number(this.data.userMoney) + Number(this.data.freightPrice)
+      totalPrice = Number(this.data.salesPrice) -  Number(this.data.userMoney/10) + Number(this.data.freightPrice)
     }else{
       totalPrice = Number(this.data.salesPrice) + Number(this.data.freightPrice)
     }

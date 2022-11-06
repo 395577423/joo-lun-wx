@@ -1,7 +1,7 @@
 <import src="/public/wxParse/wxParse.wxml" />
 <wxml-to-canvas class="widget"></wxml-to-canvas>
 <scroll-view class="app">
-  <view class="bg-img padding-tb-xl" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/newheader.jpeg');height: 600rpx;">
+  <view class="bg-img padding-tb-xl" style="background-image: url('https://mall-owen.oss-cn-beijing.aliyuncs.com/newheader.jpg');height: 600rpx;">
     <view class="padding-xl text-white text-center margin-top">
       <view class="padding-xs text-xl">
         <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/dushubaogao%402x.png" style="width: 420rpx;height: 70rpx;" />

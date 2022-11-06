@@ -68,7 +68,7 @@ Page({
         address: address,
         longitude: lon,
         latitude: lat,
-        interestedNum:
+        interestedNum:0
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
     })
