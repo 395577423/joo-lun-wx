@@ -26,7 +26,7 @@
         <view class="content">
           <view class="text-blue">温馨提示：在阅读前，记得先完成以下四步哦，点击“去搜索”，去最近的阅读馆借书去吧。
           </view>
-            <button class="cu-btn round line-blue " style="margin-left:33%;">
+            <button class="cu-btn round line-blue " style="margin-left:33%;margin-bottom: 5rpx;">
               <navigator url='/pages/map/index' class="flex solid-bottom padding" >
               去搜索
             </navigator>

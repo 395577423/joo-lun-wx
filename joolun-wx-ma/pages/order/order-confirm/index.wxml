@@ -62,7 +62,7 @@
         <view class="cu-item margin-top-sm cu-item arrow" bindtap="showBalanceModel">
           <text class="text-gray text-sm">使用账户余额抵扣</text>
           <view class="action">
-            <view class="text-price" wx:if="{{useBalance}}">{{userMoney/10}}</view>
+            <view class="text-price" wx:if="{{useBalance}}">{{userMoney}}</view>
           </view>
         </view>
         
@@ -96,7 +96,7 @@
     </view>
     <view class="padding-xl">
       <text class="margin-right-df text-lg">最高可使用账户余额</text>
-      <text class="text-price margin-left-xl text-red text-xl">减 {{userMoney/10}}</text> 
+      <text class="text-price margin-left-xl text-red text-xl">减 {{userMoney}}</text> 
       <switch class="sm margin-left-lg" bindtap="useBalance"></switch>
     </view>
   </view>
