@@ -205,7 +205,7 @@
       <view class="cu-item" wx:for="{{activityList}}" wx:key="index" bindtap="toActivity" data-id="{{item.id}}">
         <view class="cu-avatar lg" style="background-image:url({{item.imageUrl}});"></view>
         <view class="content">
-          <view class="text-black">{{item.name}}</view>
+          <view class="text-black" style="width:400rpx;">{{item.name}}</view>
         </view>
         <view>
           <view class="text-black ">
@@ -217,7 +217,7 @@
     </view>
   </view>
 </scroll-view>
-<view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}">
+<!-- <view class="cu-bar bg-white tabbar border shop foot" wx:if="{{!isOwned&&!isMember&&!inTime}}">
   <view class="btn-group">
     <view wx:if="{{course.rates > 0 && course.price>course.rates}}">
       <text class="text-price text-blue text-bold">{{course.rates}}</text>
@@ -228,7 +228,7 @@
     </view>
     <button class="cu-btn round bg-blue" bindtap="toBuy" data-type="2">购买</button>
   </view>
-</view>
+</view> -->
 
 
 <view class="cu-modal bottom-modal {{modalName=='getPhone'?'show':''}}">
