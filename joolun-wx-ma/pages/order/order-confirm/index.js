@@ -146,11 +146,12 @@ Page({
   },
   showBalanceModel(){
     let userBankMoney = (this.data.userInfo.money / 10).toFixed(2)
+    let salesPrice = this.data.salesPrice
     let userMoney = 0
-    if(userBankMoney < this.data.salesPrice){
+    if(Number(userBankMoney) < Number(salesPrice)){
       userMoney = userBankMoney
     }else{
-      userMoney = this.data.salesPrice
+      userMoney = salesPrice
     }
     this.setData({
       modalName:'userBalance',

@@ -56,6 +56,7 @@ public class OrderInfoApi {
     private final MallConfigProperties mallConfigProperties;
 
     private final WxUserService wxUserService;
+
     /**
      * 分页查询
      *
@@ -225,7 +226,7 @@ public class OrderInfoApi {
                 orderInfoService.notifyOrder(orderInfo);
                 if (Objects.nonNull(orderInfo.getCouponPrice())) {
                     WxUser user = wxUserService.getById(orderInfo.getUserId());
-                    BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice());
+                    BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice().multiply(new BigDecimal("10")));
                     if (subtract.compareTo(BigDecimal.ZERO) < 0) {
                         subtract = BigDecimal.ZERO;
                     }
