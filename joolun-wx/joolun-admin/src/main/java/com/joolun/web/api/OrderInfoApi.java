@@ -226,6 +226,10 @@ public class OrderInfoApi {
                 orderInfoService.notifyOrder(orderInfo);
                 if (Objects.nonNull(orderInfo.getCouponPrice())) {
                     WxUser user = wxUserService.getById(orderInfo.getUserId());
+                    log.info("用户剩余金额:{}", user.getMoney());
+                    log.info("使用的优惠:{}", orderInfo.getCouponPrice());
+                    log.info("优惠乘10结果:{}", orderInfo.getCouponPrice().multiply(new BigDecimal("10")));
+
                     BigDecimal subtract = user.getMoney().subtract(orderInfo.getCouponPrice().multiply(new BigDecimal("10")));
                     if (subtract.compareTo(BigDecimal.ZERO) < 0) {
                         subtract = BigDecimal.ZERO;
