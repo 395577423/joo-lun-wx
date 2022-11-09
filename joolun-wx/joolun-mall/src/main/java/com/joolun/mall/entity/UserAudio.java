@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -50,8 +49,18 @@ public class UserAudio extends Model<UserAudio> {
      */
     private String audioUrl;
 
+    /**
+     * 语音回复ID
+     */
+    private Integer replyId;
+
+    /**
+     * 语音回复内容
+     */
+    private String content;
+
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @TableField(exist = false)

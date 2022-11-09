@@ -1,15 +1,19 @@
 package com.joolun.mall.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.joolun.mall.dto.UserOrderBaseInfo;
-import com.joolun.mall.entity.*;
+import com.joolun.mall.entity.ActivityPriceCase;
+import com.joolun.mall.entity.UserIncomeRecord;
+import com.joolun.mall.entity.UserMemberConfig;
+import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.enums.IncomeStatusEnum;
-import com.joolun.mall.enums.MemberStatusEnum;
 import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.mapper.UserIncomeRecordMapper;
-import com.joolun.mall.service.*;
+import com.joolun.mall.service.ActivityPriceCaseService;
+import com.joolun.mall.service.IUserIncomeRecordService;
+import com.joolun.mall.service.IUserMemberConfigService;
+import com.joolun.mall.service.IUserShareRecordService;
 import com.joolun.weixin.entity.WxUser;
 import com.joolun.weixin.service.WxUserService;
 import org.springframework.beans.factory.annotation.Autowired;

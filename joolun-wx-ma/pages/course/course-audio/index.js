@@ -21,7 +21,9 @@ Page({
     tempFilePath:'',
     auth:false,
     coursePlaying:false,
-    userPlaying:false
+    userPlaying:false,
+    isReplyed:false,
+    courseReply:null
   },
 
   /**
@@ -40,6 +42,7 @@ Page({
       title: this.data.title,
     })
     this.queryUserAudio()
+    this.getReply()
     this.getAuth()
     this.innerAudio = wx.createInnerAudioContext()
 
@@ -56,6 +59,16 @@ Page({
 
   },
   
+  getReply(){
+    let courseId = this.data.courseId
+    let userId = this.data.wxUser.id
+    let audioId = this.data.audioId
+    app.api.getReply(courseId,userId,audioId).then(res =>{
+      this.setData({
+        courseReply:res.data
+      })
+    })
+  },
   queryUserAudio() {
     let courseId = this.data.courseId
     let userId = this.data.wxUser.id
@@ -67,6 +80,11 @@ Page({
           userAudio: res.data.audioUrl,
           isRecorded: true
         })
+        if(res.data.replyId != null){
+          this.setData({
+            isReplyed: true
+          })
+        }
       }
     })
   },
@@ -167,7 +185,8 @@ Page({
         formData: {
           'userId': that.data.wxUser.id,
           'courseId': that.data.courseId,
-          'audioId': that.data.audioId
+          'audioId': that.data.audioId,
+          'replyId':that.data.courseReply.id
         },
         success(res) {
           let result = JSON.parse(res.data)
@@ -175,8 +194,7 @@ Page({
             userAudio: result.msg,
             isRecorded: true
           })
-          let data = JSON.parse(res.data)
-          myAudioManager.src = data.msg
+          that.queryUserAudio()
         },
         fail(){
         }
@@ -185,7 +203,6 @@ Page({
   },
   getAuth() {
     let that = this
-
     wx.authorize({
       scope: 'scope.record',
       success(res) {

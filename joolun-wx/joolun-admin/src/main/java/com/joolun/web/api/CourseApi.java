@@ -27,6 +27,7 @@ import com.joolun.weixin.utils.WxMaUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,9 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 课程API
@@ -122,6 +121,8 @@ public class CourseApi {
 
 
     private final ICourseGuideService iCourseGuideService;
+
+    private final ICourseReplyService iCourseReplyService;
 
     /**
      * 查询奖学金计划课程
@@ -277,6 +278,9 @@ public class CourseApi {
             String userId = request.getParameter("userId");
             String courseId = request.getParameter("courseId");
             String audioId = request.getParameter("audioId");
+            String replyId = request.getParameter("replyId");
+            CourseReply courseReply = iCourseReplyService.getById(replyId);
+
             UserAudio userAudio;
 
             QueryWrapper<UserAudio> wrapper = new QueryWrapper<>();
@@ -285,6 +289,10 @@ public class CourseApi {
             if (null == userAudio) {
                 userAudio = new UserAudio();
             }
+            userAudio.setReplyId(Integer.parseInt(replyId));
+            userAudio.setContent(courseReply.getContent());
+
+
             userAudio.setUserId(userId);
             userAudio.setCourseId(Long.parseLong(courseId));
             userAudio.setAudioId(Long.parseLong(audioId));
@@ -489,7 +497,7 @@ public class CourseApi {
         }
 
         BigDecimal realPrice;
-        if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0 && course.getRates().compareTo(BigDecimal.ZERO)>0) {
+        if (null != course.getRates() && course.getRates().compareTo(course.getPrice()) < 0 && course.getRates().compareTo(BigDecimal.ZERO) > 0) {
             realPrice = course.getRates();
         } else {
             realPrice = course.getPrice();
@@ -612,5 +620,26 @@ public class CourseApi {
 
         EmpowerVideo result = iUserEmpowerService.getOneById(userId, id);
         return AjaxResult.success(result);
+    }
+
+    /**
+     * 获取随机语音回复信息
+     *
+     * @return
+     */
+    @GetMapping("/reply/{courseId}/{userId}/{audioId}")
+    public AjaxResult getReplyByCourseId(@PathVariable Integer courseId, @PathVariable String userId, @PathVariable Integer audioId) {
+        UserAudio one = userAudioService.getOne(Wrappers.<UserAudio>lambdaQuery().eq(UserAudio::getCourseId, courseId)
+                .eq(UserAudio::getUserId, userId)
+                .eq(UserAudio::getAudioId, audioId));
+        if (Objects.nonNull(one) && Objects.nonNull(one.getReplyId())) {
+            return AjaxResult.success(iCourseReplyService.getById(one.getReplyId()));
+        }
+        List<CourseReply> list = iCourseReplyService.list();
+        if (CollectionUtils.isNotEmpty(list)) {
+            int index = (int) (Math.random() * list.size());
+            return AjaxResult.success(list.get(index));
+        }
+        return AjaxResult.success();
     }
 }
