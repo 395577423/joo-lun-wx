@@ -1,15 +1,10 @@
-/**
- * Copyright (C) 2018-2019
- * All rights reserved, Designed By www.joolun.com
- * 注意：
- * 本软件为www.joolun.com开发研制，项目使用请保留此说明
- */
 const app = getApp()
 
 Page({
   data: {
     config: app.globalData.config,
     TabCur: 0,
+    MainCur: 0,
     VerticalNavTop: 0,
     goodsCategory: [],
     load: true
@@ -39,6 +34,7 @@ Page({
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,
+      MainCur: e.currentTarget.dataset.id,
       VerticalNavTop: (e.currentTarget.dataset.id - 1) * 50
     })
   },

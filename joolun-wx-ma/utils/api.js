@@ -292,6 +292,9 @@ module.exports = {
   },
   getSwitch:()=>{
     return request('/weixin/api/videoswitch','get')
+  },
+  getReply:(courseId,userId,audioId) =>{
+    return request('/weixin/api/course/reply/'+courseId+'/'+userId+'/'+audioId,'get')
   }
 
 }

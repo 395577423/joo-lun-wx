@@ -1,9 +1,3 @@
-<!--
-  - Copyright (C) 2018-2019
-  - All rights reserved, Designed By www.joolun.com
-  - 注意：
-  - 本软件为www.joolun.com开发研制，项目使用请保留此说明
--->
 <view class="cu-bar search bg-white">
   <view class="search-form round">
     <text class="cuIcon-search"></text>
@@ -18,7 +12,7 @@
       {{item.name}}
     </view>
   </scroll-view>
-  <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)"  bindscroll="VerticalMain">
+  <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">
     <view class="padding-tb-xs padding-lr-sm" wx:for="{{goodsCategory}}" wx:key="index" id="main-{{index}}">
       <view class='cu-bar solid-bottom bg-white'>
         <view class='action'>
