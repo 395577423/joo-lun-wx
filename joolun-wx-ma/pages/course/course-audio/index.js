@@ -26,10 +26,12 @@ Page({
     courseReply:null
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
     this.setData({
       courseId: options.courseId,
       title: options.title,
@@ -46,7 +48,7 @@ Page({
     this.getAuth()
     this.innerAudio = wx.createInnerAudioContext()
 
-    let that = this
+    
     this.innerAudio.onEnded(function(){
       that.setData({
         coursePlaying:false,
@@ -54,7 +56,6 @@ Page({
       })
     })
   },
-
   onReady(){
 
   },
@@ -194,7 +195,9 @@ Page({
             userAudio: result.msg,
             isRecorded: true
           })
-          that.queryUserAudio()
+          setTimeout(() =>{
+            that.queryUserAudio()
+          },500)
         },
         fail(){
         }
