@@ -71,7 +71,7 @@
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
       <text class="cuIcon-titles text-blue"></text>
-      <text class="text-shadow text-black text-bold">更多名著导读</text>
+      <text class="text-shadow text-black text-bold">更多名著</text>
     </view>
   </view>
   <view class="bg-white margin">

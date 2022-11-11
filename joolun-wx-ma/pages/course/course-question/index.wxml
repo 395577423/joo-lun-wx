@@ -1,6 +1,6 @@
 <view class="padding">
   <text class="cuIcon-footprint lg text-gray"></text>
-  <text>任务四：积累常考知识点</text>
+  <text>任务一：积累常识考点</text>
 </view>
 
 <scroll-view >

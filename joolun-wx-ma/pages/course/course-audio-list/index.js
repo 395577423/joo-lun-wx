@@ -19,6 +19,9 @@ Page({
       const title = options.title
       this.setData({title:title,courseId:id})
       this.getCourseAudios(id)
+      wx.setNavigationBarTitle({
+        title: title
+      })
   },
 
   /**

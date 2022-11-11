@@ -24,7 +24,7 @@
     <view class="cu-list menu">
       <view class="cu-item">
         <view class="content">
-          <view class="text-blue">温馨提示：在阅读前，记得先完成以下四步哦，点击“去搜索”，去最近的阅读馆借书去吧。
+          <view class="text-blue">温馨提示：在阅读前，记得先完成以下四步哦，点击“去搜索”，可以去最近的图书馆借书。
           </view>
             <button class="cu-btn round line-blue " style="margin-left:33%;margin-bottom: 5rpx;">
               <navigator url='/pages/map/index' class="flex solid-bottom padding" >
@@ -287,8 +287,8 @@
       </view>
     </view>
     <view class="padding-xl">
-      <view>请先点击下方购买才能做任务哦。</view>
-      <view>如有疑问请添加客服微信。</view>
+      <view>成为会员才可以做任务哦，</view>
+      <view>如有疑问请添加客服老师微信。</view>
       <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
     </view>
   </view>
