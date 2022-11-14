@@ -48,19 +48,15 @@ public class ActivityPriceCase implements Serializable {
     private Long[] caseOption;
 
     /**
-     * 套餐原价
+     * 销售价格
      */
     private BigDecimal salesPrice;
 
-    /**
-     * 套餐会员价
-     */
-    private BigDecimal memberPrice;
 
     /**
-     * 套餐超级会员价
+     * 显示价格
      */
-    private BigDecimal superMemberPrice;
+    private BigDecimal displayPrice;
 
     /**
      * 会员返现金额

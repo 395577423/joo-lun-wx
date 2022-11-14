@@ -91,7 +91,7 @@
         updateActivity,
         getActivity,
         relateCourse,
-        listPriceCase, publishActivity, setHot
+        publishActivity, setHot
     } from "@/api/activity/data";
 import {getCoursePage} from '@/api/course/course'
 import {courseTableOption, tableOption, imgTextOption} from "@/const/crud/activity/data";

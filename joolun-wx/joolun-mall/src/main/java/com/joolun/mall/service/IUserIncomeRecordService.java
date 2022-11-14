@@ -20,7 +20,7 @@ public interface IUserIncomeRecordService extends IService<UserIncomeRecord> {
      *
      * @param orderBaseInfo
      */
-    UserIncomeRecord addUserIncomeRecord(UserOrderBaseInfo orderBaseInfo);
+    void addUserIncomeRecord(UserOrderBaseInfo orderBaseInfo);
 
 
 

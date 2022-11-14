@@ -120,14 +120,8 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
 
         Long priceCaseId = activityOrderInfo.getPriceCaseId();
         ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
-        if (wxUser.getVip()) {
-            activityOrderInfo.setPaymentPrice(activityPriceCase.getSuperMemberPrice());
-        } else if (wxUser.getVip()) {
-            activityOrderInfo.setPaymentPrice(activityPriceCase.getMemberPrice());
-        } else {
-            activityOrderInfo.setPaymentPrice(activityPriceCase.getSalesPrice());
-        }
-        activityOrderInfo.setSalesPrice(activityPriceCase.getSalesPrice());
+        activityOrderInfo.setPaymentPrice(activityPriceCase.getSalesPrice());
+        activityOrderInfo.setSalesPrice(activityPriceCase.getDisplayPrice());
     }
 
     @Override

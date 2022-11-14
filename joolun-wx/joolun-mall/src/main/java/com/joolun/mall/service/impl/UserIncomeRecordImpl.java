@@ -10,10 +10,7 @@ import com.joolun.mall.entity.UserShareRecord;
 import com.joolun.mall.enums.IncomeStatusEnum;
 import com.joolun.mall.enums.ProductTypeEnum;
 import com.joolun.mall.mapper.UserIncomeRecordMapper;
-import com.joolun.mall.service.ActivityPriceCaseService;
-import com.joolun.mall.service.IUserIncomeRecordService;
-import com.joolun.mall.service.IUserMemberConfigService;
-import com.joolun.mall.service.IUserShareRecordService;
+import com.joolun.mall.service.*;
 import com.joolun.weixin.entity.WxUser;
 import com.joolun.weixin.service.WxUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,24 +40,23 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
     @Autowired
     private ActivityPriceCaseService activityPriceCaseService;
 
+    @Autowired
+    private IUserCommissionService userCommissionService;
+
     /**
      * 增加用户收入记录
      *
      * @param orderBaseInfo
      */
     @Override
-    public UserIncomeRecord addUserIncomeRecord(UserOrderBaseInfo orderBaseInfo) {
+    public void addUserIncomeRecord(UserOrderBaseInfo orderBaseInfo) {
         UserIncomeRecord userIncomeRecord = null;
         if (ProductTypeEnum.MEMBER == orderBaseInfo.getProductType()) {
-            userIncomeRecord = calMemberIncome(orderBaseInfo);
+            calMemberIncome(orderBaseInfo);
         } else if (ProductTypeEnum.ACTIVITY == orderBaseInfo.getProductType()) {
-            userIncomeRecord = calActivityIncome(orderBaseInfo);
+            calActivityIncome(orderBaseInfo);
         }
 
-        if (userIncomeRecord != null && userIncomeRecord.getAmount()!=null) {
-            save(userIncomeRecord);
-        }
-        return userIncomeRecord;
     }
 
 
@@ -69,14 +65,13 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
      *
      * @param orderInfo
      */
-    private UserIncomeRecord calMemberIncome(UserOrderBaseInfo orderInfo) {
+    private void calMemberIncome(UserOrderBaseInfo orderInfo) {
         WxUser sourceWxUser = wxUserService.getById(orderInfo.getUserId());
         UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, orderInfo.getUserId()));
         if (userShareRecord != null) {
             String parentUserId = userShareRecord.getParentUserId();
             WxUser parentWxUser = wxUserService.getById(parentUserId);
-
             UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
             userIncomeRecord.setUserId(parentUserId);
             userIncomeRecord.setUserNickName(parentWxUser.getNickName());
@@ -86,7 +81,6 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-
             if (parentWxUser.getVip()) {
                 UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
                 if (!sourceWxUser.getVip()) {
@@ -101,9 +95,10 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                     }
                 }
             }
-            return userIncomeRecord;
+            save(userIncomeRecord);
+            userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
         }
-        return null;
+
     }
 
 
@@ -112,42 +107,66 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
      *
      * @param orderInfo
      */
-    private UserIncomeRecord calActivityIncome(UserOrderBaseInfo orderInfo) {
+    private void calActivityIncome(UserOrderBaseInfo orderInfo) {
 
         WxUser sourceWxUser = wxUserService.getById(orderInfo.getUserId());
-        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
-                .eq(UserShareRecord::getUserId, orderInfo.getUserId()));
-        if (userShareRecord != null) {
-            String parentUserId = userShareRecord.getParentUserId();
-            WxUser parentWxUser = wxUserService.getById(parentUserId);
+        Long priceCaseId = orderInfo.getPriceCaseId();
+        ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
+        if (sourceWxUser.getVip()) {
             UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentUserId);
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
+            userIncomeRecord.setUserId(sourceWxUser.getId());
+            userIncomeRecord.setUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceUserId(orderInfo.getUserId());
             userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if (parentWxUser.getVip()) {
-                Long priceCaseId = orderInfo.getPriceCaseId();
-                ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
+            userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
+            if (sourceWxUser.getSVip()) {
+                userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
+            }
+            save(userIncomeRecord);
+            userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
+        }
 
-                if (!sourceWxUser.getVip()) {
+        UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
+                .eq(UserShareRecord::getUserId, orderInfo.getUserId()));
+        if (userShareRecord != null) {
+            String parentUserId = userShareRecord.getParentUserId();
+            WxUser parentWxUser = wxUserService.getById(parentUserId);
+            UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
+            userIncomeRecord.setUserId(parentWxUser.getId());
+            userIncomeRecord.setUserNickName(sourceWxUser.getNickName());
+            userIncomeRecord.setSourceUserId(orderInfo.getUserId());
+            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
+            userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
+            userIncomeRecord.setCreateTime(new Date());
+            userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
+            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
+            if (parentWxUser.getSVip()) {
+                if (sourceWxUser.getSVip()) {
+                    userIncomeRecord = null;
+                }
+                if (sourceWxUser.getVip()) {
+                    userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
+                            .subtract(activityPriceCase.getCashBackAmount()));
+                } else {
+                    userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
+                }
+            } else if (parentWxUser.getVip()) {
+                if (sourceWxUser.getSVip() || sourceWxUser.getVip()) {
+                    userIncomeRecord = null;
+                } else {
                     userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
                 }
-                if (parentWxUser.getSVip()) {
-                    if (!sourceWxUser.getVip()) {
-                        userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
-                    } else if (sourceWxUser.getVip()) {
-                        userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
-                                .subtract(activityPriceCase.getCashBackAmount()));
-                    }
-                }
             }
-            return userIncomeRecord;
+            if(userIncomeRecord != null ){
+                save(userIncomeRecord);
+                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
+            }
         }
-        return null;
+
     }
 
 
