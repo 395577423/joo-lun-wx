@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <avue-crud ref="crud"
-               :page="page"
+               :page.sync="page"
                :data="tableData"
                :table-loading="tableLoading"
                :option="tableOption"
@@ -63,7 +63,7 @@
     >
 
       <avue-crud ref="crud"
-                 :page="coursePage"
+                 :page.sync="coursePage"
                  :data="courseTableData"
                  :table-loading="tableLoading"
                  :option="courseTableOption"
@@ -284,6 +284,7 @@ import BaseEditor from '@/components/Editor/index'
                 this.open = true;
             },
             getCoursePage() {
+                console.log(this.coursePage);
                 this.tableLoading = true
                 getCoursePage(Object.assign({
                     current: this.coursePage.currentPage,
@@ -301,13 +302,13 @@ import BaseEditor from '@/components/Editor/index'
                 })
             },
             refreshCourseChange(page) {
-                this.getCoursePage(this.page)
+                this.getCoursePage(this.coursePage)
             },
             searchCourseChange(params, done) {
                 params = this.filterForm(params)
                 this.courseParamsSearch = params
                 this.coursePage.currentPage = 1
-                this.getCoursePage(this.page, params)
+                this.getCoursePage(this.coursePage, params)
                 done()
             },
             handleRelate() {

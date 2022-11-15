@@ -100,11 +100,6 @@ Page({
   },
   calAmount(quantity) {
     let unitPrice = this.data.priceCases[this.data.selectCaseIndex].salesPrice;
-      if (this.data.svip){
-      unitPrice = this.data.priceCases[this.data.selectCaseIndex].superMemberPrice;
-    }else if(this.data.vip){
-      unitPrice = this.data.priceCases[this.data.selectCaseIndex].memberPrice;
-    }
     let amount = quantity * unitPrice;
     this.setData({
       amount: amount,
