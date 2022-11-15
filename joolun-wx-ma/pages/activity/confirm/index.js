@@ -177,6 +177,10 @@ Page({
             })
           }
         })
+      } else {
+        wx.redirectTo({
+          url: '/pages/activity/order/list/index',
+        })
       }
     })
   }
