@@ -396,6 +396,18 @@ public class CourseApi {
     }
 
     /**
+     * 用户已购买课程数量
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    @GetMapping("/usercourse-count/{userId}")
+    public AjaxResult getUserCourseCount(@PathVariable String userId) {
+        int count = userCourseService.count(Wrappers.<UserCourse>lambdaQuery().eq(UserCourse::getUserId, userId));
+        return AjaxResult.success(count);
+    }
+
+    /**
      * 分页查询课程
      *
      * @param page   分页对象

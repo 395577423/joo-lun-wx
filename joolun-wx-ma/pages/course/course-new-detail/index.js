@@ -29,9 +29,15 @@ Page({
     v2play: false,
     v3play: false,
     videoSwitch: '0',
-    ispause: false
+    ispause: false,
+    userCourseCount: undefined
   },
 
+  toVipPage(){
+    wx.navigateTo({
+      url: '/pages/user/user-member/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -44,6 +50,7 @@ Page({
     this.userInfoGet()
     this.getUserCourse()
     this.getSwitch()
+    this.getUserCourseCount()
     app.initPage()
       .then(() => {
         this.getDetail(courseId)
@@ -59,6 +66,29 @@ Page({
         ispause:false
       })
     })
+  },
+  getFreeBook(){
+    app.api
+  },
+  getFreeBook(){
+    let that = this
+    app.api.userCourse({
+      id:that.data.courseId,
+      userId:app.globalData.wxUser.id
+    })
+    .then(res =>{
+        that.onLoad({courseId:that.data.courseId})
+        that.showModal('free')
+    })
+  },
+  getUserCourseCount(){
+    let userId = app.globalData.wxUser.id
+    app.api.getUserCourseCount(userId)
+      .then(res=>{
+        this.setData({
+          userCourseCount:res.data
+        })
+      })
   },
   getSwitch() {
     app.api.getSwitch()

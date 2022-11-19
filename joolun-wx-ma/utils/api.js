@@ -290,11 +290,14 @@ module.exports = {
   listWithdrawApplyRecord:() => {
     return request('/weixin/api/commission/withdraw/apply/list','get');
   },
-  getSwitch:()=>{
+  getSwitch:()=>{ //视频开关
     return request('/weixin/api/videoswitch','get')
   },
-  getReply:(courseId,userId,audioId) =>{
+  getReply:(courseId,userId,audioId) =>{ //获取语音回复
     return request('/weixin/api/course/reply/'+courseId+'/'+userId+'/'+audioId,'get')
+  },
+  getUserCourseCount:(userId) =>{ //获取用户已购买课程数量
+    return request('/weixin/api/course/usercourse-count/'+userId,'get')
   }
 
 }

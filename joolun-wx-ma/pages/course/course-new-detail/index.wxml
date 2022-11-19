@@ -287,9 +287,21 @@
       </view>
     </view>
     <view class="padding-xl">
-      <view>成为会员才可以做任务哦，</view>
-      <view>如有疑问请添加客服老师微信。</view>
-      <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
+    
+      <view wx:if="{{userCourseCount == 0}}">
+        <text class="text-xl">您有一次机会免费获得一本书</text>
+        <view class="text-red text-xl">成为会员即可免费获得所有书籍</view>
+        <view class="flex justify-center">
+          <button bindtap="getFreeBook" class="bg-blue light margin text-lg">免费获得此书</button>
+          <button bindtap="toVipPage" class="bg-blue light margin text-lg">成为会员</button>
+        </view>
+        
+      </view>
+      <view wx:else>
+        <view>成为会员才可以做任务哦，</view>
+        <view>如有疑问请添加客服老师微信。</view>
+        <button bindtap="showPic" class="bg-blue light margin">客服微信</button>
+      </view>
     </view>
   </view>
 </view>
@@ -305,6 +317,23 @@
     <view class="padding-xl flex-direction text-center">
       <text class="content flex" style="width: 68%;margin: 0 auto;">温馨提示：截图保存后可扫码哦</text>
       <image src="https://mall-owen.oss-cn-beijing.aliyuncs.com/wechat/qrcode.jpeg" style="width: 280rpx;height:280rpx;margin:0 auto;" class="flex"></image>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='free'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-blue text-bold text-shadow">
+        <view>恭喜</view>
+      </view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <view class="text-xxl">您已免费获得</view>
+      <view class="text-xxl text-blue">《{{course.title}}》</view>
     </view>
   </view>
 </view>
