@@ -129,6 +129,7 @@ public class ActivityOrderApi {
         if (orderInfo.getPaymentPrice().compareTo(BigDecimal.ZERO) == 0) {//0元购买不调支付
             orderInfo.setPaymentTime(new Date());
             orderInfo.setIsPay(CommonConstants.YES);
+            orderInfo.setStatus(ActivityOrderInfoEnum.STATUS_1.getValue());
             activityOrderInfoService.updateById(orderInfo);
             return AjaxResult.success();
         }

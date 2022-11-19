@@ -20,8 +20,7 @@ Page({
     params: {},
     show: false,
     salesPrice: 0,
-    superMemberPrice: 0,
-    memberPrice: 0,
+    displayPrice:0,
     closed: false,
     tips: '',
     interestedNum:1000,
@@ -59,16 +58,17 @@ Page({
     app.api.getActivityDetail(activityId).then(res => {
       let activityContent = res.data
       let introduction = activityContent.introduction
-      let addressInfo = activityContent.address;
-      let address = addressInfo[2];
-      let lat = addressInfo[1];
+      let addressInfo = activityContent.address
+      let address = addressInfo[2]
+      let lat = addressInfo[1]
       let lon = addressInfo[0]
+      let interestedNum = activityContent.interestedNum
       this.setData({
         activityContent: activityContent,
         address: address,
         longitude: lon,
         latitude: lat,
-        interestedNum:0
+        interestedNum:interestedNum
       })
       WxParse.wxParse('introduction', 'html', introduction, this, 0)
     })
@@ -78,27 +78,19 @@ Page({
     app.api.getPriceCase(activityId).then(res => {
       let priceCases = res.data
       let displaySalesPrice;
-      let displayMemberPrice;
-      let displaySuperMemberPrice;
       let cashBackAmount;
       if (priceCases && priceCases.length > 0) {
         priceCases.forEach(element => {
           cashBackAmount = element.cashBackAmount
           if (!displaySalesPrice) {
             displaySalesPrice = element.salesPrice
-            displayMemberPrice = element.memberPrice
-            displaySuperMemberPrice = element.superMemberPrice
           } else if (displaySalesPrice > element.salesPrice) {
             displaySalesPrice = element.salesPrice;
-            displayMemberPrice = element.memberPrice
-            displaySuperMemberPrice = element.superMemberPrice
           }
         });
       }
-      this.setData({
+      that.setData({
         salesPrice: displaySalesPrice,
-        memberPrice: displayMemberPrice,
-        superMemberPrice: displaySuperMemberPrice,
         cashBackAmount:cashBackAmount
       })
 

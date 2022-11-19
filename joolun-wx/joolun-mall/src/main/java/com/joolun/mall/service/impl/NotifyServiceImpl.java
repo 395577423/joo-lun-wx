@@ -24,7 +24,7 @@ public class NotifyServiceImpl implements INotifyService {
 
     private final IUserIncomeRecordService userIncomeRecordService;
 
-    private final IUserCommissionService userCommissionService;
+
 
 
     /**
@@ -45,9 +45,7 @@ public class NotifyServiceImpl implements INotifyService {
         if (userOrderBaseInfo != null) {
             userOrderBaseInfo.setProductType(productType);
             userPayRecordService.addPayRecord(notifyResult, userOrderBaseInfo.getUserId(), productType);
-            UserIncomeRecord userIncomeRecord = userIncomeRecordService.addUserIncomeRecord(userOrderBaseInfo);
-            userCommissionService.updateCommissionIncomeData(userIncomeRecord, productType == ProductTypeEnum.MEMBER ?
-                    IncomeStatusEnum.COMPLETED : IncomeStatusEnum.IN_PROCESS);
+            userIncomeRecordService.addUserIncomeRecord(userOrderBaseInfo);
         }
 
     }

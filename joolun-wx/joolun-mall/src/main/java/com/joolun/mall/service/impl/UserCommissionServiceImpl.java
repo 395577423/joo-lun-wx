@@ -50,7 +50,6 @@ public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper,
             }
             saveOrUpdate(userCommission);
         }
-
     }
 
 }

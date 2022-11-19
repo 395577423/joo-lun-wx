@@ -210,18 +210,13 @@ export const tableOption = {
               }]
             }, {
               width: 140,
-              label: '原价',
+              label: '销售价格',
               prop: "salesPrice",
               type: 'number'
             }, {
               width: 140,
-              label: '会员价',
-              prop: "memberPrice",
-              type: 'number'
-            }, {
-              width: 140,
-              label: '超级会员价',
-              prop: "superMemberPrice",
+              label: '划线价格',
+              prop: "displayPrice",
               type: 'number'
             }, {
               width: 140,
