@@ -51,7 +51,6 @@ public class UserShareRecordServiceImpl extends ServiceImpl<UserShareRecordMappe
                 .eq(UserShareRecord::getUserId, userId));
         if (CollectionUtil.isEmpty(shareRecords) && !userId.equals(shareUserId)) {
             WxUser wxUser = wxUserService.getById(userId);
-            WxUser shareUser = wxUserService.getById(shareUserId);
             UserShareRecord userShareRecord = new UserShareRecord();
             userShareRecord.setUserId(String.valueOf(wxUser.getId()));
             userShareRecord.setParentUserId(shareUserId);

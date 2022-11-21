@@ -32,6 +32,16 @@
               @change="changeMember(scope.row)">
             </el-switch>
           </template>
+          <template slot="sVip" slot-scope="scope">
+            <el-switch
+              active-value="1"
+              inactive-value="0"
+              v-model="scope.row.sVip"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              @change="changeSVip(scope.row)">
+            </el-switch>
+          </template>
         </avue-crud>
     </div>
 </template>
@@ -91,11 +101,23 @@
             putObj({
               id: row.id,
               member: row.member,
-              vip:true
+              vip:row.member
             }).then(data => {
 
             })
           },
+            changeSVip(row) {
+                let sVip = false;
+                if(row.sVip == "1") {
+                    sVip = true;
+                }
+                putObj({
+                    id: row.id,
+                    svip: sVip
+                }).then(data => {
+
+                })
+            },
             sortChange(val) {
                 let prop = val.prop ? val.prop.replace(/([A-Z])/g, "_$1").toLowerCase() : '';
                 if (val.order == 'ascending') {

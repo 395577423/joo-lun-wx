@@ -18,7 +18,7 @@
     <input placeholder="请输入手机号" name="tel" value="{{person.tel}}"></input>
   </view>
   <view class="cu-form-group">
-    <view class="title"><text class="text-red">*</text> 身份证号码</view>
+    <view class="title" style="margin-left: 20rpx;">身份证号码</view>
     <input placeholder="请输入身份证号码" name="identityNo" value="{{person.identityNo}}"></input>
   </view>
   <view class="cu-form-group">

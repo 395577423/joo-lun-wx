@@ -126,7 +126,6 @@ Page({
         tel: true,
       },
       identityNo: {
-        required: true,
         idcard: true,
       },
       gender: {

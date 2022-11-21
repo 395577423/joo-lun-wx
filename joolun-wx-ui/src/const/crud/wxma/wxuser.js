@@ -149,6 +149,25 @@ export const tableOption = {
       sortable:true,
       editDisplay:true
     },{
+      label: '合伙人',
+      prop: 'sVip',
+      type: 'radio',
+      slot: true,
+      rules: [{
+        required: true,
+        message: '设置是否为会员',
+        trigger: 'blur'
+      }],
+      dicData: [{
+        label: '开启',
+        value: '1'
+      }, {
+        label: '关闭',
+        value: '0'
+      }],
+      sortable:true,
+      editDisplay:true
+    },{
       label: '赋能级别',
       prop: 'level',
       type: 'select',
