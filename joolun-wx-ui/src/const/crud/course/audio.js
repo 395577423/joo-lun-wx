@@ -24,11 +24,6 @@ export default () => {
     }, {
       label: '音频问题',
       prop: 'question',
-      rules: [{
-        required: true,
-        message: '请输入课程音频问题',
-        trigger: 'blur'
-      }]
     }, {
       label: '课程音频文件',
       prop: 'audio',
