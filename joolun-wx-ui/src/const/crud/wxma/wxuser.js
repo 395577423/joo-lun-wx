@@ -150,14 +150,9 @@ export const tableOption = {
       editDisplay:true
     },{
       label: '合伙人',
-      prop: 'sVip',
+      prop: 'partner',
       type: 'radio',
       slot: true,
-      rules: [{
-        required: true,
-        message: '设置是否为会员',
-        trigger: 'blur'
-      }],
       dicData: [{
         label: '开启',
         value: '1'

@@ -1,49 +1,47 @@
-
 <template>
-    <div class="app-container">
-        <avue-crud ref="crud"
-                   :page="page"
-                   :data="tableData"
-                   :table-loading="tableLoading"
-                   :option="tableOption"
-                   :permission="permissionList"
-                   v-model="form"
-                   @on-load="getPage"
-                   @refresh-change="refreshChange"
-                   @row-update="handleUpdate"
-                   @row-save="handleSave"
-                   @row-del="handleDel"
-                   @sort-change="sortChange"
-                   @search-change="searchChange"
-                   @selection-change="selectionChange">
-            <template slot="sex" slot-scope="scope">
-                <el-tag size="mini" effect="light"
-                        :type="scope.row.sex == '1' ? '' : scope.row.sex == '2' ? 'danger' : 'warning'">
-                    {{scope.row.$sex}}
-                </el-tag>
-            </template>
-          <template slot="member" slot-scope="scope">
-            <el-switch
-              active-value="1"
-              inactive-value="0"
-              v-model="scope.row.member"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeMember(scope.row)">
-            </el-switch>
-          </template>
-          <template slot="sVip" slot-scope="scope">
-            <el-switch
-              active-value="1"
-              inactive-value="0"
-              v-model="scope.row.sVip"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeSVip(scope.row)">
-            </el-switch>
-          </template>
-        </avue-crud>
-    </div>
+  <div class="app-container">
+    <avue-crud ref="crud"
+               :page="page"
+               :data="tableData"
+               :table-loading="tableLoading"
+               :option="tableOption"
+               v-model="form"
+               @on-load="getPage"
+               @refresh-change="refreshChange"
+               @row-update="handleUpdate"
+               @row-save="handleSave"
+               @row-del="handleDel"
+               @sort-change="sortChange"
+               @search-change="searchChange"
+               @selection-change="selectionChange">
+      <template slot="sex" slot-scope="scope">
+        <el-tag size="mini" effect="light"
+                :type="scope.row.sex == '1' ? '' : scope.row.sex == '2' ? 'danger' : 'warning'">
+          {{scope.row.$sex}}
+        </el-tag>
+      </template>
+      <template slot="member" slot-scope="scope">
+        <el-switch
+          active-value="1"
+          inactive-value="0"
+          v-model="scope.row.member"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changeMember(scope.row)">
+        </el-switch>
+      </template>
+      <template slot="partner" slot-scope="scope">
+        <el-switch
+          active-value="1"
+          inactive-value="0"
+          v-model="scope.row.partner"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changeSVip(scope.row)">
+        </el-switch>
+      </template>
+    </avue-crud>
+  </div>
 </template>
 
 <script>
@@ -55,7 +53,7 @@
         name: 'wxuser',
         data() {
             return {
-              form: {},
+                form: {},
                 tableData: [],
                 page: {
                     total: 0, // 总页数
@@ -77,14 +75,7 @@
         mounted: function () {
         },
         computed: {
-            // permissionList() {
-            //     return {
-            //         addBtn: checkPermi(['wxma:wxuser:add']),
-            //         delBtn: checkPermi(['wxma:wxuser:del']),
-            //         editBtn: checkPermi(['wxma:wxuser:edit']),
-            //         viewBtn: checkPermi(['wxma:wxuser:get'])
-            //     }
-            // }
+
         },
         methods: {
             selectionChange(list) {
@@ -97,23 +88,23 @@
                 this.getPage(this.page, params)
                 done()
             },
-          changeMember(row) {
-            putObj({
-              id: row.id,
-              member: row.member,
-              vip:row.member
-            }).then(data => {
-
-            })
-          },
-            changeSVip(row) {
-                let sVip = false;
-                if(row.sVip == "1") {
-                    sVip = true;
+            changeMember(row) {
+                let vip = false;
+                if (row.member == "1") {
+                    vip = true;
                 }
                 putObj({
                     id: row.id,
-                    svip: sVip
+                    member: row.member,
+                    vip: vip
+                }).then(data => {
+
+                })
+            },
+            changeSVip(row) {
+                putObj({
+                    id: row.id,
+                    partner: row.partner
                 }).then(data => {
 
                 })

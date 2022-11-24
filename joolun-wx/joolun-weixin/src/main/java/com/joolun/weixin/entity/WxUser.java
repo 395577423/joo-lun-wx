@@ -184,6 +184,6 @@ private static final long serialVersionUID = 1L;
     /**
      * 是否是超级vip
      */
-    private Boolean sVip;
+    private String partner;
 
 }

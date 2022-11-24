@@ -86,7 +86,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 if (!sourceWxUser.getVip()) {
                     userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
                 }
-                if (parentWxUser.getSVip()) {
+                if ("1".equals(parentWxUser.getPartner())) {
                     if (!sourceWxUser.getVip()) {
                         userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
                     } else if (sourceWxUser.getVip()) {
@@ -123,7 +123,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
             userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-            if (sourceWxUser.getSVip()) {
+            if ("1".equals(sourceWxUser.getPartner())) {
                 userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
             }
             save(userIncomeRecord);
@@ -144,8 +144,8 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if (parentWxUser.getSVip()) {
-                if (sourceWxUser.getSVip()) {
+            if ("1".equals(parentWxUser.getPartner())) {
+                if ("1".equals(parentWxUser.getPartner())) {
                     userIncomeRecord = null;
                 }
                 if (sourceWxUser.getVip()) {
@@ -155,7 +155,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                     userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
                 }
             } else if (parentWxUser.getVip()) {
-                if (sourceWxUser.getSVip() || sourceWxUser.getVip()) {
+                if ("1".equals(parentWxUser.getPartner()) || sourceWxUser.getVip()) {
                     userIncomeRecord = null;
                 } else {
                     userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
