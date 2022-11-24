@@ -143,10 +143,10 @@ Page({
         required: '请输入手机号',
         tel: '请输入正确的手机号',
       },
-      idcard: {
-        required: '请输入身份证号码',
-        idcard: '请输入正确的身份证号码',
-      },
+      // idcard: {
+      //   required: '请输入身份证号码',
+      //   idcard: '请输入正确的身份证号码',
+      // },
       name: {
         required: '请输入姓名'
       },
