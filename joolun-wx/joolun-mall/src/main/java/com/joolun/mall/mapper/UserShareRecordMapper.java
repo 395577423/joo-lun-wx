@@ -23,7 +23,7 @@ public interface UserShareRecordMapper extends BaseMapper<UserShareRecord>
      * @param userId
      * @return
      */
-    @Select("select t2.headimg_url as userHeadImg,t2.nick_name as userName,t1.create_time,t2.vip,t2.s_vip " +
+    @Select("select t2.headimg_url as userHeadImg,t2.nick_name as userName,t1.create_time,t2.vip,t2.partner " +
             "FROM user_share_record t1 left join wx_user t2 on t1.user_id=t2.id where t1.parent_user_id=#{userId} " +
             " order by t2.create_time desc")
     List<PartnerVo> selectJoinWxUser(@Param("userId") String userId);

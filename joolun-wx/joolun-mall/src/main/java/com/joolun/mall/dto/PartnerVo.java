@@ -25,10 +25,10 @@ public class PartnerVo implements Serializable {
 
     private boolean vip;
 
-    private boolean sVip;
+    private String partner;
 
     public int getVipLevel() {
-        if (sVip) {
+        if ("1".equals(partner)) {
             vipLevel = 2;
         } else if (vip) {
             vipLevel = 1;

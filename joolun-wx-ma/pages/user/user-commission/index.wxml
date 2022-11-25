@@ -16,7 +16,7 @@
       <view class="cu-avatar round lg" style="background-image:url({{item.userHeadImg}});"></view>
       <view class="content">
         <view class="{{item.vip ?'iconfont icon-vip-fill':''}} text-red"></view>
-        <view class="{{item.svip  ?'iconfont icon-SVIP-fill':''}} text-red"></view>
+        <view class="{{item.partner=='1'  ?'iconfont icon-SVIP-fill':''}} text-red"></view>
         <view class="text-grey ">{{item.userName==null?'':item.userName}}</view>
       </view>
       <view>
