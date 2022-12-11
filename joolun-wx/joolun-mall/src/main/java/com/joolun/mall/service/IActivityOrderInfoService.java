@@ -29,4 +29,7 @@ public interface IActivityOrderInfoService extends IService<ActivityOrderInfo> {
      * @return
      */
     AjaxResult getActivityClosed(Long activityId);
+
+
+    AjaxResult completed(String id);
 }

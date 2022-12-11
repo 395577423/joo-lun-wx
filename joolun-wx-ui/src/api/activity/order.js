@@ -60,3 +60,13 @@ export function getPerson(activityId) {
     params: {activityOrderId:activityId}
   })
 }
+
+//订单完成
+
+export function completeOrder(id) {
+  return request({
+    url: '/activity/order/complete',
+    method: 'get',
+    params: {id:id}
+  })
+}

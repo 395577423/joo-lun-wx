@@ -122,4 +122,9 @@ public class ActivityOrderInfoController extends BaseController {
     }
 
 
+    @GetMapping("/complete")
+    public AjaxResult complete(String id) {
+
+        return activityOrderInfoService.completed(id);
+    }
 }

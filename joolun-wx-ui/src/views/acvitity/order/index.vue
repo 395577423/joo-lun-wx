@@ -14,6 +14,9 @@
                  @search-change="searchChange"
                  @selection-change="selectionChange"
       >
+        <template slot-scope="{type,size,row}" slot="menu">
+          <el-button icon="el-icon-check" size="small" type="text" v-if="row.status==1" @click="complete(row)">完成</el-button>
+        </template>
       </avue-crud>
     </div>
   </div>
@@ -23,7 +26,8 @@
 import {
   listOrder,
   getPerson,
-  updateOrder
+  updateOrder,
+  completeOrder
 } from "@/api/activity/order";
 
 export default {
@@ -61,7 +65,7 @@ export default {
         selection: false,
         searchMenuSpan: 6,
         rowKey: 'id',
-        menuWidth: 80,
+        menuWidth: 130,
         column: [
           {
             label: '订单名',
@@ -383,7 +387,18 @@ export default {
       }).catch(() => {
       })
     },
-
+    complete(row){
+      completeOrder(row.id).then(data =>{
+        this.$message({
+          showClose: true,
+          message: '操作完成',
+          type: 'success'
+        })
+        done()
+        this.getPage(this.page)
+      }).catch(() => {
+      })
+    }
   }
 };
 </script>

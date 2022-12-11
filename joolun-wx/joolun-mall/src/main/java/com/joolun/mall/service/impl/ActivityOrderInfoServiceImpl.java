@@ -54,6 +54,12 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
     @Autowired
     private ActivityPriceCaseService activityPriceCaseService;
 
+    @Autowired
+    private IUserCommissionService userCommissionService;
+
+    @Autowired
+    private IUserIncomeRecordService userIncomeRecordService;
+
     /**
      * 下单
      *
@@ -164,6 +170,32 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         } else if (activity.getExpiryDate() != null && DateUtil.compare(activity.getExpiryDate(), new Date()) < 0) {
             return AjaxResult.success("活动已结束");
         }
+        return AjaxResult.success();
+    }
+
+    /**
+     * 更新订单完成状态
+     * @param id
+     * @return
+     */
+    @Override
+    public AjaxResult completed(String id) {
+        ActivityOrderInfo activityOrderInfo = getById(id);
+        if(activityOrderInfo!=null && "1".equals(activityOrderInfo.getStatus())){
+            activityOrderInfo.setStatus("2");
+            save(activityOrderInfo);
+
+            UserIncomeRecord userIncomeRecord = userIncomeRecordService.getOne(Wrappers.lambdaQuery(UserIncomeRecord.class)
+                    .eq(UserIncomeRecord::getOrderNo, activityOrderInfo.getOrderNo()));
+            if(userIncomeRecord !=null) {
+                userIncomeRecord.setStatus("1");
+                userIncomeRecordService.save(userIncomeRecord);
+                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
+
+            }
+        }
+
+
         return AjaxResult.success();
     }
 }
