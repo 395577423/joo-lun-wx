@@ -186,4 +186,8 @@ private static final long serialVersionUID = 1L;
      */
     private String partner;
 
+    /**
+     * 会员类型
+     */
+    private String vipType;
 }

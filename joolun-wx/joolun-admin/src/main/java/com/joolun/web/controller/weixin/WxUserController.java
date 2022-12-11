@@ -106,6 +106,7 @@ public class WxUserController extends BaseController {
     public AjaxResult updateById(@RequestBody WxUser wxUser) {
         if(wxUser.getVip() !=null && wxUser.getVip()){
             wxUser.setMemberExpiryDate(DateUtil.offsetMonth(new Date(),12));
+            wxUser.setVipType("1");
         }
         return AjaxResult.success(wxUserService.updateById(wxUser));
     }

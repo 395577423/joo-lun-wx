@@ -34,11 +34,11 @@ public interface UserShareRecordMapper extends BaseMapper<UserShareRecord>
      * @param nickName
      * @return
      */
-    @Select({"<script>"+" select t1.*,t2.total_amount,t2.completed_amount,t2.withdraw_amount from (select wx_user.id, " +
-            "wx_user.nick_name as nickName,count(1) as subCount,COUNT(DISTINCT CASE WHEN wx_user.vip = '1' THEN 1 END) " +
-            "as memberCount  from user_share_record left JOIN wx_user on user_share_record.parent_user_id=wx_user.id " +
-            "GROUP BY wx_user.id,wx_user.nick_name order by count(1) DESC) t1 left join user_commission t2 " +
-            "on t1.id=t2.user_id <where> <if test='nickName!= null and nickName !=\"\" '> t1.nickName like " +
+    @Select({"<script>"+" select t1.*,t2.total_amount,t2.completed_amount,t2.withdraw_amount,t3.nick_name from (select user_share_record.parent_user_id as id" +
+            ",count(1) as subCount,sum(wx_user.vip) " +
+            "as memberCount  from user_share_record left JOIN wx_user on user_share_record.user_id=wx_user.id " +
+            "GROUP BY user_share_record.parent_user_id order by subCount DESC) t1 left join user_commission t2 " +
+            "on t1.id=t2.user_id left join wx_user t3 on t3.id=t1.id <where> <if test='nickName!= null and nickName !=\"\" '> t3.nickName like " +
             "concat('%',#{nickName},'%') </if></where> "+"</script>"})
     List<StoreDataVo> listStore(@Param("nickName") String nickName);
 }

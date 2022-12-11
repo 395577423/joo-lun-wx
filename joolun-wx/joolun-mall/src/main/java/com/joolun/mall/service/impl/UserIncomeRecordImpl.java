@@ -81,22 +81,45 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-            if (parentWxUser.getVip()) {
+            if (parentWxUser.getVip() && parentWxUser.getVipType().equals("2")) {
                 UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
                 if (!sourceWxUser.getVip()) {
                     userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
                 }
                 if ("1".equals(parentWxUser.getPartner())) {
-                    if (!sourceWxUser.getVip()) {
-                        userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
-                    } else if (sourceWxUser.getVip()) {
-                        userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount()
-                                .subtract(userMemberConfig.getCashBackAmount()));
-                    }
+                    userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
                 }
             }
             save(userIncomeRecord);
             userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
+
+            //查找上上级
+            if(!"1".equals(parentWxUser.getPartner())) {
+                UserShareRecord  parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
+                        .eq(UserShareRecord::getUserId, parentUserId));
+                if(parentUserShareRecord != null ) {
+                    String grantParentUserId = parentUserShareRecord.getParentUserId();
+                    WxUser grantParentWxUser = wxUserService.getById(grantParentUserId);
+                    if("1".equals(grantParentWxUser.getPartner())) {
+                        UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
+                        UserIncomeRecord topUserIncomeRecord = new UserIncomeRecord();
+                        topUserIncomeRecord.setUserId(grantParentUserId);
+                        topUserIncomeRecord.setUserNickName(grantParentWxUser.getNickName());
+                        topUserIncomeRecord.setSourceUserId(orderInfo.getUserId());
+                        topUserIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
+                        topUserIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
+                        topUserIncomeRecord.setCreateTime(new Date());
+                        topUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
+                        topUserIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
+                        topUserIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount()
+                                .subtract(userMemberConfig.getCashBackAmount()));
+                        save(topUserIncomeRecord);
+                        userCommissionService.updateCommissionIncomeData(topUserIncomeRecord, IncomeStatusEnum.COMPLETED);
+                    }
+                }
+            }
+
+
         }
 
     }
@@ -137,7 +160,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             WxUser parentWxUser = wxUserService.getById(parentUserId);
             UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
             userIncomeRecord.setUserId(parentWxUser.getId());
-            userIncomeRecord.setUserNickName(sourceWxUser.getNickName());
+            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
             userIncomeRecord.setSourceUserId(orderInfo.getUserId());
             userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
             userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
@@ -145,9 +168,6 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
             if ("1".equals(parentWxUser.getPartner())) {
-                if ("1".equals(parentWxUser.getPartner())) {
-                    userIncomeRecord = null;
-                }
                 if (sourceWxUser.getVip()) {
                     userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
                             .subtract(activityPriceCase.getCashBackAmount()));
@@ -155,7 +175,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                     userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
                 }
             } else if (parentWxUser.getVip()) {
-                if ("1".equals(parentWxUser.getPartner()) || sourceWxUser.getVip()) {
+                if (sourceWxUser.getVip()) {
                     userIncomeRecord = null;
                 } else {
                     userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
@@ -165,7 +185,39 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 save(userIncomeRecord);
                 userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
             }
+
+            // 查找上上级别
+            UserShareRecord parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
+                    .eq(UserShareRecord::getUserId, parentUserId));
+            if(parentUserShareRecord !=null ) {
+                String grantParentUserId = userShareRecord.getParentUserId();
+                WxUser grantParentUser = wxUserService.getById(grantParentUserId);
+                UserIncomeRecord parentUserIncomeRecord = new UserIncomeRecord();
+                parentUserIncomeRecord.setUserId(grantParentUser.getId());
+                parentUserIncomeRecord.setUserNickName(grantParentUser.getNickName());
+                parentUserIncomeRecord.setSourceUserId(orderInfo.getUserId());
+                parentUserIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
+                parentUserIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
+                parentUserIncomeRecord.setCreateTime(new Date());
+                parentUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
+                parentUserIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
+                if("1".equals(grantParentUser.getPartner())) {
+                    if(parentWxUser.getVip()){
+                        parentUserIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
+                                .subtract(activityPriceCase.getCashBackAmount()));
+                    } else {
+                        parentUserIncomeRecord = null;
+                    }
+                }
+                if(parentUserIncomeRecord != null ){
+                    save(parentUserIncomeRecord);
+                    userCommissionService.updateCommissionIncomeData(parentUserIncomeRecord, IncomeStatusEnum.IN_PROCESS);
+                }
+            }
+
         }
+
+
 
     }
 

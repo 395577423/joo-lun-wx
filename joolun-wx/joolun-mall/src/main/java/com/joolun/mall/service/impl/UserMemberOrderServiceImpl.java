@@ -108,6 +108,7 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
         wxUser.setPartner("0");
         wxUser.setMember(CommonConstants.YES);
         wxUser.setLevel((short) 1);
+        wxUser.setVipType("2");
         wxUser.setMemberExpiryDate(expiryDate);
         wxUserService.updateById(wxUser);
     }
