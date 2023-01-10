@@ -90,4 +90,6 @@ public class WxUserApi {
         WxUser wxUser = wxUserService.saveOrUpdateWxUser(wxOpenDataDTO);
         return AjaxResult.success(wxUser);
     }
+
+
 }

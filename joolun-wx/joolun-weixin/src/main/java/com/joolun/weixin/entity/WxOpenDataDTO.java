@@ -18,4 +18,6 @@ public class WxOpenDataDTO {
 	private String money;
 	private Long courseId;
 	private String code;
+	private String nickName;
+	private String headImgUrl;
 }

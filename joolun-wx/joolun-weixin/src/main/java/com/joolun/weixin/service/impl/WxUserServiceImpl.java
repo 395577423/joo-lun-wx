@@ -229,20 +229,38 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public WxUser saveOrUpdateWxUser(WxOpenDataDTO wxOpenDataDTO) {
-        WxMaUserService wxMaUserService = WxMaConfiguration.getMaService(wxOpenDataDTO.getAppId()).getUserService();
-        WxMaUserInfo wxMaUserInfo = wxMaUserService.getUserInfo(wxOpenDataDTO.getSessionKey(), wxOpenDataDTO.getEncryptedData(), wxOpenDataDTO.getIv());
-        WxUser wxUser = new WxUser();
-        BeanUtil.copyProperties(wxMaUserInfo, wxUser);
-        wxUser.setId(wxOpenDataDTO.getUserId());
-        wxUser.setSex(wxMaUserInfo.getGender());
-        wxUser.setHeadimgUrl(wxMaUserInfo.getAvatarUrl());
-        //更新余额信息
-        if (StringUtils.isNotEmpty(wxOpenDataDTO.getMoney())) {
-            wxUser.setMoney(new BigDecimal(wxOpenDataDTO.getMoney()));
+        if (StringUtils.isNotEmpty(wxOpenDataDTO.getEncryptedData())
+                && StringUtils.isNotEmpty(wxOpenDataDTO.getIv())) {
+            WxMaUserService wxMaUserService = WxMaConfiguration.getMaService(wxOpenDataDTO.getAppId()).getUserService();
+            WxMaUserInfo wxMaUserInfo = wxMaUserService.getUserInfo(wxOpenDataDTO.getSessionKey(), wxOpenDataDTO.getEncryptedData(), wxOpenDataDTO.getIv());
+            WxUser wxUser = new WxUser();
+            BeanUtil.copyProperties(wxMaUserInfo, wxUser);
+            wxUser.setId(wxOpenDataDTO.getUserId());
+            wxUser.setSex(wxMaUserInfo.getGender());
+            wxUser.setHeadimgUrl(wxMaUserInfo.getAvatarUrl());
+            //更新余额信息
+            if (StringUtils.isNotEmpty(wxOpenDataDTO.getMoney())) {
+                wxUser.setMoney(new BigDecimal(wxOpenDataDTO.getMoney()));
+            }
+            baseMapper.updateById(wxUser);
+            wxUser = baseMapper.selectById(wxUser.getId());
+            return wxUser;
+        } else if (StringUtils.isNotEmpty(wxOpenDataDTO.getNickName()) || StringUtils.isNotEmpty(wxOpenDataDTO.getHeadImgUrl())) {
+            WxUser wxUser = new WxUser();
+            wxUser.setId(wxOpenDataDTO.getUserId());
+            wxUser = baseMapper.selectById(wxUser.getId());
+            if (StringUtils.isNotEmpty(wxOpenDataDTO.getNickName())) {
+                wxUser.setNickName(wxOpenDataDTO.getNickName());
+            }
+            if (StringUtils.isNotEmpty(wxOpenDataDTO.getHeadImgUrl())) {
+                wxUser.setHeadimgUrl(wxOpenDataDTO.getHeadImgUrl());
+            }
+            baseMapper.updateById(wxUser);
+            return wxUser;
+        } else {
+            return baseMapper.selectById(wxOpenDataDTO.getUserId());
         }
-        baseMapper.updateById(wxUser);
-        wxUser = baseMapper.selectById(wxUser.getId());
-        return wxUser;
+
     }
 
     @Override

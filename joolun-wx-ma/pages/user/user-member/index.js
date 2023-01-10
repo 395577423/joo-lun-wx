@@ -28,6 +28,7 @@ Page({
     let that = this;
     app.initPage().then(res => {
       let wxmaCode = app.globalData.config.basePath + "/weixin/api/activity/image/wxm/code?page=pages/user/user-member/index&param=" + encodeURIComponent(app.globalData.wxUser.id)
+      console.log(wxmaCode)
       this.setData({
         qrCode: wxmaCode
       })

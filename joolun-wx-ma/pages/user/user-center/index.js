@@ -5,13 +5,14 @@
  * 本软件为www.joolun.com开发研制，项目使用请保留此说明
  */
 const app = getApp()
-
+const uploadImage = require('../../../js/uploadImg/uploadImg.js');
 Page({
   data: {
     config: app.globalData.config,
     wxUser: null,
     userInfo: null,
-    level:''
+    level:'',
+    editStatus:false
   },
 
   onShow() {
@@ -56,6 +57,32 @@ Page({
   },
   onReady(){
   },
+  onChooseAvatar(e) {
+    const avatarUrl  = e.detail.avatarUrl
+    console.log(avatarUrl)
+    let that = this;
+    uploadImage(avatarUrl, '',
+      function (result) {
+        let wxUserInfo = {}
+        wxUserInfo.headImgUrl = result
+        app.api.wxUserSave(wxUserInfo)
+        .then(res => {
+          let wxUser = res.data
+          that.setData({
+            wxUser: wxUser
+          })
+          app.globalData.wxUser = wxUser
+          that.wxUserGet()
+        })
+      },
+      function (result) {
+        log.error('upload faild')
+        logger.error(result)
+
+      }
+    )
+   
+  },
   /**
    * 小程序设置
    */
@@ -63,22 +90,6 @@ Page({
     wx.openSetting({
       success: function (res) {
 
-      }
-    })
-  },
-  getUserProfile(e) {
-    wx.getUserProfile({
-      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (detail) => {
-        app.api.wxUserSave(detail)
-          .then(res => {
-            let wxUser = res.data
-            this.setData({
-              wxUser: wxUser
-            })
-            app.globalData.wxUser = wxUser
-            this.wxUserGet()
-          })
       }
     })
   },
@@ -109,6 +120,29 @@ Page({
   bugVip(e) {
     wx.navigateTo({
       url: '/pages/user/user-member/index',
+    })
+  },
+  editNickName(e) {
+    this.setData({
+      editStatus: true
+    })
+  },
+  updateNickName(e) {
+    let nickName = e.detail.value.nickName
+    let wxUserInfo = {}
+    wxUserInfo.nickName = nickName
+    app.api.wxUserSave(wxUserInfo)
+    .then(res => {
+      let wxUser = res.data
+      this.setData({
+        wxUser: wxUser
+      })
+      app.globalData.wxUser = wxUser
+      this.wxUserGet()
+    })
+  
+    this.setData({
+      editStatus:false
     })
   }
 })

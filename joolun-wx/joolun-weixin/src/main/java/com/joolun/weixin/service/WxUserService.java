@@ -63,4 +63,5 @@ public interface WxUserService extends IService<WxUser> {
 	 * @param wxUser
 	 */
 	void updateMoney(WxUser wxUser);
+
 }
