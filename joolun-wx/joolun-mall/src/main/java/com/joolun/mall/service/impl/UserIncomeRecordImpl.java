@@ -50,13 +50,11 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
      */
     @Override
     public void addUserIncomeRecord(UserOrderBaseInfo orderBaseInfo) {
-        UserIncomeRecord userIncomeRecord = null;
         if (ProductTypeEnum.MEMBER == orderBaseInfo.getProductType()) {
             calMemberIncome(orderBaseInfo);
         } else if (ProductTypeEnum.ACTIVITY == orderBaseInfo.getProductType()) {
             calActivityIncome(orderBaseInfo);
         }
-
     }
 
 
@@ -81,12 +79,12 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-            if (parentWxUser.getVip() && parentWxUser.getVipType().equals("2")) {
+            if (parentWxUser.getVip()) {
                 UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
                 if (!sourceWxUser.getVip()) {
                     userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
                 }
-                if ("1".equals(parentWxUser.getPartner())) {
+                if ("1".equals(parentWxUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
                     userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
                 }
             }
@@ -94,13 +92,13 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
 
             //查找上上级
-            if(!"1".equals(parentWxUser.getPartner())) {
-                UserShareRecord  parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
+            if (!"1".equals(parentWxUser.getPartner())) {
+                UserShareRecord parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                         .eq(UserShareRecord::getUserId, parentUserId));
-                if(parentUserShareRecord != null ) {
+                if (parentUserShareRecord != null) {
                     String grantParentUserId = parentUserShareRecord.getParentUserId();
                     WxUser grantParentWxUser = wxUserService.getById(grantParentUserId);
-                    if("1".equals(grantParentWxUser.getPartner())) {
+                    if ("1".equals(grantParentWxUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
                         UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
                         UserIncomeRecord topUserIncomeRecord = new UserIncomeRecord();
                         topUserIncomeRecord.setUserId(grantParentUserId);
@@ -167,7 +165,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if ("1".equals(parentWxUser.getPartner())) {
+            if ("1".equals(parentWxUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
                 if (sourceWxUser.getVip()) {
                     userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
                             .subtract(activityPriceCase.getCashBackAmount()));
@@ -181,16 +179,16 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                     userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
                 }
             }
-            if(userIncomeRecord != null ){
+            if (userIncomeRecord != null) {
                 save(userIncomeRecord);
                 userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
             }
 
             // 查找上上级别
             UserShareRecord parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
-                    .eq(UserShareRecord::getUserId, parentUserId));
-            if(parentUserShareRecord !=null ) {
-                String grantParentUserId = userShareRecord.getParentUserId();
+                    .eq(UserShareRecord::getUserId, parentUserId).ne(UserShareRecord::getParentUserId, parentUserId));
+            if (parentUserShareRecord != null) {
+                String grantParentUserId = parentUserShareRecord.getParentUserId();
                 WxUser grantParentUser = wxUserService.getById(grantParentUserId);
                 UserIncomeRecord parentUserIncomeRecord = new UserIncomeRecord();
                 parentUserIncomeRecord.setUserId(grantParentUser.getId());
@@ -201,22 +199,21 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 parentUserIncomeRecord.setCreateTime(new Date());
                 parentUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
                 parentUserIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-                if("1".equals(grantParentUser.getPartner())) {
-                    if(parentWxUser.getVip()){
+                if ("1".equals(grantParentUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
+                    if (parentWxUser.getVip()) {
                         parentUserIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
                                 .subtract(activityPriceCase.getCashBackAmount()));
                     } else {
                         parentUserIncomeRecord = null;
                     }
                 }
-                if(parentUserIncomeRecord != null ){
+                if (parentUserIncomeRecord != null) {
                     save(parentUserIncomeRecord);
                     userCommissionService.updateCommissionIncomeData(parentUserIncomeRecord, IncomeStatusEnum.IN_PROCESS);
                 }
             }
 
         }
-
 
 
     }
