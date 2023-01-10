@@ -24,21 +24,7 @@ export default () => {
     }, {
       label: '音频问题',
       prop: 'question',
-    }, {
-      label: '课程音频文件',
-      prop: 'audio',
-      type: 'upload',
-      rules: [{
-        required: true,
-        message: '请选择音频',
-        trigger: 'blur'
-      }],
-      oss: 'ali',
-      loadText: '附件上传中，请稍等',
-      span: 24,
-      tip: '只能上传音频文件，尽量控制大小',
-      hide: true
-    }, {
+    },{
       label: '排序',
       prop: 'sort',
       type: 'number',
