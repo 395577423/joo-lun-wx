@@ -183,15 +183,14 @@ public class ActivityOrderInfoServiceImpl extends ServiceImpl<ActivityOrderInfoM
         ActivityOrderInfo activityOrderInfo = getById(id);
         if(activityOrderInfo!=null && "1".equals(activityOrderInfo.getStatus())){
             activityOrderInfo.setStatus("2");
-            save(activityOrderInfo);
+            updateById(activityOrderInfo);
 
-            UserIncomeRecord userIncomeRecord = userIncomeRecordService.getOne(Wrappers.lambdaQuery(UserIncomeRecord.class)
+            List<UserIncomeRecord> userIncomeRecords = userIncomeRecordService.list(Wrappers.lambdaQuery(UserIncomeRecord.class)
                     .eq(UserIncomeRecord::getOrderNo, activityOrderInfo.getOrderNo()));
-            if(userIncomeRecord !=null) {
+            for (UserIncomeRecord userIncomeRecord : userIncomeRecords) {
                 userIncomeRecord.setStatus("1");
-                userIncomeRecordService.save(userIncomeRecord);
+                userIncomeRecordService.updateById(userIncomeRecord);
                 userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
-
             }
         }
 

@@ -15,7 +15,8 @@
                  @selection-change="selectionChange"
       >
         <template slot-scope="{type,size,row}" slot="menu">
-          <el-button icon="el-icon-check" size="small" type="text" v-if="row.status==1" @click="complete(row)">完成</el-button>
+          <el-button icon="el-icon-check" size="small" type="text" v-if="row.status==1" @click="complete(row)">完成
+          </el-button>
         </template>
       </avue-crud>
     </div>
@@ -387,16 +388,21 @@ export default {
       }).catch(() => {
       })
     },
-    complete(row){
-      completeOrder(row.id).then(data =>{
-        this.$message({
+    complete(row, index, done, loading) {
+      var _this = this
+      this.$confirm('确认活动完成？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return completeOrder(row.id)
+      }).then(data => {
+        _this.$message({
           showClose: true,
           message: '操作完成',
           type: 'success'
         })
-        done()
         this.getPage(this.page)
-      }).catch(() => {
       })
     }
   }

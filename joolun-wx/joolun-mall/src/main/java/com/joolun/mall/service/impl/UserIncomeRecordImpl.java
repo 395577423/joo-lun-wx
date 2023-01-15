@@ -151,6 +151,10 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
         }
 
+        if ("1".equals(sourceWxUser.getPartner())) {
+            return;
+        }
+
         UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, orderInfo.getUserId()));
         if (userShareRecord != null) {
@@ -200,7 +204,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 parentUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
                 parentUserIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
                 if ("1".equals(grantParentUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
-                    if (parentWxUser.getVip()) {
+                    if (parentWxUser.getVip() && !"1".equals(sourceWxUser.getPartner())) {
                         parentUserIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
                                 .subtract(activityPriceCase.getCashBackAmount()));
                     } else {
