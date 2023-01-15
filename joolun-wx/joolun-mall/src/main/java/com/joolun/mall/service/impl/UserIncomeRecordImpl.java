@@ -169,7 +169,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             userIncomeRecord.setCreateTime(new Date());
             userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
             userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if ("1".equals(parentWxUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
+            if ("1".equals(parentWxUser.getPartner())) {
                 if (sourceWxUser.getVip()) {
                     userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
                             .subtract(activityPriceCase.getCashBackAmount()));
@@ -203,7 +203,7 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
                 parentUserIncomeRecord.setCreateTime(new Date());
                 parentUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
                 parentUserIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-                if ("1".equals(grantParentUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
+                if ("1".equals(grantParentUser.getPartner())) {
                     if (parentWxUser.getVip() && !"1".equals(sourceWxUser.getPartner())) {
                         parentUserIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
                                 .subtract(activityPriceCase.getCashBackAmount()));
