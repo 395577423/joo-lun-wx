@@ -158,7 +158,7 @@ export default {
      *
      **/
     handleSave: function (row, done, loading) {
-      row.audio = row.audio[0].value
+      // row.audio = row.audio[0].value
       addObj(row).then(data => {
         this.$message({
           showClose: true,
