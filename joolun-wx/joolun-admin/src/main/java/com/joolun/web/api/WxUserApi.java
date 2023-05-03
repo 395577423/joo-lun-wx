@@ -1,6 +1,7 @@
 package com.joolun.web.api;
 
 import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.common.utils.StringUtils;
 import com.joolun.weixin.entity.LoginMaDTO;
 import com.joolun.weixin.entity.WxOpenDataDTO;
 import com.joolun.weixin.entity.WxUser;
@@ -36,6 +37,9 @@ public class WxUserApi {
             String phone = WxMaUtil.getPhone(wxOpenDataDTO.getCode());
             WxUser wxUser = wxUserService.getById(wxOpenDataDTO.getUserId());
             wxUser.setPhone(phone);
+            if(StringUtils.isEmpty(wxUser.getNickName())) {
+                wxUser.setNickName("U"+phone.substring(7));
+            }
             wxUserService.updateById(wxUser);
             return AjaxResult.success();
         } catch (Exception e) {

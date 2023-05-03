@@ -58,8 +58,8 @@
   text-align:center;
   }
 .cate-img{
-  width:140rpx;
-  height:140rpx;
+  width:340rpx;
+  height:260rpx;
   }
 .cate-type{
   font-size: 28rpx;

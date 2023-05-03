@@ -1,0 +1,3 @@
+<view class="flex padding justify-center align-center">
+  <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="cu-btn bg-blue margin-tb-xl lg">微信授权一键登录</button>
+</view>

@@ -18,9 +18,10 @@ Page({
   onShow() {
     let wxUser = app.globalData.wxUser
     let str = '普通用户'
-    if(wxUser.vip){
+    console.log(wxUser)
+    if(wxUser.level === 1){
       str = "会员"
-    }else if(wxUser.sVip){
+    }else if(wxUser.level === 2){
       str = '超级会员'
     }
 
@@ -143,6 +144,11 @@ Page({
   
     this.setData({
       editStatus:false
+    })
+  },
+  toLoginPage(e) {
+    wx.navigateTo({
+      url: '/pages/user/login/index',
     })
   }
 })

@@ -104,8 +104,6 @@ public class UserMemberOrderServiceImpl extends ServiceImpl<UserMemberOrderMappe
     private void setUserMember(String wxUserId) {
         Date expiryDate = DateUtil.offsetMonth(new Date(), 12);
         WxUser wxUser = wxUserService.getById(wxUserId);
-        wxUser.setVip(true);
-        wxUser.setPartner("0");
         wxUser.setMember(CommonConstants.YES);
         wxUser.setLevel((short) 1);
         wxUser.setVipType("2");

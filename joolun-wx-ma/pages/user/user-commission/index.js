@@ -43,7 +43,7 @@ Page({
       let vipCount = 0;
       if (resp.data.length > 0) {
         resp.data.forEach(function (item) {
-          if (item.vip) {
+          if (item.member) {
             vipCount++;
           }
         });

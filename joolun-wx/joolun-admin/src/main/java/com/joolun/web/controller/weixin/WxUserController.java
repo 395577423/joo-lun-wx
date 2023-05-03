@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.joolun.common.core.controller.BaseController;
 import com.joolun.common.core.domain.AjaxResult;
+import com.joolun.weixin.config.CommonConstants;
 import com.joolun.weixin.entity.WxUser;
 import com.joolun.weixin.service.WxUserService;
 import lombok.AllArgsConstructor;
@@ -45,9 +46,9 @@ public class WxUserController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wxmp:wxuser:index')")
     public AjaxResult getWxUserPage(Page page, WxUser wxUser, String tagId) {
         Wrapper<WxUser> queryWrapper;
-        if (StringUtils.isNotBlank(tagId)) {
+        if(StringUtils.isNotBlank(tagId)){
             queryWrapper = Wrappers.lambdaQuery(wxUser)
-                    .and(wrapper -> wrapper
+                    .and(wrapper->wrapper
                             .eq(WxUser::getTagidList, "[" + tagId + "]")
                             .or()
                             .like(WxUser::getTagidList, "," + tagId + ",")
@@ -55,17 +56,17 @@ public class WxUserController extends BaseController {
                             .likeRight(WxUser::getTagidList, "[" + tagId + ",")
                             .or()
                             .likeLeft(WxUser::getTagidList, "," + tagId + "]"));
-        } else if (StrUtil.isNotBlank(wxUser.getNickName())) {
+        } else if(StrUtil.isNotBlank(wxUser.getNickName())){
             String nickName = wxUser.getNickName();
             wxUser.setNickName(null);
             queryWrapper = Wrappers.lambdaQuery(wxUser)
                     .like(WxUser::getNickName, nickName);
         } else {
             queryWrapper = Wrappers.<WxUser>lambdaQuery()
-                    .like(StringUtils.isNotBlank(wxUser.getNickName()), WxUser::getNickName,wxUser.getNickName())
-                    .eq(StringUtils.isNotBlank(wxUser.getSex()),WxUser::getSex,wxUser.getSex())
-                    .eq(StringUtils.isNotBlank(wxUser.getCountry()),WxUser::getCountry,wxUser.getCountry())
-                    .eq(StringUtils.isNotBlank(wxUser.getCity()),WxUser::getCity,wxUser.getCity());
+                    .like(StringUtils.isNotBlank(wxUser.getNickName()), WxUser::getNickName, wxUser.getNickName())
+                    .eq(StringUtils.isNotBlank(wxUser.getSex()), WxUser::getSex, wxUser.getSex())
+                    .eq(StringUtils.isNotBlank(wxUser.getCountry()), WxUser::getCountry, wxUser.getCountry())
+                    .eq(StringUtils.isNotBlank(wxUser.getCity()), WxUser::getCity, wxUser.getCity());
         }
         return AjaxResult.success(wxUserService.page(page, queryWrapper));
     }
@@ -104,8 +105,8 @@ public class WxUserController extends BaseController {
     @PutMapping
     @PreAuthorize("@ss.hasPermi('wxmp:wxuser:edit')")
     public AjaxResult updateById(@RequestBody WxUser wxUser) {
-        if(wxUser.getVip() !=null && wxUser.getVip()){
-            wxUser.setMemberExpiryDate(DateUtil.offsetMonth(new Date(),12));
+        if(CommonConstants.YES.equals(wxUser.getMember())){
+            wxUser.setMemberExpiryDate(DateUtil.offsetMonth(new Date(), 12));
             wxUser.setVipType("1");
         }
         return AjaxResult.success(wxUserService.updateById(wxUser));
@@ -169,7 +170,7 @@ public class WxUserController extends BaseController {
             JSONArray tagIdsArray = data.getJSONArray("tagIds");
             JSONArray openIdsArray = data.getJSONArray("openIds");
             String[] openIds = openIdsArray.toArray(new String[0]);
-            for (Object tagId : tagIdsArray) {
+            for(Object tagId : tagIdsArray) {
                 wxUserService.tagging(taggingType, Long.valueOf(String.valueOf(tagId)), openIds);
             }
             return AjaxResult.success();

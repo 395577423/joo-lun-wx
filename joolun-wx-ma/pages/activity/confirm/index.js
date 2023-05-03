@@ -29,9 +29,7 @@ Page({
     var DATE = util.formatDate(new Date());
     this.setData({
       activityId: options.activityId,
-      date: DATE,
-      vip: wxUser.vip,
-      svip: wxUser.svip
+      date: DATE
     })
     let activityId = options.activityId
     app.initPage()

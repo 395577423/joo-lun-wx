@@ -2,6 +2,7 @@ package com.joolun.mall.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.joolun.mall.config.CommonConstants;
 import com.joolun.mall.dto.UserOrderBaseInfo;
 import com.joolun.mall.entity.ActivityPriceCase;
 import com.joolun.mall.entity.UserIncomeRecord;
@@ -16,6 +17,7 @@ import com.joolun.weixin.service.WxUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -43,6 +45,10 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
     @Autowired
     private IUserCommissionService userCommissionService;
 
+    private static final int MEMBER_LEVEL_VALUE = 1;
+
+    private static final int SUPER_LEVEL_VALUE = 2;
+
     /**
      * 增加用户收入记录
      *
@@ -50,9 +56,9 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
      */
     @Override
     public void addUserIncomeRecord(UserOrderBaseInfo orderBaseInfo) {
-        if (ProductTypeEnum.MEMBER == orderBaseInfo.getProductType()) {
+        if(ProductTypeEnum.MEMBER == orderBaseInfo.getProductType()){
             calMemberIncome(orderBaseInfo);
-        } else if (ProductTypeEnum.ACTIVITY == orderBaseInfo.getProductType()) {
+        } else if(ProductTypeEnum.ACTIVITY == orderBaseInfo.getProductType()){
             calActivityIncome(orderBaseInfo);
         }
     }
@@ -67,50 +73,33 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
         WxUser sourceWxUser = wxUserService.getById(orderInfo.getUserId());
         UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, orderInfo.getUserId()));
-        if (userShareRecord != null) {
+        if(userShareRecord != null){
             String parentUserId = userShareRecord.getParentUserId();
             WxUser parentWxUser = wxUserService.getById(parentUserId);
-            UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentUserId);
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(orderInfo.getUserId());
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
-            userIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-            if (parentWxUser.getVip()) {
-                UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
-                if (!sourceWxUser.getVip()) {
-                    userIncomeRecord.setAmount(userMemberConfig.getCashBackAmount());
-                }
-                if ("1".equals(parentWxUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
-                    userIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount());
-                }
+            UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
+            if(parentWxUser.getLevel() == MEMBER_LEVEL_VALUE || parentWxUser.getLevel() == SUPER_LEVEL_VALUE){
+                BigDecimal amount = parentWxUser.getLevel() == MEMBER_LEVEL_VALUE ?
+                        userMemberConfig.getCashBackAmount() : userMemberConfig.getSuperCashBackAmount();
+                UserIncomeRecord userIncomeRecord = createUserIncomeRecord(parentWxUser, sourceWxUser, ProductTypeEnum.MEMBER, orderInfo.getOrderNo(),
+                        amount, IncomeStatusEnum.COMPLETED);
+                save(userIncomeRecord);
+                userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
             }
-            save(userIncomeRecord);
-            userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.COMPLETED);
 
             //查找上上级
-            if (!"1".equals(parentWxUser.getPartner())) {
+            if(parentWxUser.getLevel() != SUPER_LEVEL_VALUE){
                 UserShareRecord parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                         .eq(UserShareRecord::getUserId, parentUserId));
-                if (parentUserShareRecord != null) {
+                if(parentUserShareRecord != null){
                     String grantParentUserId = parentUserShareRecord.getParentUserId();
                     WxUser grantParentWxUser = wxUserService.getById(grantParentUserId);
-                    if ("1".equals(grantParentWxUser.getPartner()) && "2".equals(parentWxUser.getVipType())) {
-                        UserMemberConfig userMemberConfig = userMemberConfigService.list().get(0);
-                        UserIncomeRecord topUserIncomeRecord = new UserIncomeRecord();
-                        topUserIncomeRecord.setUserId(grantParentUserId);
-                        topUserIncomeRecord.setUserNickName(grantParentWxUser.getNickName());
-                        topUserIncomeRecord.setSourceUserId(orderInfo.getUserId());
-                        topUserIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-                        topUserIncomeRecord.setSourceType(ProductTypeEnum.MEMBER.getValue());
-                        topUserIncomeRecord.setCreateTime(new Date());
-                        topUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
-                        topUserIncomeRecord.setStatus(IncomeStatusEnum.COMPLETED.getValue());
-                        topUserIncomeRecord.setAmount(userMemberConfig.getSuperCashBackAmount()
-                                .subtract(userMemberConfig.getCashBackAmount()));
+                    if(grantParentWxUser.getLevel() == SUPER_LEVEL_VALUE){
+                        BigDecimal amount = userMemberConfig.getSuperCashBackAmount().subtract(userMemberConfig.getCashBackAmount());
+                        if(CommonConstants.NO.equals(parentWxUser.getMember())){
+                            amount = userMemberConfig.getSuperCashBackAmount();
+                        }
+                        UserIncomeRecord topUserIncomeRecord = createUserIncomeRecord(grantParentWxUser, sourceWxUser,
+                                ProductTypeEnum.MEMBER, orderInfo.getOrderNo(), amount, IncomeStatusEnum.COMPLETED);
                         save(topUserIncomeRecord);
                         userCommissionService.updateCommissionIncomeData(topUserIncomeRecord, IncomeStatusEnum.COMPLETED);
                     }
@@ -133,57 +122,37 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
         WxUser sourceWxUser = wxUserService.getById(orderInfo.getUserId());
         Long priceCaseId = orderInfo.getPriceCaseId();
         ActivityPriceCase activityPriceCase = activityPriceCaseService.getById(priceCaseId);
-        if (sourceWxUser.getVip()) {
-            UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(sourceWxUser.getId());
-            userIncomeRecord.setUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(orderInfo.getUserId());
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
-            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-            if ("1".equals(sourceWxUser.getPartner())) {
-                userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
-            }
+        if(sourceWxUser.getLevel() == MEMBER_LEVEL_VALUE || sourceWxUser.getLevel() == SUPER_LEVEL_VALUE){
+            BigDecimal amount = sourceWxUser.getLevel() == MEMBER_LEVEL_VALUE ?
+                    activityPriceCase.getCashBackAmount() : activityPriceCase.getSuperCashBackAmount();
+            UserIncomeRecord userIncomeRecord = createUserIncomeRecord(sourceWxUser, sourceWxUser, ProductTypeEnum.ACTIVITY,
+                    orderInfo.getOrderNo(), amount, IncomeStatusEnum.IN_PROCESS);
             save(userIncomeRecord);
             userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
         }
 
-        if ("1".equals(sourceWxUser.getPartner())) {
+        if(sourceWxUser.getLevel() == SUPER_LEVEL_VALUE){
             return;
         }
 
         UserShareRecord userShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                 .eq(UserShareRecord::getUserId, orderInfo.getUserId()));
-        if (userShareRecord != null) {
+        if(userShareRecord != null){
             String parentUserId = userShareRecord.getParentUserId();
             WxUser parentWxUser = wxUserService.getById(parentUserId);
-            UserIncomeRecord userIncomeRecord = new UserIncomeRecord();
-            userIncomeRecord.setUserId(parentWxUser.getId());
-            userIncomeRecord.setUserNickName(parentWxUser.getNickName());
-            userIncomeRecord.setSourceUserId(orderInfo.getUserId());
-            userIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-            userIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
-            userIncomeRecord.setCreateTime(new Date());
-            userIncomeRecord.setOrderNo(orderInfo.getOrderNo());
-            userIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-            if ("1".equals(parentWxUser.getPartner())) {
-                if (sourceWxUser.getVip()) {
-                    userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
-                            .subtract(activityPriceCase.getCashBackAmount()));
+            int levelDiff = parentWxUser.getLevel() - sourceWxUser.getLevel();
+            if(levelDiff > 0){
+                BigDecimal amount;
+                if(parentWxUser.getLevel() == SUPER_LEVEL_VALUE && sourceWxUser.getLevel() == MEMBER_LEVEL_VALUE){
+                    amount = activityPriceCase.getSuperCashBackAmount()
+                            .subtract(activityPriceCase.getCashBackAmount());
+                } else if(parentWxUser.getLevel() == MEMBER_LEVEL_VALUE && sourceWxUser.getLevel() == 0){
+                    amount = activityPriceCase.getCashBackAmount();
                 } else {
-                    userIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount());
+                    amount = activityPriceCase.getSuperCashBackAmount();
                 }
-            } else if (parentWxUser.getVip()) {
-                if (sourceWxUser.getVip()) {
-                    userIncomeRecord = null;
-                } else {
-                    userIncomeRecord.setAmount(activityPriceCase.getCashBackAmount());
-                }
-            }
-            if (userIncomeRecord != null) {
+                UserIncomeRecord userIncomeRecord = createUserIncomeRecord(parentWxUser, sourceWxUser, ProductTypeEnum.ACTIVITY,
+                        orderInfo.getOrderNo(), amount, IncomeStatusEnum.IN_PROCESS);
                 save(userIncomeRecord);
                 userCommissionService.updateCommissionIncomeData(userIncomeRecord, IncomeStatusEnum.IN_PROCESS);
             }
@@ -191,36 +160,52 @@ public class UserIncomeRecordImpl extends ServiceImpl<UserIncomeRecordMapper, Us
             // 查找上上级别
             UserShareRecord parentUserShareRecord = userShareRecordService.getOne(Wrappers.<UserShareRecord>lambdaQuery()
                     .eq(UserShareRecord::getUserId, parentUserId).ne(UserShareRecord::getParentUserId, parentUserId));
-            if (parentUserShareRecord != null) {
+            if(parentUserShareRecord != null){
                 String grantParentUserId = parentUserShareRecord.getParentUserId();
                 WxUser grantParentUser = wxUserService.getById(grantParentUserId);
-                UserIncomeRecord parentUserIncomeRecord = new UserIncomeRecord();
-                parentUserIncomeRecord.setUserId(grantParentUser.getId());
-                parentUserIncomeRecord.setUserNickName(grantParentUser.getNickName());
-                parentUserIncomeRecord.setSourceUserId(orderInfo.getUserId());
-                parentUserIncomeRecord.setSourceUserNickName(sourceWxUser.getNickName());
-                parentUserIncomeRecord.setSourceType(ProductTypeEnum.ACTIVITY.getValue());
-                parentUserIncomeRecord.setCreateTime(new Date());
-                parentUserIncomeRecord.setOrderNo(orderInfo.getOrderNo());
-                parentUserIncomeRecord.setStatus(IncomeStatusEnum.IN_PROCESS.getValue());
-                if ("1".equals(grantParentUser.getPartner())) {
-                    if (parentWxUser.getVip() && !"1".equals(sourceWxUser.getPartner())) {
-                        parentUserIncomeRecord.setAmount(activityPriceCase.getSuperCashBackAmount()
-                                .subtract(activityPriceCase.getCashBackAmount()));
+                if(grantParentUser.getLevel() == SUPER_LEVEL_VALUE && parentWxUser.getLevel() != SUPER_LEVEL_VALUE
+                        && sourceWxUser.getLevel() != SUPER_LEVEL_VALUE){
+                    BigDecimal amount;
+                    if(parentWxUser.getLevel() == 0 && sourceWxUser.getLevel() == 0){
+                        amount = activityPriceCase.getSuperCashBackAmount();
                     } else {
-                        parentUserIncomeRecord = null;
+                        amount = activityPriceCase.getSuperCashBackAmount().subtract(activityPriceCase.getCashBackAmount());
                     }
-                }
-                if (parentUserIncomeRecord != null) {
+                    UserIncomeRecord parentUserIncomeRecord = createUserIncomeRecord(grantParentUser, sourceWxUser, ProductTypeEnum.ACTIVITY,
+                            orderInfo.getOrderNo(), amount, IncomeStatusEnum.IN_PROCESS);
                     save(parentUserIncomeRecord);
                     userCommissionService.updateCommissionIncomeData(parentUserIncomeRecord, IncomeStatusEnum.IN_PROCESS);
                 }
             }
-
         }
 
 
     }
 
+
+    /**
+     * 创建收入对象
+     *
+     * @param user
+     * @param srcUser
+     * @param type
+     * @param orderNo
+     * @param status
+     * @return
+     */
+    private UserIncomeRecord createUserIncomeRecord(WxUser user, WxUser srcUser, ProductTypeEnum type, String orderNo,
+                                                    BigDecimal amount, IncomeStatusEnum status) {
+        UserIncomeRecord parentUserIncomeRecord = new UserIncomeRecord();
+        parentUserIncomeRecord.setUserId(user.getId());
+        parentUserIncomeRecord.setUserNickName(user.getNickName());
+        parentUserIncomeRecord.setSourceUserId(srcUser.getId());
+        parentUserIncomeRecord.setSourceUserNickName(srcUser.getNickName());
+        parentUserIncomeRecord.setSourceType(type.getValue());
+        parentUserIncomeRecord.setCreateTime(new Date());
+        parentUserIncomeRecord.setOrderNo(orderNo);
+        parentUserIncomeRecord.setAmount(amount);
+        parentUserIncomeRecord.setStatus(status.getValue());
+        return parentUserIncomeRecord;
+    }
 
 }

@@ -5,26 +5,27 @@
     </view>
   </view>
 
-    <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头像' : ''}}
-      <view class="cu-tag badge " wx:if="{{wxUser.vip}}">vip</view>
-    </view>
+<view wx:if="{{wxUser.openId}}">
+  <view class="cu-avatar round xl head flex" style="background-image:url({{wxUser.headimgUrl}})">{{!wxUser.headimgUrl ? '头像' : ''}}
+    <view class="cu-tag badge " wx:if="{{!wxUser.member}}">vip</view>
+  </view>
   <view class="content text-center margin-top-sm">
-  <view class="flex justify-center"  wx:if="{{wxUser.nickName && !editStatus}}">
-    <view class="margin-top-xs text-xxl text-bold text-black ">{{wxUser.nickName}}
+    <view class="flex justify-center" wx:if="{{!editStatus}}">
+      <view class="margin-top-xs text-xxl text-bold text-black ">{{wxUser.nickName == null? "":wxUser.nickName}}
+      </view>
+      <view class="cuIcon-edit margin-left-sm padding-top" bindtap="editNickName"></view>
     </view>
-    <view class="cuIcon-edit margin-left-sm padding-top" bindtap="editNickName" ></view>
-  </view>
-  <form bindsubmit="updateNickName">
-  <view class="flex justify-center" wx:if="{{wxUser.nickName && editStatus}}">
-    <input type="nickname" name="nickName"  value="{{wxUser.nickName}}"/>
-    <button class="cu-btn round sm bg-blue" form-type="submit">确定</button>
-  </view>
-</form>
+    <form bindsubmit="updateNickName">
+      <view class="flex justify-center" wx:if="{{editStatus}}">
+        <input type="nickname" name="nickName" value="{{wxUser.nickName}}" />
+        <button class="cu-btn round sm bg-blue" form-type="submit">确定</button>
+      </view>
+    </form>
     <button class="cu-btn round text-lg margin-top-xs line-blue" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-      {{!wxUser.nickName ? '登录' : '更新头像'}}
+      {{!wxUser.openId ? '登录' : '更新头像'}}
     </button>
-    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{!wxUser.vip}}">成为会员</button>
-    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{wxUser.vip}}">分享</button>
+    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{wxUser.member === '0'}}">成为会员</button>
+    <button class="cu-btn round text-lg margin-top-xs line-blue margin-left-sm" bindtap="bugVip" wx:if="{{wxUser.member === '1'}}">分享</button>
   </view>
   <view class="grid col-4 margin-top text-center">
     <view></view>
@@ -36,6 +37,12 @@
     <view class="padding-top-sm"><text class="text-red text-left">{{level}}</text></view>
     <view></view>
   </view>
+</view>
+
+<view wx:if="{{!wxUser.openId}}" class="flex solid-bottom padding justify-center">
+  <button class="cu-btn round text-lg margin-top-xs line-blue" bindtap="toLoginPage">登录</button>
+</view>
+
 </view>
 
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">

@@ -19,8 +19,7 @@ import java.util.List;
  * @author Lanjian
  * @date 2022-09-05
  */
-@Service
-public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper, UserCommission>
+@Service public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper, UserCommission>
         implements IUserCommissionService {
 
     /**
@@ -34,8 +33,8 @@ public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper,
         if (incomeRecord != null && incomeRecord.getAmount() != null) {
             String userId = incomeRecord.getUserId();
             BigDecimal amount = incomeRecord.getAmount();
-            LambdaQueryWrapper<UserCommission> queryWrapper = Wrappers.<UserCommission>lambdaQuery()
-                    .eq(UserCommission::getUserId, userId);
+            LambdaQueryWrapper<UserCommission> queryWrapper =
+                    Wrappers.<UserCommission>lambdaQuery().eq(UserCommission::getUserId, userId);
             UserCommission userCommission = getOne(queryWrapper);
             if (userCommission == null) {
                 userCommission = new UserCommission();
@@ -44,9 +43,12 @@ public class UserCommissionServiceImpl extends ServiceImpl<UserCommissionMapper,
                 userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ? amount : BigDecimal.ZERO);
                 userCommission.setWithdrawAmount(BigDecimal.ZERO);
             } else {
-                userCommission.setTotalAmount(amount.add(userCommission.getTotalAmount()));
+                userCommission.setTotalAmount(IncomeStatusEnum.COMPLETED == status ?
+                        userCommission.getTotalAmount() :
+                        amount.add(userCommission.getTotalAmount()));
                 userCommission.setCompletedAmount(IncomeStatusEnum.COMPLETED == status ?
-                        amount.add(userCommission.getCompletedAmount()) : userCommission.getCompletedAmount());
+                        amount.add(userCommission.getCompletedAmount()) :
+                        userCommission.getCompletedAmount());
             }
             saveOrUpdate(userCommission);
         }

@@ -66,7 +66,7 @@ Page({
           'paySign': payData.paySign,
           'success': function (res) {
             let wxUser = app.globalData.wxUser
-            wxUser.vip = true
+            wxUser.member = true
             app.globalData.wxUser = wxUser;
             wx.redirectTo({
               url: '/pages/user/user-center/index',
@@ -84,6 +84,14 @@ Page({
       }
     })
   },
+  getPhoneNumber (e) {
+    debugger
+    let code = e.detail.code;
+    if(code) {
+      app.api.bindWXPhoneNumber({code:code,userId:app.globalData.wxUser.id});
+      this.buy();
+    }
+  },
   addShareRecord(shareUserId) {
     app.api.addShareRecord(shareUserId).then(res => {
       console.log('添加分享记录完成')
@@ -91,7 +99,6 @@ Page({
   },
   share() {
     this.getDraw();
-
   },
   getDraw() {
     // 做判断，如果已经生成过，就不用反复生成了

@@ -45,8 +45,7 @@
 </template>
 
 <script>
-    import {checkPermi, checkRole} from "@/utils/permission"
-    import {getPage, getObj, addObj, putObj, delObj, synchroWxUser, updateRemark, tagging} from '@/api/wxma/wxuser'
+    import {addObj, delObj, getPage, putObj, updateRemark} from '@/api/wxma/wxuser'
     import {tableOption} from '@/const/crud/wxma/wxuser'
 
     export default {
@@ -89,14 +88,10 @@
                 done()
             },
             changeMember(row) {
-                let vip = false;
-                if (row.member == "1") {
-                    vip = true;
-                }
                 putObj({
                     id: row.id,
-                    member: row.member,
-                    vip: vip
+                    member: 1,
+                    level: 1
                 }).then(data => {
 
                 })
@@ -104,9 +99,8 @@
             changeSVip(row) {
                 putObj({
                     id: row.id,
-                    partner: row.partner
-                }).then(data => {
-
+                    member: 1,
+                    level: 2
                 })
             },
             sortChange(val) {

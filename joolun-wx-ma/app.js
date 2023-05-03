@@ -56,9 +56,9 @@ App({
     return new Promise((resolve, reject) => {
       if (!that.globalData.thirdSession) {//无thirdSession，进行登录
         that.doLogin()
-          .then(res => {
-            resolve("success")
-          })
+        .then(res => {
+          resolve("success")
+        })
       } else {//有thirdSession，说明已登录，返回初始化成功
         wx.checkSession({//检查登录态是否过期
           success () {

@@ -164,7 +164,7 @@ private static final long serialVersionUID = 1L;
     /**
      * 赋能级别
      */
-    private Short level;
+    private int level;
 
     /**
      * 会员国企时间
@@ -175,16 +175,6 @@ private static final long serialVersionUID = 1L;
      * 赋能积分
      */
     private Integer empowerNum;
-
-    /**
-     * 是否是vip
-     */
-    private Boolean vip;
-
-    /**
-     * 是否是超级vip
-     */
-    private String partner;
 
     /**
      * 会员类型
